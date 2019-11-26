@@ -7,6 +7,11 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage2Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage5Level1Split
 import io.jenetics.Gene
 import io.jenetics.Genotype
 import io.jenetics.Phenotype
@@ -143,6 +148,17 @@ private class PhenotypeEvaluation<G : Gene<*, G>, C : Comparable<C>> internal co
 
         val controller = SimpleANNController(controllerNetwork)
         val marioSimulator = GameSimulator()
+
+        /*
+        val levels: Array<MarioLevel> = when {
+            _phenotype.generation < 10 -> arrayOf(PathWithHolesLevel)
+            _phenotype.generation < 20 -> arrayOf<MarioLevel>(PathWithHolesLevel) + Stage1Level1Split.levels
+            _phenotype.generation < 30 -> arrayOf<MarioLevel>(PathWithHolesLevel) + Stage1Level1Split.levels + Stage2Level1Split.levels
+            _phenotype.generation < 40 -> arrayOf<MarioLevel>(PathWithHolesLevel) + Stage1Level1Split.levels + Stage2Level1Split.levels  + Stage4Level1Split.levels
+            else -> arrayOf<MarioLevel>(PathWithHolesLevel) + Stage1Level1Split.levels + Stage2Level1Split.levels + Stage4Level1Split.levels + Stage5Level1Split.levels
+        }
+         */
+
         // TODO: levelsCount as parameter
         val statistics = marioSimulator.playRandomLevels(controller, levels, 999999, false)
 

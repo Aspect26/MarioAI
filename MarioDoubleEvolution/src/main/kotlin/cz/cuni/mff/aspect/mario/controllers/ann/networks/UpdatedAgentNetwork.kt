@@ -40,7 +40,8 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE
+    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
+    override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
     private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * 4
 
     override fun newInstance(): ControllerArtificialNetwork =
@@ -66,27 +67,9 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
     }
 
     override fun setNetworkWeights(weights: DoubleArray) {
-        val weightsTable = this.network.paramTable()
-        val weightsKeysIterator = weightsTable.keys.iterator()
-        var currentWeight = 0
-
-        while (weightsKeysIterator.hasNext()) {
-            val weightTableKey = weightsKeysIterator.next()
-            // Types of keys: x_W (weights from layer x to x+1); x_b (weights of bias from layer x to x+1)
-            val layerWeightsValues = weightsTable[weightTableKey] ?: continue
-
-            if (weightTableKey.contains("W")) {
-                val shape = layerWeightsValues.shape()
-                val layerWeights = this.network.getParam(weightTableKey)
-                for (x in 0 until shape[0]) {
-                    for (y in 0 until shape[1]) {
-                        layerWeights.putScalar(x, y, weights[currentWeight])
-                        currentWeight++
-                    }
-                }
-            }
-
-        }
+        val floatWeights = FloatArray(weights.size) { weights[it].toFloat() }
+        val ndArray = NDArray(floatWeights)
+        this.network.setParameters(ndArray)
     }
 
     private fun createNetwork(): MultiLayerNetwork {

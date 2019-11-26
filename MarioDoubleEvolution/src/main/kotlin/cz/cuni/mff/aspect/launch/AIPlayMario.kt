@@ -10,10 +10,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage2Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
+import cz.cuni.mff.aspect.mario.level.original.*
 import cz.cuni.mff.aspect.storage.NeatAIStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import kotlin.system.exitProcess
@@ -28,11 +25,11 @@ fun main() {
 
 fun aiPlayLevel() {
     // val agent = EvolvedAgents.ruleBasedAgent
-    val agent = MarioAgent(ObjectStorage.load("experiments/Doubled input - S4S/NeuroEvolution, experiment 2_ai.ai") as MarioController)
-    val levels = arrayOf<MarioLevel>(PathWithHolesLevel) + Stage4Level1Split.levels
-    // val levels = TrainingLevelsSet
+    val agent = MarioAgent(ObjectStorage.load("experiments/Gaussian test evaluation - S4S/NeuroEvolution, Mutator 0.25_ai.ai") as MarioController)
+    // val levels = arrayOf<MarioLevel>(PathWithHolesLevel) + Stage4Level1Split.levels
+    val levels = arrayOf<MarioLevel>(Stage4Level1)
 
-    val gameSimulator = GameSimulator(400)
+    val gameSimulator = GameSimulator(1400)
     levels.forEach {
         gameSimulator.playMario(agent, it, true)
     }

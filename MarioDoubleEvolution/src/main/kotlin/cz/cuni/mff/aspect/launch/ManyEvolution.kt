@@ -1,38 +1,43 @@
 package cz.cuni.mff.aspect.launch
 
+import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
-import cz.cuni.mff.aspect.evolution.levels.TrainingLevelsSet
-import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.custom.OnlyPathLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage2Level1
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
+
 
 fun main() {
     doManyEvolution()
 }
 
+// TODO: something weird is happening - when training on only 1 level, the objective can reach 1 and then drop back to 0 with fitness distanceOnly
+// TODO: fitness is also dropping even with elite selector...
+
 fun doManyEvolution() {
-    val learningLevels = TrainingLevelsSet
-    val evaluationName = "Doubled input - All"
+    val learningLevels = arrayOf<MarioLevel>(Stage4Level1)
+    val evaluationName = "Newest"
 
     val generationsCount = 50
     val populationSize = 50
     val fitness = MarioGameplayEvaluators::distanceOnly
 //    val mutators = arrayOf<Alterer<DoubleGene, Float>>(
-//        UpdatedGaussianMutator(0.25, 0.1),
-//        UpdatedGaussianMutator(0.15, 0.2),
+//        UpdatedGaussianMutator(0.25, 0.2),
+//        UpdatedGaussianMutator(0.15, 0.3),
 //        UpdatedGaussianMutator(0.05, 0.4),
 //        UpdatedGaussianMutator(0.01, 0.6)
 //    )
     val mutators = arrayOf<Alterer<DoubleGene, Float>>(GaussianMutator(0.45))
     val hiddenLayerSize = 5
+    val offspringsSelector = TournamentSelector<DoubleGene, Float>(2)
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
@@ -41,7 +46,7 @@ fun doManyEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
-            offspringSelector = TournamentSelector(2),
+            offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = Pair(5, 5),
@@ -59,7 +64,7 @@ fun doManyEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
-            offspringSelector = TournamentSelector(2),
+            offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = Pair(5, 5),
@@ -77,7 +82,7 @@ fun doManyEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
-            offspringSelector = TournamentSelector(2),
+            offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = Pair(5, 5),
@@ -95,7 +100,7 @@ fun doManyEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
-            offspringSelector = TournamentSelector(2),
+            offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = Pair(5, 5),
