@@ -6,6 +6,7 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 
 
 /**
@@ -15,6 +16,16 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
 
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         return this.network.chooseAction(tiles, entities, mario)
+    }
+
+    fun setLegacy() {
+        if (this.network is UpdatedAgentNetwork) {
+            (this.network as UpdatedAgentNetwork).legacy = true
+        }
+    }
+
+    companion object {
+        private val serialVersionUID = -9169720247413687669L
     }
 
 }
