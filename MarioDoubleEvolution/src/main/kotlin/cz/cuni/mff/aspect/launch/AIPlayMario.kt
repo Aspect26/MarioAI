@@ -24,13 +24,13 @@ fun main() {
 
 
 fun aiPlayLevel() {
-    // val agent = EvolvedAgents.ruleBasedAgent
-    val agentController = ObjectStorage.load("experiments/Gaussian test evaluation - S4S/NeuroEvolution, Mutator 0.25_ai.ai") as SimpleANNController
-    agentController.setLegacy()
+    val agent = EvolvedAgents.Neuroveolution.bestGeneric
+    // val agentController = ObjectStorage.load("experiments/Gaussian test evaluation - S4S/NeuroEvolution, Mutator 0.25_ai.ai") as SimpleANNController
+    // agentController.setLegacy()
+    // val agent = MarioAgent(agentController)
 
-    val agent = MarioAgent(agentController)
-    val levels = arrayOf<MarioLevel>(PathWithHolesLevel) + Stage4Level1Split.levels
-    // val levels = TrainingLevelsSet
+    // val levels = arrayOf<MarioLevel>(PathWithHolesLevel) + Stage2Level1Split.levels
+    val levels = TrainingLevelsSet
 
     val gameSimulator = GameSimulator(400)
     levels.forEach {

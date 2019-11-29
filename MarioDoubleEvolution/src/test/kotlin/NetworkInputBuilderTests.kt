@@ -11,6 +11,8 @@ import org.junit.Test
 
 class NetworkInputBuilderTests {
 
+    // TODO: add test with no dense input
+
     @Test
     fun `test dense tiles - mario aligned`() {
         val networkBuilder = this.givenDenseBuilderWithTiles(arrayOf (

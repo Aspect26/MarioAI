@@ -35,6 +35,7 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
     Serializable {
 
     var legacy: Boolean = false
+    var denseInput: Boolean = false
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
@@ -98,6 +99,10 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
 
         if (this.legacy) {
             networkInputBuilder.legacy()
+        }
+
+        if (this.denseInput) {
+            networkInputBuilder.useDenserInput()
         }
 
         return networkInputBuilder.buildDouble()
