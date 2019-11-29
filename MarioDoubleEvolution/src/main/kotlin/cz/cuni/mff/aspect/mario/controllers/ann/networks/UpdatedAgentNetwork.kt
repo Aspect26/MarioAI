@@ -34,6 +34,7 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
 ) : ControllerArtificialNetwork,
     Serializable {
 
+    var legacy: Boolean = false
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
@@ -105,13 +106,18 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
     }
 
     private fun createInput(tiles: Tiles, entities: Entities, mario: MarioEntity): DoubleArray {
-        return NetworkInputBuilder()
+        val networkInputBuilder = NetworkInputBuilder()
             .tiles(tiles)
             .entities(entities)
             .mario(mario)
             .receptiveFieldSize(this.receptiveFieldSizeRow, this.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.receptiveFieldRowOffset, this.receptiveFieldColumnOffset)
-            .buildDouble()
+
+        if (this.legacy) {
+            networkInputBuilder.legacy()
+        }
+
+        return networkInputBuilder.buildDouble()
     }
 
     private fun addActionIfOutputActivated(actions: ArrayList<MarioAction>, output: INDArray, outputIndex: Int, action: MarioAction) {
@@ -121,6 +127,7 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
     }
 
     companion object {
+        private val serialVersionUID = -1794183199102411681L
         private const val OUTPUT_LAYER_SIZE = 4
         private const val CHOOSE_ACTION_THRESHOLD = 0.95
     }

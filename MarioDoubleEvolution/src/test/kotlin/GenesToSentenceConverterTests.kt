@@ -1,8 +1,10 @@
 import cz.cuni.mff.aspect.evolution.algorithm.grammar.*
 import org.junit.Test
 import org.junit.Assert.*
+import org.junit.Ignore
 
 
+@Ignore
 class GenesToSentenceConverterTests {
 
     @Test

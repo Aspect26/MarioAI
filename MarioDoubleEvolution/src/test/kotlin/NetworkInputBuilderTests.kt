@@ -5,7 +5,6 @@ import ch.idsia.benchmark.mario.engine.generalization.EntityType
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import ch.idsia.benchmark.mario.engine.generalization.Tile
 import ch.idsia.benchmark.mario.engine.sprites.Sprite
-import cz.cuni.mff.aspect.mario.Enemies
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -13,8 +12,8 @@ import org.junit.Test
 class NetworkInputBuilderTests {
 
     @Test
-    fun `test tiles - mario aligned`() {
-        val networkBuilder = this.givenBuilderForTilesNoEnemies(arrayOf (
+    fun `test dense tiles - mario aligned`() {
+        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK)
@@ -35,8 +34,8 @@ class NetworkInputBuilderTests {
     }
 
     @Test
-    fun `test tiles - mario not aligned X`() {
-        val networkBuilder = this.givenBuilderForTilesNoEnemies(arrayOf (
+    fun `test dense tiles - mario not aligned X`() {
+        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK, Tile.NOTHING),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK)
@@ -57,8 +56,8 @@ class NetworkInputBuilderTests {
     }
 
     @Test
-    fun `test tiles - mario not aligned Y`() {
-        val networkBuilder = this.givenBuilderForTilesNoEnemies(arrayOf (
+    fun `test dense tiles - mario not aligned Y`() {
+        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK),
@@ -103,7 +102,7 @@ class NetworkInputBuilderTests {
         this.assertInputTilesEqual(input, expectedTilesResult)
     }
 
-    fun givenBuilderForTilesNoEnemies(tilesArray: Array<Array<Tile>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
+    fun givenDenseBuilderForTilesNoEnemies(tilesArray: Array<Array<Tile>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
         val tiles = Tiles()
         tiles.tileField = tilesArray
 
@@ -122,6 +121,7 @@ class NetworkInputBuilderTests {
             .mario(mario)
             .receptiveFieldOffset(0, 0)
             .receptiveFieldSize(3, 3)
+            .useDenserInput()
     }
 
     fun givenBuilderForEntitiesNoTiles(entitiesArray: Array<Array<List<Entity<Sprite>>>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
