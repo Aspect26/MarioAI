@@ -33,7 +33,7 @@ object EvolvedAgents {
                 // experiments/Phase I - AI/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 5_ai.ai // non jumpee
                 // experiments/Phase I - AI/Gaussian test evaluation - S4S - Population 100/NeuroEvolution, Mutator 0.10_ai.ai  // solves also PathWithHoles but fails on one part of S4S
                 // experiments/Phase I - AI/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 15_ai.ai  // solves also PathWithHoles nicely but fails on one part of S4S and is overfited
-                val controller = ObjectStorage.load("experiments/Phase I - AI/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 15_ai.ai") as SimpleANNController
+                val controller = ObjectStorage.load("experiments/Phase I - AI/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 5_ai.ai") as SimpleANNController
                 controller.setLegacy()
 
                 return MarioAgent(controller)
@@ -41,7 +41,9 @@ object EvolvedAgents {
 
         val bestGeneric: IAgent
             get() {
-                val controller = ObjectStorage.load("experiments/Phase I - AI/Doubled input - All/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
+                // experiments/Phase I - AI/Doubled input - All/NeuroEvolution, experiment 1_ai.ai // solves 12 of all
+                // experiments/Phase I - AI/Doubled input - All - Randomized levels/NeuroEvolution, experiment 1_ai.ai  // solves 9 of all random
+                val controller = ObjectStorage.load("experiments/Phase I - AI/Doubled input - All - Randomized levels/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
                 controller.setDenseInput()
 
                 return MarioAgent(controller)

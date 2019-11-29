@@ -24,7 +24,7 @@ fun main() {
 
 
 fun aiPlayLevel() {
-    val agent = EvolvedAgents.Neuroveolution.bestGeneric
+    val agent = EvolvedAgents.Neuroveolution.stage4Level1Solver
     // val agentController = ObjectStorage.load("experiments/Gaussian test evaluation - S4S/NeuroEvolution, Mutator 0.25_ai.ai") as SimpleANNController
     // agentController.setLegacy()
     // val agent = MarioAgent(agentController)
