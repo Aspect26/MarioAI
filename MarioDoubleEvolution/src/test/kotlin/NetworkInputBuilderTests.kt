@@ -13,7 +13,7 @@ class NetworkInputBuilderTests {
 
     @Test
     fun `test dense tiles - mario aligned`() {
-        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
+        val networkBuilder = this.givenDenseBuilderWithTiles(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK)
@@ -35,7 +35,7 @@ class NetworkInputBuilderTests {
 
     @Test
     fun `test dense tiles - mario not aligned X`() {
-        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
+        val networkBuilder = this.givenDenseBuilderWithTiles(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK, Tile.NOTHING),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK)
@@ -57,7 +57,7 @@ class NetworkInputBuilderTests {
 
     @Test
     fun `test dense tiles - mario not aligned Y`() {
-        val networkBuilder = this.givenDenseBuilderForTilesNoEnemies(arrayOf (
+        val networkBuilder = this.givenDenseBuilderWithTiles(arrayOf (
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
             arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.BRICK),
             arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK),
@@ -79,30 +79,57 @@ class NetworkInputBuilderTests {
     }
 
     @Test
-    fun `test entities - mario aligned`() {
-        val entity = Entity<Sprite>(null, EntityType.GOOMBA, 0, 0, 0f, 0f, 0f)
+    fun `test dense entities - mario aligned`() {
+        val goombaEntity = Entity<Sprite>(null, EntityType.GOOMBA, 0, 0, 0f, 0f, 0f)
+        val nothingEntity = Entity<Sprite>(null, EntityType.NOTHING, 0, 0, 0f, 0f, 0f)
 
-        val networkBuilder = this.givenBuilderForEntitiesNoTiles(arrayOf (
-            arrayOf(listOf(entity), emptyList(), emptyList()),
+        val networkBuilder = this.givenDenseBuilderWithEntities(arrayOf (
+            arrayOf(listOf(goombaEntity), emptyList(), emptyList()),
             arrayOf(emptyList(), emptyList(), emptyList()),
             arrayOf(emptyList(), emptyList(), emptyList())
-        ), marioPosition = Pair(1, 1), marioInTilePosition = Pair(0, 10))
+        ), marioPosition = Pair(1, 1), marioInTilePosition = Pair(0, 0))
 
         val input = networkBuilder.build()
 
-        val expectedTilesResult = arrayOf(
-            arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
-            arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.BRICK, Tile.BRICK),
-            arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.NOTHING, Tile.BRICK, Tile.BRICK),
-            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK),
-            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK),
-            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.BRICK, Tile.NOTHING, Tile.NOTHING)
+        val expectedEntitiesResult = arrayOf(
+            arrayOf(goombaEntity, goombaEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(goombaEntity, goombaEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity)
         )
 
-        this.assertInputTilesEqual(input, expectedTilesResult)
+        this.assertInputEntitiesEqual(input, expectedEntitiesResult)
     }
 
-    fun givenDenseBuilderForTilesNoEnemies(tilesArray: Array<Array<Tile>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
+    @Test
+    fun `test dense entities - mario not aligned`() {
+        val goombaEntity = Entity<Sprite>(null, EntityType.GOOMBA, 0, 0, 0f, 0f, 0f)
+        val nothingEntity = Entity<Sprite>(null, EntityType.NOTHING, 0, 0, 0f, 0f, 0f)
+
+        val networkBuilder = this.givenDenseBuilderWithEntities(arrayOf (
+            arrayOf(listOf(goombaEntity), emptyList(), emptyList(), listOf(goombaEntity)),
+            arrayOf(emptyList(), emptyList(), emptyList(), listOf(goombaEntity)),
+            arrayOf(emptyList(), emptyList(), emptyList(), emptyList()),
+            arrayOf(emptyList(), listOf(goombaEntity), emptyList(), emptyList())
+        ), marioPosition = Pair(1, 1), marioInTilePosition = Pair(10, 10))
+
+        val input = networkBuilder.build()
+
+        val expectedEntitiesResult = arrayOf(
+            arrayOf(goombaEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, goombaEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, goombaEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, goombaEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity, nothingEntity),
+            arrayOf(nothingEntity, goombaEntity, goombaEntity, nothingEntity, nothingEntity, nothingEntity)
+        )
+
+        this.assertInputEntitiesEqual(input, expectedEntitiesResult)
+    }
+
+    fun givenDenseBuilderWithTiles(tilesArray: Array<Array<Tile>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
         val tiles = Tiles()
         tiles.tileField = tilesArray
 
@@ -114,21 +141,12 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-
-        return NetworkInputBuilder()
-            .tiles(tiles)
-            .entities(entities)
-            .mario(mario)
-            .receptiveFieldOffset(0, 0)
-            .receptiveFieldSize(3, 3)
-            .useDenserInput()
+        return this.givenNetworkInputBuilder(tiles, entities, mario)
     }
 
-    fun givenBuilderForEntitiesNoTiles(entitiesArray: Array<Array<List<Entity<Sprite>>>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
+    fun givenDenseBuilderWithEntities(entitiesArray: Array<Array<List<Entity<Sprite>>>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
         val entities = Entities()
         entities.entityField = entitiesArray
-
-        // level.setSpriteTemplate(x, y, SpriteTemplate(enemy))
 
         val tiles = Tiles()
         tiles.tileField = Array(entities.entityField.size) {
@@ -138,13 +156,7 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-
-        return NetworkInputBuilder()
-            .tiles(tiles)
-            .entities(entities)
-            .mario(mario)
-            .receptiveFieldOffset(0, 0)
-            .receptiveFieldSize(3, 3)
+        return this.givenNetworkInputBuilder(tiles, entities, mario)
     }
 
     fun givenMario(marioPosition: Pair<Int, Int>, marioInTilePosition: Pair<Int, Int>): MarioEntity {
@@ -157,6 +169,16 @@ class NetworkInputBuilderTests {
         return mario
     }
 
+    fun givenNetworkInputBuilder(tiles: Tiles, entities: Entities, mario: MarioEntity): NetworkInputBuilder {
+        return NetworkInputBuilder()
+            .tiles(tiles)
+            .entities(entities)
+            .mario(mario)
+            .receptiveFieldOffset(0, 0)
+            .receptiveFieldSize(3, 3)
+            .useDenserInput()
+    }
+
     fun assertInputTilesEqual(input: IntArray, expectedTiles: Array<Array<Tile>>) {
         val flatExpected = expectedTiles.flatten()
         val receptiveFieldGridSize = flatExpected.size
@@ -164,6 +186,15 @@ class NetworkInputBuilderTests {
         for (index in (0 until receptiveFieldGridSize)) {
             // The entities grid comes first in the input
             assertEquals("Created input is not as expected at index $input", flatExpected[index].code, input[index + receptiveFieldGridSize])
+        }
+    }
+
+    fun assertInputEntitiesEqual(input: IntArray, expectedEntities: Array<Array<Entity<Sprite>>>) {
+        val flatExpected = expectedEntities.flatten()
+        val receptiveFieldGridSize = flatExpected.size
+
+        for (index in (0 until receptiveFieldGridSize)) {
+            assertEquals("Created input is not as expected at index $input", flatExpected[index].type.code, input[index])
         }
     }
 
