@@ -1,8 +1,6 @@
 language: java
+install: gradle wrapper --gradle-version 5.5
 jdk:
   - openjdk8
-before_install:
-  - chmod +x gradlew
-  - chmod +x gradle/wrapper/gradle-wrapper.jar
 script:
-  - ./gradlew test build
+  - ./gradlew test
