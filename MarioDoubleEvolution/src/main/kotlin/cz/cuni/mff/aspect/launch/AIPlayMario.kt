@@ -10,10 +10,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage2Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
+import cz.cuni.mff.aspect.mario.level.original.*
 import cz.cuni.mff.aspect.storage.NeatAIStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import kotlin.system.exitProcess
