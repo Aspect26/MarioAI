@@ -13,7 +13,9 @@ data class NetworkInputBuilder(
     private var receptiveFieldColumns: Int = 5,
     private var receptiveFieldOffsetRows: Int = 0,
     private var receptiveFieldOffsetColumns: Int = 0,
-    private var addMarioInTilePosition: Boolean = false
+    private var addMarioInTilePosition: Boolean = false,
+    private var denseInput: Boolean = false,
+    private var legacy: Boolean = false
 ) {
 
     class NetworkInputBuilderException(error: String) : Exception(error)
@@ -24,15 +26,22 @@ data class NetworkInputBuilder(
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
     fun addMarioInTilePosition() = apply { this.addMarioInTilePosition = false }
+    fun useDenserInput() = apply { this.denseInput = true }
+    fun legacy() = apply { this.legacy = true }
+
+    private val receptiveFieldSize: Int get() = this.receptiveFieldRows * this.receptiveFieldColumns * if (this.denseInput) 4 else 1
+
+    private val inputLayerSize: Int get() = this.receptiveFieldSize * 2 + if (this.addMarioInTilePosition) 2 else 0
 
     // TODO: do not use these pls :(
-    fun buildDouble(): DoubleArray {
-        return this.build().map { it.toDouble() }.toDoubleArray()
-    }
+    fun buildDouble(): DoubleArray =
+        if (this.legacy) {
+            this.buildLegacy()
+        } else {
+            this.build().map { it.toDouble() }.toDoubleArray()
+        }
 
-    fun buildFloat(): FloatArray {
-        return this.build().map { it.toFloat() }.toFloatArray()
-    }
+    fun buildFloat(): FloatArray = this.build().map { it.toFloat() }.toFloatArray()
 
     fun build(): IntArray {
         val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
@@ -47,9 +56,21 @@ data class NetworkInputBuilder(
         }
     }
 
+    private fun buildLegacy(): DoubleArray {
+        val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
+        return DoubleArray(inputLayerSize) {
+            when {
+                it == inputLayerSize - 1 -> this.mario!!.dX.toDouble()
+                it == inputLayerSize - 2 -> this.mario!!.dY.toDouble()
+                it >= flatEntities.size -> flatTiles[it - flatEntities.size].toDouble()
+                else -> flatEntities[it].toDouble()
+            }
+        }
+    }
+
     private fun createFlatArrays(): Triple<IntArray, IntArray, Int> {
         this.checkInput()
-        return Triple(this.createFlatTiles(), this.createFlatEntities(), this.getInputLayerSize())
+        return Triple(this.createFlatTiles(), this.createFlatEntities(), this.inputLayerSize)
     }
 
     private fun checkInput() {
@@ -59,7 +80,8 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatTiles(): IntArray {
-        val flatTiles = IntArray(this.receptiveFieldRows * this.receptiveFieldColumns * 4) { 0 }
+        val flatTilesSize = this.receptiveFieldSize
+        val flatTiles = IntArray(flatTilesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
             val tileAtPosition = this.tiles!!.tileField[row][column]
@@ -75,7 +97,8 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatEntities(): IntArray {
-        val flatEntities = IntArray(this.receptiveFieldRows * this.receptiveFieldColumns * 4) { 0 }
+        val flatEntitiesSize = this.receptiveFieldSize
+        val flatEntities = IntArray(flatEntitiesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
             val entitiesAtPosition = this.entities!!.entityField[row][column]
@@ -91,6 +114,15 @@ data class NetworkInputBuilder(
         val marioX = this.mario!!.egoCol
         val marioY = this.mario!!.egoRow
 
+        if (this.denseInput) {
+            this.iterateOverDenseReceptiveField(marioX, marioY, receptiveFieldColumnMiddle, receptiveFieldRowMiddle, callback)
+        } else {
+            this.iterateOverOriginalReceptiveField(marioX, marioY, receptiveFieldColumnMiddle, receptiveFieldRowMiddle, callback)
+        }
+    }
+
+    private fun iterateOverDenseReceptiveField(marioX: Int, marioY: Int, receptiveFieldColumnMiddle: Int,
+                                               receptiveFieldRowMiddle: Int, callback: (Int, Int, Int) -> Unit) {
         var index = 0
         for (row in 0 until this.receptiveFieldRows * 2) {
             val refinedRow = if (row % 2 == 1 && this.mario!!.inTileY >= 8) (row / 2) + 1 else (row / 2)
@@ -104,9 +136,17 @@ data class NetworkInputBuilder(
         }
     }
 
-    private fun getInputLayerSize(): Int {
-        val receptiveFieldSize = this.receptiveFieldRows * this.receptiveFieldColumns * 4
-        return if (!this.addMarioInTilePosition) 2 * receptiveFieldSize else 2 * receptiveFieldSize + 2
+    private fun iterateOverOriginalReceptiveField(marioX: Int, marioY: Int, receptiveFieldColumnMiddle: Int,
+                                                  receptiveFieldRowMiddle: Int, callback: (Int, Int, Int) -> Unit) {
+        var index = 0
+        for (row in 0 until this.receptiveFieldRows) {
+            val offsetRow = row - receptiveFieldRowMiddle + this.receptiveFieldOffsetRows
+            for (column in 0 until this.receptiveFieldColumns) {
+                val offsetColumn = column - receptiveFieldColumnMiddle + this.receptiveFieldOffsetColumns
+                callback(index, marioY + offsetRow, marioX + offsetColumn)
+                index++
+            }
+        }
     }
 
 }
