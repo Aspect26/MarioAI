@@ -35,9 +35,8 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
     }
 
     override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
-    val inputLayerSize: Int get() = 2 * this.networkSettings.receptiveFieldSizeRow * this.networkSettings.receptiveFieldSizeColumn + 2
+    val inputLayerSize: Int get() = 2 * this.networkSettings.receptiveFieldSizeRow * this.networkSettings.receptiveFieldSizeColumn * 4
 
-    // TODO: generalise this pls :(
     private fun createInput(tiles: Tiles, entities: Entities, mario: MarioEntity): FloatArray {
         return NetworkInputBuilder()
             .tiles(tiles)
@@ -45,21 +44,9 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
             .mario(mario)
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
-            .addMarioInTilePosition()
+            .useDenserInput()
             .buildFloat()
-
-        /*
-        return FloatArray(this.inputLayerSize) {
-            when {
-                it == this.inputLayerSize - 1 -> mario.dX
-                it == this.inputLayerSize - 2 -> mario.dY
-                it >= flatEntities.size -> flatTiles[it - flatEntities.size]
-                else -> flatEntities[it]
-            }
-        }
-         */
     }
-
 
     // TODO: generalise this too!
     private fun addActionIfOutputActivated(actions: ArrayList<MarioAction>, output: FloatArray, outputIndex: Int, action: MarioAction) {

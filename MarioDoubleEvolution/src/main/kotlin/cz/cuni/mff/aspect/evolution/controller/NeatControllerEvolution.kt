@@ -21,24 +21,31 @@ class NeatControllerEvolution(
     private val networkSettings: NetworkSettings,
     private var generationsCount: Int = 200,
     private val populationSize: Int = 150,
+    private val denseInput: Boolean = true,
     private val chartName: String = "NEAT Evolution"
 ) : ControllerEvolution {
 
     private lateinit var topGenome: Genome
+    private val chart = EvolutionLineChart(label = this.chartName, hideNegative = true)
 
     class ControllerEvolutionEnvironment(private val levels: Array<MarioLevel>,
                                          private val networkSettings: NetworkSettings,
                                          private val fitness: MarioGameplayEvaluator<Float>,
-                                         private val levelsCount: Int = 0) : Environment {
+                                         private val denseInput: Boolean = true,
+                                         private val levelsCount: Int = levels.size) : Environment {
 
         override fun evaluateFitness(population: ArrayList<Genome>) {
             for (genome in population) {
                 val neatNetwork = NeatAgentNetwork(this.networkSettings, genome)
                 val controller = SimpleANNController(neatNetwork)
 
+                // TODO: this actually does nothing here
+                if (this.denseInput) {
+                    controller.setDenseInput()
+                }
+
                 val marioSimulator = GameSimulator()
-                // TODO: levelsCount as parameter to the evolution
-                val statistics = marioSimulator.playRandomLevels(controller, this.levels, 999, false)
+                val statistics = marioSimulator.playRandomLevels(controller, this.levels, this.levelsCount, false)
 
                 genome.fitness = fitness(statistics)
             }
@@ -47,14 +54,14 @@ class NeatControllerEvolution(
 
     override fun evolve(levels: Array<MarioLevel>, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
         val startTime = System.currentTimeMillis()
-        val evolution = ControllerEvolutionEnvironment(levels, this.networkSettings, fitness)
+        // TODO: levelsCount as parameter to the evolution
+        val evolution = ControllerEvolutionEnvironment(levels, this.networkSettings, fitness, this.denseInput)
         val networkInputSize = NeatAgentNetwork(this.networkSettings, Genome(0,0)).inputLayerSize
         val networkOutputSize = 4
         val pool = Pool(this.populationSize)
-        val chart = EvolutionLineChart(label = this.chartName, hideNegative = true)
 
         var currentGeneration = pool.initializePool(networkInputSize, networkOutputSize)
-        chart.show()
+        this.chart.show()
 
         var generation = 1
 
@@ -66,7 +73,7 @@ class NeatControllerEvolution(
             val minFitness = this.getMinFitness(currentGeneration)
             val maxFitness = topGenome.points
 
-            chart.update(generation, maxFitness.toDouble(), averageFitness.toDouble(), 0.0, 0.0)
+            this.chart.update(generation, maxFitness.toDouble(), averageFitness.toDouble(), 0.0, 0.0)
             val currentTimeMillis = System.currentTimeMillis() - startTime
             val timeString = String.format("%02d min, %02d sec",
                 TimeUnit.MILLISECONDS.toMinutes(currentTimeMillis),
@@ -82,9 +89,12 @@ class NeatControllerEvolution(
         val network = NeatAgentNetwork(this.networkSettings, this.topGenome)
 
         NeatAIStorage.storeAi(NeatAIStorage.LATEST, this.topGenome)
-        chart.save("latest.svg")
 
         return SimpleANNController(network)
+    }
+
+    fun storeChart(path: String) {
+        this.chart.save(path)
     }
 
     private fun getAverageFitness(population: List<Genome>): Float {
