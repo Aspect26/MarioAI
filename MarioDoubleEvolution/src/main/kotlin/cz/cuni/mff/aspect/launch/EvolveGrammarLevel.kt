@@ -1,6 +1,5 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.EvolvedAgents
 import cz.cuni.mff.aspect.evolution.levels.grammar.GrammarLevelEvolution
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.LevelStorage
