@@ -30,11 +30,11 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
                           private val receptiveFieldSizeColumn: Int = 3,
                           private val receptiveFieldRowOffset: Int = 0,
                           private val receptiveFieldColumnOffset: Int = 1,
-                          private val hiddenLayerSize: Int = 7,
-                          var legacy: Boolean = true
+                          private val hiddenLayerSize: Int = 7
 ) : ControllerArtificialNetwork,
     Serializable {
 
+    var legacy: Boolean = false
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
