@@ -24,7 +24,7 @@ object MarioGameplayEvaluators {
         val sumSpecials = statistics.sumBy { it.specials }
         val levelsFinished = statistics.sumBy { if (it.levelFinished) 1 else 0 }
 
-        return sumFinalDistances - sumJumps * 40 - sumSpecials * 40 + levelsFinished * 200.0f
+        return sumFinalDistances - sumJumps * 20 - sumSpecials * 20 + levelsFinished * 200.0f
     }
 
     fun victoriesOnly(statistics: Array<GameStatistics>): Float {
