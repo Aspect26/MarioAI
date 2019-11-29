@@ -1,17 +1,21 @@
 package cz.cuni.mff.aspect.evolution
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.aspect.RuleBasedAgent
+import cz.cuni.mff.arnold.ArnoldRuleBasedAgent
+import cz.cuni.mff.aspect.MyRuleBasedAgent
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
-object EvolvedAgents {
+object Agents {
 
     object RuleBased {
 
         // My implementation from AI course
-        val ruleBasedAgent: IAgent get() = RuleBasedAgent()
+        val my: IAgent get() = MyRuleBasedAgent()
+
+        // Jakub Arnold's implementation from AI course
+        val arnold: IAgent get() = ArnoldRuleBasedAgent()
 
     }
 
