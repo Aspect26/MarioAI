@@ -44,7 +44,7 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
 
     private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
     override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
-    private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * 4
+    private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
 
     override fun newInstance(): ControllerArtificialNetwork =
         UpdatedAgentNetwork(
