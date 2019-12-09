@@ -14,7 +14,6 @@ import cz.cuni.mff.aspect.visualisation.EvolutionLineChart
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-import kotlin.math.min
 
 
 class NeatControllerEvolution(
