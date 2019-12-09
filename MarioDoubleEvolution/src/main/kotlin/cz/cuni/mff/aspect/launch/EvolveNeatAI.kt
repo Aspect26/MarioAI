@@ -9,6 +9,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
 import cz.cuni.mff.aspect.mario.level.original.Stage1Level1
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import kotlin.system.exitProcess
 
 
@@ -21,10 +22,11 @@ fun evolveNeatAI() {
     val networkSettings = NetworkSettings(5, 5, 0, 2)
     val controllerEvolution: ControllerEvolution = NeatControllerEvolution(
         networkSettings,
-        generationsCount = 100,
+        denseInput = false,
+        generationsCount = 500,
         populationSize = 100,
-        chartName = "NEAT Evolution S1L1")
-    val levels = emptyArray<MarioLevel>() + Stage1Level1 + PathWithHolesLevel
+        chartName = "NEAT Evolution S4L1")
+    val levels = emptyArray<MarioLevel>() /* + Stage4Level1Split.levels */ + PathWithHolesLevel
     //val levels = arrayOf<MarioLevel>(*TrainingLevelsSet)
     val resultController = controllerEvolution.evolve(levels, MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
 

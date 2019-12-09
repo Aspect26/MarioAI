@@ -3,21 +3,21 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.levels.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.Stage1Level1
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
+import cz.cuni.mff.aspect.mario.level.original.*
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
 
 
 fun main() {
-    // doManyNeuroEvolution()
+//    doManyNeuroEvolution()
     doManyNEATEvolution()
 }
 
@@ -26,12 +26,12 @@ fun main() {
 
 
 fun doManyNEATEvolution() {
-    val learningLevels = arrayOf<MarioLevel>(Stage4Level1)
-    val evaluationName = "NEAT/first"
+    val learningLevels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+    val evaluationName = "NEAT - Newest"
 
-    val generationsCount = 50
-    val populationSize = 300
-    val fitness = MarioGameplayEvaluators::distanceOnly
+    val generationsCount = 300
+    val populationSize = 100
+    val fitness = MarioGameplayEvaluators::distanceLeastActions
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
@@ -43,7 +43,44 @@ fun doManyNEATEvolution() {
             receptiveFieldSize = Pair(5, 5),
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 1",
-            dataLocation = evaluationName
+            dataLocation = evaluationName,
+            denseInput = false
+        ),
+        NeatEvolutionLauncher(
+            levels = learningLevels,
+            fitnessFunction = fitness,
+            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            generationsCount = generationsCount,
+            populationSize = populationSize,
+            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldOffset = Pair(0, 2),
+            label = "NEAT evolution, experiment 2",
+            dataLocation = evaluationName,
+            denseInput = false
+        ),
+        NeatEvolutionLauncher(
+            levels = learningLevels,
+            fitnessFunction = fitness,
+            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            generationsCount = generationsCount,
+            populationSize = populationSize,
+            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldOffset = Pair(0, 2),
+            label = "NEAT evolution, experiment 3",
+            dataLocation = evaluationName,
+            denseInput = false
+        ),
+        NeatEvolutionLauncher(
+            levels = learningLevels,
+            fitnessFunction = fitness,
+            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            generationsCount = generationsCount,
+            populationSize = populationSize,
+            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldOffset = Pair(0, 2),
+            label = "NEAT evolution, experiment 4",
+            dataLocation = evaluationName,
+            denseInput = false
         )
     )
 
@@ -54,7 +91,7 @@ fun doManyNEATEvolution() {
 
 
 fun doManyNeuroEvolution() {
-    val learningLevels = arrayOf<MarioLevel>(Stage4Level1)
+    val learningLevels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
     val evaluationName = "Newest"
 
     val generationsCount = 50
@@ -202,7 +239,8 @@ class NeatEvolutionLauncher(
     private val label: String,
     private val fitnessFunction: MarioGameplayEvaluator<Float>,
     private val objectiveFunction: MarioGameplayEvaluator<Float>,
-    private val dataLocation: String
+    private val dataLocation: String,
+    private val denseInput: Boolean
 ) : EvolutionLauncher {
 
     override fun run() {
@@ -211,6 +249,7 @@ class NeatEvolutionLauncher(
             networkSettings,
             generationsCount = generationsCount,
             populationSize = populationSize,
+            denseInput = denseInput,
             chartName = label)
 
         val resultController = controllerEvolution.evolve(levels, fitnessFunction, objectiveFunction)

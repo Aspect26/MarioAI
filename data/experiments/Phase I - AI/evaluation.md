@@ -44,7 +44,7 @@ Using fitness `distanceOnly` instead of `distanceLeastActions (20pts penalty)` w
 In these experiments, instead of learning only on S4S we tried to use whole training data set (4 original mario levels + path with holes level + path only level). We ran the evolution with configuration found from previous experiments (experiment `All test`), also comparing again with classic mutator (experiment `All test - classic mutator`), and multi gaussian again (`All test- multi gaussian`), and then using denser input (what mario sees wasn't only tiles from grid, but we made the grid denser (1x1 tile was now 2x2)) (test `Doubled input - all`), and using randomized fitness (playing random 15 levels from the dataset) (test `Doubled input - all - randomized levels`). Doubled input seems to yield slightly better results, so we use it. We also ran `Double input - S4S)` (doubled input on stage 4 leve 1 split + artificial levels).
 
 #### Experiments 7 (Increasing levels)
-We also tried simulate learning firstly simple things then more difficult ones, havin diferent levels in different generations:
+We also tried simulate learning firstly simple things then more difficult ones, having different levels in different generations:
 `
 _phenotype.generation < 10 -> arrayOf(PathWithHolesLevel)
 _phenotype.generation < 20 -> arrayOf<MarioLevel>(PathWithHolesLevel) + Stage1Level1Split.levels

@@ -19,7 +19,7 @@ object Agents {
 
     }
 
-    object Neuroveolution {
+    object NeuroEvolution {
 
         val stage2Level1Solver: IAgent
             get() {

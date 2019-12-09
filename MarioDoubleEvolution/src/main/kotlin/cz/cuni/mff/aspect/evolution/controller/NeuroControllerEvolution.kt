@@ -75,7 +75,7 @@ class NeuroControllerEvolution(
             objectiveFunction,
             controllerNetwork,
             levels,
-            alwaysEvaluate = true
+            alwaysEvaluate = false
         )
     }
 
