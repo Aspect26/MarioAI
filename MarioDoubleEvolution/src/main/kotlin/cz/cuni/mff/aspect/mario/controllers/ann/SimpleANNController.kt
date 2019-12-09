@@ -24,6 +24,12 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
         }
     }
 
+    fun setDenseInput() {
+        if (this.network is UpdatedAgentNetwork) {
+            (this.network as UpdatedAgentNetwork).denseInput = true
+        }
+    }
+
     companion object {
         private val serialVersionUID = -9169720247413687669L
     }

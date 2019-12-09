@@ -29,7 +29,7 @@ import ch.idsia.utils.MarioLog;
  * 
  * Once you have your agent ready, you may use {@link Evaluate} class to benchmark the quality of your AI. 
  */
-public class RuleBasedAgent extends MarioHijackAIBase implements IAgent {
+public class MyRuleBasedAgent extends MarioHijackAIBase implements IAgent {
 
 	@Override
 	public void reset(AgentOptions options) {
@@ -220,7 +220,7 @@ public class RuleBasedAgent extends MarioHijackAIBase implements IAgent {
 		//MarioSimulator simulator = new MarioSimulator(level.getOptionsRandomized());
 		
 		// INSTANTIATE YOUR AGENT
-		IAgent agent = new RuleBasedAgent();
+		IAgent agent = new MyRuleBasedAgent();
 		
 		// RUN THE SIMULATION
 		EvaluationInfo info = simulator.run(agent);
