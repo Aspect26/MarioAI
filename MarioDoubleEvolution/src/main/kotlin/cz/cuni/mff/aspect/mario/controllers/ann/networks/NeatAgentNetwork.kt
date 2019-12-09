@@ -6,9 +6,13 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import java.io.Serializable
 
 
-class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val genome: Genome) : ControllerArtificialNetwork {
+class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val genome: Genome) : ControllerArtificialNetwork, Serializable {
+
+    var denseInput: Boolean = false
+
     override fun chooseAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         val input: FloatArray = this.createInput(tiles, entities, mario)
         val output: FloatArray = this.genome.evaluateNetwork(input)
@@ -35,31 +39,21 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
     }
 
     override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
-    val inputLayerSize: Int get() = 2 * this.networkSettings.receptiveFieldSizeRow * this.networkSettings.receptiveFieldSizeColumn + 2
+    val inputLayerSize: Int get() = 2 * this.networkSettings.receptiveFieldSizeRow * this.networkSettings.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
 
-    // TODO: generalise this pls :(
     private fun createInput(tiles: Tiles, entities: Entities, mario: MarioEntity): FloatArray {
-        return NetworkInputBuilder()
+        val networkBuilder = NetworkInputBuilder()
             .tiles(tiles)
             .entities(entities)
             .mario(mario)
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
-            .addMarioInTilePosition()
-            .buildFloat()
 
-        /*
-        return FloatArray(this.inputLayerSize) {
-            when {
-                it == this.inputLayerSize - 1 -> mario.dX
-                it == this.inputLayerSize - 2 -> mario.dY
-                it >= flatEntities.size -> flatTiles[it - flatEntities.size]
-                else -> flatEntities[it]
-            }
-        }
-         */
+        if (this.denseInput)
+            networkBuilder.useDenserInput()
+
+        return networkBuilder.buildFloat()
     }
-
 
     // TODO: generalise this too!
     private fun addActionIfOutputActivated(actions: ArrayList<MarioAction>, output: FloatArray, outputIndex: Int, action: MarioAction) {
@@ -69,6 +63,8 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
     }
 
     companion object {
+        private val serialVersionUID = -6994844472540119145L
+
         private const val OUTPUT_LAYER_SIZE = 4
         private const val CHOOSE_ACTION_THRESHOLD = 0.95
     }

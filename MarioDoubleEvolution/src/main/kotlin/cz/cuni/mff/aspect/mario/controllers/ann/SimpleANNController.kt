@@ -6,6 +6,7 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 
 
@@ -25,8 +26,12 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
     }
 
     fun setDenseInput() {
+        // TODO: CRITICAL pls this :(
         if (this.network is UpdatedAgentNetwork) {
             (this.network as UpdatedAgentNetwork).denseInput = true
+        }
+        else if (this.network is NeatAgentNetwork) {
+            (this.network as NeatAgentNetwork).denseInput = true
         }
     }
 
