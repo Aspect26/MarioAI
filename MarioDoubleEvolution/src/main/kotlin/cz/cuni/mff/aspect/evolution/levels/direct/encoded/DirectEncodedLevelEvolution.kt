@@ -31,14 +31,15 @@ class DirectEncodedLevelEvolution : LevelEvolution {
     }
 
     private fun createInitialGenotype(): Genotype<IntegerGene> {
-        return Genotype.of(IntegerChromosome.of(0, 1, LEVEL_WIDTH * LEVEL_HEIGHT))
+        return Genotype.of(IntegerChromosome.of(*Array<IntegerGene>(LEVEL_WIDTH * LEVEL_HEIGHT) { IntegerGene.of(0, 0, 1) }))
+        // return Genotype.of(IntegerChromosome.of(0, 1, LEVEL_WIDTH * LEVEL_HEIGHT))
     }
 
     private fun createEvolutionEngine(initialGenotype: Genotype<IntegerGene>): Engine<IntegerGene, Float> {
         return Engine.builder(fitness, initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(POPULATION_SIZE)
-            .alterers(SinglePointCrossover(0.2), Mutator(0.30))
+            .alterers(SinglePointCrossover(0.2), Mutator(0.50))
             .survivorsSelector(EliteSelector(2))
             .offspringSelector(TournamentSelector(3))
             .mapping { evolutionResult ->
@@ -66,10 +67,11 @@ class DirectEncodedLevelEvolution : LevelEvolution {
     }
 
     companion object {
-        const val LEVEL_WIDTH = 64
-        const val LEVEL_HEIGHT = 15
+        // TODO: omg these two are swapped
+        const val LEVEL_WIDTH = 15
+        const val LEVEL_HEIGHT = 100
 
-        const val POPULATION_SIZE = 40
-        const val GENERATIONS_COUNT = 150L
+        const val POPULATION_SIZE = 50
+        const val GENERATIONS_COUNT = 3000L
     }
 }

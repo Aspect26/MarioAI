@@ -5,6 +5,9 @@ import cz.cuni.mff.aspect.evolution.algorithm.grammar.GrammarSentence
 import cz.cuni.mff.aspect.evolution.algorithm.grammar.getString
 import cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics.ByteGene
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
+import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.*
 import io.jenetics.Alterer
@@ -40,7 +43,12 @@ class GrammarLevelEvolution : LevelEvolution {
             return 0f
 
         val level = this.createLevelFromSentence(sentence)
-        return sentence.size.toFloat() /*(fitnessOnlyVictories(this.controller, arrayOf(level)) * 10f)*/
+        val gameSimulator = GameSimulator()
+
+        val stats = gameSimulator.playMario(MarioAgent(this.controller), level, false)
+
+        return MarioGameplayEvaluators.distanceOnly(arrayOf(stats))
+        // return sentence.size.toFloat() /*(fitnessOnlyVictories(this.controller, arrayOf(level)) * 10f)*/
     }
 
     // TODO: this may be its own class

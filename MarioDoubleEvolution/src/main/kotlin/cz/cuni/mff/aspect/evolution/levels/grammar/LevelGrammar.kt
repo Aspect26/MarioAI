@@ -21,8 +21,8 @@ object LevelGrammar {
     private val grammar = Grammar(arrayOf(
         ProductionRule(level, arrayOf(start, blockSequence)),
 
-        ProductionRule(blockSequence, arrayOf(block)),
-        ProductionRule(blockSequence, arrayOf(block, blockSequence)),
+        // ProductionRule(blockSequence, arrayOf(block)),
+        ProductionRule(blockSequence, arrayOf(block, block, block, block, block, block, block, block, block, block, block, block, block, block, block)),
         ProductionRule(block, arrayOf(nothing)),
         ProductionRule(block, arrayOf(path)),
         ProductionRule(block, arrayOf(boxes)),

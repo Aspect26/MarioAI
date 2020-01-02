@@ -8,8 +8,10 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.mario.level.custom.OnlyPathLevel
 import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
 import cz.cuni.mff.aspect.mario.level.original.*
+import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.storage.NeatAIStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import kotlin.system.exitProcess
@@ -23,13 +25,14 @@ fun main() {
 
 
 fun aiPlayLevel() {
-    //val agent = Agents.RuleBased.arnold
-    val agentController = ObjectStorage.load("experiments/Newest/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
+    val agent = Agents.NeuroEvolution.stage4Level1Solver
+    //val agentController = ObjectStorage.load("experiments/Newest/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
     // agentController.setLegacy()
-    val agent = MarioAgent(agentController)
+    //val agent = MarioAgent(agentController)
 
-    // val levels = arrayOf<MarioLevel>(PathWithHolesLevel) + Stage2Level1Split.levels
-    val levels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+//    val levels = TrainingLevelsSet
+//    val levels = listOf<MarioLevel>(OnlyPathLevel) + arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+    val levels = listOf<MarioLevel>(LevelStorage.loadLevel("current.lvl"))
 
     val gameSimulator = GameSimulator(1400)
     val statistics = levels.map { gameSimulator.playMario(agent, it, true) }
@@ -38,14 +41,17 @@ fun aiPlayLevel() {
 
 
 fun neatAiPlayLevel() {
-    val controller = ObjectStorage.load("experiments/NEAT - Newest/NEAT evolution, experiment 1_ai.ai") as SimpleANNController
+    val controller = ObjectStorage.load("experiments/NEAT - All - 500-100 - fitness only distance/NEAT evolution, experiment 3_ai.ai") as SimpleANNController
+//    val agent = MarioAgent(controller)
+    val agent = Agents.NEAT.bestGeneric
 
-    val levels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+//    val levels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+    val levels = TrainingLevelsSet
     val simulator = GameSimulator(1000)
 
     for (level in levels) {
-        val stats = simulator.playMario(controller, level, true)
-        print(stats.jumps)
+        val stats = simulator.playMario(agent, level, true)
+        println(stats.jumps)
     }
 
 

@@ -26,12 +26,13 @@ fun main() {
 
 
 fun doManyNEATEvolution() {
-    val learningLevels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
-    val evaluationName = "NEAT - Newest"
+    val learningLevels = TrainingLevelsSet
+    val evaluationName = "NEAT - All - 500-100 - fitness distance least actions"
 
-    val generationsCount = 300
+    val generationsCount = 500
     val populationSize = 100
     val fitness = MarioGameplayEvaluators::distanceLeastActions
+    val receptiveFieldSize = Pair(5, 5)
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
@@ -40,7 +41,7 @@ fun doManyNEATEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 1",
             dataLocation = evaluationName,
@@ -52,7 +53,7 @@ fun doManyNEATEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 2",
             dataLocation = evaluationName,
@@ -64,7 +65,7 @@ fun doManyNEATEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 3",
             dataLocation = evaluationName,
@@ -76,7 +77,7 @@ fun doManyNEATEvolution() {
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
+            receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 4",
             dataLocation = evaluationName,
