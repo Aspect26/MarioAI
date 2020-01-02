@@ -27,11 +27,11 @@ fun main() {
 
 fun doManyNEATEvolution() {
     val learningLevels = TrainingLevelsSet
-    val evaluationName = "NEAT - All - 500-100 - fitness distance least actions"
+    val evaluationName = "NEAT - All - 500-100 - one hot"
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness = MarioGameplayEvaluators::distanceLeastActions
+    val fitness = MarioGameplayEvaluators::distanceOnly
     val receptiveFieldSize = Pair(5, 5)
 
     val evolutions = arrayOf(

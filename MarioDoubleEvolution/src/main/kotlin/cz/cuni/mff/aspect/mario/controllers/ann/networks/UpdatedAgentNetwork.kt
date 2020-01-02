@@ -97,10 +97,6 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
             .receptiveFieldSize(this.receptiveFieldSizeRow, this.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.receptiveFieldRowOffset, this.receptiveFieldColumnOffset)
 
-        if (this.legacy) {
-            networkInputBuilder.legacy()
-        }
-
         if (this.denseInput) {
             networkInputBuilder.useDenserInput()
         }

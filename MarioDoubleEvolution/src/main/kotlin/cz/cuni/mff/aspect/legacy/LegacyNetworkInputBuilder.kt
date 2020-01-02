@@ -1,11 +1,11 @@
-package cz.cuni.mff.aspect.mario.controllers.ann.networks
+package cz.cuni.mff.aspect.legacy
 
 import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 
 
-data class NetworkInputBuilder(
+data class LegacyNetworkInputBuilder(
     private var tiles: Tiles? = null,
     private var entities: Entities? = null,
     private var mario: MarioEntity? = null,
@@ -13,7 +13,9 @@ data class NetworkInputBuilder(
     private var receptiveFieldColumns: Int = 5,
     private var receptiveFieldOffsetRows: Int = 0,
     private var receptiveFieldOffsetColumns: Int = 0,
-    private var denseInput: Boolean = false
+    private var addMarioInTilePosition: Boolean = false,
+    private var denseInput: Boolean = false,
+    private var legacy: Boolean = false
 ) {
 
     class NetworkInputBuilderException(error: String) : Exception(error)
@@ -23,39 +25,43 @@ data class NetworkInputBuilder(
     fun mario(mario: MarioEntity) = apply { this.mario = mario }
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
+    fun addMarioInTilePosition() = apply { this.addMarioInTilePosition = false }
     fun useDenserInput() = apply { this.denseInput = true }
+    fun legacy() = apply { this.legacy = true }
 
     private val receptiveFieldSize: Int get() = this.receptiveFieldRows * this.receptiveFieldColumns * if (this.denseInput) 4 else 1
-    private val inputLayerSize: Int get() = this.receptiveFieldSize * 2
 
-    // TODO: DRY!!!!!
+    private val inputLayerSize: Int get() = this.receptiveFieldSize * 2 + if (this.addMarioInTilePosition) 2 else 0
+
+    // TODO: do not use these pls :(
+    fun buildDouble(): DoubleArray =
+        if (this.legacy) {
+            this.buildLegacy()
+        } else {
+            this.build().map { it.toDouble() }.toDoubleArray()
+        }
+
+    fun buildFloat(): FloatArray = this.build().map { it.toFloat() }.toFloatArray()
+
     fun build(): IntArray {
         val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
 
         return IntArray(inputLayerSize) {
             when {
+                this.addMarioInTilePosition && it == inputLayerSize - 1 -> this.mario!!.inTileX
+                this.addMarioInTilePosition && it == inputLayerSize - 2 -> this.mario!!.inTileY
                 it >= flatEntities.size -> flatTiles[it - flatEntities.size]
                 else -> flatEntities[it]
             }
         }
     }
 
-    fun buildFloat(): FloatArray {
+    private fun buildLegacy(): DoubleArray {
         val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
-
-        return FloatArray(inputLayerSize) {
-            when {
-                it >= flatEntities.size -> flatTiles[it - flatEntities.size].toFloat()
-                else -> flatEntities[it].toFloat()
-            }
-        }
-    }
-
-    fun buildDouble(): DoubleArray {
-        val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
-
         return DoubleArray(inputLayerSize) {
             when {
+                it == inputLayerSize - 1 -> this.mario!!.dX.toDouble()
+                it == inputLayerSize - 2 -> this.mario!!.dY.toDouble()
                 it >= flatEntities.size -> flatTiles[it - flatEntities.size].toDouble()
                 else -> flatEntities[it].toDouble()
             }
@@ -63,11 +69,11 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatArrays(): Triple<IntArray, IntArray, Int> {
-        this.ensureHasInput()
+        this.checkInput()
         return Triple(this.createFlatTiles(), this.createFlatEntities(), this.inputLayerSize)
     }
 
-    private fun ensureHasInput() {
+    private fun checkInput() {
         if (this.tiles == null) throw NetworkInputBuilderException("'Tiles' not specified")
         if (this.entities == null) throw NetworkInputBuilderException("'Entities' not specified")
         if (this.mario == null) throw NetworkInputBuilderException("'Mario' not specified")
@@ -75,13 +81,15 @@ data class NetworkInputBuilder(
 
     private fun createFlatTiles(): IntArray {
         val flatTilesSize = this.receptiveFieldSize
-        // TODO: this would be better if we initialize it directly to the required values
         val flatTiles = IntArray(flatTilesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
             val tileAtPosition = this.tiles!!.tileField[row][column]
 
-            val tileCode = if (tileAtPosition.code != 0) 1 else 0
+            val tileCode = when (tileAtPosition.code) {
+                -60 -> -1
+                else -> tileAtPosition.code
+            }
             flatTiles[index] = tileCode
         }
 
@@ -90,12 +98,11 @@ data class NetworkInputBuilder(
 
     private fun createFlatEntities(): IntArray {
         val flatEntitiesSize = this.receptiveFieldSize
-        // TODO: this would be better if we initialize it directly to the required values
         val flatEntities = IntArray(flatEntitiesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
             val entitiesAtPosition = this.entities!!.entityField[row][column]
-            flatEntities[index] = if (entitiesAtPosition.size > 0) 1 else 0
+            flatEntities[index] = if (entitiesAtPosition.size > 0) entitiesAtPosition[0].type.code else 0
         }
 
         return flatEntities
