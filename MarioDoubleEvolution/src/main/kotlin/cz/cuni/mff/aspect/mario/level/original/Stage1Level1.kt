@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.mario.level.original
 
 import cz.cuni.mff.aspect.evolution.levels.grammar.ChunkHelpers
-import cz.cuni.mff.aspect.mario.Enemies
+import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
@@ -123,21 +123,21 @@ object Stage1Level1 : MarioLevel {
         }
 
         this.enemies = Array(LEVEL_WIDTH) { Array(15) { 0 } }
-        enemies[22][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[42][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[55][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[56][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[79][SECOND_LEVEL - 2] = Enemies.Goomba.NORMAL
-        enemies[82][THIRD_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[96][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[98][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[107][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN
-        enemies[124][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[125][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[127][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[128][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[174][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[175][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
+        enemies[22][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[42][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[55][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[56][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[79][SECOND_LEVEL - 2] = Entities.Goomba.NORMAL
+        enemies[82][THIRD_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[96][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[98][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[107][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
+        enemies[124][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[125][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[127][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[128][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[174][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[175][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
     }
 
 }

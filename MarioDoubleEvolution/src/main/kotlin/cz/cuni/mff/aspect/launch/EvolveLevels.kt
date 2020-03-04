@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.evolution.Agents
 import cz.cuni.mff.aspect.evolution.levels.direct.encoded.DirectEncodedLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.grammar.GrammarLevelEvolution
+import cz.cuni.mff.aspect.evolution.utils.LevelPostProcessor
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.storage.LevelStorage
@@ -21,6 +22,7 @@ fun grammarEvolution() {
     val levels = levelEvolution.evolve(marioAgent.controller)
     val firstLevel = levels.first()
 
+    LevelPostProcessor.postProcess(firstLevel)
     LevelStorage.storeLevel("current.lvl", firstLevel)
 
     GameSimulator().playMario(agent, firstLevel, true)

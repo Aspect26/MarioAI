@@ -15,6 +15,12 @@ object Tiles {
     const val GRASS_TOP: Byte = (1 + 8 * 16).toByte()
     const val GRASS_LEFT: Byte = (0 + 9 * 16).toByte()
     const val GRASS_RIGHT: Byte = (2 + 9 * 16).toByte()
+    const val GRASS_TOP_LEFT: Byte = (0 + 8 * 16).toByte()
+    const val GRASS_TOP_RIGHT: Byte = (2 + 8 * 16).toByte()
+    const val GRASS_CORNER_TOP_LEFT: Byte = (3 + 8 * 16).toByte()
+    const val GRASS_CORNER_TOP_RIGHT: Byte = (3 + 9 * 16).toByte()
+    const val GRASS_CORNER_BOTTOM_RIGHT: Byte = (3 + 10 * 16).toByte()
+    const val GRASS_CORNER_BOTTOM_LEFT: Byte = (3 + 11 * 16).toByte()
 
     const val COIN: Byte = (0 + 2 * 16).toByte()
 
@@ -47,7 +53,7 @@ object Tiles {
 /**
  * Wrapper constants representing all types of enemies in Mario.
  */
-object Enemies {
+object Entities {
 
     const val NOTHING = 0
 
@@ -71,6 +77,14 @@ object Enemies {
 
     object Flower {
         const val NORMAL = Sprite.KIND_ENEMY_FLOWER
+    }
+
+    object BulletBill {
+        const val NORMAL = Sprite.KIND_BULLET_BILL
+    }
+
+    object Princess {
+        const val NORMAL = Sprite.KIND_PRINCESS
     }
 
 }
