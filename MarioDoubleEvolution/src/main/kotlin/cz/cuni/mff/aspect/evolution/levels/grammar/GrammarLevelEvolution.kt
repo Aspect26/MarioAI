@@ -9,12 +9,13 @@ import cz.cuni.mff.aspect.evolution.utils.MarioLevelEvaluators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
-import cz.cuni.mff.aspect.mario.level.*
+import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
+import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.mario.level.MarioLevelChunk
 import io.jenetics.Alterer
 import io.jenetics.Mutator
 import io.jenetics.SinglePointCrossover
 import io.jenetics.util.IntRange
-import java.lang.ClassCastException
 
 
 class GrammarLevelEvolution : LevelEvolution {
@@ -55,13 +56,8 @@ class GrammarLevelEvolution : LevelEvolution {
     fun createLevelFromSentence(sentence: GrammarSentence): MarioLevel {
         val levelChunks = mutableListOf<MarioLevelChunk>()
         sentence.forEach {
-            try {
-                val chunkTerminal = (it as LevelChunkTerminal)
-                levelChunks.add(chunkTerminal.generateChunk())
-            } catch (e: ClassCastException) {
-                println(it.value)
-                println(it.javaClass.toString())
-            }
+            val chunkTerminal = (it as LevelChunkTerminal)
+            levelChunks.add(chunkTerminal.generateChunk())
         }
 
         return ChunkedMarioLevel(levelChunks.toTypedArray())
