@@ -68,7 +68,7 @@ object LevelPostProcessor {
     }
 
     private fun tryAddStartArrow(level: MarioLevel, x: Int, y: Int) {
-        if (x == 4 && level.tiles[x][y] == Tiles.GRASS_TOP) {
+        if (x == 2 && level.tiles[x][y] == Tiles.GRASS_TOP) {
             level.tiles[x][y - 1] = Tiles.ARROW_BOTTOM_LEFT
             level.tiles[x + 1][y - 1] = Tiles.ARROW_BOTTOM_RIGHT
             level.tiles[x][y - 2] = Tiles.ARROW_TOP_LEFT
@@ -96,8 +96,6 @@ object LevelPostProcessor {
         level.tiles[x][y - 1] = Tiles.ENV_GRASS_START
         level.tiles[x + 1][y - 1] = Tiles.ENV_GRASS_MIDDLE
         level.tiles[x + 2][y - 1] = Tiles.ENV_GRASS_END
-
-        println("Added bush: $x")
     }
 
     private fun copyLevel(level: MarioLevel): MarioLevel {

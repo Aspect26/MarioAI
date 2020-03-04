@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.visualisation
+package cz.cuni.mff.aspect.visualisation.charts
 
 import org.knowm.xchart.*
 import org.knowm.xchart.internal.series.Series
