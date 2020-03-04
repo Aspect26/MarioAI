@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.mario.level.original
 
 import cz.cuni.mff.aspect.evolution.levels.grammar.ChunkHelpers
-import cz.cuni.mff.aspect.mario.Enemies
+import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
@@ -99,53 +99,53 @@ object Stage2Level1 : MarioLevel {
         }
 
         this.enemies = Array(LEVEL_WIDTH) { Array(15) { 0 } }
-        enemies[24][FLOOR_LEVEL - 6] = Enemies.Goomba.NORMAL
+        enemies[24][FLOOR_LEVEL - 6] = Entities.Goomba.NORMAL
 
-        enemies[32][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN
-        enemies[33][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN
+        enemies[32][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
+        enemies[33][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
 
-        enemies[42][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[43][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
+        enemies[42][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[43][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
 
-        enemies[46][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
+        enemies[46][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
 
-        enemies[55][SECOND_LEVEL - 1] = Enemies.Koopa.GREEN
+        enemies[55][SECOND_LEVEL - 1] = Entities.Koopa.GREEN
 
-        enemies[59][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[61][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[66][SECOND_LEVEL - 1] = Enemies.Koopa.GREEN
-        enemies[68][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[70][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[71][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
+        enemies[59][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[61][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[66][SECOND_LEVEL - 1] = Entities.Koopa.GREEN
+        enemies[68][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[70][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[71][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
 
-        enemies[74][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
+        enemies[74][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
 
-        enemies[87][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[89][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[90][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
+        enemies[87][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[89][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[90][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
 
-        enemies[103][FLOOR_LEVEL - 5] = Enemies.Goomba.NORMAL
-        enemies[103][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
+        enemies[103][FLOOR_LEVEL - 5] = Entities.Goomba.NORMAL
+        enemies[103][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
 
-        enemies[115][FLOOR_LEVEL - 5] = Enemies.Goomba.NORMAL
-        enemies[115][FLOOR_LEVEL - 2] = Enemies.Flower.NORMAL
-        enemies[120][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[122][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
-        enemies[130][FLOOR_LEVEL - 5] = Enemies.Flower.NORMAL
+        enemies[115][FLOOR_LEVEL - 5] = Entities.Goomba.NORMAL
+        enemies[115][FLOOR_LEVEL - 2] = Entities.Flower.NORMAL
+        enemies[120][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[122][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
+        enemies[130][FLOOR_LEVEL - 5] = Entities.Flower.NORMAL
 
-        enemies[137][SECOND_LEVEL - 1] = Enemies.Koopa.GREEN
+        enemies[137][SECOND_LEVEL - 1] = Entities.Koopa.GREEN
 
-        enemies[151][SECOND_LEVEL - 3] = Enemies.Koopa.GREEN_WINGED
+        enemies[151][SECOND_LEVEL - 3] = Entities.Koopa.GREEN_WINGED
 
-        enemies[162][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
-        enemies[164][FLOOR_LEVEL - 1] = Enemies.Goomba.NORMAL
+        enemies[162][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        enemies[164][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
 
-        enemies[169][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN_WINGED
-        enemies[171][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN_WINGED
+        enemies[169][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN_WINGED
+        enemies[171][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN_WINGED
 
-        enemies[176][FLOOR_LEVEL - 3] = Enemies.Flower.NORMAL
+        enemies[176][FLOOR_LEVEL - 3] = Entities.Flower.NORMAL
 
-        enemies[185][FLOOR_LEVEL - 1] = Enemies.Koopa.GREEN
+        enemies[185][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
 
     }
 

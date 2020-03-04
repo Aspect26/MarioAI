@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.mario.level.original
 
 import cz.cuni.mff.aspect.evolution.levels.grammar.ChunkHelpers
-import cz.cuni.mff.aspect.mario.Enemies
+import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
@@ -86,14 +86,14 @@ object Stage4Level1 : MarioLevel {
         }
 
         this.enemies = Array(LEVEL_WIDTH) { Array(15) { 0 } }
-        enemies[21][FLOOR_LEVEL - 3] = Enemies.Flower.NORMAL
-        enemies[28][FLOOR_LEVEL - 1] = Enemies.Spiky.NORMAL
-        enemies[111][FLOOR_LEVEL - 1] = Enemies.Spiky.NORMAL
-        enemies[113][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
-        enemies[129][FLOOR_LEVEL - 4] = Enemies.Flower.NORMAL
-        enemies[160][FLOOR_LEVEL - 2] = Enemies.Flower.NORMAL
-        enemies[191][FLOOR_LEVEL - 1] = Enemies.Spiky.NORMAL
-        enemies[193][FLOOR_LEVEL - 1] = Enemies.Spiky.NORMAL
+        enemies[21][FLOOR_LEVEL - 3] = Entities.Flower.NORMAL
+        enemies[28][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        enemies[111][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        enemies[113][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
+        enemies[129][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
+        enemies[160][FLOOR_LEVEL - 2] = Entities.Flower.NORMAL
+        enemies[191][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        enemies[193][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
     }
 
 }

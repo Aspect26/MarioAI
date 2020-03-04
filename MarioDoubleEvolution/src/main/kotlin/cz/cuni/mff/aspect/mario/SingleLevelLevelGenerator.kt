@@ -33,7 +33,7 @@ class SingleLevelLevelGenerator(private val level: MarioLevel) : ch.idsia.benchm
         for (x in enemies.indices) {
             for (y in enemies[x].indices) {
                 val enemy = enemies[x][y]
-                if (enemy != Enemies.NOTHING) {
+                if (enemy != Entities.NOTHING) {
                     level.setSpriteTemplate(x, y, SpriteTemplate(enemy))
                 }
             }

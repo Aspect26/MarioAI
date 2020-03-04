@@ -35,6 +35,15 @@ object ChunkHelpers {
         }
     }
 
+    fun getSecretPowerUpColumn(level: Int, secretLevel: Int): ByteArray = ByteArray(15) {
+        when {
+            it == secretLevel -> Tiles.QM_WITH_POWERUP
+            it == level -> Tiles.GRASS_TOP
+            it > level -> Tiles.DIRT
+            else -> Tiles.NOTHING
+        }
+    }
+
     fun getBoxesAndSecretsColumn(level: Int, boxesLevel: Int, secretsLevel: Int): ByteArray = ByteArray(15) {
         when {
             it == boxesLevel -> Tiles.BRICK
