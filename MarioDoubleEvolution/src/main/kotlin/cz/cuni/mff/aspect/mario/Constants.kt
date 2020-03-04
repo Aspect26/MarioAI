@@ -48,6 +48,19 @@ object Tiles {
 
     const val PEACH: Byte = (15 + 15 * 16).toByte()
 
+    const val BUSH_START: Byte = (0 + 6 * 16).toByte()
+    const val BUSH_MIDDLE: Byte = (1 + 6 * 16).toByte()
+    const val BUSH_END: Byte = (2 + 6 * 16).toByte()
+
+    const val ENV_GRASS_START: Byte = (0 + 5 * 16).toByte()
+    const val ENV_GRASS_MIDDLE: Byte = (1 + 5 * 16).toByte()
+    const val ENV_GRASS_END: Byte = (2 + 5 * 16).toByte()
+
+    const val ARROW_BOTTOM_LEFT: Byte = (3 + 5 * 16).toByte()
+    const val ARROW_BOTTOM_RIGHT: Byte = (4 + 5 * 16).toByte()
+    const val ARROW_TOP_LEFT: Byte = (3 + 4 * 16).toByte()
+    const val ARROW_TOP_RIGHT: Byte = (4 + 4 * 16).toByte()
+
 }
 
 /**

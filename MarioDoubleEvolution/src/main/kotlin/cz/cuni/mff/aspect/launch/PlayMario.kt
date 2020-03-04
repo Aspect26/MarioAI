@@ -21,7 +21,7 @@ fun keyboardPlay() {
     // val levels = Stage2Level1Split.levels.sliceArray(1..1)
 //    val levels = arrayOf(Stage5Level1Split.levels[5])
     val levels = arrayOf(LevelStorage.loadLevel("current.lvl"))
-    levels[0] = LevelPostProcessor.postProcess(levels[0])
+    levels[0] = LevelPostProcessor.postProcess(levels[0], true)
     val marioSimulator = GameSimulator(15000)
 
      for (level in levels) {
