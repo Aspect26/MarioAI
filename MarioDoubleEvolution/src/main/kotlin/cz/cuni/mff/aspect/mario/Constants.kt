@@ -96,7 +96,7 @@ object Entities {
         const val NORMAL = Sprite.KIND_BULLET_BILL
     }
 
-    object Princess {
+    object PrincessPeach {
         const val NORMAL = Sprite.KIND_PRINCESS
     }
 

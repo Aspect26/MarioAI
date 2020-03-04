@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.visualisation
+package cz.cuni.mff.aspect.visualisation.charts
 
 import java.awt.Color
 
