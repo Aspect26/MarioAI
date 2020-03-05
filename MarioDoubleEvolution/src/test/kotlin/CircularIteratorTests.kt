@@ -1,4 +1,5 @@
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.CircularIterator
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CircularIteratorTests {

@@ -1,4 +1,6 @@
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.*
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.Ignore
 
