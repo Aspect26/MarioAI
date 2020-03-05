@@ -1,8 +1,7 @@
 package cz.cuni.mff.aspect.visualisation.level
 
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import javafx.embed.swing.SwingFXUtils
-import javafx.scene.image.Image
+import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
@@ -13,20 +12,23 @@ import javax.swing.JScrollPane
 class LevelVisualiser {
 
     fun displayAndStore(level: MarioLevel, fileName: String) {
-        val image = LevelToImageConverter.create(level, "level_image_test.png")
+        val image = LevelToImageConverter.create(level)
 
         val file = File(fileName)
         file.parentFile.mkdirs()
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file)
+        ImageIO.write(image, "png", file)
 
         this.displayImage(image)
     }
 
-    private fun displayImage(image: Image) {
-        val fxImage = SwingFXUtils.fromFXImage(image, null)
+    fun display(level: MarioLevel) {
+        val image = LevelToImageConverter.create(level)
+        this.displayImage(image)
+    }
 
+    private fun displayImage(image: BufferedImage) {
         val label = JLabel()
-        label.icon = ImageIcon(fxImage)
+        label.icon = ImageIcon(image)
 
         val frame = JFrame()
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE

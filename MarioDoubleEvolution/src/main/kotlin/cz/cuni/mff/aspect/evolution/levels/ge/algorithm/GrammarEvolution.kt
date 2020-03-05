@@ -1,6 +1,5 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteChromosome
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.extensions.getByteValues
@@ -36,7 +35,7 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
                 result.map { it.genotype.getByteValues() }.map { this.getGrammarSentence(it) }
             }
             else -> {
-                throw InvalidArgumentException(arrayOf("Result count cannot be less than 1"))
+                throw IllegalArgumentException("Result count cannot be less than 1")
             }
         }
     }

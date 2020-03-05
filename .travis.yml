@@ -1,6 +1,6 @@
 language: java
 install: gradle wrapper --gradle-version 5.5
 jdk:
-  - openjdk8
+  - openjdk12
 script:
   - ./gradlew test
