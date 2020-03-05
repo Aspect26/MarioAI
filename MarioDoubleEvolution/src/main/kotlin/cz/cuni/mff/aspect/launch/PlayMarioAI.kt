@@ -1,18 +1,11 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.Agents
+import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.levels.TrainingLevelsSet
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
-import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.custom.OnlyPathLevel
-import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.*
 import cz.cuni.mff.aspect.storage.LevelStorage
-import cz.cuni.mff.aspect.storage.NeatAIStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import kotlin.system.exitProcess
 
@@ -25,7 +18,7 @@ fun main() {
 
 
 fun aiPlayLevel() {
-    val agent = Agents.NeuroEvolution.stage4Level1Solver
+    val agent = Agents.NeuroEvolution.Stage4Level1Solver
     //val agentController = ObjectStorage.load("experiments/Newest/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
     // agentController.setLegacy()
     //val agent = MarioAgent(agentController)
@@ -43,7 +36,7 @@ fun aiPlayLevel() {
 fun neatAiPlayLevel() {
     val controller = ObjectStorage.load("experiments/NEAT - All - 500-100 - fitness only distance/NEAT evolution, experiment 3_ai.ai") as SimpleANNController
 //    val agent = MarioAgent(controller)
-    val agent = Agents.NEAT.bestGeneric
+    val agent = Agents.NEAT.BestGeneric
 
 //    val levels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
     val levels = TrainingLevelsSet

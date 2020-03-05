@@ -1,5 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
+import kotlin.math.abs
+
 
 class GenesToSentenceConverter(private val grammar: Grammar) {
 

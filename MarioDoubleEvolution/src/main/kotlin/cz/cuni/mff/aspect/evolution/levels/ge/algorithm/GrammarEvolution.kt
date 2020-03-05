@@ -1,8 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
-import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GenesToSentenceConverter
-import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Grammar
-import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteChromosome
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.extensions.getByteValues
 import io.jenetics.*
@@ -49,7 +47,7 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
             .limit(generationsCount)
             .collect(EvolutionResult.toBestEvolutionResult<ByteGene, Float>())
 
-    private val fitness = Function<Genotype<ByteGene>, Float> { genotype -> fitness(genotype) }
+    private val fitness = java.util.function.Function<Genotype<ByteGene>, Float> { genotype -> fitness(genotype) }
     private fun fitness(genotype: Genotype<ByteGene>): Float {
         val genes = genotype.getByteValues()
         val sentence = this.getGrammarSentence(genes)

@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution
+package cz.cuni.mff.aspect.evolution.results
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.arnold.ArnoldRuleBasedAgent
@@ -21,7 +21,7 @@ object Agents {
 
     object NeuroEvolution {
 
-        val stage2Level1Solver: IAgent
+        val Stage2Level1Solver: IAgent
             get() {
                 // best S2S, doesn't solve everything, but does some nice things and solves PathWithHoles level
                 val controller = ObjectStorage.load("experiments/Phase I - AI/NeuroEvolution/Gaussian test evaluation - S2S/NeuroEvolution, Mutator 0.45_ai.ai") as SimpleANNController
@@ -30,7 +30,7 @@ object Agents {
                 return MarioAgent(controller)
             }
 
-        val stage4Level1Solver: IAgent
+        val Stage4Level1Solver: IAgent
             get() {
                 // experiments/Phase I - AI/Gaussian test evaluation - S4S/NeuroEvolution, Mutator 0.25_ai.ai   // jumpee
                 // experiments/Phase I - AI/Gaussian test evaluation - S4S (3)/NeuroEvolution, Mutator 0.1_ai.ai // non jumpee
@@ -43,7 +43,7 @@ object Agents {
                 return MarioAgent(controller)
             }
 
-        val bestGeneric: IAgent
+        val BestGeneric: IAgent
             get() {
                 // experiments/Phase I - AI/Doubled input - All/NeuroEvolution, experiment 1_ai.ai // solves 12 of all
                 // experiments/Phase I - AI/Doubled input - All - Randomized levels/NeuroEvolution, experiment 1_ai.ai  // solves 9 of all random
@@ -55,14 +55,14 @@ object Agents {
     }
 
     object NEAT {
-        val stage4Level1Solver: IAgent
+        val Stage4Level1Solver: IAgent
             get() {
                 // val controller = ObjectStorage.load("experiments/Phase I - AI/NEAT/NEAT - S4S - Population 100, Generations - 200, no dense input/NEAT evolution, experiment 2_ai.ai") as SimpleANNController
                 val controller = ObjectStorage.load("experiments/Phase I - AI/NEAT/NEAT - SS - Population 100, Generations - 100, no dense input/NEAT evolution, experiment 1_ai.ai") as SimpleANNController
                 return MarioAgent(controller)
             }
 
-        val bestGeneric: IAgent
+        val BestGeneric: IAgent
             get() {
                 //solves 12
                 //val controller = ObjectStorage.load("experiments/Phase I - AI/NEAT/NEAT - All - 300-100 - fitness least actions/NEAT evolution, experiment 1_ai.ai") as SimpleANNController

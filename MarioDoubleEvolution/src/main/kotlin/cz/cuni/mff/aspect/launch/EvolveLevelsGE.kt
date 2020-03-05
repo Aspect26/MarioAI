@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.Agents
+import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.levels.direct.DirectEncodedLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
@@ -15,7 +15,7 @@ fun main() {
 }
 
 fun grammarEvolution() {
-    val agent = Agents.NeuroEvolution.stage4Level1Solver
+    val agent = Agents.NeuroEvolution.Stage4Level1Solver
     val marioAgent = agent as MarioAgent
 
     val levelEvolution = GrammarLevelEvolution()
@@ -29,7 +29,7 @@ fun grammarEvolution() {
 }
 
 fun directEncodedEvolution() {
-    val agent = Agents.NeuroEvolution.stage4Level1Solver
+    val agent = Agents.NeuroEvolution.Stage4Level1Solver
     val marioAgent = agent as MarioAgent
     val levelEvolution = DirectEncodedLevelEvolution()
     val levels = levelEvolution.evolve(marioAgent.controller)
