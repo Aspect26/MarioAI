@@ -15,7 +15,10 @@ class LevelVisualiser {
     fun displayAndStore(level: MarioLevel, fileName: String) {
         val image = LevelToImageConverter.create(level, "level_image_test.png")
 
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", File(fileName))
+        val file = File(fileName)
+        file.parentFile.mkdirs()
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file)
+
         this.displayImage(image)
     }
 

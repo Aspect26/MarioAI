@@ -12,10 +12,8 @@ object LevelGrammar {
     private val blockSequence = NonTerminal("BLOCK SEQUENCE")
     private val block = NonTerminal("LEVEL BLOCK")
 
-    private val beginPlatform =
-        BeginPlatformChunkTerminal()
-    private val endPlatform =
-        EndPlatformChunkTerminal()
+    private val beginPlatform = BeginPlatformChunkTerminal()
+    private val endPlatform = EndPlatformChunkTerminal()
     private val nothing = NothingChunkTerminal()
     private val start = StartChunkTerminal()
     private val path = PathChunkTerminal()

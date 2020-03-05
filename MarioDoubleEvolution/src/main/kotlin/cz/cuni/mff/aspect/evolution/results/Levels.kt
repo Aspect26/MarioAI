@@ -10,9 +10,10 @@ object Levels {
         val Level1: MarioLevel = LevelStorage.loadLevel("grammar/01.lvl")
         val Level2: MarioLevel = LevelStorage.loadLevel("grammar/02.lvl")
         val Level3: MarioLevel = LevelStorage.loadLevel("grammar/03.lvl")
-        val Level4: MarioLevel = LevelStorage.loadLevel("grammar/04.lvl")
+        val Level5: MarioLevel = LevelStorage.loadLevel("grammar/05.lvl")
+        val Level6: MarioLevel = LevelStorage.loadLevel("grammar/06.lvl")
 
-        val AllLevels: Array<MarioLevel> = arrayOf(Level1, Level2, Level3, Level4)
+        val AllLevels: Array<MarioLevel> = arrayOf(Level1, Level2, Level3, Level5, Level6)
 
     }
 

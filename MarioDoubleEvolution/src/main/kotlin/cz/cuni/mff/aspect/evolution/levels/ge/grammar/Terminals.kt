@@ -87,7 +87,7 @@ abstract class MonsterSpawningChunkTerminal(terminalName: String, protected var 
         val monsterCount: Int = iterator.next() % 3
         this.monsterSpawns = Array(monsterCount) {
             val xPos = iterator.next() % this.width
-            val yPos = 1
+            val yPos = this.level - 1
             when (iterator.next() % 2) {
                 0 -> MonsterSpawn(xPos, yPos, Entities.Goomba.NORMAL)
                 1 -> MonsterSpawn(xPos, yPos, Entities.Koopa.GREEN)
@@ -97,10 +97,11 @@ abstract class MonsterSpawningChunkTerminal(terminalName: String, protected var 
 
     }
 
+    protected abstract var level: Int
 }
 
 
-class PathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var level: Int = 5, var _width: Int = 3) :
+class PathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), override var level: Int = 5, var _width: Int = 3) :
     MonsterSpawningChunkTerminal("path", monsterSpawns) {
 
     override fun takeChunkParameters(iterator: Iterator<Int>) {
@@ -126,31 +127,28 @@ class PathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private 
 }
 
 
-class StartChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var _width: Int = 7) :
-    MonsterSpawningChunkTerminal("start", monsterSpawns) {
+class StartChunkTerminal(private var _width: Int = 7, private var level: Int = 14) :
+    LevelChunkTerminal("start") {
 
-    override fun takeChunkParameters(iterator: Iterator<Int>) {
+    override fun takeParameters(iterator: Iterator<Int>) {
+        this.level = iterator.next() % 5 + 9
         this._width = iterator.next() % 4 + 5
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(14)
-        return TerminalMarioLevelChunk(this, Array(this._width) { pathColumn }, this.monsterSpawns)
+        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        return TerminalMarioLevelChunk(this, Array(this._width) { pathColumn }, emptyArray())
     }
 
     override val width: Int get() = this._width
-    override fun copy(): StartChunkTerminal =
-        StartChunkTerminal(
-            this.monsterSpawns,
-            this._width
-        )
+    override fun copy(): StartChunkTerminal = StartChunkTerminal(this._width, this.level)
     override fun toString(): String = "${this.value}(${this._width})"
     override fun equals(other: Any?): Boolean = other is StartChunkTerminal && other._width == this._width
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode()
 }
 
 
-class BoxesChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var level: Int = 5, private var _width: Int = 5, private var boxesPadding: Int = 2) :
+class BoxesChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), override var level: Int = 5, private var _width: Int = 5, private var boxesPadding: Int = 2) :
     MonsterSpawningChunkTerminal("boxes", monsterSpawns) {
 
     override fun takeChunkParameters(iterator: Iterator<Int>) {
@@ -184,7 +182,7 @@ class BoxesChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
 }
 
 
-class SecretsChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var level: Int = 5, private var _width: Int = 5,
+class SecretsChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), override var level: Int = 5, private var _width: Int = 5,
                            private var secretsPadding: Int = 2, private var hasPowerUp: Boolean = false, private var powerUpLocation: Int = 0) :
     MonsterSpawningChunkTerminal("secrets", monsterSpawns) {
 
@@ -293,7 +291,7 @@ class BulletBillChunkTerminal(private var _width: Int = 3, private var billHeigh
 
 }
 
-class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var _width: Int = 3, private var level: Int = 5) :
+class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var _width: Int = 3, override var level: Int = 5) :
     MonsterSpawningChunkTerminal("stairs", monsterSpawns) {
 
     override fun takeChunkParameters(iterator: Iterator<Int>) {
@@ -327,7 +325,7 @@ class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
 
 }
 
-class DoublePathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var _width: Int = 3, private var level: Int = 5,
+class DoublePathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private var _width: Int = 3, override var level: Int = 5,
                               private var firstLevelPadding: Int = 1, private var secondLevelPadding: Int = 0,
                               private var isFirstSecrets: Boolean = false, private var isSecondSecrets: Boolean = true) :
     MonsterSpawningChunkTerminal("two_paths", monsterSpawns) {

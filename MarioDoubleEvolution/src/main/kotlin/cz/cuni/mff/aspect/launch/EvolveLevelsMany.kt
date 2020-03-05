@@ -19,7 +19,7 @@ fun doManyGrammarEvolution() {
             agent = Agents.NeuroEvolution.BestGeneric,
             populationSize = 50,
             generationsCount = 50,
-            levelsCount = 5,
+            levelsCount = 1,
             postProcess = false
         )
     )
@@ -51,7 +51,7 @@ class GrammarEvolutionLauncher(
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()
 
         levels.forEachIndexed { index, level -> LevelStorage.storeLevel("experiments/$label/$index.lvl", level) }
-        levels.forEachIndexed { index, level -> levelVisualiser.displayAndStore(level, "experiments/$label/$index") }
+        levels.forEachIndexed { index, level -> levelVisualiser.displayAndStore(level, "data/levels/experiments/$label/$index") }
     }
 
 }
