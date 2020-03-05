@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.grammar
 
+import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
@@ -18,26 +19,29 @@ import io.jenetics.SinglePointCrossover
 import io.jenetics.util.IntRange
 
 
-class GrammarLevelEvolution : LevelEvolution {
+class GrammarLevelEvolution(private val levelsCount: Int = 1,
+                            private val populationSize: Int = POPULATION_SIZE,
+                            private val generationsCount: Long = GENERATIONS_COUNT) : LevelEvolution {
 
-    private lateinit var controller: MarioController
+    private lateinit var agent: IAgent
 
-    override fun evolve(controller: MarioController): Array<MarioLevel> {
-        this.controller = controller
+    override fun evolve(controller: IAgent): Array<MarioLevel> {
+        this.agent = controller
         val grammarEvolution = GrammarEvolution.Builder(LevelGrammar.get())
             .fitness(this::fitness)
             .chromosomeLength(CHROMOSOME_LENGTH)
             .alterers(*ALTERERS)
-            .populationSize(POPULATION_SIZE)
-            .generationsCount(GENERATIONS_COUNT)
+            .populationSize(populationSize)
+            .generationsCount(generationsCount)
+            .resultsCount(levelsCount)
             .build()
 
-        val resultSentence = grammarEvolution.evolve()
-        val resultLevel = this.createLevelFromSentence(resultSentence)
+        val resultSentences = grammarEvolution.evolve()
+        val resultLevels = resultSentences.map { this.createLevelFromSentence(it) }.toTypedArray()
 
-        println("BEST SENTENCE: ${resultSentence.getString()}")
+        println("BEST SENTENCE: ${resultSentences[0].getString()}")
 
-        return arrayOf(resultLevel)
+        return resultLevels
     }
 
     private fun fitness(sentence: GrammarSentence): Float {
@@ -47,7 +51,9 @@ class GrammarLevelEvolution : LevelEvolution {
         val level = this.createLevelFromSentence(sentence)
         val gameSimulator = GameSimulator()
 
-        val stats = gameSimulator.playMario(MarioAgent(this.controller), level, false)
+        // TODO: this is a hack!!! for some reason if we directly pass agent, it crashes
+        val agent = MarioAgent((this.agent as MarioAgent).controller)
+        val stats = gameSimulator.playMario(agent, level, false)
 
         return MarioLevelEvaluators.distanceActionsVictory(sentence, stats)
     }

@@ -1,10 +1,9 @@
 package cz.cuni.mff.aspect.evolution.levels.direct
 
+import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
 import cz.cuni.mff.aspect.extensions.getIntValues
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
-import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.*
@@ -18,10 +17,10 @@ import java.util.function.Function
  */
 class DirectEncodedLevelEvolution : LevelEvolution {
 
-    private lateinit var controller: MarioController
+    private lateinit var agent: IAgent
 
-    override fun evolve(controller: MarioController): Array<MarioLevel> {
-        this.controller = controller
+    override fun evolve(agent: IAgent): Array<MarioLevel> {
+        this.agent = agent
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val result = this.doEvolution(evolutionEngine)
@@ -59,9 +58,8 @@ class DirectEncodedLevelEvolution : LevelEvolution {
     private fun fitness(genotype: Genotype<IntegerGene>): Float {
         val marioSimulator = GameSimulator()
         val level = DirectMarioLevel.createFromTilesArray(LEVEL_WIDTH, LEVEL_HEIGHT, genotype.getIntValues())
-        val agent = MarioAgent(this.controller)
 
-        marioSimulator.playMario(agent, level, false)
+        marioSimulator.playMario(this.agent, level, false)
 
         return marioSimulator.statistics.finalMarioDistance
     }

@@ -53,7 +53,6 @@ object LevelToImageConverter {
             }
         }
 
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", File(path))
         return image
     }
 
