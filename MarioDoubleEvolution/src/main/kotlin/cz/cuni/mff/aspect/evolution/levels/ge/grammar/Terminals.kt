@@ -1,6 +1,6 @@
-package cz.cuni.mff.aspect.evolution.levels.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.grammar
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.Terminal
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Terminal
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevelChunk
@@ -30,7 +30,8 @@ class NothingChunkTerminal(private var _width: Int = 3) : LevelChunkTerminal("no
     }
 
     override val width: Int get() = this._width
-    override fun copy(): LevelChunkTerminal = NothingChunkTerminal(this._width)
+    override fun copy(): LevelChunkTerminal =
+        NothingChunkTerminal(this._width)
     override fun toString(): String = "${this.value}(${this._width})"
     override fun equals(other: Any?): Boolean = other is NothingChunkTerminal && other._width == this._width
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode()
@@ -48,7 +49,8 @@ class BeginPlatformChunkTerminal(private var level: Int = 5) : LevelChunkTermina
     }
 
     override val width: Int get() = 12
-    override fun copy(): LevelChunkTerminal = BeginPlatformChunkTerminal(this.level)
+    override fun copy(): LevelChunkTerminal =
+        BeginPlatformChunkTerminal(this.level)
     override fun toString(): String = "${this.value}(${this.level})"
     override fun equals(other: Any?): Boolean = other is BeginPlatformChunkTerminal && other.level == this.level
     override fun hashCode(): Int = javaClass.hashCode() * this.level.hashCode()
@@ -66,7 +68,8 @@ class EndPlatformChunkTerminal(private var level: Int = 5) : LevelChunkTerminal(
     }
 
     override val width: Int get() = 12
-    override fun copy(): LevelChunkTerminal = EndPlatformChunkTerminal(this.level)
+    override fun copy(): LevelChunkTerminal =
+        EndPlatformChunkTerminal(this.level)
     override fun toString(): String = "${this.value}(${this.level})"
     override fun equals(other: Any?): Boolean = other is EndPlatformChunkTerminal && other.level == this.level
     override fun hashCode(): Int = javaClass.hashCode() * this.level.hashCode()
@@ -111,7 +114,12 @@ class PathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private 
     }
 
     override val width: Int get() = this._width
-    override fun copy(): PathChunkTerminal = PathChunkTerminal(this.monsterSpawns, this.level, this._width)
+    override fun copy(): PathChunkTerminal =
+        PathChunkTerminal(
+            this.monsterSpawns,
+            this.level,
+            this._width
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level})"
     override fun equals(other: Any?): Boolean = other is PathChunkTerminal && other._width == this._width && other.level == this.level
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.level.hashCode()
@@ -131,7 +139,11 @@ class StartChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
     }
 
     override val width: Int get() = this._width
-    override fun copy(): StartChunkTerminal = StartChunkTerminal(this.monsterSpawns, this._width)
+    override fun copy(): StartChunkTerminal =
+        StartChunkTerminal(
+            this.monsterSpawns,
+            this._width
+        )
     override fun toString(): String = "${this.value}(${this._width})"
     override fun equals(other: Any?): Boolean = other is StartChunkTerminal && other._width == this._width
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode()
@@ -159,7 +171,13 @@ class BoxesChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
     }
 
     override val width: Int get() = this._width
-    override fun copy(): BoxesChunkTerminal = BoxesChunkTerminal(this.monsterSpawns, this.level, this._width, this.boxesPadding)
+    override fun copy(): BoxesChunkTerminal =
+        BoxesChunkTerminal(
+            this.monsterSpawns,
+            this.level,
+            this._width,
+            this.boxesPadding
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level}.${this.boxesPadding})"
     override fun equals(other: Any?): Boolean = other is BoxesChunkTerminal && other._width == this._width && other.level == this.level && this.boxesPadding == boxesPadding
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.level.hashCode() * this.boxesPadding.hashCode()
@@ -193,7 +211,13 @@ class SecretsChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), priva
     }
 
     override val width: Int get() = this._width
-    override fun copy(): SecretsChunkTerminal = SecretsChunkTerminal(this.monsterSpawns, this.level, this._width, this.secretsPadding)
+    override fun copy(): SecretsChunkTerminal =
+        SecretsChunkTerminal(
+            this.monsterSpawns,
+            this.level,
+            this._width,
+            this.secretsPadding
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level}.${this.secretsPadding},${this.hasPowerUp})"
     override fun equals(other: Any?): Boolean = other is SecretsChunkTerminal && other._width == this._width && other.level == this.level && this.secretsPadding == secretsPadding
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.level.hashCode() * this.secretsPadding.hashCode()
@@ -223,7 +247,12 @@ class PipeChunkTerminal(private var _width: Int = 4, private var pipeHeight: Int
         }, arrayOf(MonsterSpawn(this._width / 2 - 1, this.level - (this.pipeHeight - 1), Entities.Flower.NORMAL)))
     }
 
-    override fun copy(): LevelChunkTerminal = PipeChunkTerminal(this._width, this.pipeHeight, this.level)
+    override fun copy(): LevelChunkTerminal =
+        PipeChunkTerminal(
+            this._width,
+            this.pipeHeight,
+            this.level
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level},${this.pipeHeight})"
     override fun equals(other: Any?): Boolean = other is PipeChunkTerminal && other._width == this._width && other.level == this.level && other.pipeHeight == pipeHeight
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.pipeHeight * this.level
@@ -252,7 +281,12 @@ class BulletBillChunkTerminal(private var _width: Int = 3, private var billHeigh
         }, arrayOf(MonsterSpawn(this._width / 2, this.level - (this.billHeight), Entities.BulletBill.NORMAL)))
     }
 
-    override fun copy(): LevelChunkTerminal = BulletBillChunkTerminal(this._width, this.billHeight, this.level)
+    override fun copy(): LevelChunkTerminal =
+        BulletBillChunkTerminal(
+            this._width,
+            this.billHeight,
+            this.level
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level},${this.billHeight})"
     override fun equals(other: Any?): Boolean = other is BulletBillChunkTerminal && other._width == this._width && other.level == this.level && other.billHeight == billHeight
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.billHeight * this.level
@@ -281,7 +315,12 @@ class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
         }, this.monsterSpawns)
     }
 
-    override fun copy(): LevelChunkTerminal = StairChunkTerminal(this.monsterSpawns, this.width, this.level)
+    override fun copy(): LevelChunkTerminal =
+        StairChunkTerminal(
+            this.monsterSpawns,
+            this.width,
+            this.level
+        )
     override fun toString(): String = "${this.value}(${this._width},${this.level})"
     override fun equals(other: Any?): Boolean = other is StairChunkTerminal && other._width == this._width && other.level == this.level
     override fun hashCode(): Int = javaClass.hashCode() * this._width.hashCode() * this.level
@@ -325,7 +364,16 @@ class DoublePathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), pr
         }, this.monsterSpawns)
     }
 
-    override fun copy(): LevelChunkTerminal = DoublePathChunkTerminal(monsterSpawns, width, level, firstLevelPadding, secondLevelPadding, isFirstSecrets, isSecondSecrets)
+    override fun copy(): LevelChunkTerminal =
+        DoublePathChunkTerminal(
+            monsterSpawns,
+            width,
+            level,
+            firstLevelPadding,
+            secondLevelPadding,
+            isFirstSecrets,
+            isSecondSecrets
+        )
     override fun toString(): String = "$value($_width,$level,$firstLevelPadding,$secondLevelPadding,$isFirstSecrets,$isSecondSecrets)"
     override fun equals(other: Any?): Boolean = other is DoublePathChunkTerminal && other._width == this._width && other.level == this.level
             && other.firstLevelPadding == this.firstLevelPadding && other.secondLevelPadding == this.secondLevelPadding

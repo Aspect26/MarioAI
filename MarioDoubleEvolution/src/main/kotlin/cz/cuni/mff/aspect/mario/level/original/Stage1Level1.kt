@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.original
 
-import cz.cuni.mff.aspect.evolution.levels.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel

@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.grammar
 
 import cz.cuni.mff.aspect.mario.Tiles
 
@@ -7,7 +7,8 @@ object ChunkHelpers {
 
     private val spaceColumn: ByteArray = ByteArray(15) { Tiles.NOTHING }
 
-    fun getSpaceColumn(): ByteArray = this.spaceColumn
+    fun getSpaceColumn(): ByteArray =
+        spaceColumn
 
     fun getPathColumn(level: Int): ByteArray = ByteArray(15) {
         when {

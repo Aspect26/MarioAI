@@ -1,6 +1,4 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar
-
-import kotlin.math.abs
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
 
 class GenesToSentenceConverter(private val grammar: Grammar) {

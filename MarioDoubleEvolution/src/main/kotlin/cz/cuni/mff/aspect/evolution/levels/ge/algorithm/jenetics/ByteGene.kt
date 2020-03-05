@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics
 
 import io.jenetics.NumericGene
 import io.jenetics.util.ISeq

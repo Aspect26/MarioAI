@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.direct.encoded
+package cz.cuni.mff.aspect.evolution.levels.direct
 
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
 import cz.cuni.mff.aspect.extensions.getIntValues

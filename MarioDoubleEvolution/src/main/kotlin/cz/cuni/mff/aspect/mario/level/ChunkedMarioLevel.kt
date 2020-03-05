@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.Terminal
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Terminal
 
 
 class ChunkedMarioLevel(chunks: Array<MarioLevelChunk>) : MarioLevel {

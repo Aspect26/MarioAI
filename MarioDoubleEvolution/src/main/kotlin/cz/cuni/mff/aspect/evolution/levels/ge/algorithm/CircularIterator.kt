@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
 
 class CircularIterator<T>(private val data: Array<T>): Iterator<T> {

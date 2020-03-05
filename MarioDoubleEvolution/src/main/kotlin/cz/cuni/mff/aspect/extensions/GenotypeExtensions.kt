@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.extensions
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics.ByteGene
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import io.jenetics.DoubleGene
 import io.jenetics.Gene
 import io.jenetics.Genotype

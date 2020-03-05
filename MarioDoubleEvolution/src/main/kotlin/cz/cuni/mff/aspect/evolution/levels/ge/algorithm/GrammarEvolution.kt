@@ -1,13 +1,14 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics.ByteChromosome
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics.ByteGene
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GenesToSentenceConverter
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Grammar
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.extensions.getByteValues
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import io.jenetics.util.IntRange
-import java.util.function.Function
 
 
 class GrammarEvolution private constructor(private val grammar: Grammar,

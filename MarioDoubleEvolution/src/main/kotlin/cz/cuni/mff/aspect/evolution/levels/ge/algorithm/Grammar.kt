@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
 
 open class IncorrectGrammarException(message: String) : Exception(message)
@@ -27,12 +27,17 @@ class Grammar(private val productionRules: Array<ProductionRule>, val startingSy
         }
 
         if (productionMap[this.startingSymbol.value].isNullOrEmpty()) {
-            throw MissingStartingSymbolRule(this.startingSymbol, this.productionRules)
+            throw MissingStartingSymbolRule(
+                this.startingSymbol,
+                this.productionRules
+            )
         }
     }
 
     fun getRules(nonTerminal: Symbol): List<ProductionRule> =
-        this.productionMap[nonTerminal.value] ?: throw NoRuleForGivenSymbol(nonTerminal)
+        this.productionMap[nonTerminal.value] ?: throw NoRuleForGivenSymbol(
+            nonTerminal
+        )
 
 }
 

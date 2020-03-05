@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.utils
+package cz.cuni.mff.aspect.evolution.levels
 
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.DirectMarioLevel

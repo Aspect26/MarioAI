@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.utils.LevelPostProcessor
+import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import javafx.embed.swing.SwingFXUtils
@@ -8,7 +8,6 @@ import javafx.scene.image.Image
 import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JLabel
-import javax.swing.JScrollPane
 
 
 fun main() {

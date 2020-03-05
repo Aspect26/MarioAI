@@ -1,6 +1,5 @@
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.*
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.*
 import org.junit.Test
-import org.junit.Assert.*
 import org.junit.Ignore
 
 
@@ -68,11 +67,13 @@ class GenesToSentenceConverterTests {
         assertArrayEquals("Wrong conversion", expectedResult, result)
     }
 
-    private fun getConverterForTestGrammar() = GenesToSentenceConverter(TestGrammar.get())
+    private fun getConverterForTestGrammar() =
+        GenesToSentenceConverter(TestGrammar.get())
 
     object TestGrammar {
         val start = NonTerminal("START")
-        private val blockSequence = NonTerminal("BLOCK SEQUENCE")
+        private val blockSequence =
+            NonTerminal("BLOCK SEQUENCE")
         private  val block = NonTerminal("BLOCK")
         val blockType1 = Terminal("block 1")
         val blockType2 = Terminal("block 2")
@@ -80,18 +81,23 @@ class GenesToSentenceConverterTests {
         val blockType4 = Terminal("block 4")
         val blockType5 = Terminal("block 5")
 
-        private val grammar = Grammar(arrayOf(
-            ProductionRule(start, arrayOf(blockSequence)),
+        private val grammar = Grammar(
+            arrayOf(
+                ProductionRule(start, arrayOf(blockSequence)),
 
-            ProductionRule(blockSequence, arrayOf(block)),
-            ProductionRule(blockSequence, arrayOf(block, blockSequence)),
+                ProductionRule(blockSequence, arrayOf(block)),
+                ProductionRule(
+                    blockSequence,
+                    arrayOf(block, blockSequence)
+                ),
 
-            ProductionRule(block, arrayOf(blockType1)),
-            ProductionRule(block, arrayOf(blockType2)),
-            ProductionRule(block, arrayOf(blockType3)),
-            ProductionRule(block, arrayOf(blockType4)),
-            ProductionRule(block, arrayOf(blockType5))
-        ), start)
+                ProductionRule(block, arrayOf(blockType1)),
+                ProductionRule(block, arrayOf(blockType2)),
+                ProductionRule(block, arrayOf(blockType3)),
+                ProductionRule(block, arrayOf(blockType4)),
+                ProductionRule(block, arrayOf(blockType5))
+            ), start
+        )
 
         fun get(): Grammar = grammar
     }

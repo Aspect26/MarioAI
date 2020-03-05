@@ -1,9 +1,8 @@
-package cz.cuni.mff.aspect.grammar
+package cz.cuni.mff.aspect.grammar.algorithm
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.CircularIterator
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.Grammar
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.GrammarSentence
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.Symbol
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Grammar
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Symbol
 import java.util.*
 import kotlin.math.abs
 
@@ -17,7 +16,8 @@ class RandomGrammarSentenceGenerator(private val grammar: Grammar) {
 
         val currentSentence = mutableListOf<Symbol>(grammar.startingSymbol)
         var firstNonTerminal: Symbol? = currentSentence.find { it.expandable }
-        val parametersIterator = CircularIterator(Array(100) {this.random.nextInt()} )
+        val parametersIterator =
+            cz.cuni.mff.aspect.evolution.levels.ge.algorithm.CircularIterator(Array(100) { this.random.nextInt() })
 
         while (firstNonTerminal != null && currentSentence.size < maxLength) {
             val applicableRules = grammar.getRules(firstNonTerminal)

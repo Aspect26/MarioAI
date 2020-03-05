@@ -1,17 +1,15 @@
-package cz.cuni.mff.aspect.evolution.levels.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.grammar
 
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.GrammarEvolution
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.GrammarSentence
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.getString
-import cz.cuni.mff.aspect.evolution.algorithm.grammar.jenetics.ByteGene
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
-import cz.cuni.mff.aspect.evolution.utils.MarioLevelEvaluators
+import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.MarioLevelChunk
 import io.jenetics.Alterer
 import io.jenetics.Mutator
 import io.jenetics.SinglePointCrossover

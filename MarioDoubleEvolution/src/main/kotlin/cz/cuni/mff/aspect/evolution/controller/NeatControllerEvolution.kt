@@ -3,8 +3,6 @@ package cz.cuni.mff.aspect.evolution.controller
 import com.evo.NEAT.Environment
 import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
-import cz.cuni.mff.aspect.evolution.utils.MarioGameplayEvaluator
-import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
@@ -12,8 +10,6 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 
 class NeatControllerEvolution(

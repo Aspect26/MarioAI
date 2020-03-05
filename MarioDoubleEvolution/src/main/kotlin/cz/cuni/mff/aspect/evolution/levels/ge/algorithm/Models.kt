@@ -1,5 +1,7 @@
-package cz.cuni.mff.aspect.evolution.algorithm.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
+import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
 import java.io.Serializable
 
 
