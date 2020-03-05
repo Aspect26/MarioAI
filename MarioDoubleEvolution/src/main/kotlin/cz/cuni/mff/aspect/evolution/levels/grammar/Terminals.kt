@@ -62,7 +62,7 @@ class EndPlatformChunkTerminal(private var level: Int = 5) : LevelChunkTerminal(
 
     override fun generateChunk(): MarioLevelChunk {
         val pathColumn = ChunkHelpers.getPathColumn(this.level)
-        return TerminalMarioLevelChunk(this, Array(this.width) { pathColumn }, arrayOf(MonsterSpawn(this.width / 2, this.level - 1, Entities.Princess.NORMAL)))
+        return TerminalMarioLevelChunk(this, Array(this.width) { pathColumn }, arrayOf(MonsterSpawn(this.width / 2, this.level - 1, Entities.PrincessPeach.NORMAL)))
     }
 
     override val width: Int get() = 12

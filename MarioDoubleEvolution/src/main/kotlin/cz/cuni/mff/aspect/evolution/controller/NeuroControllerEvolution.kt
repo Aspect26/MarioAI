@@ -6,7 +6,7 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.visualisation.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import cz.woitee.endlessRunners.evolution.utils.MarioEvaluator
 import io.jenetics.*
 import io.jenetics.engine.Engine
