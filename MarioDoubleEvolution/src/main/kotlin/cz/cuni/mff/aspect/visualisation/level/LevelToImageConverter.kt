@@ -1,16 +1,21 @@
 package cz.cuni.mff.aspect.visualisation.level
 
 import cz.cuni.mff.aspect.mario.Entities
-import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 
 
 object LevelToImageConverter {
 
     private const val SPRITES_SIZE = 16
-    private const val ENTITIES_PADDING = 2
+    private const val TRANSPARENT_COLOR = 16777215
+
+    private val tileSheet: BufferedImage = ImageIO.read(File("resources/mapsheet.png"))
+    private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
+    private val backgroundSheet: BufferedImage = ImageIO.read(File("resources/bgsheet.png"))
 
     fun create(level: MarioLevel): BufferedImage {
         val width = level.tiles.size * this.SPRITES_SIZE
@@ -18,14 +23,23 @@ object LevelToImageConverter {
 
         val image = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
 
+        for (x in 0 until level.tiles.size * this.SPRITES_SIZE) {
+            for (y in 0 until level.tiles[0].size * this.SPRITES_SIZE) {
+                val color = this.getBackgroundColor(x, y)
+                image.setRGB(x, y, color)
+            }
+        }
+
         for (x in level.tiles.indices) {
             for (y in level.tiles[x].indices) {
                 val tile = level.tiles[x][y]
-                val color = this.getTileColor(tile)
 
                 for (i in 0 until this.SPRITES_SIZE) {
                     for (j in 0 until this.SPRITES_SIZE) {
-                        image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j, color.rgb)
+                        val color = this.getTileColor(tile, i, j)
+                        if (color != this.TRANSPARENT_COLOR) {
+                            image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j, color)
+                        }
                     }
                 }
             }
@@ -36,12 +50,13 @@ object LevelToImageConverter {
                 val entity = level.enemies[x][y]
 
                 if (entity != Entities.NOTHING) {
-                    val color = this.getEntityColor(entity)
 
-                    for (i in ENTITIES_PADDING .. this.SPRITES_SIZE - 2 * ENTITIES_PADDING) {
-                        for (j in ENTITIES_PADDING .. this.SPRITES_SIZE - 2 * ENTITIES_PADDING) {
-                            val selectedColor = if (i == j || i == this.SPRITES_SIZE - ENTITIES_PADDING - j) Color.WHITE else color
-                            image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j, selectedColor.rgb)
+                    for (i in 0 until this.SPRITES_SIZE) {
+                        for (j in 0 until this.SPRITES_SIZE * 2) {
+                            val color = this.getEntityColor(entity, i, j)
+                            if (color != this.TRANSPARENT_COLOR) {
+                                image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j, color)
+                            }
                         }
                     }
                 }
@@ -51,35 +66,31 @@ object LevelToImageConverter {
         return image
     }
 
-    private fun getTileColor(tile: Byte): Color =
-        when (tile) {
-            Tiles.NOTHING -> Color.WHITE
-            Tiles.DIRT -> Color(118, 81, 49)
-            Tiles.STONE -> Color.LIGHT_GRAY
-            Tiles.BRICK -> Color(114, 0, 1)
-            Tiles.QM_WITH_COIN -> Color(151, 59, 5)
-            Tiles.QM_WITH_POWERUP -> Color.YELLOW
-            Tiles.GRASS_TOP, Tiles.GRASS_LEFT, Tiles.GRASS_RIGHT, Tiles.GRASS_TOP_RIGHT, Tiles.GRASS_TOP_LEFT,
-                Tiles.GRASS_CORNER_TOP_LEFT, Tiles.GRASS_CORNER_TOP_RIGHT -> Color(0, 93, 12)
-            Tiles.PIPE_MIDDLE_LEFT, Tiles.PIPE_MIDDLE_RIGHT, Tiles.PIPE_TOP_LEFT, Tiles.PIPE_TOP_RIGHT -> Color(0, 200, 12)
-            Tiles.BULLET_BLASTER_BOTTOM, Tiles.BULLET_BLASTER_MIDDLE, Tiles.BULLET_BLASTER_TOP -> Color.ORANGE
+    private fun getBackgroundColor(x: Int, y: Int): Int {
+        val xPos = 130 + x % 30
+        val ySize = 95
+        val yPos = if ((y / ySize) % 2 == 0) y % ySize else ySize - (y % ySize)
 
-            Tiles.BUSH_START, Tiles.BUSH_MIDDLE, Tiles.BUSH_END,
-            Tiles.ENV_GRASS_START, Tiles.ENV_GRASS_MIDDLE, Tiles.ENV_GRASS_END,
-            Tiles.ARROW_BOTTOM_LEFT, Tiles.ARROW_BOTTOM_RIGHT, Tiles.ARROW_TOP_RIGHT, Tiles.ARROW_TOP_LEFT -> Color(255, 244,189)
+        return this.backgroundSheet.getRGB(xPos, yPos)
+    }
 
-            else -> Color.BLACK
-        }
+    private fun getTileColor(tile: Byte, x: Int, y: Int): Int {
+        val tilePosition: Int = if (tile >= 0) tile.toInt() else tile + 256
+        val tileX = tilePosition % 16
+        val tileY = (tilePosition - tileX) / 16
 
-    private fun getEntityColor(entity: Int): Color =
+        return this.tileSheet.getRGB(tileX * 16 + x, tileY * 16 + y)
+    }
+
+    private fun getEntityColor(entity: Int, x: Int, y: Int): Int =
         when (entity) {
-            Entities.Goomba.NORMAL -> Color(118, 81, 49)
-            Entities.Koopa.GREEN -> Color(0, 200, 12)
-            Entities.Flower.NORMAL -> Color.RED
-            Entities.BulletBill.NORMAL -> Color.ORANGE
-            Entities.PrincessPeach.NORMAL -> Color(225, 122, 157)
+            Entities.Goomba.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 2 * 32 + y)
+            Entities.Koopa.GREEN -> this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+            Entities.Flower.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 6 * 32 + y)
+            Entities.BulletBill.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 5 * 32 + y)
+            Entities.PrincessPeach.NORMAL -> Color(225, 122, 157).rgb
 
-            else -> Color.BLACK
+            else -> Color.BLACK.rgb
         }
 
 }

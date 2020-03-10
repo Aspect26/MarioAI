@@ -4,7 +4,7 @@ import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.results.Levels
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.storage.LevelStorage
+import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import kotlin.system.exitProcess
 
 
@@ -21,15 +21,19 @@ fun keyboardPlay() {
 //    val levels = Levels.GrammarEvolution.AllLevels
 
     val experimentName = "firstManyTest"
-    val levels = arrayOf(
-        LevelStorage.loadLevel("experiments/$experimentName/0.lvl")
-    )
+//    val levels = arrayOf(
+//        LevelStorage.loadLevel("experiments/$experimentName/0.lvl")
+//    )
+
+    val levels = Levels.GrammarEvolution.AllLevels
+
 
     val postProcessedLevels = levels.map { level -> LevelPostProcessor.postProcess(level, true) }
 
     val marioSimulator = GameSimulator(15000)
 
     for (level in postProcessedLevels) {
+        LevelVisualiser().display(level)
         val agent = CheaterKeyboardAgent()
         val stats = marioSimulator.playMario(agent, level, true)
         print(stats.jumps)
