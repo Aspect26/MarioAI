@@ -87,7 +87,7 @@ abstract class MonsterSpawningChunkTerminal(terminalName: String, protected var 
         val monsterCount: Int = iterator.next() % 3
         this.monsterSpawns = Array(monsterCount) {
             val xPos = iterator.next() % this.width
-            val yPos = this.level - 1
+            val yPos = this.monstersLevel
             when (iterator.next() % 2) {
                 0 -> MonsterSpawn(xPos, yPos, Entities.Goomba.NORMAL)
                 1 -> MonsterSpawn(xPos, yPos, Entities.Koopa.GREEN)
@@ -98,6 +98,7 @@ abstract class MonsterSpawningChunkTerminal(terminalName: String, protected var 
     }
 
     protected abstract var level: Int
+    protected open val monstersLevel: Int get() = this.level - 1
 }
 
 
@@ -296,11 +297,13 @@ class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
 
     override fun takeChunkParameters(iterator: Iterator<Int>) {
         this._width = (iterator.next() % 4) + 3 + 2
-        this.level = iterator.next() % 6 + 7
+        this.level = iterator.next() % 6 + 8
     }
 
     override val width: Int
         get() = this._width
+
+    override val monstersLevel: Int get() = this.level - this._width
 
     override fun generateChunk(): MarioLevelChunk {
         val pathColumn = ChunkHelpers.getPathColumn(this.level)

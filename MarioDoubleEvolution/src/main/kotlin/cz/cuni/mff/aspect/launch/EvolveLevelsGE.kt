@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.storage.LevelStorage
+import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 
 fun main() {
@@ -22,10 +23,11 @@ fun grammarEvolution() {
     val levels = levelEvolution.evolve(marioAgent)
     val firstLevel = levels.first()
 
-    LevelPostProcessor.postProcess(firstLevel)
-    LevelStorage.storeLevel("current.lvl", firstLevel)
+    val postprocessed = LevelPostProcessor.postProcess(firstLevel)
+    LevelStorage.storeLevel("current.lvl", postprocessed)
 
-    GameSimulator().playMario(agent, firstLevel, true)
+    LevelVisualiser().display(postprocessed)
+    GameSimulator().playMario(agent, postprocessed, true)
 }
 
 fun directEncodedEvolution() {
