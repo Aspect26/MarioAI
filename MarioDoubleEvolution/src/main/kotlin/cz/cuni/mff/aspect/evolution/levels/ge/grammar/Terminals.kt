@@ -303,7 +303,7 @@ class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
     override val width: Int
         get() = this._width
 
-    override val monstersLevel: Int get() = this.level - this._width
+    override val monstersLevel: Int get() = this.level - this._width + 1
 
     override fun generateChunk(): MarioLevelChunk {
         val pathColumn = ChunkHelpers.getPathColumn(this.level)
