@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.levels.direct.DirectEncodedLevelEvolution
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.GrammarLevelEvolution
+import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent

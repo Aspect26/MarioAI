@@ -86,6 +86,8 @@ object LevelToImageConverter {
         when (entity) {
             Entities.Goomba.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 2 * 32 + y)
             Entities.Koopa.GREEN -> this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+            Entities.Koopa.RED -> this.enemySheet.getRGB(0 * 32 + x, 0 * 32 + y)
+            Entities.Spiky.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 3 * 32 + y)
             Entities.Flower.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 6 * 32 + y)
             Entities.BulletBill.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 5 * 32 + y)
             Entities.PrincessPeach.NORMAL -> Color(225, 122, 157).rgb

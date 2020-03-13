@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.ge.grammar
+package cz.cuni.mff.aspect.evolution.levels.ge
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
@@ -7,9 +7,10 @@ import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelGrammar
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
-import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevelChunk
@@ -21,7 +22,8 @@ import io.jenetics.util.IntRange
 
 class GrammarLevelEvolution(private val levelsCount: Int = 1,
                             private val populationSize: Int = POPULATION_SIZE,
-                            private val generationsCount: Long = GENERATIONS_COUNT) : LevelEvolution {
+                            private val generationsCount: Long = GENERATIONS_COUNT
+) : LevelEvolution {
 
     private lateinit var agent: IAgent
 
