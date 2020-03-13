@@ -4,13 +4,13 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
     var agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val marioAgent = agent as MarioAgent
+    agent = Agents.RuleBased.goingRight
+    val marioAgent = agent
 
     val levelEvolution = ProbabilisticMultipassEvolution()
     val levels = levelEvolution.evolve(marioAgent)

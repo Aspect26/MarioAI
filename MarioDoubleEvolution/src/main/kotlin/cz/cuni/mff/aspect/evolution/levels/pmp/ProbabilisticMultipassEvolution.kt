@@ -14,7 +14,7 @@ import java.util.function.Function
 
 class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
-    private val generationsCount: Int = 50,
+    private val generationsCount: Int = 200,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5
 ) : LevelEvolution {
@@ -30,6 +30,7 @@ class ProbabilisticMultipassEvolution(
         // TODO: return multiple levels
         val genes = result.bestPhenotype.genotype.getDoubleValues()
         val level = PMPLevelCreator.create(levelLength, genes)
+        print(genes.contentToString())
         return arrayOf(level)
     }
 
@@ -42,9 +43,9 @@ class ProbabilisticMultipassEvolution(
         return Engine.builder(fitness, initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)
-            .alterers(SinglePointCrossover(0.2), Mutator(0.50))
+            .alterers(GaussianMutator(0.60))
             .survivorsSelector(EliteSelector(2))
-            .offspringSelector(TournamentSelector(3))
+            .offspringSelector(RouletteWheelSelector())
             .mapping { evolutionResult ->
                 println("new gen: ${evolutionResult.generation} (best fitness: ${evolutionResult.bestFitness})")
                 evolutionResult
@@ -61,9 +62,9 @@ class ProbabilisticMultipassEvolution(
     private val fitness = Function<Genotype<DoubleGene>, Float> { genotype -> fitness(genotype) }
     private fun fitness(genotype: Genotype<DoubleGene>): Float {
 
+        // TODO: reevaluate on every generation for all individuals
         val genes = genotype.getDoubleValues()
 
-        // TODO: compute on more levels than one!
         val levels = Array(this.evaluateOnLevelsCount) { PMPLevelCreator.create(levelLength, genes) }
         val stats = levels.map {level ->
             // TODO: this is a hack!!! for some reason if we directly pass agent, it crashes
@@ -72,6 +73,7 @@ class ProbabilisticMultipassEvolution(
             marioSimulator.playMario(agent, level, false)
         }
 
+        // TODO: fitness should be in ctor 
         return MarioLevelEvaluators.distanceOnly(stats)
     }
 

@@ -11,8 +11,11 @@ object Agents {
 
     object RuleBased {
 
-        // My implementation from AI course
+        // My best implementation from AI course
         val my: IAgent get() = MyRuleBasedAgent()
+
+        // Going right only -> for testing
+        val goingRight: MarioAgent get() = GoingRightAgent()
 
         // Jakub Arnold's implementation from AI course
         val arnold: IAgent get() = ArnoldRuleBasedAgent()
