@@ -10,6 +10,6 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
  */
 interface LevelEvolution {
 
-    fun evolve(controller: IAgent): Array<MarioLevel>
+    fun evolve(agent: IAgent): Array<MarioLevel>
 
 }

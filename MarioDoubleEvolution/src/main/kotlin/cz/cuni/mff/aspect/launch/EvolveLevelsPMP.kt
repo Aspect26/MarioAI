@@ -1,20 +1,27 @@
 package cz.cuni.mff.aspect.launch
 
-import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
-import ch.idsia.agents.controllers.keyboard.KeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelCreator
+import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
+import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.MarioAgent
+import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
+    var agent = Agents.NeuroEvolution.Stage4Level1Solver
+    val marioAgent = agent as MarioAgent
 
-    var level = PMPLevelCreator.createDefault()
-    val agent = CheaterKeyboardAgent()
+    val levelEvolution = ProbabilisticMultipassEvolution()
+    val levels = levelEvolution.evolve(marioAgent)
+    val firstLevel = levels.first()
 
-    level = LevelPostProcessor.postProcess(level)
+    val postprocessed = LevelPostProcessor.postProcess(firstLevel)
+    LevelStorage.storeLevel("current.lvl", postprocessed)
 
-    LevelVisualiser().display(level)
-    GameSimulator().playMario(agent, level, true)
+    LevelVisualiser().display(postprocessed)
+
+//    agent = CheaterKeyboardAgent()
+    GameSimulator().playMario(agent, postprocessed, true)
 
 }

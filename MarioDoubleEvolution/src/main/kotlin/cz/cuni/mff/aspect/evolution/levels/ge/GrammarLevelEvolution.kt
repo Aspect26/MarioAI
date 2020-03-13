@@ -57,7 +57,7 @@ class GrammarLevelEvolution(private val levelsCount: Int = 1,
         val agent = MarioAgent((this.agent as MarioAgent).controller)
         val stats = gameSimulator.playMario(agent, level, false)
 
-        return MarioLevelEvaluators.distanceActionsVictory(sentence, stats)
+        return MarioLevelEvaluators.distanceActionsVictory(stats)
     }
 
     // TODO: this may be its own class
