@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
+import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -16,7 +17,9 @@ class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
     private val generationsCount: Int = 200,
     private val levelLength: Int = 200,
-    private val evaluateOnLevelsCount: Int = 5
+    private val evaluateOnLevelsCount: Int = 5,
+    private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::distanceOnly,
+    private val maxProbability: Double = 0.3
 ) : LevelEvolution {
 
     private lateinit var agent: IAgent
@@ -35,8 +38,7 @@ class ProbabilisticMultipassEvolution(
     }
 
     private fun createInitialGenotype(): Genotype<DoubleGene> {
-        // TODO: constant omg
-        return Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(11) { DoubleGene.of(0.0, 0.0, 0.3) }))
+        return Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(PMPLevelCreator.PROBABILITIES_COUNT) { DoubleGene.of(0.0, 0.0, this.maxProbability) }))
     }
 
     private fun createEvolutionEngine(initialGenotype: Genotype<DoubleGene>): Engine<DoubleGene, Float> {
@@ -73,8 +75,7 @@ class ProbabilisticMultipassEvolution(
             marioSimulator.playMario(agent, level, false)
         }
 
-        // TODO: fitness should be in ctor 
-        return MarioLevelEvaluators.distanceOnly(stats)
+        return this.fitnessFunction(stats)
     }
 
 }

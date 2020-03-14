@@ -27,6 +27,8 @@ object PMPLevelCreator {
     private const val PI_PIPE = 9
     private const val PI_START_BOXES = 10
 
+    const val PROBABILITIES_COUNT = 11
+
     private val random = Random()
 
     fun createDefault(): MarioLevel =

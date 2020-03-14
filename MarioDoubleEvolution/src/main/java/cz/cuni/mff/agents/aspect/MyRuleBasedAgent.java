@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect;
+package cz.cuni.mff.agents.aspect;
 
 import java.awt.Graphics;
 
@@ -17,6 +17,7 @@ import ch.idsia.benchmark.mario.engine.input.MarioInput;
 import ch.idsia.benchmark.mario.environments.IEnvironment;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.utils.MarioLog;
+import cz.cuni.mff.LevelConfig;
 
 /**
  * Code your custom agent here!

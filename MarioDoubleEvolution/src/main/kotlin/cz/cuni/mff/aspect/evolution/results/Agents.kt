@@ -1,8 +1,12 @@
 package cz.cuni.mff.aspect.evolution.results
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.arnold.ArnoldRuleBasedAgent
-import cz.cuni.mff.aspect.MyRuleBasedAgent
+import cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent
+import cz.cuni.mff.agents.aspect.MyRuleBasedAgent
+import cz.cuni.mff.aspect.agents.GoingRightAgent
+import cz.cuni.mff.aspect.agents.GoingRightAndJumpingAgent
+import cz.cuni.mff.aspect.agents.RandomAgent
+import cz.cuni.mff.aspect.agents.StandingAgent
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -11,11 +15,14 @@ object Agents {
 
     object RuleBased {
 
+        // Sanity checks agents
+        val standing: MarioAgent get() = StandingAgent()
+        val random: MarioAgent get() = RandomAgent()
+        val goingRight: MarioAgent get() = GoingRightAgent()
+        val goingRightJumping: MarioAgent get() = GoingRightAndJumpingAgent()
+
         // My best implementation from AI course
         val my: IAgent get() = MyRuleBasedAgent()
-
-        // Going right only -> for testing
-        val goingRight: MarioAgent get() = GoingRightAgent()
 
         // Jakub Arnold's implementation from AI course
         val arnold: IAgent get() = ArnoldRuleBasedAgent()

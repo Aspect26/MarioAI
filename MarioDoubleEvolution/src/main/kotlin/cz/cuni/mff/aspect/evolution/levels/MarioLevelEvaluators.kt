@@ -1,10 +1,9 @@
 package cz.cuni.mff.aspect.evolution.levels
 
-import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
 import cz.cuni.mff.aspect.extensions.sumByFloat
 import cz.cuni.mff.aspect.mario.GameStatistics
 
-typealias MarioGrammarLevelEvaluator<F> = (sentence: GrammarSentence, gameStatistics: GameStatistics) -> F
+typealias MarioLevelEvaluator<F> = (gameStatistics: List<GameStatistics>) -> F
 
 object MarioLevelEvaluators {
 

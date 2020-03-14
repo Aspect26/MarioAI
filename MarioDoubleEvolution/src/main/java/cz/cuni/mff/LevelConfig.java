@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect;
+package cz.cuni.mff;
 
 import ch.idsia.benchmark.mario.engine.generalization.Enemy;
 import ch.idsia.benchmark.mario.options.FastOpts;
