@@ -7,11 +7,13 @@ import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import java.util.function.Function
 import java.util.stream.Collectors
+import java.util.stream.Stream
 
 class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
@@ -20,10 +22,12 @@ class ProbabilisticMultipassEvolution(
     private val evaluateOnLevelsCount: Int = 5,
     private val resultLevelsCount: Int = 5,
     private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::distanceOnly,
-    private val maxProbability: Double = 0.3
+    private val maxProbability: Double = 0.3,
+    private val chartLabel: String = "PMP Level Evolution"
 ) : LevelEvolution {
 
     private lateinit var agentFactory: () -> IAgent
+    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = true)
 
     override fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
         this.agentFactory = agentFactory
@@ -32,6 +36,10 @@ class ProbabilisticMultipassEvolution(
         val resultIndividuals = this.doEvolution(evolutionEngine)
 
         return Array(resultIndividuals.size) { PMPLevelCreator.create(levelLength, resultIndividuals[it]) }
+    }
+
+    fun storeChart(path: String) {
+        this.chart.save(path)
     }
 
     private fun createInitialGenotype(): Genotype<DoubleGene> {
@@ -45,37 +53,41 @@ class ProbabilisticMultipassEvolution(
             .alterers(GaussianMutator(0.60))
             .survivorsSelector(EliteSelector(2))
             .offspringSelector(RouletteWheelSelector())
-            .mapping { evolutionResult ->
-                println("new gen: ${evolutionResult.generation} (best fitness: ${evolutionResult.bestFitness})")
-                evolutionResult
-            }
             .build()
     }
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): List<DoubleArray> {
+        this.chart.show()
+
+        val evolutionStream = evolutionEngine.stream()
+            .limit(this.generationsCount.toLong())
+            .peek {
+                val generation = it.generation.toInt()
+                val bestFitness = it.bestFitness.toDouble()
+                val averageFitness = it.population.asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness}) / it.population.length()
+                this.chart.update(generation, bestFitness, averageFitness.toDouble(), 0.0, 0.0)
+                println("new gen: ${it.generation} (best fitness: ${it.bestFitness})")
+            }
+
         return if (this.resultLevelsCount == 1) {
-            val evolutionBestResult = this.doEvolutionSingleResult(evolutionEngine)
+            val evolutionBestResult = this.collectSingleEvolutionResult(evolutionStream)
             listOf(evolutionBestResult)
         } else {
-            this.doEvolutionMultiResult(evolutionEngine, this.resultLevelsCount)
+            this.collectMultiEvolutionResult(evolutionStream, this.resultLevelsCount)
         }
     }
 
-    private fun doEvolutionSingleResult(evolutionEngine: Engine<DoubleGene, Float>): DoubleArray {
-        return evolutionEngine.stream()
-            .limit(this.generationsCount.toLong())
+    private fun collectSingleEvolutionResult(evolutionStream: Stream<EvolutionResult<DoubleGene, Float>>): DoubleArray {
+        return evolutionStream
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
             .bestPhenotype.genotype.getDoubleValues()
     }
 
-    private fun doEvolutionMultiResult(evolutionEngine: Engine<DoubleGene, Float>, levelsCount: Int): List<DoubleArray> {
-        val allGenerations = evolutionEngine.stream()
-            .limit(this.generationsCount.toLong())
-            .collect(Collectors.toList())
-
+    private fun collectMultiEvolutionResult(evolutionStream: Stream<EvolutionResult<DoubleGene, Float>>, resultsCount: Int): List<DoubleArray> {
+        val allGenerations = evolutionStream.collect(Collectors.toList())
         val allIndividuals = allGenerations.flatMap { it.population }
         val allIndividualsSorted = allIndividuals.sortedByDescending { it.fitness }
-        val bestIndividuals = allIndividualsSorted.subList(0, levelsCount.coerceAtMost(allIndividuals.size))
+        val bestIndividuals = allIndividualsSorted.subList(0, resultsCount.coerceAtMost(allIndividuals.size))
 
         return bestIndividuals.map { it.genotype.getDoubleValues() }
     }

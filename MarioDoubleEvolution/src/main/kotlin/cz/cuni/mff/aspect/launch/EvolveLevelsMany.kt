@@ -16,13 +16,15 @@ fun main() {
 
 fun doManyPMPEvolution() {
 
-    val experimentsLabel = "pmp/goingRightAgent"
+    val experimentsName = "pmp/Neuros4l1solver"
     val generationsCount = 150
+    val agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver }
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(
-            label = "${experimentsLabel}_1",
-            agentFactory = { Agents.RuleBased.goingRight },
+            storageLocation = experimentsName,
+            label = "experiment_1",
+            agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             evaluateOnLevelsCount = 5,
@@ -31,8 +33,9 @@ fun doManyPMPEvolution() {
         ),
 
         PMPEvolutionLauncher(
-            label = "${experimentsLabel}_2",
-            agentFactory = { Agents.RuleBased.goingRight },
+            storageLocation = experimentsName,
+            label = "experiment_2",
+            agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             evaluateOnLevelsCount = 5,
@@ -41,8 +44,9 @@ fun doManyPMPEvolution() {
         ),
 
         PMPEvolutionLauncher(
-            label = "${experimentsLabel}_3",
-            agentFactory = { Agents.RuleBased.goingRight },
+            storageLocation = experimentsName,
+            label = "experiment_3",
+            agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             evaluateOnLevelsCount = 5,
@@ -51,8 +55,9 @@ fun doManyPMPEvolution() {
         ),
 
         PMPEvolutionLauncher(
-            label = "${experimentsLabel}_4",
-            agentFactory = { Agents.RuleBased.goingRight },
+            storageLocation = experimentsName,
+            label = "experiment_4",
+            agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             evaluateOnLevelsCount = 5,
@@ -83,6 +88,7 @@ fun doManyGrammarEvolution() {
 }
 
 class PMPEvolutionLauncher(
+    private val storageLocation: String,
     private val label: String,
     private val agentFactory: () -> IAgent,
     private val populationSize: Int,
@@ -99,7 +105,8 @@ class PMPEvolutionLauncher(
             resultLevelsCount = this.resultLevelsCount,
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
-            evaluateOnLevelsCount = this.evaluateOnLevelsCount
+            evaluateOnLevelsCount = this.evaluateOnLevelsCount,
+            chartLabel = this.label
         )
 
         var levels = levelEvolution.evolve(this.agentFactory)
@@ -107,8 +114,9 @@ class PMPEvolutionLauncher(
         if (this.postProcess)
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()
 
-        levels.forEachIndexed { index, level -> LevelStorage.storeLevel("experiments/${label}_$index.lvl", level) }
-        levels.forEachIndexed { index, level -> levelVisualiser.displayAndStore(level, "data/levels/experiments/${label}_$index") }
+        levels.forEachIndexed { index, level -> LevelStorage.storeLevel("data/levels/experiments/$storageLocation/${label}_$index.lvl", level) }
+        levels.forEachIndexed { index, level -> levelVisualiser.store(level, "data/levels/experiments/$storageLocation/${label}_$index") }
+        levelEvolution.storeChart("data/levels/experiments/$storageLocation/$label")
     }
 }
 
@@ -135,8 +143,8 @@ class GrammarEvolutionLauncher(
         if (this.postProcess)
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()
 
-        levels.forEachIndexed { index, level -> LevelStorage.storeLevel("experiments/$label/$index.lvl", level) }
-        levels.forEachIndexed { index, level -> levelVisualiser.displayAndStore(level, "data/levels/experiments/$label/$index") }
+        levels.forEachIndexed { index, level -> LevelStorage.storeLevel("data/levels/experiments/$label/$index.lvl", level) }
+        levels.forEachIndexed { index, level -> levelVisualiser.store(level, "data/levels/experiments/$label/$index") }
     }
 
 }
