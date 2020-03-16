@@ -11,6 +11,7 @@ import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import java.util.function.Function
+import java.util.stream.Collectors
 
 class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
@@ -28,12 +29,9 @@ class ProbabilisticMultipassEvolution(
         this.agentFactory = agentFactory
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
-        val result = this.doEvolution(evolutionEngine)
+        val resultIndividuals = this.doEvolution(evolutionEngine)
 
-        // TODO: return multiple levels
-        val genes = result.bestPhenotype.genotype.getDoubleValues()
-        val level = PMPLevelCreator.create(levelLength, genes)
-        return arrayOf(level)
+        return Array(resultIndividuals.size) { PMPLevelCreator.create(levelLength, resultIndividuals[it]) }
     }
 
     private fun createInitialGenotype(): Genotype<DoubleGene> {
@@ -54,10 +52,32 @@ class ProbabilisticMultipassEvolution(
             .build()
     }
 
-    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): EvolutionResult<DoubleGene, Float> {
+    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): List<DoubleArray> {
+        return if (this.resultLevelsCount == 1) {
+            val evolutionBestResult = this.doEvolutionSingleResult(evolutionEngine)
+            listOf(evolutionBestResult)
+        } else {
+            this.doEvolutionMultiResult(evolutionEngine, this.resultLevelsCount)
+        }
+    }
+
+    private fun doEvolutionSingleResult(evolutionEngine: Engine<DoubleGene, Float>): DoubleArray {
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
+            .bestPhenotype.genotype.getDoubleValues()
+    }
+
+    private fun doEvolutionMultiResult(evolutionEngine: Engine<DoubleGene, Float>, levelsCount: Int): List<DoubleArray> {
+        val allGenerations = evolutionEngine.stream()
+            .limit(this.generationsCount.toLong())
+            .collect(Collectors.toList())
+
+        val allIndividuals = allGenerations.flatMap { it.population }
+        val allIndividualsSorted = allIndividuals.sortedByDescending { it.fitness }
+        val bestIndividuals = allIndividualsSorted.subList(0, levelsCount.coerceAtMost(allIndividuals.size))
+
+        return bestIndividuals.map { it.genotype.getDoubleValues() }
     }
 
     private val fitness = Function<Genotype<DoubleGene>, Float> { genotype -> fitness(genotype) }
