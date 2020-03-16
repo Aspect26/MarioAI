@@ -45,7 +45,8 @@ class GrammarEvolutionLauncher(
             generationsCount = this.generationsCount
         )
 
-        var levels = levelEvolution.evolve(agent)
+        // TODO: here should be agent factory! so it does not pass the same object again and again
+        var levels = levelEvolution.evolve { agent }
 
         if (this.postProcess)
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()

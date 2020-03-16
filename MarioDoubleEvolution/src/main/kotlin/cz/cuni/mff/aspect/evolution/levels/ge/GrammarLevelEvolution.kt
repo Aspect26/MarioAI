@@ -10,7 +10,6 @@ import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelGrammar
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevelChunk
@@ -25,10 +24,10 @@ class GrammarLevelEvolution(private val levelsCount: Int = 1,
                             private val generationsCount: Long = GENERATIONS_COUNT
 ) : LevelEvolution {
 
-    private lateinit var agent: IAgent
+    private lateinit var agentFactory: () -> IAgent
 
-    override fun evolve(controller: IAgent): Array<MarioLevel> {
-        this.agent = controller
+    override fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
+        this.agentFactory = agentFactory
         val grammarEvolution = GrammarEvolution.Builder(LevelGrammar.get())
             .fitness(this::fitness)
             .chromosomeLength(CHROMOSOME_LENGTH)
@@ -53,8 +52,7 @@ class GrammarLevelEvolution(private val levelsCount: Int = 1,
         val level = this.createLevelFromSentence(sentence)
         val gameSimulator = GameSimulator()
 
-        // TODO: this is a hack!!! for some reason if we directly pass agent, it crashes
-        val agent = MarioAgent((this.agent as MarioAgent).controller)
+        val agent = this.agentFactory()
         val stats = gameSimulator.playMario(agent, level, false)
 
         return MarioLevelEvaluators.distanceActionsVictory(stats)

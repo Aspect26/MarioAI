@@ -12,20 +12,21 @@ import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import java.util.function.Function
+import java.util.stream.Collectors
 
 class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
-    private val generationsCount: Int = 200,
+    private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
     private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::distanceOnly,
     private val maxProbability: Double = 0.3
 ) : LevelEvolution {
 
-    private lateinit var agent: IAgent
+    private lateinit var agentFactory: () -> IAgent
 
-    override fun evolve(agent: IAgent): Array<MarioLevel> {
-        this.agent = agent
+    override fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
+        this.agentFactory = agentFactory
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val result = this.doEvolution(evolutionEngine)
@@ -69,8 +70,7 @@ class ProbabilisticMultipassEvolution(
 
         val levels = Array(this.evaluateOnLevelsCount) { PMPLevelCreator.create(levelLength, genes) }
         val stats = levels.map {level ->
-            // TODO: this is a hack!!! for some reason if we directly pass agent, it crashes
-            val agent = MarioAgent((this.agent as MarioAgent).controller)
+            val agent = this.agentFactory()
             val marioSimulator = GameSimulator()
             marioSimulator.playMario(agent, level, false)
         }

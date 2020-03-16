@@ -17,10 +17,10 @@ import java.util.function.Function
  */
 class DirectEncodedLevelEvolution : LevelEvolution {
 
-    private lateinit var agent: IAgent
+    private lateinit var agentFactory: () -> IAgent
 
-    override fun evolve(agent: IAgent): Array<MarioLevel> {
-        this.agent = agent
+    override fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
+        this.agentFactory = agentFactory
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val result = this.doEvolution(evolutionEngine)
@@ -58,8 +58,9 @@ class DirectEncodedLevelEvolution : LevelEvolution {
     private fun fitness(genotype: Genotype<IntegerGene>): Float {
         val marioSimulator = GameSimulator()
         val level = DirectMarioLevel.createFromTilesArray(LEVEL_WIDTH, LEVEL_HEIGHT, genotype.getIntValues())
+        val agent = this.agentFactory()
 
-        marioSimulator.playMario(this.agent, level, false)
+        marioSimulator.playMario(agent, level, false)
 
         return marioSimulator.statistics.finalMarioDistance
     }

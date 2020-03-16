@@ -1,5 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
+import cz.cuni.mff.aspect.agents.GoingRightAgent
+import cz.cuni.mff.aspect.agents.GoingRightAndJumpingAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
@@ -8,12 +10,11 @@ import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    var agent = Agents.NeuroEvolution.Stage4Level1Solver
-    agent = Agents.RuleBased.goingRight
-    val marioAgent = agent
+//    var agent = Agents.NeuroEvolution.Stage4Level1Solver
+//    agent = Agents.RuleBased.goingRightJumping
 
     val levelEvolution = ProbabilisticMultipassEvolution()
-    val levels = levelEvolution.evolve(marioAgent)
+    val levels = levelEvolution.evolve { Agents.RuleBased.goingRightJumping }
     val firstLevel = levels.first()
 
     val postprocessed = LevelPostProcessor.postProcess(firstLevel)
@@ -22,6 +23,6 @@ fun main() {
     LevelVisualiser().display(postprocessed)
 
 //    agent = CheaterKeyboardAgent()
-    GameSimulator().playMario(agent, postprocessed, true)
+    GameSimulator().playMario(Agents.RuleBased.goingRightJumping, postprocessed, true)
 
 }
