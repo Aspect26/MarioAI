@@ -6,19 +6,18 @@ import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import java.util.function.Function
-import java.util.stream.Collectors
 
 class ProbabilisticMultipassEvolution(
     private val populationSize: Int = 50,
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
+    private val resultLevelsCount: Int = 5,
     private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::distanceOnly,
     private val maxProbability: Double = 0.3
 ) : LevelEvolution {
@@ -34,7 +33,6 @@ class ProbabilisticMultipassEvolution(
         // TODO: return multiple levels
         val genes = result.bestPhenotype.genotype.getDoubleValues()
         val level = PMPLevelCreator.create(levelLength, genes)
-        print(genes.contentToString())
         return arrayOf(level)
     }
 

@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels
+package cz.cuni.mff.aspect.evolution.controller
 
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.custom.OnlyPathLevel
