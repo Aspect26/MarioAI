@@ -20,7 +20,7 @@ fun grammarEvolution() {
     val marioAgent = agent as MarioAgent
 
     val levelEvolution = GrammarLevelEvolution()
-    val levels = levelEvolution.evolve(marioAgent)
+    val levels = levelEvolution.evolve { Agents.NeuroEvolution.Stage4Level1Solver }
     val firstLevel = levels.first()
 
     val postprocessed = LevelPostProcessor.postProcess(firstLevel)
@@ -34,7 +34,7 @@ fun directEncodedEvolution() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
     val marioAgent = agent as MarioAgent
     val levelEvolution = DirectEncodedLevelEvolution()
-    val levels = levelEvolution.evolve(marioAgent)
+    val levels = levelEvolution.evolve { Agents.NeuroEvolution.Stage4Level1Solver }
 
     val firstLevel = levels.first()
     LevelStorage.storeLevel("current.lvl", firstLevel)

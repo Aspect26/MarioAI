@@ -27,31 +27,33 @@ object PMPLevelCreator {
     private const val PI_PIPE = 9
     private const val PI_START_BOXES = 10
 
+    const val PROBABILITIES_COUNT = 11
+
     private val random = Random()
 
     fun createDefault(): MarioLevel =
-        this.create(200, FloatArray(11) {
+        this.create(200, DoubleArray(11) {
             when (it) {
-                PI_DECREASE_HEIGHT -> 0.07f
-                PI_INCREASE_HEIGHT -> 0.07f
-                PI_START_HOLE -> 0.05f
-                PI_END_HOLE -> 0.33f
+                PI_DECREASE_HEIGHT -> 0.07
+                PI_INCREASE_HEIGHT -> 0.07
+                PI_START_HOLE -> 0.05
+                PI_END_HOLE -> 0.33
 
-                PI_ENEMY_GOOMBA -> 0.03f
-                PI_ENEMY_KOOPA_GREEN -> 0.03f
-                PI_ENEMY_KOOPA_RED -> 0.03f
-                PI_ENEMY_SPIKES -> 0.03f
-                PI_ENEMY_BULLET_BILL -> 0.03f
+                PI_ENEMY_GOOMBA -> 0.03
+                PI_ENEMY_KOOPA_GREEN -> 0.03
+                PI_ENEMY_KOOPA_RED -> 0.03
+                PI_ENEMY_SPIKES -> 0.03
+                PI_ENEMY_BULLET_BILL -> 0.03
 
-                PI_PIPE -> 0.03f
+                PI_PIPE -> 0.03
 
-                PI_START_BOXES -> 0.05f
+                PI_START_BOXES -> 0.05
 
-                else -> 0f
+                else -> 0.0
             }
         })
 
-    fun create(length: Int, probabilities: FloatArray): MarioLevel {
+    fun create(length: Int, probabilities: DoubleArray): MarioLevel {
         val levelMetadata = this.createInitialLevel(length)
         this.groundPass(levelMetadata, probabilities)
         this.pipesPass(levelMetadata, probabilities)
@@ -70,7 +72,7 @@ object PMPLevelCreator {
         return MarioLevelMetadata(groundHeight, entities, pipes, startBoxes)
     }
 
-    private fun groundPass(levelMetadata: MarioLevelMetadata, probabilities: FloatArray) {
+    private fun groundPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         var currentHeight = levelMetadata.groundHeight[0]
         var previousHeight = currentHeight
         var currentHoleSize = 0
@@ -83,7 +85,7 @@ object PMPLevelCreator {
                 val selected = this.selectChangeFrom(changeOptions, probabilities)
                 changedHeight = true
                 currentHeight = when (selected) {
-                    PI_INCREASE_HEIGHT -> (currentHeight + this.nextHeightChange).coerceAtMost(this.LEVEL_HEIGHT)
+                    PI_INCREASE_HEIGHT -> (currentHeight + this.nextHeightChange).coerceAtMost(this.LEVEL_HEIGHT - 7)
                     PI_DECREASE_HEIGHT -> (currentHeight - this.nextHeightChange).coerceAtLeast(0)
                     PI_START_HOLE -> {previousHeight = if (currentHeight != 0) currentHeight else previousHeight; 0 }
                     PI_END_HOLE -> previousHeight
@@ -99,7 +101,7 @@ object PMPLevelCreator {
         }
     }
 
-    private fun pipesPass(levelMetadata: MarioLevelMetadata, probabilities: FloatArray) {
+    private fun pipesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < probabilities[this.PI_PIPE]
             val canBePipe: Boolean = !levelMetadata.pipes[tileIndex - 1]
@@ -113,7 +115,7 @@ object PMPLevelCreator {
         }
     }
 
-    private fun boxesPass(levelMetadata: MarioLevelMetadata, probabilities: FloatArray) {
+    private fun boxesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[tileIndex] == 0) continue
 
@@ -122,7 +124,7 @@ object PMPLevelCreator {
         }
     }
 
-    private fun enemiesPass(levelMetadata: MarioLevelMetadata, probabilities: FloatArray) {
+    private fun enemiesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES, PI_ENEMY_BULLET_BILL)
 
         for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
@@ -187,9 +189,9 @@ object PMPLevelCreator {
         return DirectMarioLevel(tiles, entities)
     }
 
-    private fun selectChangeFrom(options: IntArray, probabilities: FloatArray): Int {
-        var cumulativeProbability = 0f
-        val probability = this.random.nextFloat()
+    private fun selectChangeFrom(options: IntArray, probabilities: DoubleArray): Int {
+        var cumulativeProbability = 0.0
+        val probability = this.random.nextDouble()
 
         for (option in options) {
             if (probability < cumulativeProbability + probabilities[option]) {

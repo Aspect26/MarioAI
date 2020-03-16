@@ -66,7 +66,7 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
             .collect(Collectors.toList())
 
         val allIndividuals = allGenerations.map { it.population.toList() }.flatten()
-        return allIndividuals.sortedBy { it.fitness }.subList(0, resultCount)
+        return allIndividuals.sortedByDescending { it.fitness }.subList(0, resultCount)
     }
 
     private val fitness = java.util.function.Function<Genotype<ByteGene>, Float> { genotype -> fitness(genotype) }

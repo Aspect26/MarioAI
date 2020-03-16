@@ -62,13 +62,12 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
     }
 
     fun save(path: String) {
-        val fullPath = "data/$path"
-        val directoryPath = fullPath.replaceAfterLast("/", "")
+        val directoryPath = path.replaceAfterLast("/", "")
 
         val directory = File(directoryPath)
         if (!directory.exists()) directory.mkdirs()
 
-        VectorGraphicsEncoder.saveVectorGraphic(this.chart, fullPath, VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        VectorGraphicsEncoder.saveVectorGraphic(this.chart, path, VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
     }
 
     private fun getOrCreateSeries(label: String, color: Color): Series {

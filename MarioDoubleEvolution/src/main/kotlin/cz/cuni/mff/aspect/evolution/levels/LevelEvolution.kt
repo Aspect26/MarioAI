@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import java.util.function.Function
 
 
 /**
@@ -10,6 +11,6 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
  */
 interface LevelEvolution {
 
-    fun evolve(controller: IAgent): Array<MarioLevel>
+    fun evolve(agentFactory: () -> IAgent): Array<MarioLevel>
 
 }

@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.results.Agents
-import cz.cuni.mff.aspect.evolution.levels.TrainingLevelsSet
+import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.level.MarioLevel

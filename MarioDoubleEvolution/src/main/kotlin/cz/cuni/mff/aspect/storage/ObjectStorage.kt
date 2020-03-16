@@ -5,11 +5,8 @@ import java.io.*
 
 object ObjectStorage {
 
-    private const val storageDirectory: String = "data"
-
     fun store(filePath: String, data: Any) {
-        val fullFilePath = this.getFullFilePath(filePath)
-        val file = File(fullFilePath)
+        val file = File(filePath)
         file.parentFile.mkdirs()
         file.createNewFile()
         val fos = FileOutputStream(file)
@@ -20,8 +17,7 @@ object ObjectStorage {
     }
 
     fun load(filePath: String): Any {
-        val fullFilePath = this.getFullFilePath(filePath)
-        val file = File(fullFilePath)
+        val file = File(filePath)
         val fis = FileInputStream(file)
         val ois = ObjectInputStream(fis)
 
@@ -32,7 +28,5 @@ object ObjectStorage {
 
         return result
     }
-
-    private fun getFullFilePath(filePath: String): String = "${this.storageDirectory}/$filePath"
 
 }

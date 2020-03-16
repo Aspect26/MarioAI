@@ -13,11 +13,7 @@ class LevelVisualiser {
 
     fun displayAndStore(level: MarioLevel, fileName: String) {
         val image = LevelToImageConverter.create(level)
-
-        val file = File(fileName)
-        file.parentFile.mkdirs()
-        ImageIO.write(image, "png", file)
-
+        this.storeImage(image, fileName)
         this.displayImage(image)
     }
 
@@ -26,16 +22,27 @@ class LevelVisualiser {
         this.displayImage(image)
     }
 
+    fun store(level: MarioLevel, fileName: String) {
+        val image = LevelToImageConverter.create(level)
+        this.storeImage(image, fileName)
+    }
+
     private fun displayImage(image: BufferedImage) {
         val label = JLabel()
         label.icon = ImageIcon(image)
 
         val frame = JFrame()
-        frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
         frame.contentPane.add(JScrollPane(label))
         frame.setSize(1800, 400)
         frame.setLocation(200, 200)
         frame.isVisible = true
+    }
+
+    private fun storeImage(image: BufferedImage, fileName: String) {
+        val file = File(fileName)
+        file.parentFile.mkdirs()
+        ImageIO.write(image, "png", file)
     }
 
 }

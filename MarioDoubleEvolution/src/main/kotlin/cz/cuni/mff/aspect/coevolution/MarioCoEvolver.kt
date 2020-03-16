@@ -17,8 +17,7 @@ class MarioCoEvolver {
         for (generation in (0 until generations)) {
             println("COEVOLUTION GENERATION ${generation + 1}")
             resultController = controllerEvolution.evolve(resultLevels, MarioGameplayEvaluators::distanceLeastActions, MarioGameplayEvaluators::victoriesOnly)
-            val agent = MarioAgent(resultController)
-            resultLevels = generator.evolve(agent)
+            resultLevels = generator.evolve { MarioAgent(resultController) }
         }
 
         return CoevolutionResult(resultController, resultLevels)

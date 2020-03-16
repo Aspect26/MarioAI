@@ -1,4 +1,4 @@
-package cz.cuni.mff.arnold;
+package cz.cuni.mff.agents.arnold;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import ch.idsia.benchmark.mario.engine.input.MarioInput;
 import ch.idsia.benchmark.mario.environments.IEnvironment;
 import ch.idsia.tools.EvaluationInfo;
 import ch.idsia.utils.MarioLog;
-import cz.cuni.mff.aspect.LevelConfig;
+import cz.cuni.mff.LevelConfig;
 
 /**
  * Code your custom agent here!
