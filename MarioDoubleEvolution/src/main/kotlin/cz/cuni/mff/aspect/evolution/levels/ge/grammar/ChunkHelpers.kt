@@ -5,12 +5,12 @@ import cz.cuni.mff.aspect.mario.Tiles
 
 object ChunkHelpers {
 
-    private val spaceColumn: ByteArray = ByteArray(15) { Tiles.NOTHING }
+    private const val DEFAULT_HEIGHT: Int = 15
 
     fun getSpaceColumn(): ByteArray =
-        spaceColumn
+        ByteArray(15) { Tiles.NOTHING }
 
-    fun getPathColumn(level: Int): ByteArray = ByteArray(15) {
+    fun getPathColumn(level: Int, height: Int = this.DEFAULT_HEIGHT): ByteArray = ByteArray(height) {
         when {
             it < level -> Tiles.NOTHING
             it > level -> Tiles.DIRT
