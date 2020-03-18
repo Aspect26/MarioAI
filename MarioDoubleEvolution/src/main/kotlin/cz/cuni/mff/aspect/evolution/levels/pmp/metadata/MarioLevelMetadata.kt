@@ -31,6 +31,16 @@ data class MarioLevelMetadata (
         return DirectMarioLevel(tiles, entities)
     }
 
+    // TODO: unit test this
+    fun isHoleAt(checkingColumn: Int): Boolean {
+        for (currentColumn in this.holes.indices) {
+            val holeLength = this.holes[currentColumn]
+            if (holeLength > 0 && checkingColumn in currentColumn until currentColumn + holeLength) return true
+        }
+
+        return false
+    }
+
     private fun createEntities(): Array<Array<Int>> = Array(this.levelLength) { column ->
         Array(this.levelHeight) { height ->
             when (height) {

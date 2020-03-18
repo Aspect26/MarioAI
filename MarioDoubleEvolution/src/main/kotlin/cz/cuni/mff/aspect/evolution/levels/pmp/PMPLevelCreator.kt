@@ -21,7 +21,7 @@ object PMPLevelCreator {
     private const val PI_ENEMY_KOOPA_GREEN = 4
     private const val PI_ENEMY_KOOPA_RED = 5
     private const val PI_ENEMY_SPIKES = 6
-    private const val PI_ENEMY_BULLET_BILL = 7
+    private const val PI_BULLET_BILL = 7
     private const val PI_PIPE = 8
     private const val PI_START_BOXES = 9
 
@@ -40,9 +40,9 @@ object PMPLevelCreator {
                 PI_ENEMY_KOOPA_GREEN -> 0.03
                 PI_ENEMY_KOOPA_RED -> 0.03
                 PI_ENEMY_SPIKES -> 0.03
-                PI_ENEMY_BULLET_BILL -> 0.03
 
-                PI_PIPE -> 0.03
+                PI_BULLET_BILL -> 0.5//0.03
+                PI_PIPE -> 0.5//0.03
 
                 PI_START_BOXES -> 0.05
 
@@ -115,31 +115,34 @@ object PMPLevelCreator {
     }
 
     private fun pipesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < probabilities[this.PI_PIPE]
-            val canBePipe: Boolean = levelMetadata.pipes[tileIndex - 1] == 0
-                    && levelMetadata.groundHeight[tileIndex] == levelMetadata.groundHeight[tileIndex + 1]
-                    && levelMetadata.groundHeight[tileIndex] == levelMetadata.groundHeight[tileIndex - 1]
-                    && levelMetadata.groundHeight[tileIndex] != 0
+            val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+                    && !levelMetadata.isHoleAt(column - 1)
+                    && !levelMetadata.isHoleAt(column)
+                    && !levelMetadata.isHoleAt(column + 1)
 
             if (shouldBePipe && canBePipe) {
                 val pipeHeight = this.randomInt(2, 4)
-                levelMetadata.pipes[tileIndex] = pipeHeight
+                levelMetadata.pipes[column] = pipeHeight
             }
         }
     }
 
     private fun bulletBillsPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
-            val shouldBeBulletBill = this.random.nextFloat() < probabilities[this.PI_ENEMY_BULLET_BILL]
-            val canBeBulletBill: Boolean = levelMetadata.pipes[tileIndex - 1] == 0
-                    && levelMetadata.pipes[tileIndex] == 0
-                    && levelMetadata.groundHeight[tileIndex] == levelMetadata.groundHeight[tileIndex - 1]
-                    && levelMetadata.groundHeight[tileIndex] != 0
+        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+            val shouldBeBulletBill = this.random.nextFloat() < probabilities[this.PI_BULLET_BILL]
+            val canBeBulletBill: Boolean = levelMetadata.pipes[column - 1] == 0
+                    && levelMetadata.pipes[column] == 0
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+                    && !levelMetadata.isHoleAt(column - 1)
+                    && !levelMetadata.isHoleAt(column)
 
             if (shouldBeBulletBill && canBeBulletBill) {
                 val bulletBillHeight = this.randomInt(1, 4)
-                levelMetadata.bulletBills[tileIndex] = bulletBillHeight
+                levelMetadata.bulletBills[column] = bulletBillHeight
             }
         }
     }
@@ -159,7 +162,7 @@ object PMPLevelCreator {
     }
 
     private fun enemiesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES, PI_ENEMY_BULLET_BILL)
+        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES, PI_BULLET_BILL)
 
         for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[tileIndex] == 0) continue
