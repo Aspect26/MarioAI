@@ -11,17 +11,18 @@ data class MarioLevelMetadata (
     val levelHeight: Int,
     val groundHeight: IntArray,
     val entities: IntArray,
+    val holes: IntArray,
     val pipes: IntArray,
     val bulletBills: IntArray,
     val boxPlatforms: Array<BoxPlatform>,
     val stairs: IntArray) {
 
-    // TODO: this constant is duplicated in PMPLevelCreator
-    private val levelLength: Int get() = this.groundHeight.size
+    val levelLength: Int get() = this.groundHeight.size
 
     fun createLevel(): MarioLevel {
         val entities: Array<Array<Int>> = this.createEntities()
         val tiles: Array<ByteArray> = this.createGround()
+        this.insertHoles(tiles)
         this.insertPipes(tiles, entities)
         this.insertBulletBills(tiles)
         this.insertBoxPlatforms(tiles)
@@ -43,6 +44,15 @@ data class MarioLevelMetadata (
         val currentLevel = this.levelHeight - this.groundHeight[it]
         val currentChunk = ChunkHelpers.getPathColumn(currentLevel, this.levelHeight)
         currentChunk
+    }
+
+    private fun insertHoles(tiles: Array<ByteArray>) {
+        for (column in this.holes.indices) {
+            val holeLength = this.holes[column]
+            if (holeLength > 0) {
+                this.insertHole(tiles, column, holeLength)
+            }
+        }
     }
 
     private fun insertPipes(tiles: Array<ByteArray>, entities: Array<Array<Int>>) {
@@ -77,6 +87,12 @@ data class MarioLevelMetadata (
             if (stairsLength > 0) {
                 this.insertStairs(tiles, column, stairsLength)
             }
+        }
+    }
+
+    private fun insertHole(tiles: Array<ByteArray>, column: Int, holeLength: Int) {
+        for (currentColumn in 0 until holeLength) {
+            tiles[column + currentColumn] = ChunkHelpers.getSpaceColumn(this.levelHeight)
         }
     }
 

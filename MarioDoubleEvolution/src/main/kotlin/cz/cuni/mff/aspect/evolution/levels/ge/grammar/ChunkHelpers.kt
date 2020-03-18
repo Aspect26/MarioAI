@@ -7,8 +7,8 @@ object ChunkHelpers {
 
     private const val DEFAULT_HEIGHT: Int = 15
 
-    fun getSpaceColumn(): ByteArray =
-        ByteArray(15) { Tiles.NOTHING }
+    fun getSpaceColumn(height: Int = this.DEFAULT_HEIGHT): ByteArray =
+        ByteArray(height) { Tiles.NOTHING }
 
     fun getPathColumn(level: Int, height: Int = this.DEFAULT_HEIGHT): ByteArray = ByteArray(height) {
         when {

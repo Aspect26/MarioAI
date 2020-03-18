@@ -13,21 +13,19 @@ object PMPLevelCreator {
     private const val LEVEL_HEIGHT = 15
     private const val STARTING_HEIGHT = 5
     private const val SAFE_ZONE_LENGTH = 10
-    private const val MAX_HOLE_SIZE = 4
 
     private const val PI_DECREASE_HEIGHT = 0
     private const val PI_INCREASE_HEIGHT = 1
-    private const val PI_START_HOLE = 2
-    private const val PI_END_HOLE = 3
-    private const val PI_ENEMY_GOOMBA = 4
-    private const val PI_ENEMY_KOOPA_GREEN = 5
-    private const val PI_ENEMY_KOOPA_RED = 6
-    private const val PI_ENEMY_SPIKES = 7
-    private const val PI_ENEMY_BULLET_BILL = 8
-    private const val PI_PIPE = 9
-    private const val PI_START_BOXES = 10
+    private const val PI_CREATE_HOLE = 2
+    private const val PI_ENEMY_GOOMBA = 3
+    private const val PI_ENEMY_KOOPA_GREEN = 4
+    private const val PI_ENEMY_KOOPA_RED = 5
+    private const val PI_ENEMY_SPIKES = 6
+    private const val PI_ENEMY_BULLET_BILL = 7
+    private const val PI_PIPE = 8
+    private const val PI_START_BOXES = 9
 
-    const val PROBABILITIES_COUNT = 11
+    const val PROBABILITIES_COUNT = 10
 
     private val random = Random()
 
@@ -36,8 +34,7 @@ object PMPLevelCreator {
             when (it) {
                 PI_DECREASE_HEIGHT -> 0.07
                 PI_INCREASE_HEIGHT -> 0.07
-                PI_START_HOLE -> 0.05
-                PI_END_HOLE -> 0.33
+                PI_CREATE_HOLE -> 0.05
 
                 PI_ENEMY_GOOMBA -> 0.03
                 PI_ENEMY_KOOPA_GREEN -> 0.03
@@ -67,6 +64,7 @@ object PMPLevelCreator {
     private fun createInitialLevel(length: Int): MarioLevelMetadata {
         val groundHeight = IntArray(length) { this.STARTING_HEIGHT }
         val entities = IntArray(length) { Entities.NOTHING }
+        val holes = IntArray(length) { 0 }
         val pipes = IntArray(length) { 0 }
         val bulletBills = IntArray(length) { 0 }
         val boxPlatforms = Array(length) { BoxPlatform(0, intArrayOf(), BoxPlatformType.BRICKS) }
@@ -76,6 +74,7 @@ object PMPLevelCreator {
             this.LEVEL_HEIGHT,
             groundHeight,
             entities,
+            holes,
             pipes,
             bulletBills,
             boxPlatforms,
@@ -85,30 +84,33 @@ object PMPLevelCreator {
 
     private fun groundPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         var currentHeight = levelMetadata.groundHeight[0]
-        var previousHeight = currentHeight
-        var currentHoleSize = 0
-        var changedHeight = false
+        var lastChangeAtColumn = 0
+        var lastHoleEndColumn = 0
+        val changeOptions = intArrayOf(PI_INCREASE_HEIGHT, PI_DECREASE_HEIGHT, PI_CREATE_HOLE)
 
-        val changeOptions = intArrayOf(PI_INCREASE_HEIGHT, PI_DECREASE_HEIGHT, PI_START_HOLE, PI_END_HOLE)
-
-        for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
-            if (!changedHeight) {
-                val selected = this.selectChangeFrom(changeOptions, probabilities)
-                changedHeight = true
-                currentHeight = when (selected) {
-                    PI_INCREASE_HEIGHT -> (currentHeight + this.nextHeightChange).coerceAtMost(this.LEVEL_HEIGHT - 7)
-                    PI_DECREASE_HEIGHT -> (currentHeight - this.nextHeightChange).coerceAtLeast(0)
-                    PI_START_HOLE -> {previousHeight = if (currentHeight != 0) currentHeight else previousHeight; 0 }
-                    PI_END_HOLE -> previousHeight
-                    else -> { changedHeight = false; currentHeight }
-                }
-            } else {
-                changedHeight = false
+        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
+            if (column - lastHoleEndColumn <= 1 || column - lastChangeAtColumn <= 1) {
+                levelMetadata.groundHeight[column] = currentHeight
+                continue
             }
 
-            levelMetadata.groundHeight[tileIndex] = currentHeight
-            if (currentHeight == 0) currentHoleSize++
-            if (currentHoleSize == this.MAX_HOLE_SIZE) currentHeight = previousHeight
+            when (this.selectChangeFrom(changeOptions, probabilities)) {
+                PI_INCREASE_HEIGHT -> {
+                    lastChangeAtColumn = column
+                    currentHeight = (currentHeight + this.nextHeightChange).coerceAtMost(this.LEVEL_HEIGHT - 5)
+                }
+                PI_DECREASE_HEIGHT -> {
+                    lastChangeAtColumn = column
+                    currentHeight = (currentHeight - this.nextHeightChange).coerceAtLeast(1)
+                }
+                PI_CREATE_HOLE -> {
+                    val holeLength = this.randomInt(2, 4)
+                    lastHoleEndColumn = column + holeLength
+                    levelMetadata.holes[column] = holeLength
+                }
+            }
+
+            levelMetadata.groundHeight[column] = currentHeight
         }
     }
 
@@ -175,12 +177,12 @@ object PMPLevelCreator {
         }
     }
 
+    private val nextHeightChange: Int get() = this.randomInt(2, 4)
+
     private fun randomInt(lowerBound: Int, higherBound: Int): Int {
         val range = higherBound - lowerBound + 1
         return (this.random.nextFloat() * range).toInt() + lowerBound
     }
-
-    private val nextHeightChange: Int get() = 2 + this.random.nextInt() % 3
 
     private fun selectChangeFrom(options: IntArray, probabilities: DoubleArray): Int {
         var cumulativeProbability = 0.0
