@@ -41,6 +41,26 @@ data class MarioLevelMetadata (
         return false
     }
 
+    // TODO: unit test this
+    fun horizontalRayUntilObstacle(fromColumn: Int, fromRow: Int): Int {
+        var currentLength = 0
+
+        for (currentColumn in fromColumn until this.levelLength) {
+            if (this.isObstacleAt(currentColumn, fromRow)) break
+            currentLength++
+        }
+
+        return currentLength
+    }
+
+    private fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
+        if (this.groundHeight[checkingColumn] >= row
+            || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row
+            || this.groundHeight[checkingColumn] + this.bulletBills[checkingColumn] >= row) return true
+
+        return false
+    }
+
     private fun createEntities(): Array<Array<Int>> = Array(this.levelLength) { column ->
         Array(this.levelHeight) { height ->
             when (height) {
@@ -132,8 +152,7 @@ data class MarioLevelMetadata (
     }
 
     private fun insertBoxPlatform(tiles: Array<ByteArray>, column: Int, boxPlatform: BoxPlatform) {
-        val groundLevel = this.levelHeight - this.groundHeight[column]
-        val platformLevel = groundLevel - 4
+        val platformLevel = this.levelHeight - boxPlatform.boxesLevel
         val platformTile = if (boxPlatform.type == BoxPlatformType.BRICKS) Tiles.BRICK else Tiles.QM_WITH_COIN
         val powerUpTile = if (boxPlatform.type == BoxPlatformType.BRICKS) Tiles.BRICK_WITH_POWERUP else Tiles.QM_WITH_POWERUP
 

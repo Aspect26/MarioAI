@@ -6,6 +6,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
+import kotlin.math.min
 
 
 object PMPLevelCreator {
@@ -41,8 +42,8 @@ object PMPLevelCreator {
                 PI_ENEMY_KOOPA_RED -> 0.03
                 PI_ENEMY_SPIKES -> 0.03
 
-                PI_BULLET_BILL -> 0.5//0.03
-                PI_PIPE -> 0.5//0.03
+                PI_BULLET_BILL -> 0.03
+                PI_PIPE -> 0.03
 
                 PI_START_BOXES -> 0.05
 
@@ -67,7 +68,7 @@ object PMPLevelCreator {
         val holes = IntArray(length) { 0 }
         val pipes = IntArray(length) { 0 }
         val bulletBills = IntArray(length) { 0 }
-        val boxPlatforms = Array(length) { BoxPlatform(0, intArrayOf(), BoxPlatformType.BRICKS) }
+        val boxPlatforms = Array(length) { BoxPlatform(0, 0, intArrayOf(), BoxPlatformType.BRICKS) }
         val stairs = IntArray(length) { 0 }
 
         return MarioLevelMetadata(
@@ -148,15 +149,19 @@ object PMPLevelCreator {
     }
 
     private fun boxesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
-            if (levelMetadata.groundHeight[tileIndex] == 0) continue
+        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+            if (levelMetadata.groundHeight[column] == 0) continue
 
             val shouldBeBoxes = this.random.nextFloat() < probabilities[this.PI_START_BOXES]
             if (shouldBeBoxes) {
-                val boxesLength = this.randomInt(2, 7)
+                val boxesLevel = levelMetadata.groundHeight[column] + 4
+                val chosenBoxesLength = this.randomInt(2, 7)
+                val maxBoxesLength = min(levelMetadata.horizontalRayUntilObstacle(column, boxesLevel - 1),
+                    levelMetadata.horizontalRayUntilObstacle(column, boxesLevel - 1) - 1)
+                val boxesLength = min(chosenBoxesLength, maxBoxesLength)
+
                 val type = if (this.random.nextFloat() < 0.5) BoxPlatformType.BRICKS else BoxPlatformType.QUESTION_MARKS
-                // TODO: powerups!
-                levelMetadata.boxPlatforms[tileIndex] = BoxPlatform(boxesLength, intArrayOf(), type)
+                levelMetadata.boxPlatforms[column] = BoxPlatform(boxesLength, boxesLevel, intArrayOf(), type)
             }
         }
     }
