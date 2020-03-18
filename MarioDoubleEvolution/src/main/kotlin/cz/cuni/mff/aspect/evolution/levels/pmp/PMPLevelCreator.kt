@@ -25,8 +25,9 @@ object PMPLevelCreator {
     private const val PI_BULLET_BILL = 7
     private const val PI_PIPE = 8
     private const val PI_START_BOXES = 9
+    private const val PI_POWER_UP = 10
 
-    const val PROBABILITIES_COUNT = 10
+    const val PROBABILITIES_COUNT = 11
 
     private val random = Random()
 
@@ -45,7 +46,8 @@ object PMPLevelCreator {
                 PI_BULLET_BILL -> 0.03
                 PI_PIPE -> 0.03
 
-                PI_START_BOXES -> 0.05
+                PI_START_BOXES -> 0.1
+                PI_POWER_UP -> 0.25
 
                 else -> 0.0
             }
@@ -68,7 +70,7 @@ object PMPLevelCreator {
         val holes = IntArray(length) { 0 }
         val pipes = IntArray(length) { 0 }
         val bulletBills = IntArray(length) { 0 }
-        val boxPlatforms = Array(length) { BoxPlatform(0, 0, intArrayOf(), BoxPlatformType.BRICKS) }
+        val boxPlatforms = Array(length) { BoxPlatform(0, 0, listOf(), BoxPlatformType.BRICKS) }
         val stairs = IntArray(length) { 0 }
 
         return MarioLevelMetadata(
@@ -161,7 +163,10 @@ object PMPLevelCreator {
                 val boxesLength = min(chosenBoxesLength, maxBoxesLength)
 
                 val type = if (this.random.nextFloat() < 0.5) BoxPlatformType.BRICKS else BoxPlatformType.QUESTION_MARKS
-                levelMetadata.boxPlatforms[column] = BoxPlatform(boxesLength, boxesLevel, intArrayOf(), type)
+                val powerUps = mutableListOf<Int>()
+                if (this.random.nextFloat() < probabilities[this.PI_POWER_UP])
+                    powerUps.add(this.randomInt(0, boxesLength -1))
+                levelMetadata.boxPlatforms[column] = BoxPlatform(boxesLength, boxesLevel, powerUps, type)
             }
         }
     }
