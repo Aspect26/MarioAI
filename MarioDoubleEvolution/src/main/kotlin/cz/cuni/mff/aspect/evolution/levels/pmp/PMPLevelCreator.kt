@@ -89,8 +89,8 @@ object PMPLevelCreator {
         var lastHoleEndColumn = 0
         val changeOptions = intArrayOf(PI_INCREASE_HEIGHT, PI_DECREASE_HEIGHT, PI_CREATE_HOLE)
 
-        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
-            if (column - lastHoleEndColumn <= 1 || column - lastChangeAtColumn <= 1) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength) {
+            if (column - lastHoleEndColumn <= 1 || column - lastChangeAtColumn <= 1 || column >= levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
                 levelMetadata.groundHeight[column] = currentHeight
                 continue
             }
@@ -116,7 +116,7 @@ object PMPLevelCreator {
     }
 
     private fun pipesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < probabilities[this.PI_PIPE]
             val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
@@ -133,7 +133,7 @@ object PMPLevelCreator {
     }
 
     private fun bulletBillsPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             val shouldBeBulletBill = this.random.nextFloat() < probabilities[this.PI_BULLET_BILL]
             val canBeBulletBill: Boolean = levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.pipes[column] == 0
@@ -149,7 +149,7 @@ object PMPLevelCreator {
     }
 
     private fun boxesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[column] == 0) continue
 
             val shouldBeBoxes = this.random.nextFloat() < probabilities[this.PI_START_BOXES]
@@ -167,12 +167,12 @@ object PMPLevelCreator {
     }
 
     private fun enemiesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES, PI_BULLET_BILL)
+        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES)
 
-        for (tileIndex in this.SAFE_ZONE_LENGTH .. levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
-            if (levelMetadata.groundHeight[tileIndex] == 0) continue
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+            if (levelMetadata.groundHeight[column] == 0) continue
 
-            var entity = when (this.selectChangeFrom(changeOptions, probabilities)) {
+            val entity = when (this.selectChangeFrom(changeOptions, probabilities)) {
                 PI_ENEMY_GOOMBA -> Entities.Goomba.NORMAL
                 PI_ENEMY_KOOPA_GREEN -> Entities.Koopa.GREEN
                 PI_ENEMY_KOOPA_RED -> Entities.Koopa.RED
@@ -180,8 +180,10 @@ object PMPLevelCreator {
                 else -> Entities.NOTHING
             }
 
-            if (entity == Entities.BulletBill.NORMAL && levelMetadata.groundHeight[tileIndex] != levelMetadata.groundHeight[tileIndex - 1]) entity = Entities.NOTHING
-            levelMetadata.entities[tileIndex] = entity
+            val canBeEntity = !levelMetadata.isHoleAt(column)
+                    && !levelMetadata.isObstacleAt(column, levelMetadata.groundHeight[column] + 1)
+
+            levelMetadata.entities[column] = if (canBeEntity) entity else Entities.NOTHING
         }
     }
 

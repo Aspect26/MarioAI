@@ -53,9 +53,11 @@ data class MarioLevelMetadata (
         return currentLength
     }
 
-    private fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
+    // TODO: unit test this
+    fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
         if (this.groundHeight[checkingColumn] >= row
             || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row
+            || (this.pipes[checkingColumn - 1] >    0 && this.groundHeight[checkingColumn] + this.pipes[checkingColumn - 1] >= row)
             || this.groundHeight[checkingColumn] + this.bulletBills[checkingColumn] >= row) return true
 
         return false
