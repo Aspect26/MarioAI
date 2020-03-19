@@ -46,7 +46,7 @@ object PMPLevelCreator {
                 PI_BULLET_BILL -> 0.03
                 PI_PIPE -> 0.03
 
-                PI_START_BOXES -> 0.1
+                PI_START_BOXES -> 0.05
                 PI_POWER_UP -> 0.25
 
                 else -> 0.0
