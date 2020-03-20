@@ -27,8 +27,9 @@ object PMPLevelCreator {
     private const val PI_START_BOXES = 9
     private const val PI_DOUBLE_BOXES = 10
     private const val PI_POWER_UP = 11
+    private const val PI_STAIRS = 12
 
-    const val PROBABILITIES_COUNT = 12
+    const val PROBABILITIES_COUNT = 13
 
     private val random = Random()
 
@@ -51,6 +52,8 @@ object PMPLevelCreator {
                 PI_DOUBLE_BOXES -> 0.33
                 PI_POWER_UP -> 0.25
 
+                PI_STAIRS -> 0.1
+
                 else -> 0.0
             }
         })
@@ -60,6 +63,7 @@ object PMPLevelCreator {
         this.groundPass(levelMetadata, probabilities)
         this.pipesPass(levelMetadata, probabilities)
         this.bulletBillsPass(levelMetadata, probabilities)
+        this.stairsPass(levelMetadata, probabilities)
         this.boxesPass(levelMetadata, probabilities)
         this.enemiesPass(levelMetadata, probabilities)
 
@@ -120,7 +124,7 @@ object PMPLevelCreator {
     }
 
     private fun pipesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < probabilities[this.PI_PIPE]
             val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
@@ -137,7 +141,7 @@ object PMPLevelCreator {
     }
 
     private fun bulletBillsPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
             val shouldBeBulletBill = this.random.nextFloat() < probabilities[this.PI_BULLET_BILL]
             val canBeBulletBill: Boolean = levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.pipes[column] == 0
@@ -152,8 +156,34 @@ object PMPLevelCreator {
         }
     }
 
+    private fun stairsPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
+            val shouldBeStairs = this.random.nextFloat() < probabilities[this.PI_STAIRS]
+            val canBeStairs = !levelMetadata.isHoleAt(column)
+                    && !levelMetadata.isHoleAt(column - 1)
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+
+            if (shouldBeStairs && canBeStairs) {
+                val nearestHoleIndex = this.nearestHoleOrEnd(levelMetadata, column)
+                val nearestGroundHeightChangeIndex = this.nearestHeightChangeOrEnd(levelMetadata, column)
+                val chosenLength = this.randomInt(3, 6)
+                val maxLength = min(
+                    levelMetadata.horizontalRayUntilObstacle(column, levelMetadata.groundHeight[column] + 1),
+                    min(nearestHoleIndex - column, nearestGroundHeightChangeIndex - column))
+                val stairsLength = min(chosenLength, maxLength)
+
+                if (stairsLength == 1) continue
+
+                for (step in 0 until stairsLength) {
+                    levelMetadata.stoneColumns[column + step] = step + 1
+                }
+            }
+
+        }
+    }
+
     private fun boxesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
-        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[column] == 0) continue
             val canBeBoxes = levelMetadata.pipes[column] == 0
                     && levelMetadata.pipes[column - 1] == 0
@@ -200,7 +230,7 @@ object PMPLevelCreator {
     private fun enemiesPass(levelMetadata: MarioLevelMetadata, probabilities: DoubleArray) {
         val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES)
 
-        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - this.SAFE_ZONE_LENGTH) {
+        for (column in this.SAFE_ZONE_LENGTH until levelMetadata.levelLength - this.SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[column] == 0) continue
 
             val entity = when (this.selectChangeFrom(changeOptions, probabilities)) {
@@ -225,6 +255,16 @@ object PMPLevelCreator {
 
     private fun nearestBillOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
         for (index in fromColumn until levelMetadata.bulletBills.size) if (levelMetadata.bulletBills[index] > 0) return index
+        return levelMetadata.levelLength
+    }
+
+    private fun nearestHoleOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
+        for (index in fromColumn until levelMetadata.holes.size) if (levelMetadata.holes[index] > 0) return index
+        return levelMetadata.levelLength
+    }
+
+    private fun nearestHeightChangeOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
+        for (index in fromColumn + 1 until levelMetadata.groundHeight.size) if (levelMetadata.groundHeight[index] != levelMetadata.groundHeight[index - 1]) return index
         return levelMetadata.levelLength
     }
 

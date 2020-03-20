@@ -15,7 +15,7 @@ data class MarioLevelMetadata (
     val pipes: IntArray,
     val bulletBills: IntArray,
     val boxPlatforms: Array<BoxPlatform>,
-    val stairs: IntArray) {
+    val stoneColumns: IntArray) {
 
     val levelLength: Int get() = this.groundHeight.size
 
@@ -26,7 +26,7 @@ data class MarioLevelMetadata (
         this.insertPipes(tiles, entities)
         this.insertBulletBills(tiles)
         this.insertBoxPlatforms(tiles)
-        this.insertStairs(tiles)
+        this.insertStoneColumns(tiles)
 
         return DirectMarioLevel(tiles, entities)
     }
@@ -55,18 +55,17 @@ data class MarioLevelMetadata (
 
     // TODO: unit test this
     fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
-        if (this.groundHeight[checkingColumn] >= row
-            || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row
-            || (this.pipes[checkingColumn - 1] > 0 && this.groundHeight[checkingColumn] + this.pipes[checkingColumn - 1] >= row)
-            || this.groundHeight[checkingColumn] + this.bulletBills[checkingColumn] >= row) return true
-
-        return false
+        return this.groundHeight[checkingColumn] >= row
+                || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row
+                || (this.pipes[checkingColumn - 1] > 0 && this.groundHeight[checkingColumn] + this.pipes[checkingColumn - 1] >= row)
+                || this.groundHeight[checkingColumn] + this.bulletBills[checkingColumn] >= row
+                || this.groundHeight[checkingColumn] + this.stoneColumns[checkingColumn] >= row
     }
 
     private fun createEntities(): Array<Array<Int>> = Array(this.levelLength) { column ->
         Array(this.levelHeight) { height ->
             when (height) {
-                this.levelHeight - (groundHeight[column] + 1) -> entities[column]
+                this.levelHeight - (groundHeight[column] + 1 + stoneColumns[column]) -> entities[column]
                 else -> Entities.NOTHING
             }
         }
@@ -113,11 +112,11 @@ data class MarioLevelMetadata (
         }
     }
 
-    private fun insertStairs(tiles: Array<ByteArray>) {
-        for (column in this.stairs.indices) {
-            val stairsLength = this.stairs[column]
-            if (stairsLength > 0) {
-                this.insertStairs(tiles, column, stairsLength)
+    private fun insertStoneColumns(tiles: Array<ByteArray>) {
+        for (column in this.stoneColumns.indices) {
+            val columnSize = this.stoneColumns[column]
+            if (columnSize > 0) {
+                this.insertStoneColumns(tiles, column, columnSize)
             }
         }
     }
@@ -165,12 +164,12 @@ data class MarioLevelMetadata (
         }
     }
 
-    private fun insertStairs(tiles: Array<ByteArray>, column: Int, stairsLength: Int) {
+    private fun insertStoneColumns(tiles: Array<ByteArray>, column: Int, columnSize: Int) {
         val groundLevel = this.levelHeight - this.groundHeight[column]
 
-        for (currentColumn in 0 until stairsLength) {
-            for (stairHeight in 0 until currentColumn)
-                tiles[column + currentColumn][groundLevel - 1 - stairHeight] = Tiles.STONE
+        for (level in 0 until columnSize) {
+            if (groundLevel - level - 1 < 0) break
+            tiles[column][groundLevel - level - 1] = Tiles.STONE
         }
     }
 
