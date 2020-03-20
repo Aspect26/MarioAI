@@ -155,6 +155,8 @@ data class MarioLevelMetadata (
 
     private fun insertBoxPlatform(tiles: Array<ByteArray>, column: Int, boxPlatform: BoxPlatform) {
         val platformLevel = this.levelHeight - boxPlatform.boxesLevel
+        if (platformLevel < 0) return
+
         val platformTile = if (boxPlatform.type == BoxPlatformType.BRICKS) Tiles.BRICK else Tiles.QM_WITH_COIN
         val powerUpTile = if (boxPlatform.type == BoxPlatformType.BRICKS) Tiles.BRICK_WITH_POWERUP else Tiles.QM_WITH_POWERUP
 
