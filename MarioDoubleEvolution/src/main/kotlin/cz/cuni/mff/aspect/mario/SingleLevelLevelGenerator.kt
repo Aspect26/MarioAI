@@ -16,7 +16,7 @@ class SingleLevelLevelGenerator(private val level: MarioLevel) : ch.idsia.benchm
         level.type = LevelTypes.DEFAULT
 
         level.xExit = level.length - 1
-        level.yExit = 12
+        level.yExit = 15
         level.randomSeed = 123
         level.difficulty = 1
 
