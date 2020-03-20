@@ -56,10 +56,11 @@ object PMPLevelCreator {
 
                 else -> 0.0
             }
-        })
+        }).createLevel()
 
-    fun create(length: Int, probabilities: DoubleArray): MarioLevel {
+    fun create(length: Int, probabilities: DoubleArray): MarioLevelMetadata {
         val levelMetadata = this.createInitialLevel(length)
+
         this.groundPass(levelMetadata, probabilities)
         this.pipesPass(levelMetadata, probabilities)
         this.bulletBillsPass(levelMetadata, probabilities)
@@ -67,7 +68,7 @@ object PMPLevelCreator {
         this.boxesPass(levelMetadata, probabilities)
         this.enemiesPass(levelMetadata, probabilities)
 
-        return levelMetadata.createLevel()
+        return levelMetadata
     }
 
     private fun createInitialLevel(length: Int): MarioLevelMetadata {

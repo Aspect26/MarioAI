@@ -2,10 +2,9 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
-import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluator
-import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.extensions.getDoubleValues
+import cz.cuni.mff.aspect.extensions.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
@@ -23,7 +22,7 @@ class ProbabilisticMultipassEvolution(
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
     private val resultLevelsCount: Int = 5,
-    private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::distanceOnly,
+    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::marioDistance,
     private val maxProbability: Double = 0.3,
     private val chartLabel: String = "PMP Level Evolution"
 ) : LevelEvolution {
@@ -37,7 +36,7 @@ class ProbabilisticMultipassEvolution(
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividuals = this.doEvolution(evolutionEngine)
 
-        return Array(resultIndividuals.size) { PMPLevelCreator.create(levelLength, resultIndividuals[it]) }
+        return Array(resultIndividuals.size) { PMPLevelCreator.create(this.levelLength, resultIndividuals[it]).createLevel() }
     }
 
     fun storeChart(path: String) {
@@ -99,14 +98,17 @@ class ProbabilisticMultipassEvolution(
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
         val genes = genotype.getDoubleValues()
 
-        val levels = Array(this.evaluateOnLevelsCount) { PMPLevelCreator.create(levelLength, genes) }
-        val stats = levels.map {level ->
+        val fitnesses = (0 until this.evaluateOnLevelsCount).map {
             val agent = this.agentFactory()
+            val levelMetadata = PMPLevelCreator.create(levelLength, genes)
+            val level = levelMetadata.createLevel()
             val marioSimulator = GameSimulator()
-            marioSimulator.playMario(agent, level, false)
+            val gameStatistics = marioSimulator.playMario(agent, level, false)
+
+            this.fitnessFunction(levelMetadata, gameStatistics)
         }
 
-        return this.fitnessFunction(stats)
+        return fitnesses.sumByFloat { it }
     }
 
 }

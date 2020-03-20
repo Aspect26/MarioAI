@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
-import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
+import cz.cuni.mff.aspect.evolution.levels.pmp.MarioLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelGrammar
