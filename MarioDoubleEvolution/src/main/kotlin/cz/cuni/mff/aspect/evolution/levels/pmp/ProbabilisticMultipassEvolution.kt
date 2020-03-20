@@ -50,7 +50,7 @@ class ProbabilisticMultipassEvolution(
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
         return Engine.Builder(AlwaysReevaluatingEvaluator(
-                { genotype: Genotype<DoubleGene> -> this.computeFitness(genotype) },
+                this::computeFitness,
                 ForkJoinPool.commonPool()), initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)

@@ -21,9 +21,9 @@ class AlwaysReevaluatingEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     override fun eval(population: Seq<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         // Evaluation happens twice per evolution step in jenetics
         // But we should do the "always evaluation" only once, since it would be wasteful otherwise
-        val shouldReevaluateAll = !isEverybodyEvaluated(population)
+        val notAllEvaluated = !isEverybodyEvaluated(population)
 
-        return if (shouldReevaluateAll) {
+        return if (notAllEvaluated) {
             val phenotypeEvaluators = population.map { pt -> PhenotypeEvaluator(pt, this.fitnessFunction) }
 
             val concurrency = Concurrency.with(this.executor)
