@@ -16,7 +16,7 @@ fun main() {
 
 fun doManyPMPEvolution() {
 
-    val experimentsName = "pmp/Neuros4l1solver"
+    val experimentsName = "pmp_v2/Neuros4l1solver"
     val generationsCount = 150
     val agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver }
 
