@@ -12,16 +12,18 @@ import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    // evolve()
-    createDefault()
+     evolve()
+//    createDefault()
 }
 
 fun evolve() {
     //    var agent = Agents.NeuroEvolution.Stage4Level1Solver
 //    agent = Agents.RuleBased.goingRightJumping
 
-    val levelEvolution = ProbabilisticMultipassEvolution()
-    val levels = levelEvolution.evolve { Agents.RuleBased.goingRightJumping }
+    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
+
+    val levelEvolution = ProbabilisticMultipassEvolution(generationsCount = 20)
+    val levels = levelEvolution.evolve(agentFactory)
     val firstLevel = levels.first()
 
     val postprocessed = LevelPostProcessor.postProcess(firstLevel)
@@ -30,7 +32,7 @@ fun evolve() {
     LevelVisualiser().display(postprocessed)
 
 //    agent = CheaterKeyboardAgent()
-    GameSimulator().playMario(Agents.RuleBased.goingRightJumping, postprocessed, true)
+    GameSimulator().playMario(agentFactory(), postprocessed, true)
 }
 
 fun createDefault() {

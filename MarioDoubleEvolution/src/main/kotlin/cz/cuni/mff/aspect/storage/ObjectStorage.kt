@@ -7,7 +7,7 @@ object ObjectStorage {
 
     fun store(filePath: String, data: Any) {
         val file = File(filePath)
-        file.parentFile.mkdirs()
+        file.parentFile?.mkdirs()
         file.createNewFile()
         val fos = FileOutputStream(file)
         val oos = ObjectOutputStream(fos)

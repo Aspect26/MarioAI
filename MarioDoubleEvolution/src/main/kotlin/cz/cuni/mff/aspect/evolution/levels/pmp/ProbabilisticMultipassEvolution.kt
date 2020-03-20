@@ -4,6 +4,7 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
+import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -11,7 +12,8 @@ import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
-import java.util.function.Function
+import io.jenetics.util.Factory
+import java.util.concurrent.ForkJoinPool
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -46,8 +48,10 @@ class ProbabilisticMultipassEvolution(
         return Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(PMPLevelCreator.PROBABILITIES_COUNT) { DoubleGene.of(0.0, 0.0, this.maxProbability) }))
     }
 
-    private fun createEvolutionEngine(initialGenotype: Genotype<DoubleGene>): Engine<DoubleGene, Float> {
-        return Engine.builder(fitness, initialGenotype)
+    private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
+        return Engine.Builder(AlwaysReevaluatingEvaluator(
+                this::computeFitness,
+                ForkJoinPool.commonPool()), initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)
             .alterers(GaussianMutator(0.60))
@@ -92,10 +96,7 @@ class ProbabilisticMultipassEvolution(
         return bestIndividuals.map { it.genotype.getDoubleValues() }
     }
 
-    private val fitness = Function<Genotype<DoubleGene>, Float> { genotype -> fitness(genotype) }
-    private fun fitness(genotype: Genotype<DoubleGene>): Float {
-
-        // TODO: reevaluate on every generation for all individuals
+    private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
         val genes = genotype.getDoubleValues()
 
         val levels = Array(this.evaluateOnLevelsCount) { PMPLevelCreator.create(levelLength, genes) }

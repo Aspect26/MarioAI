@@ -21,13 +21,12 @@ fun keyboardPlay() {
 //    val levels = arrayOf(Levels.GrammarEvolution.Level3)
 //    val levels = Levels.GrammarEvolution.AllLevels
 
-    val experimentName = "firstManyTest"
 //    val levels = arrayOf(
 //        LevelStorage.loadLevel("experiments/$experimentName/0.lvl")
 //    )
 
-//    val levels = arrayOf(LevelStorage.loadLevel("current.lvl"))
-    val levels = Levels.GrammarEvolution.AllLevels
+    val levels = arrayOf(LevelStorage.loadLevel("current.lvl"))
+//    val levels = Levels.GrammarEvolution.AllLevels
 
     val marioSimulator = GameSimulator(15000)
 

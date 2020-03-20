@@ -34,12 +34,10 @@ fun aiPlayLevel() {
 
 
 fun neatAiPlayLevel() {
-    val controller = ObjectStorage.load("experiments/NEAT - All - 500-100 - fitness only distance/NEAT evolution, experiment 3_ai.ai") as SimpleANNController
 //    val agent = MarioAgent(controller)
-    val agent = Agents.NEAT.BestGeneric
+    val agent = Agents.NEAT.Stage4Level1Solver
 
-//    val levels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
-    val levels = TrainingLevelsSet
+    val levels = listOf<MarioLevel>(LevelStorage.loadLevel("current.lvl"))
     val simulator = GameSimulator(1000)
 
     for (level in levels) {
