@@ -17,3 +17,6 @@ Welcome to my diploma thesis work! Meaningful readme coming soon...
 3. [evo-NEAT](https://github.com/vishnugh/evo-NEAT) - NEAT algorithm (Neuroevolution of augmented topologies)
 4. [XChart](http://knowm.org/open-source/xchart) - charts
 5. [MyConcurrentEvaluator](https://github.com/woitee/endlessRunners) - custom jenetics evaluator 
+
+## Notes
+The game simulator does not work properly in Java 12 (see https://github.com/Aspect26/MarioDoubleEvolution/issues/47)
