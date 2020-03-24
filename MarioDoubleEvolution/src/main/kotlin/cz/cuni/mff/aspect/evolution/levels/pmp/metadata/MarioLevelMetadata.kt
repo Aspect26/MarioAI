@@ -31,6 +31,13 @@ data class MarioLevelMetadata (
         return DirectMarioLevel(tiles, entities)
     }
 
+    val enemiesCount: Int get() = this.entities.filter { it != Entities.NOTHING }.size
+    val holesCount: Int get() = this.holes.filter { it > 0}.size
+    val pipesCount: Int get() = this.pipes.filter { it > 0}.size
+    val billsCount: Int get() = this.bulletBills.filter { it > 0}.size
+    val boxPlatformsCount: Int get() = this.boxPlatforms.filter { it.length > 0}.size
+    val stoneColumnsCount: Int get() = this.stoneColumns.filter { it > 0}.size
+
     // TODO: unit test this
     fun isHoleAt(checkingColumn: Int): Boolean {
         for (currentColumn in this.holes.indices) {

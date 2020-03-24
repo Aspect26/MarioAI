@@ -1,14 +1,16 @@
 package cz.cuni.mff.aspect.evolution.levels.ge
 
 import ch.idsia.agents.IAgent
+import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.MarioLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelGrammar
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
+import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -55,7 +57,7 @@ class GrammarLevelEvolution(private val levelsCount: Int = 1,
         val agent = this.agentFactory()
         val stats = gameSimulator.playMario(agent, level, false)
 
-        return MarioLevelEvaluators.distanceActionsVictory(stats)
+        return MarioGameplayEvaluators.distanceOnly(arrayOf(stats))
     }
 
     // TODO: this may be its own class

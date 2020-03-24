@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.agents.GoingRightAgent
 import cz.cuni.mff.aspect.agents.GoingRightAndJumpingAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelCreator
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -21,8 +22,9 @@ fun evolve() {
 //    agent = Agents.RuleBased.goingRightJumping
 
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
+    val fitness = PMPLevelEvaluators::marioDistanceAndLevelDiversity
 
-    val levelEvolution = ProbabilisticMultipassEvolution(generationsCount = 20)
+    val levelEvolution = ProbabilisticMultipassEvolution(generationsCount = 70, fitnessFunction = fitness)
     val levels = levelEvolution.evolve(agentFactory)
     val firstLevel = levels.first()
 

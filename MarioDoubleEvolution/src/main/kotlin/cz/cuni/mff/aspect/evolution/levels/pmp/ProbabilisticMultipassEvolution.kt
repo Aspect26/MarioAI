@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
+import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.extensions.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -53,7 +54,7 @@ class ProbabilisticMultipassEvolution(
                 ForkJoinPool.commonPool()), initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)
-            .alterers(GaussianMutator(0.60))
+            .alterers(UpdatedGaussianMutator(1.0, 0.6))
             .survivorsSelector(EliteSelector(2))
             .offspringSelector(RouletteWheelSelector())
             .build()

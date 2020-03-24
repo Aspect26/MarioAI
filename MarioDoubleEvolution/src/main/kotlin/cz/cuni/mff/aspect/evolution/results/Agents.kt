@@ -78,7 +78,7 @@ object Agents {
                 //val controller = ObjectStorage.load("experiments/Phase I - AI/NEAT/NEAT - All - 300-100 - fitness least actions/NEAT evolution, experiment 1_ai.ai") as SimpleANNController
 
                 // solves 13
-                val controller = ObjectStorage.load("data/experiments/NEAT - All - 300-100 - fitness only distance/NEAT evolution, experiment 2_ai.ai") as SimpleANNController
+                val controller = ObjectStorage.load("data/experiments/Phase I - AI/NEAT/NEAT - All - 300-100 - fitness only distance/NEAT evolution, experiment 2_ai.ai") as SimpleANNController
                 return MarioAgent(controller)
             }
     }
