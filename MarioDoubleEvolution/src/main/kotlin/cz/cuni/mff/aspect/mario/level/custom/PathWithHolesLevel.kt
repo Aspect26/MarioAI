@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.custom
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
 object PathWithHolesLevel : MarioLevel {
@@ -17,9 +17,9 @@ object PathWithHolesLevel : MarioLevel {
 
     override val tiles: Array<ByteArray> = Array(LENGTH) {
         if (it in HOLES_AT) {
-            ChunkHelpers.getSpaceColumn()
+            ColumnHelpers.getSpaceColumn()
         } else {
-            ChunkHelpers.getPathColumn(10)
+            ColumnHelpers.getPathColumn(10)
         }
     }
 

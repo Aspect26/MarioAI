@@ -25,7 +25,7 @@ class NothingChunkTerminal(private var _width: Int = 3) : LevelChunkTerminal("no
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val emptyColumn = ChunkHelpers.getSpaceColumn()
+        val emptyColumn = ColumnHelpers.getSpaceColumn()
         return TerminalMarioLevelChunk(this, Array(this._width) { emptyColumn }, emptyArray())
     }
 
@@ -44,7 +44,7 @@ class BeginPlatformChunkTerminal(private var level: Int = 5) : LevelChunkTermina
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
         return TerminalMarioLevelChunk(this, Array(this.width) { pathColumn }, emptyArray())
     }
 
@@ -63,7 +63,7 @@ class EndPlatformChunkTerminal(private var level: Int = 5) : LevelChunkTerminal(
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
         return TerminalMarioLevelChunk(this, Array(this.width) { pathColumn }, arrayOf(MonsterSpawn(this.width / 2, this.level - 1, Entities.PrincessPeach.NORMAL)))
     }
 
@@ -111,7 +111,7 @@ class PathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), override
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
         return TerminalMarioLevelChunk(this, Array(this._width) { pathColumn }, this.monsterSpawns)
     }
 
@@ -137,7 +137,7 @@ class StartChunkTerminal(private var _width: Int = 7, private var level: Int = 1
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
         return TerminalMarioLevelChunk(this, Array(this._width) { pathColumn }, emptyArray())
     }
 
@@ -159,8 +159,8 @@ class BoxesChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), overrid
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
-        val boxesColumn = ChunkHelpers.getBoxesColumn(this.level, this.level - 4)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
+        val boxesColumn = ColumnHelpers.getBoxesColumn(this.level, this.level - 4)
         return TerminalMarioLevelChunk(this, Array(this._width) {
             if (it in (0 + this.boxesPadding until this._width - this.boxesPadding))
                 boxesColumn
@@ -196,14 +196,14 @@ class SecretsChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), overr
     }
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
-        val secretsColumn = ChunkHelpers.getSecretBoxesColumn(this.level, this.level - 4)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
+        val secretsColumn = ColumnHelpers.getSecretBoxesColumn(this.level, this.level - 4)
 
         return TerminalMarioLevelChunk(this, Array(this._width) {
             if (it in (0 + this.secretsPadding until this._width - this.secretsPadding))
                 secretsColumn
             else if (hasPowerUp && it == this.secretsPadding + this.powerUpLocation)
-                ChunkHelpers.getSecretPowerUpColumn(this.level, this.level - 4)
+                ColumnHelpers.getSecretPowerUpColumn(this.level, this.level - 4)
             else
                 pathColumn
         }, this.monsterSpawns)
@@ -235,12 +235,12 @@ class PipeChunkTerminal(private var _width: Int = 4, private var pipeHeight: Int
         get() = this._width
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
 
         return TerminalMarioLevelChunk(this, Array(this._width) {
             when (it) {
-                this._width / 2 -> ChunkHelpers.getPipeEndColumn(this.level, this.pipeHeight)
-                this._width / 2 - 1 -> ChunkHelpers.getPipeStartColumn(this.level, this.pipeHeight)
+                this._width / 2 -> ColumnHelpers.getPipeEndColumn(this.level, this.pipeHeight)
+                this._width / 2 - 1 -> ColumnHelpers.getPipeStartColumn(this.level, this.pipeHeight)
                 else -> pathColumn
             }
         }, arrayOf(MonsterSpawn(this._width / 2 - 1, this.level - (this.pipeHeight - 1), Entities.Flower.NORMAL)))
@@ -270,11 +270,11 @@ class BulletBillChunkTerminal(private var _width: Int = 3, private var billHeigh
         get() = this._width
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
 
         return TerminalMarioLevelChunk(this, Array(this._width) {
             when (it) {
-                this._width / 2 -> ChunkHelpers.getBlasterBulletBillColumn(this.level, this.billHeight)
+                this._width / 2 -> ColumnHelpers.getBlasterBulletBillColumn(this.level, this.billHeight)
                 else -> pathColumn
             }
         }, arrayOf(MonsterSpawn(this._width / 2, this.level - (this.billHeight), Entities.BulletBill.NORMAL)))
@@ -306,12 +306,12 @@ class StairChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), private
     override val monstersLevel: Int get() = this.level - this._width + 1
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
 
         return TerminalMarioLevelChunk(this, Array(this._width) {
             when (it) {
                 0 or this._width - 1 -> pathColumn
-                else -> ChunkHelpers.getStonesColumn(this.level, it)
+                else -> ColumnHelpers.getStonesColumn(this.level, it)
             }
         }, this.monsterSpawns)
     }
@@ -347,11 +347,11 @@ class DoublePathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), pr
         get() = this._width
 
     override fun generateChunk(): MarioLevelChunk {
-        val pathColumn = ChunkHelpers.getPathColumn(this.level)
-        val oneLevelColumn = ChunkHelpers.getBoxesColumn(this.level, this.level - 4)
+        val pathColumn = ColumnHelpers.getPathColumn(this.level)
+        val oneLevelColumn = ColumnHelpers.getBoxesColumn(this.level, this.level - 4)
         val firstLevelBlockType = if (this.isFirstSecrets) Tiles.QM_WITH_COIN else Tiles.BRICK
         val secondLevelBlockType = if (this.isSecondSecrets) Tiles.QM_WITH_COIN else Tiles.BRICK
-        val twoLevelsColumn = ChunkHelpers.getColumnWithTwoBlocks(this.level, this.level - 4, firstLevelBlockType, this.level - 8, secondLevelBlockType)
+        val twoLevelsColumn = ColumnHelpers.getColumnWithTwoBlocks(this.level, this.level - 4, firstLevelBlockType, this.level - 8, secondLevelBlockType)
 
         return TerminalMarioLevelChunk(this, Array(this._width) {
             when (it) {

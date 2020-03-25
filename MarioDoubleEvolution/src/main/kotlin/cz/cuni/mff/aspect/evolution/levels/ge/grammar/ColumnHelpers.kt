@@ -3,7 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.ge.grammar
 import cz.cuni.mff.aspect.mario.Tiles
 
 
-object ChunkHelpers {
+object ColumnHelpers {
 
     private const val DEFAULT_HEIGHT: Int = 15
 
@@ -15,6 +15,15 @@ object ChunkHelpers {
             it < level -> Tiles.NOTHING
             it > level -> Tiles.DIRT
             else -> Tiles.GRASS_TOP
+        }
+    }
+
+    fun getPlatformColumn(level: Int, platformLevel: Int, platformBlockType: Byte): ByteArray = ByteArray(15) {
+        when {
+            it == platformLevel -> platformBlockType
+            it == level -> Tiles.GRASS_TOP
+            it > level -> Tiles.DIRT
+            else -> Tiles.NOTHING
         }
     }
 

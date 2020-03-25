@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.original
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -20,51 +20,51 @@ object Stage5Level1 : MarioLevel {
     init {
         this.tiles = Array(LEVEL_WIDTH) {
             when (it) {
-                44 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
-                45 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
+                44 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
+                45 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
 
-                49, 50 -> ChunkHelpers.getSpaceColumn()
-                51 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
-                52 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
+                49, 50 -> ColumnHelpers.getSpaceColumn()
+                51 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
+                52 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
 
-                89 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                90, 91 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.STONE, THIRD_LEVEL, Tiles.BRICK) // the second brick should have star
-                92 -> ChunkHelpers.getColumnWithTwoBlocks(BOTTOM_LEVEL, SECOND_LEVEL, Tiles.STONE, THIRD_LEVEL, Tiles.BRICK)
-                93 -> ChunkHelpers.getColumnWithBlock(BOTTOM_LEVEL, SECOND_LEVEL, Tiles.STONE)
-                94, 95 -> ChunkHelpers.getSpaceColumn()
+                89 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                90, 91 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.STONE, THIRD_LEVEL, Tiles.BRICK) // the second brick should have star
+                92 -> ColumnHelpers.getColumnWithTwoBlocks(BOTTOM_LEVEL, SECOND_LEVEL, Tiles.STONE, THIRD_LEVEL, Tiles.BRICK)
+                93 -> ColumnHelpers.getColumnWithBlock(BOTTOM_LEVEL, SECOND_LEVEL, Tiles.STONE)
+                94, 95 -> ColumnHelpers.getSpaceColumn()
 
-                111 -> ChunkHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
+                111 -> ColumnHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
 
-                114, 115 -> ChunkHelpers.getSpaceColumn()
-                116 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                114, 115 -> ColumnHelpers.getSpaceColumn()
+                116 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
 
-                147 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                147 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
 
-                149, 150 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
+                149, 150 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
 
-                152, 153, 154 -> ChunkHelpers.getSpaceColumn()
+                152, 153, 154 -> ColumnHelpers.getSpaceColumn()
 
-                156 -> ChunkHelpers.getPipeStartWithBlockColumn(FLOOR_LEVEL, 2, SECOND_LEVEL, Tiles.STONE, 4)
-                157 -> ChunkHelpers.getPipeEndWithBlockColumn(FLOOR_LEVEL, 2, SECOND_LEVEL, Tiles.STONE, 4)
+                156 -> ColumnHelpers.getPipeStartWithBlockColumn(FLOOR_LEVEL, 2, SECOND_LEVEL, Tiles.STONE, 4)
+                157 -> ColumnHelpers.getPipeEndWithBlockColumn(FLOOR_LEVEL, 2, SECOND_LEVEL, Tiles.STONE, 4)
 
-                159 -> ChunkHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
+                159 -> ColumnHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
 
-                163 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
-                164 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
+                163 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
+                164 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
 
-                170 -> ChunkHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
+                170 -> ColumnHelpers.getBlasterBulletBillColumn(FLOOR_LEVEL, 2)
 
-                182 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
-                183 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                184 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                185 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                186 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 5)
+                182 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                183 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                184 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                185 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                186 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 5)
 
-                189, 190 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 6, 2)
+                189, 190 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 6, 2)
 
-                199 -> ChunkHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
+                199 -> ColumnHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
 
-                else -> ChunkHelpers.getPathColumn(FLOOR_LEVEL)
+                else -> ColumnHelpers.getPathColumn(FLOOR_LEVEL)
             }
         }
 
