@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.original
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -20,105 +20,105 @@ object Stage1Level1 : MarioLevel {
     init {
         this.tiles = Array(LEVEL_WIDTH) {
             when (it) {
-                17 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                17 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
 
-                21 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                22 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP)
-                23 -> ChunkHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL)
-                24 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                25 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                21 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                22 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP)
+                23 -> ColumnHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL)
+                24 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                25 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
 
-                29 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
-                30 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
+                29 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
+                30 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
 
-                39 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
-                40 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
+                39 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
+                40 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
 
-                47 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
-                48 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                47 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
+                48 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                58 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4) // should be pipe down
-                59 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                58 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4) // should be pipe down
+                59 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                65 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL - 1)  // Should be green mroom and invisible
+                65 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL - 1)  // Should be green mroom and invisible
 
-                70, 71 -> ChunkHelpers.getSpaceColumn()
+                70, 71 -> ColumnHelpers.getSpaceColumn()
 
-                78 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                79 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP)
-                80 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                81 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                82 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                83 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                84 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                85 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                86 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                78 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                79 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP)
+                80 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                81 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                82 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                83 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                84 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                85 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                86 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
 
-                87, 88 -> ChunkHelpers.getBoxesColumn(BOTTOM_LEVEL, THIRD_LEVEL)
-                89 -> ChunkHelpers.getSpaceColumn()
+                87, 88 -> ColumnHelpers.getBoxesColumn(BOTTOM_LEVEL, THIRD_LEVEL)
+                89 -> ColumnHelpers.getSpaceColumn()
 
-                92, 93, 94 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                95 -> ChunkHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL) // on second level is multiple coins qm
+                92, 93, 94 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                95 -> ColumnHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL) // on second level is multiple coins qm
 
-                101 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                    102 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)  // should be star powerup
+                101 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                    102 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)  // should be star powerup
 
-                107 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                110 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.QM_WITH_POWERUP)
-                113 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                107 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                110 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.QM_WITH_POWERUP)
+                113 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
 
-                119 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                119 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
 
-                122, 123, 124 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                122, 123, 124 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
 
-                129 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
-                130, 131 -> ChunkHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL)
-                132 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                129 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
+                130, 131 -> ColumnHelpers.getBoxesAndSecretsColumn(FLOOR_LEVEL, SECOND_LEVEL, THIRD_LEVEL)
+                132 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, THIRD_LEVEL)
 
-                135 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
-                136 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                137 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                138 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                135 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                136 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                137 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                138 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
 
-                141 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                142 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                143 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                144 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                141 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                142 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                143 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                144 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
 
-                149 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
-                150 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                151 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                152 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                153 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                154, 155 -> ChunkHelpers.getSpaceColumn()
-                156 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                157 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                158 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                159 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                149 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                150 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                151 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                152 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                153 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                154, 155 -> ColumnHelpers.getSpaceColumn()
+                156 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                157 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                158 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                159 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
 
-                164 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)  // should be pipe up
-                165 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
+                164 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)  // should be pipe up
+                165 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
 
-                169, 170 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                171 -> ChunkHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
-                172 -> ChunkHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                169, 170 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                171 -> ColumnHelpers.getSecretBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
+                172 -> ColumnHelpers.getBoxesColumn(FLOOR_LEVEL, SECOND_LEVEL)
 
-                180 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
-                181 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
+                180 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 2)
+                181 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
 
-                182 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 1)
-                183 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
-                184 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
-                185 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                186 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 5)
-                187 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 6)
-                188 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 7)
-                189 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 8)
-                190 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 8)
+                182 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 1)
+                183 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                184 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                185 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                186 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 5)
+                187 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 6)
+                188 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 7)
+                189 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 8)
+                190 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 8)
 
-                199 -> ChunkHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
+                199 -> ColumnHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
 
-                else -> ChunkHelpers.getPathColumn(FLOOR_LEVEL)
+                else -> ColumnHelpers.getPathColumn(FLOOR_LEVEL)
             }
         }
 

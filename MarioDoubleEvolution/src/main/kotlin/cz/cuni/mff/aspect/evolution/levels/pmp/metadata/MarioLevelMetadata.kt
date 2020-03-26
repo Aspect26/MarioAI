@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp.metadata
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
@@ -80,7 +80,7 @@ data class MarioLevelMetadata (
 
     private fun createGround(): Array<ByteArray> = Array(this.levelLength) {
         val currentLevel = this.levelHeight - this.groundHeight[it]
-        val currentChunk = ChunkHelpers.getPathColumn(currentLevel, this.levelHeight)
+        val currentChunk = ColumnHelpers.getPathColumn(currentLevel, this.levelHeight)
         currentChunk
     }
 
@@ -130,7 +130,7 @@ data class MarioLevelMetadata (
 
     private fun insertHole(tiles: Array<ByteArray>, column: Int, holeLength: Int) {
         for (currentColumn in 0 until holeLength) {
-            tiles[column + currentColumn] = ChunkHelpers.getSpaceColumn(this.levelHeight)
+            tiles[column + currentColumn] = ColumnHelpers.getSpaceColumn(this.levelHeight)
         }
     }
 

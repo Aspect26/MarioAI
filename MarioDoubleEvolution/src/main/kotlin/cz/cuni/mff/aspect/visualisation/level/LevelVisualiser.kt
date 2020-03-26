@@ -41,7 +41,7 @@ class LevelVisualiser {
 
     private fun storeImage(image: BufferedImage, fileName: String) {
         val file = File(fileName)
-        file.parentFile.mkdirs()
+        if (file.parentFile != null) file.parentFile.mkdirs()
         ImageIO.write(image, "png", file)
     }
 

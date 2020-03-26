@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.original
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ChunkHelpers
+import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -20,81 +20,81 @@ object Stage2Level1 : MarioLevel {
     init {
         this.tiles = Array(LEVEL_WIDTH) {
             when (it) {
-                15, 17 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
-                16 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_POWERUP)
+                15, 17 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
+                16 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_POWERUP)
 
-                20, 21, 22, 23, 24 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, it - 19)
+                20, 21, 22, 23, 24 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, it - 19)
 
-                28 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_COIN, THIRD_LEVEL, Tiles.BRICK) // The coin block should be hidden and the brick should have 1UP
-                29, 30, 31 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                28 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_COIN, THIRD_LEVEL, Tiles.BRICK) // The coin block should be hidden and the brick should have 1UP
+                29, 30, 31 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
 
-                34 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 4)
-                35 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 2)
+                34 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 4)
+                35 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 2)
 
-                46 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
-                47 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                46 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
+                47 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                53 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP, THIRD_LEVEL, Tiles.QM_WITH_COIN)
-                54, 55, 56, 57 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.QM_WITH_COIN)
+                53 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_POWERUP, THIRD_LEVEL, Tiles.QM_WITH_COIN)
+                54, 55, 56, 57 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.QM_WITH_COIN)
 
-                68 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
-                69 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK) // should contain star
-                70, 71, 72 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                68 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
+                69 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK) // should contain star
+                70, 71, 72 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
 
-                74 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
-                75 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                74 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
+                75 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                79, 80 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
-                81, 82 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.BRICK)
-                83 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK) // should contain ladder to the clouds
-                84 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
-                85 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.BRICK)
-                86, 87 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
+                79, 80 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
+                81, 82 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.BRICK)
+                83 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK) // should contain ladder to the clouds
+                84 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                85 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN, THIRD_LEVEL, Tiles.BRICK)
+                86, 87 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
 
-                92, 93, 94, 95 -> ChunkHelpers.getColumnWithBlock(BOTTOM_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                92, 93, 94, 95 -> ColumnHelpers.getColumnWithBlock(BOTTOM_LEVEL, THIRD_LEVEL, Tiles.BRICK)
 
-                103 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4) // should be pipe down
-                104 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                103 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4) // should be pipe down
+                104 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                106, 107, 108 -> ChunkHelpers.getSpaceColumn()
+                106, 107, 108 -> ColumnHelpers.getSpaceColumn()
 
-                115 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 2) // should be pipe up
-                116 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
+                115 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 2) // should be pipe up
+                116 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 2)
 
-                122 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
-                123 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
+                122 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 4)
+                123 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 4)
 
-                125 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK_WITH_POWERUP)
-                126 -> ChunkHelpers.getPipeStartWithBlockColumn(FLOOR_LEVEL, 3, THIRD_LEVEL, Tiles.BRICK)
-                127 -> ChunkHelpers.getPipeEndWithBlockColumn(FLOOR_LEVEL, 3, THIRD_LEVEL, Tiles.BRICK)
-                128 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                125 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK_WITH_POWERUP)
+                126 -> ColumnHelpers.getPipeStartWithBlockColumn(FLOOR_LEVEL, 3, THIRD_LEVEL, Tiles.BRICK)
+                127 -> ColumnHelpers.getPipeEndWithBlockColumn(FLOOR_LEVEL, 3, THIRD_LEVEL, Tiles.BRICK)
+                128 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
 
-                130 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 5)
-                131 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 5)
+                130 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 5)
+                131 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 5)
 
-                139, 140, 141 -> ChunkHelpers.getSpaceColumn()
+                139, 140, 141 -> ColumnHelpers.getSpaceColumn()
 
-                152, 153 -> ChunkHelpers.getSpaceColumn()
-                154 -> ChunkHelpers.getStonesColumn(FLOOR_LEVEL, 3)
+                152, 153 -> ColumnHelpers.getSpaceColumn()
+                154 -> ColumnHelpers.getStonesColumn(FLOOR_LEVEL, 3)
 
-                161 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_COIN)
+                161 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK_WITH_COIN)
 
-                164, 165, 166, 167, 168 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
-                170 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
-                172 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK_WITH_POWERUP)
+                164, 165, 166, 167, 168 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK)
+                170 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.QM_WITH_COIN)
+                172 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, THIRD_LEVEL, Tiles.BRICK_WITH_POWERUP)
 
-                176 -> ChunkHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
-                177 -> ChunkHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
+                176 -> ColumnHelpers.getPipeStartColumn(FLOOR_LEVEL, 3)
+                177 -> ColumnHelpers.getPipeEndColumn(FLOOR_LEVEL, 3)
 
-                185 -> ChunkHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
-                186 -> ChunkHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK, THIRD_LEVEL, Tiles.BRICK_WITH_COIN) // the coin brick should be invisible
+                185 -> ColumnHelpers.getColumnWithBlock(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK)
+                186 -> ColumnHelpers.getColumnWithTwoBlocks(FLOOR_LEVEL, SECOND_LEVEL, Tiles.BRICK, THIRD_LEVEL, Tiles.BRICK_WITH_COIN) // the coin brick should be invisible
 
                 // 188 should be some piston
                 // 190 and 191 should be stone wall with height 10
 
-                200 -> ChunkHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
+                200 -> ColumnHelpers.getPrincessPeachColumn(FLOOR_LEVEL)
 
-                else -> ChunkHelpers.getPathColumn(FLOOR_LEVEL)
+                else -> ColumnHelpers.getPathColumn(FLOOR_LEVEL)
             }
         }
 

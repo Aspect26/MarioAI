@@ -88,6 +88,8 @@ class ProbabilisticMultipassEvolution(
     }
 
     private fun collectMultiEvolutionResult(evolutionStream: Stream<EvolutionResult<DoubleGene, Float>>, resultsCount: Int): List<DoubleArray> {
+        // TODO: omg wtf why don't we generate the resulting levels with only the best generator?
+
         val allGenerations = evolutionStream.collect(Collectors.toList())
         val allIndividuals = allGenerations.flatMap { it.population }
         val allIndividualsSorted = allIndividuals.sortedByDescending { it.fitness }
