@@ -2,10 +2,7 @@ package cz.cuni.mff.aspect.evolution.levels.chunks
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
-import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluator
-import cz.cuni.mff.aspect.evolution.levels.MarioLevelEvaluators
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
-import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.extensions.getDoubleValues
 import cz.cuni.mff.aspect.extensions.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -19,11 +16,12 @@ import io.jenetics.util.Factory
 import io.jenetics.util.RandomRegistry
 import io.jenetics.util.Seq
 import java.util.*
+import java.util.concurrent.ForkJoinPool
 
 
 class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                     private val generationsCount: Int = GENERATIONS_COUNT,
-                                    private val fitnessFunction: MarioLevelEvaluator<Float> = MarioLevelEvaluators::marioDistance,
+                                    private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::marioDistanceAndDiversity,
                                     private val evaluateOnLevelsCount: Int = 5,
                                     private val resultLevelsCount: Int = 5,
                                     private val chunksCount: Int = 35,
@@ -39,7 +37,11 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
 
-        return Array(this.resultLevelsCount) { ProbabilisticChunksLevelCreator.createFromDefaultChunks(resultIndividual.toList(), this.chunksCount) }
+        return Array(this.resultLevelsCount) {
+            val (level, _) = ProbabilisticChunksLevelCreator.createFromDefaultChunks(resultIndividual.getDoubleValues().toList(), this.chunksCount)
+            if (it == 0) { println("FINAL:"); this.computeFitness(resultIndividual) }
+            level
+        }
     }
 
     fun storeChart(path: String) {
@@ -51,7 +53,7 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
         return Engine.Builder(
-            AlwaysReevaluatingEvaluator(this::computeFitness,Concurrency.SERIAL_EXECUTOR),
+            AlwaysReevaluatingEvaluator(this::computeFitness, ForkJoinPool.commonPool()),
             initialGenotype
         )
             .optimize(Optimize.MAXIMUM)
@@ -62,7 +64,7 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
             .build()
     }
 
-    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): DoubleArray {
+    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Genotype<DoubleGene> {
         this.chart.show()
 
         return evolutionEngine.stream()
@@ -74,7 +76,7 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
                 this.chart.update(generation, bestFitness, averageFitness.toDouble(), 0.0, 0.0)
                 println("new gen: ${it.generation} (best fitness: ${it.bestFitness})")
             } .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
-            .bestPhenotype.genotype.getDoubleValues()
+            .bestPhenotype.genotype
     }
 
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
@@ -82,11 +84,11 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
 
         val fitnesses = (0 until this.evaluateOnLevelsCount).map {
             val agent = this.agentFactory()
-            val level = ProbabilisticChunksLevelCreator.createFromDefaultChunks(genes.toList(), this.chunksCount)
+            val (level, chunks) = ProbabilisticChunksLevelCreator.createFromDefaultChunks(genes.toList(), this.chunksCount)
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(level, gameStatistics)
+            this.fitnessFunction(level, chunks, gameStatistics)
         }
 
         return fitnesses.sumByFloat { it }
