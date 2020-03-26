@@ -19,11 +19,6 @@ object ProbabilisticChunksLevelCreator {
         BulletBill1Chunk(), BulletBill1Chunk(), BulletBill2Chunk(), BulletBill3Chunk(),
         Stair2Chunk(), Stair3Chunk(), Stair4Chunk(), Stair5Chunk(),
         DoubleBrickPlatforms5Chunk(), DoubleQMPlatforms5Chunk(), BrickAndQMPlatforms5Chunk())
-    private val DEFAULT_CHUNKS_SMALL = arrayOf(
-        Hole2Chunk(),
-        Path6Chunk(),
-        SingleBricks3Platform(),
-        Pipe4Chunk())
     private val DEFAULT_START_CHUNK: MarioLevelChunk = PathChunk(8)
     private val DEFAULT_END_CHUNK: MarioLevelChunk = PathChunk(8)
 
@@ -40,7 +35,7 @@ object ProbabilisticChunksLevelCreator {
             35,
             this.DEFAULT_START_CHUNK,
             this.DEFAULT_END_CHUNK,
-            List(5) { 0.05 },
+            listOf(0.05, 0.05, 0.05, 0.02, 0.02),
             0.5
         )
 
@@ -130,8 +125,8 @@ object ProbabilisticChunksLevelCreator {
             val entity = when (this.randomChoice(entityProbabilities)) {
                 0 -> Entities.Goomba.NORMAL
                 1 -> Entities.Koopa.GREEN
-                2 -> Entities.Koopa.GREEN_WINGED
-                3 -> Entities.Koopa.RED
+                2 -> Entities.Koopa.RED
+                3 -> Entities.Koopa.GREEN_WINGED
                 4 -> Entities.Spiky.NORMAL
                 else -> Entities.NOTHING
             }

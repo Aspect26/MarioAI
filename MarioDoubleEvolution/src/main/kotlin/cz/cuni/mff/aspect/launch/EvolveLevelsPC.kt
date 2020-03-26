@@ -10,8 +10,8 @@ import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
-    createDefaultPc()
+    evolvePC()
+//    createDefaultPc()
 }
 
 fun evolvePC() {

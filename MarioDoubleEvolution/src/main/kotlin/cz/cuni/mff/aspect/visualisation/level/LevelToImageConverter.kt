@@ -54,10 +54,14 @@ object LevelToImageConverter {
                         for (j in 0 until this.SPRITES_SIZE * 2) {
                             val color = this.getEntityColor(entity, i, j)
                             if (!this.isTransparent(color)) {
-                                image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j - this.SPRITES_SIZE, color)
+                                val imageY = y * SPRITES_SIZE + j - this.SPRITES_SIZE
+                                val imageX = x * SPRITES_SIZE + i
+
+                                if (imageY < 0 || imageX < 0 || imageX > image.width || imageY > image.height) continue
+
+                                image.setRGB(imageX, imageY, color)
                             }
                         }
-                        println()
                     }
                 }
             }
