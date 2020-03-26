@@ -11,7 +11,6 @@ import javax.imageio.ImageIO
 object LevelToImageConverter {
 
     private const val SPRITES_SIZE = 16
-    private const val TRANSPARENT_COLOR = 16777215
 
     private val tileSheet: BufferedImage = ImageIO.read(File("resources/mapsheet.png"))
     private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
@@ -37,7 +36,7 @@ object LevelToImageConverter {
                 for (i in 0 until this.SPRITES_SIZE) {
                     for (j in 0 until this.SPRITES_SIZE) {
                         val color = this.getTileColor(tile, i, j)
-                        if (color != this.TRANSPARENT_COLOR) {
+                        if (!this.isTransparent(color)) {
                             image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j, color)
                         }
                     }
@@ -54,10 +53,11 @@ object LevelToImageConverter {
                     for (i in 0 until this.SPRITES_SIZE) {
                         for (j in 0 until this.SPRITES_SIZE * 2) {
                             val color = this.getEntityColor(entity, i, j)
-                            if (color != this.TRANSPARENT_COLOR) {
+                            if (!this.isTransparent(color)) {
                                 image.setRGB(x * SPRITES_SIZE + i, y * SPRITES_SIZE + j - this.SPRITES_SIZE, color)
                             }
                         }
+                        println()
                     }
                 }
             }
@@ -86,6 +86,13 @@ object LevelToImageConverter {
         when (entity) {
             Entities.Goomba.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 2 * 32 + y)
             Entities.Koopa.GREEN -> this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+            Entities.Koopa.GREEN_WINGED -> {
+                val koopaPixel = this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+                if (this.isTransparent(koopaPixel))
+                    this.enemySheet.getRGB(0 * 32 + x, 4 * 32 + y + 16)
+                else
+                    koopaPixel
+            }
             Entities.Koopa.RED -> this.enemySheet.getRGB(0 * 32 + x, 0 * 32 + y)
             Entities.Spiky.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 3 * 32 + y)
             Entities.Flower.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 6 * 32 + y)
@@ -95,4 +102,7 @@ object LevelToImageConverter {
             else -> Color.BLACK.rgb
         }
 
+    private fun isTransparent(color: Int): Boolean {
+        return color == 16777215 || color == 47104 || color == 63488 || color == 30720
+    }
 }

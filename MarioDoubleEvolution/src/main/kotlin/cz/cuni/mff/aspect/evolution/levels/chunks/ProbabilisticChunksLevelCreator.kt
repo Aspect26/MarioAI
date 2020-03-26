@@ -19,10 +19,18 @@ object ProbabilisticChunksLevelCreator {
         BulletBill1Chunk(), BulletBill1Chunk(), BulletBill2Chunk(), BulletBill3Chunk(),
         Stair2Chunk(), Stair3Chunk(), Stair4Chunk(), Stair5Chunk(),
         DoubleBrickPlatforms5Chunk(), DoubleQMPlatforms5Chunk(), BrickAndQMPlatforms5Chunk())
+    private val DEFAULT_CHUNKS_SMALL = arrayOf(
+        Hole2Chunk(),
+        Path6Chunk(),
+        SingleBricks3Platform(),
+        Pipe4Chunk())
     private val DEFAULT_START_CHUNK: MarioLevelChunk = PathChunk(8)
     private val DEFAULT_END_CHUNK: MarioLevelChunk = PathChunk(8)
 
     private val random = Random()
+
+    val DEFAULT_CHUNKS_COUNT: Int = this.DEFAULT_CHUNKS.size
+    const val ENEMY_TYPES_COUNT = 5
 
     fun createDefault(): MarioLevel =
         this.create(
@@ -32,22 +40,33 @@ object ProbabilisticChunksLevelCreator {
             35,
             this.DEFAULT_START_CHUNK,
             this.DEFAULT_END_CHUNK,
-            List(5) { 0.05 }
+            List(5) { 0.05 },
+            0.5
         )
 
-    fun createFromDefaultChunks(probabilities: List<Double>, chunksInLevelCount: Int): MarioLevel =
-        this.create(
+    fun createFromDefaultChunks(probabilities: List<Double>, chunksInLevelCount: Int): MarioLevel {
+//        this.printProbabilities(probabilities)
+        return this.create(
             this.DEFAULT_CHUNKS,
             probabilities.subList(0, this.DEFAULT_CHUNKS.size),
-            probabilities.subList(this.DEFAULT_CHUNKS.size, this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size),
+            probabilities.subList(
+                this.DEFAULT_CHUNKS.size,
+                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size
+            ),
             chunksInLevelCount,
             this.DEFAULT_START_CHUNK,
             this.DEFAULT_END_CHUNK,
-            probabilities.subList(this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size, this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size + 5)
+            probabilities.subList(
+                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size,
+                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size + this.ENEMY_TYPES_COUNT
+            ),
+            probabilities[this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size + this.ENEMY_TYPES_COUNT]
         )
+    }
 
     fun create(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
-               chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk, entitiesProbabilities: List<Double>): MarioLevel {
+               chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk, entitiesProbabilities: List<Double>,
+               heightChangeProbability: Double): MarioLevel {
         if (transitionProbabilities.size != chunks.size * chunks.size) {
             throw IllegalArgumentException("The length of transition probabilities arrays must equal to the length of chunks array squared")
         }
@@ -56,12 +75,12 @@ object ProbabilisticChunksLevelCreator {
             throw IllegalArgumentException("The length of starting probabilities arrays must equal to the length of chunks array")
         }
 
-        if (entitiesProbabilities.size != 5) {
-            throw IllegalArgumentException("The length of entities probabilities arrays must equal to 5")
+        if (entitiesProbabilities.size != this.ENEMY_TYPES_COUNT) {
+            throw IllegalArgumentException("The length of entities probabilities arrays must equal to ${this.ENEMY_TYPES_COUNT}")
         }
 
         val tiles: Array<ByteArray> = this.createTiles(chunks, startingProbabilities, transitionProbabilities, chunksInLevelCount,
-            startChunk, endChunk)
+            startChunk, endChunk, heightChangeProbability)
 
         val entities: Array<Array<Int>> = this.createEntities(tiles, entitiesProbabilities)
 
@@ -69,7 +88,8 @@ object ProbabilisticChunksLevelCreator {
     }
 
     private fun createTiles(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
-                            chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk): Array<ByteArray> {
+                            chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk,
+                            heightChangeProbability: Double): Array<ByteArray> {
         val tilesList: MutableList<ByteArray> = mutableListOf()
 
         var currentHeight = 10
@@ -79,7 +99,8 @@ object ProbabilisticChunksLevelCreator {
         tilesList.addAll(chunks[currentChunkIndex].generate(currentHeight))
 
         for (chunkNumber in 1 until chunksInLevelCount) {
-            currentHeight = (currentHeight + this.nextHeightChange).coerceIn(5, 14)
+            if (this.random.nextDouble() < heightChangeProbability)
+                currentHeight = (currentHeight + this.nextHeightChange).coerceIn(5, 14)
 
             val tpStartIndex = chunks.size * currentChunkIndex
             val tpEndIndex = chunks.size * (currentChunkIndex + 1)
@@ -119,7 +140,7 @@ object ProbabilisticChunksLevelCreator {
 
         val princessColumn = tiles.size - 3
         val firstEmpty = tiles[princessColumn].size - tiles[princessColumn].reversedArray().indexOfFirst { it == Tiles.NOTHING }
-        entities[princessColumn][firstEmpty] = Entities.PrincessPeach.NORMAL
+        entities[princessColumn][firstEmpty - 1] = Entities.PrincessPeach.NORMAL
 
         return entities
     }
@@ -144,6 +165,25 @@ object ProbabilisticChunksLevelCreator {
         }
 
         return -1
+    }
+
+    private fun printProbabilities(probabilities: List<Double>) {
+        val chunksCount = this.DEFAULT_CHUNKS.size
+
+        val initialProbabilities = probabilities.subList(0, chunksCount)
+        val probabilitiesMatrix = probabilities.subList(chunksCount, chunksCount + chunksCount * chunksCount)
+        val enemiesMatrix = probabilities.subList(chunksCount + chunksCount * chunksCount, chunksCount + chunksCount * chunksCount + this.ENEMY_TYPES_COUNT)
+
+        println("PBOS:")
+        println(initialProbabilities.joinToString(", "))
+        println("-----------")
+        for (x in 0 until chunksCount) {
+            println(probabilitiesMatrix.subList(x * chunksCount, (x + 1) * chunksCount).joinToString(", "))
+        }
+        println("-----------")
+        println(enemiesMatrix.joinToString(", "))
+        println()
+
     }
 
 }
