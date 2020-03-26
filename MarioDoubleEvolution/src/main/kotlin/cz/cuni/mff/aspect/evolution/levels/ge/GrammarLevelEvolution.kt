@@ -5,12 +5,10 @@ import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.GrammarSentence
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
-import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
+import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.getString
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelGrammar
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.level.ChunkedMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -24,11 +22,11 @@ import io.jenetics.util.IntRange
 class GrammarLevelEvolution(private val levelsCount: Int = 1,
                             private val populationSize: Int = POPULATION_SIZE,
                             private val generationsCount: Long = GENERATIONS_COUNT
-) : LevelEvolution {
+) {
 
     private lateinit var agentFactory: () -> IAgent
 
-    override fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
+    fun evolve(agentFactory: () -> IAgent): Array<MarioLevel> {
         this.agentFactory = agentFactory
         val grammarEvolution = GrammarEvolution.Builder(LevelGrammar.get())
             .fitness(this::fitness)

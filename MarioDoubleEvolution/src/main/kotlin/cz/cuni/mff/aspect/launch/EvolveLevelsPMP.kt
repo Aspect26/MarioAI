@@ -1,20 +1,18 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
-import cz.cuni.mff.aspect.agents.GoingRightAgent
-import cz.cuni.mff.aspect.agents.GoingRightAndJumpingAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelCreator
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-     evolve()
-//    createDefault()
+//     evolve()
+    createDefault()
 }
 
 fun evolve() {
@@ -24,11 +22,11 @@ fun evolve() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
     val fitness = PMPLevelEvaluators::marioDistanceAndLevelDiversity
 
-    val levelEvolution = ProbabilisticMultipassEvolution(generationsCount = 70, fitnessFunction = fitness)
-    val levels = levelEvolution.evolve(agentFactory)
-    val firstLevel = levels.first()
+    val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(generationsCount = 70, fitnessFunction = fitness)
+    val levelGenerator = levelEvolution.evolve(agentFactory)
+    val level = levelGenerator.generate()
 
-    val postprocessed = LevelPostProcessor.postProcess(firstLevel)
+    val postprocessed = LevelPostProcessor.postProcess(level)
     LevelStorage.storeLevel("current.lvl", postprocessed)
 
     LevelVisualiser().display(postprocessed)
@@ -38,7 +36,7 @@ fun evolve() {
 }
 
 fun createDefault() {
-    val defaultLevel = PMPLevelCreator.createDefault()
+    val defaultLevel = PMPLevelGenerator().generate()
     val postProcessed = LevelPostProcessor.postProcess(defaultLevel)
     LevelVisualiser().display(postProcessed)
     GameSimulator(500000000).playMario(CheaterKeyboardAgent(), postProcessed, true)

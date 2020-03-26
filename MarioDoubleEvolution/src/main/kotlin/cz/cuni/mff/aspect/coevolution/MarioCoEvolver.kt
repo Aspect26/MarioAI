@@ -1,26 +1,28 @@
 package cz.cuni.mff.aspect.coevolution
 
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
-import cz.cuni.mff.aspect.evolution.levels.LevelEvolution
+import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
-import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.custom.OnlyPathLevel
 
 class MarioCoEvolver {
 
-    fun evolve(controllerEvolution: ControllerEvolution, generator: LevelEvolution, generations: Int = DEFAULT_GENERATIONS_NUMBER): CoevolutionResult {
+    fun evolve(controllerEvolution: ControllerEvolution, generator: LevelGeneratorEvolution, generations: Int = DEFAULT_GENERATIONS_NUMBER): CoevolutionResult {
         lateinit var resultController: MarioController
-        var resultLevels: Array<MarioLevel> = arrayOf(OnlyPathLevel)
+        var resultLevelGenerator: LevelGenerator = PMPLevelGenerator()
 
         for (generation in (0 until generations)) {
             println("COEVOLUTION GENERATION ${generation + 1}")
-            resultController = controllerEvolution.evolve(resultLevels, MarioGameplayEvaluators::distanceLeastActions, MarioGameplayEvaluators::victoriesOnly)
-            resultLevels = generator.evolve { MarioAgent(resultController) }
+            val levels = Array(5) { resultLevelGenerator.generate() }
+
+            resultController = controllerEvolution.evolve(levels, MarioGameplayEvaluators::distanceLeastActions, MarioGameplayEvaluators::victoriesOnly)
+            resultLevelGenerator = generator.evolve { MarioAgent(resultController) }
         }
 
-        return CoevolutionResult(resultController, resultLevels)
+        return CoevolutionResult(resultController, resultLevelGenerator)
     }
 
     companion object {

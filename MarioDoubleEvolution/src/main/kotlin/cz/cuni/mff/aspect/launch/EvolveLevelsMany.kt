@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.MetadataLevelsEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
@@ -109,8 +109,7 @@ class PMPEvolutionLauncher(
     private val levelVisualiser = LevelVisualiser()
 
     fun launch()  {
-        val levelEvolution = ProbabilisticMultipassEvolution(
-            resultLevelsCount = this.resultLevelsCount,
+        val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
             fitnessFunction = this.fitnessFunction,
@@ -118,7 +117,8 @@ class PMPEvolutionLauncher(
             chartLabel = this.label
         )
 
-        var levels = levelEvolution.evolve(this.agentFactory)
+        val levelGenerator = levelEvolution.evolve(this.agentFactory)
+        var levels = Array(this.resultLevelsCount) { levelGenerator.generate() }
 
         if (this.postProcess)
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()
