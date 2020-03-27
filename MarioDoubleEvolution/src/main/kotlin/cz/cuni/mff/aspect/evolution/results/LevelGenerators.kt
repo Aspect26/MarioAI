@@ -16,4 +16,10 @@ object LevelGenerators {
         val NEAT6: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neat_6.lg") as LevelGenerator
 
     }
+
+    object PMPGenerator {
+
+        val NEAT1: LevelGenerator = ObjectStorage.load("data/level-generators/pmp_neat_1.lg") as LevelGenerator
+
+    }
 }

@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp
 
+import cz.cuni.mff.aspect.evolution.levels.chunks.ProbabilisticChunksLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 
@@ -31,14 +32,17 @@ object PMPLevelEvaluators {
 
         val jumpsFactor = (gameStatistic.jumps / 40.0f).coerceAtMost(1.0f)
 
+        val enemyTypes: Int = levelMetadata.entities.filter { it > 0 }.distinct().size
         val enemiesCount = levelMetadata.enemiesCount
         val enemiesFactor = (enemiesCount / 10f).coerceAtMost(1.0f)
+        val enemiesDiversityFactor = enemyTypes / 4f
 
         val linearityFactor = heightChangeProbability / 5f
 
-        println("$maxFeatureOccurrences : $minFeatureOccurrences : $featureUsageFactor")
+//        println("$maxFeatureOccurrences : $minFeatureOccurrences : $featureUsageFactor")
 
-        return distance * (3 + featureUsageFactor + enemiesFactor + linearityFactor)
+//        return (distance / 5) + distance * featureUsageFactor * enemiesFactor * linearityFactor * enemiesDiversityFactor
+        return distance * (diversityFactor + featureUsageFactor + linearityFactor * enemiesDiversityFactor)
     }
 
 }

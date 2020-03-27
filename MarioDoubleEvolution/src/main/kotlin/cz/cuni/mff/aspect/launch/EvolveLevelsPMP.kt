@@ -21,7 +21,7 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
-        generationsCount = 20,
+        generationsCount = 50,
         populationSize = 50,
         fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity
     )
@@ -40,10 +40,14 @@ fun evolvePMP() {
 
 fun playLatestPMP() {
     val levelGenerator = ObjectStorage.load("data/latest_pmp_lg.lg") as LevelGenerator
-    val level = levelGenerator.generate()
-    val postProcessed = LevelPostProcessor.postProcess(level, true)
-    val agent = CheaterKeyboardAgent()
-    GameSimulator().playMario(agent, postProcessed, true)
+    val levels = Array(15) { levelGenerator.generate() }
+    val gameSimulator = GameSimulator()
+
+    for (level in levels) {
+        val postProcessed = LevelPostProcessor.postProcess(level, true)
+        val agent = CheaterKeyboardAgent()
+        gameSimulator.playMario(agent, postProcessed, true)
+    }
 }
 
 fun createDefaultPMP() {
