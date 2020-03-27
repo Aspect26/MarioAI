@@ -12,8 +12,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
-    playLatest()
+    evolvePC()
+//    playLatest()
 //    createDefaultPc()
 }
 
@@ -22,7 +22,7 @@ fun evolvePC() {
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 25,
+        generationsCount = 75,
         evaluateOnLevelsCount = 5,
         fitnessFunction = PCLevelEvaluators::marioDistanceAndDiversity)
 

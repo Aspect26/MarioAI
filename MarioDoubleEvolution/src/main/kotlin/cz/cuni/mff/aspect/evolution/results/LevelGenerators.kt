@@ -7,7 +7,10 @@ object LevelGenerators {
 
     object ChunkGenerator {
 
-        val NeuroS4L1: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neuro_s4l1.lg") as LevelGenerator
+        val Neuro1: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neuro_1.lg") as LevelGenerator
+        val NEAT1: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neat_1.lg") as LevelGenerator
+        val NEAT2: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neat_2.lg") as LevelGenerator
+        val NEAT3: LevelGenerator = ObjectStorage.load("data/level-generators/pc_neat_3.lg") as LevelGenerator
 
     }
 }
