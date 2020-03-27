@@ -1,42 +1,49 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.chunks.ProbabilisticChunksLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.storage.LevelStorage
+import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
 //    evolvePC()
-    createDefaultPc()
+    playLatest()
+//    createDefaultPc()
 }
 
 fun evolvePC() {
-    val agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver }
-
-    val fitnessFunction = PCLevelEvaluators::marioDistanceAndDiversity
+    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 50,
+        generationsCount = 25,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = fitnessFunction)
+        fitnessFunction = PCLevelEvaluators::marioDistanceAndDiversity)
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)
-    val firstLevel = levelGenerator.generate()
+    ObjectStorage.store("data/latest_pc_lg.lg", levelGenerator)
 
-    val postprocessed = LevelPostProcessor.postProcess(firstLevel)
-    LevelStorage.storeLevel("current.lvl", postprocessed)
-
-    LevelVisualiser().displayAndStore(postprocessed, "current.png")
+    val level = levelGenerator.generate()
+    val postProcessed = LevelPostProcessor.postProcess(level, true)
+    LevelVisualiser().display(postProcessed)
 
 //    val agent = CheaterKeyboardAgent()
     val agent = agentFactory()
-    GameSimulator().playMario(agent, postprocessed, true)
+    GameSimulator().playMario(agent, postProcessed, true)
+}
+
+fun playLatest() {
+    val generator: LevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as LevelGenerator
+    val level = generator.generate()
+    val postProcessed = LevelPostProcessor.postProcess(level, true)
+    val agent = CheaterKeyboardAgent()
+    GameSimulator().playMario(agent, postProcessed, true)
 }
 
 fun createDefaultPc() {

@@ -33,10 +33,11 @@ class ProbabilisticChunksLevelGenerator(
     private val START_CHUNK: MarioLevelChunk = PathChunk(8)
     private val END_CHUNK: MarioLevelChunk = PathChunk(8)
 
-    private val random = Random()
+    private lateinit var random: Random
     private lateinit var _lastChunkNames: Array<String>
 
     override fun generate(): MarioLevel {
+        this.random = Random()
         return this.generate(
             this.DEFAULT_CHUNKS,
             this.probabilities.subList(0, this.DEFAULT_CHUNKS.size),

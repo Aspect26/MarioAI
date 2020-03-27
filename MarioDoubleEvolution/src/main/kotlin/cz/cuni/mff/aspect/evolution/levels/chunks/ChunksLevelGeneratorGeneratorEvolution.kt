@@ -11,6 +11,7 @@ import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
+import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.Factory
 import io.jenetics.util.RandomRegistry
 import io.jenetics.util.Seq
@@ -48,6 +49,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
         return Engine.Builder(
             AlwaysReevaluatingEvaluator(this::computeFitness, ForkJoinPool.commonPool()),
+//            AlwaysReevaluatingEvaluator(this::computeFitness, Concurrency.SERIAL_EXECUTOR),
             initialGenotype
         )
             .optimize(Optimize.MAXIMUM)
@@ -141,7 +143,7 @@ class MarkovChainMutator(
             val oldGene = oldIndividual.get(0, index)
             genes[index] = if (random.nextDouble() < this.additionalProbabilitiesChangeProbability) {
                 mutations++
-                (oldGene.doubleValue() + (random.nextDouble() - 0.5)).coerceIn(0.0, 1.0)
+                (oldGene.doubleValue() + (random.nextDouble() / 2 - 0.25)).coerceIn(0.0, 1.0)
             } else {
                 oldGene.doubleValue()
             }

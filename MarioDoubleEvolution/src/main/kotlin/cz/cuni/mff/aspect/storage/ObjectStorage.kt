@@ -5,7 +5,7 @@ import java.io.*
 
 object ObjectStorage {
 
-    fun store(filePath: String, data: Any) {
+    fun store(filePath: String, data: Serializable) {
         val file = File(filePath)
         file.parentFile?.mkdirs()
         file.createNewFile()

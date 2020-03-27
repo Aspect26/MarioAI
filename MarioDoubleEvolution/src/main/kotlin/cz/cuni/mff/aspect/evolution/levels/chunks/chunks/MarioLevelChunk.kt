@@ -1,6 +1,8 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
 
-abstract class MarioLevelChunk {
+import java.io.Serializable
+
+abstract class MarioLevelChunk : Serializable {
 
     abstract fun generate(level: Int): Array<ByteArray>
 
