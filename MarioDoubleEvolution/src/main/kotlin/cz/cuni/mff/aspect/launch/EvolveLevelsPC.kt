@@ -13,7 +13,7 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
     evolvePC()
-//    playLatest()
+//    playLatestPC()
 //    createDefaultPC()
 }
 
@@ -22,7 +22,7 @@ fun evolvePC() {
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 75,
+        generationsCount = 200,
         evaluateOnLevelsCount = 5,
         fitnessFunction = PCLevelEvaluators::distanceDiversityEnemiesLinearity
     )
@@ -41,10 +41,15 @@ fun evolvePC() {
 
 fun playLatestPC() {
     val levelGenerator: LevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as LevelGenerator
-    val level = levelGenerator.generate()
-    val postProcessed = LevelPostProcessor.postProcess(level, true)
-    val agent = CheaterKeyboardAgent()
-    GameSimulator().playMario(agent, postProcessed, true)
+    val levels = Array(15) { levelGenerator.generate() }
+    val simulator = GameSimulator(15000)
+
+    for (level in levels) {
+        val postProcessed = LevelPostProcessor.postProcess(level)
+        val agent = CheaterKeyboardAgent()
+//        val agent = Agents.NEAT.Stage4Level1Solver
+        val stats = simulator.playMario(agent, postProcessed, true)
+    }
 }
 
 fun createDefaultPC() {

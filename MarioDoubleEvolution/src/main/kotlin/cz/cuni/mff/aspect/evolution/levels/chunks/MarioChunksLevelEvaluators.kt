@@ -22,14 +22,17 @@ object PCLevelEvaluators {
 
         val jumpsFactor = (gameStatistic.jumps / 40.0f).coerceAtMost(1.0f)
 
+        val enemyTypes: Int = level.enemies.flatten().filter { it > 0 }.distinct().size
         val enemiesCount = level.enemies.flatten().filter { it > 0 }.size
-        val enemiesFactor = (enemiesCount / 10f).coerceAtMost(2.0f)
+        val enemiesFactor = (enemiesCount / 20f).coerceAtMost(2.0f)
+        val enemiesDiversityFactor = enemyTypes / ProbabilisticChunksLevelGenerator.ENEMY_TYPES_COUNT.toFloat()
 
         val linearityFactor = heightChangeProbability
 
 //        println("$enemiesFactor : $diversityFactor : $jumpsFactor - ${levelChunks.joinToString(", ")}")
 
-        return distance * (4 + diversityFactor + chunkUsageFactor + enemiesFactor + linearityFactor)
+        return (distance / 5) + distance * chunkUsageFactor * diversityFactor * linearityFactor * enemiesFactor * enemiesDiversityFactor
+//        return distance * (5 + diversityFactor + chunkUsageFactor + enemiesFactor + linearityFactor + jumpsFactor)
     }
 
 }

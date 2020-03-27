@@ -16,7 +16,7 @@ fun main() {
 
 
 fun keyboardPlay() {
-    val levelGenerator = LevelGenerators.ChunkGenerator.NEAT3
+    val levelGenerator = LevelGenerators.ChunkGenerator.NEAT4
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
     val marioSimulator = GameSimulator(15000)
