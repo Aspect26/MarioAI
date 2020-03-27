@@ -3,33 +3,42 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 
-typealias MetadataLevelsEvaluator<F> = (levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics) -> F
+typealias MetadataLevelsEvaluator<F> = (levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
 
 object PMPLevelEvaluators {
 
-    fun marioDistance(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float =
+    fun marioDistance(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float =
         gameStatistic.finalMarioDistance
 
-    fun marioDistanceAndLevelDiversity(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
-        val maxObstacleOccurrences = maxOf(levelMetadata.holesCount, maxOf(levelMetadata.pipesCount, maxOf(levelMetadata.billsCount,
+    fun distanceDiversityEnemiesLinearity(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
+        val distance = gameStatistic.finalMarioDistance
+
+        val featuresUsed = levelMetadata.holesCount.coerceAtMost(1) + levelMetadata.pipesCount.coerceAtMost(1)
+            + levelMetadata.billsCount.coerceAtMost(1) + levelMetadata.boxPlatformsCount.coerceAtMost(1) + levelMetadata.stoneColumnsCount.coerceAtMost(1)
+        val diversityFactor = featuresUsed / 5f
+
+        val maxFeatureOccurrences = maxOf(levelMetadata.holesCount, maxOf(levelMetadata.pipesCount, maxOf(levelMetadata.billsCount,
             maxOf(levelMetadata.boxPlatformsCount, levelMetadata.stoneColumnsCount))))
-
-        val minObstacleOccurrences = minOf(levelMetadata.holesCount, minOf(levelMetadata.pipesCount, minOf(levelMetadata.billsCount,
+        val minFeatureOccurrences = minOf(levelMetadata.holesCount, minOf(levelMetadata.pipesCount, minOf(levelMetadata.billsCount,
             minOf(levelMetadata.boxPlatformsCount, levelMetadata.stoneColumnsCount))))
+        val minMaxDifference = maxFeatureOccurrences - minFeatureOccurrences
 
-        val minMaxDifference = maxObstacleOccurrences - minObstacleOccurrences
-
-        val obstaclesCount = levelMetadata.holesCount + levelMetadata.pipesCount + levelMetadata.billsCount
-        val enemiesCount = levelMetadata.enemiesCount
-        val diversityFactor: Float = if (minMaxDifference > 0) 1f / minMaxDifference else 1f
-        val marioDistanceFactor = (gameStatistic.finalMarioDistance) / (levelMetadata.levelLength * 16f)
-
-        return if (gameStatistic.levelFinished) {
-            // println("${levelMetadata.holesCount} | ${levelMetadata.pipesCount} | ${levelMetadata.billsCount} | ${levelMetadata.boxPlatformsCount} | ${levelMetadata.stoneColumnsCount}")
-            gameStatistic.finalMarioDistance * (1 + diversityFactor) + minObstacleOccurrences * 100
-        } else {
-            gameStatistic.finalMarioDistance
+        val featureUsageFactor = when {
+            minFeatureOccurrences == 0 -> 0f
+            minMaxDifference > 0f -> 1f / minMaxDifference
+            else -> 1f
         }
+
+        val jumpsFactor = (gameStatistic.jumps / 40.0f).coerceAtMost(1.0f)
+
+        val enemiesCount = levelMetadata.enemiesCount
+        val enemiesFactor = (enemiesCount / 10f).coerceAtMost(1.0f)
+
+        val linearityFactor = heightChangeProbability / 5f
+
+        println("$maxFeatureOccurrences : $minFeatureOccurrences : $featureUsageFactor")
+
+        return distance * (3 + featureUsageFactor + enemiesFactor + linearityFactor)
     }
 
 }

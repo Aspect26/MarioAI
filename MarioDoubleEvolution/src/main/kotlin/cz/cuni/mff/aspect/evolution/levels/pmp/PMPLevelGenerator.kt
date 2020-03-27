@@ -13,8 +13,7 @@ import kotlin.math.min
 class PMPLevelGenerator(
     private val probabilities: DoubleArray = DoubleArray(PROBABILITIES_COUNT) {
         when (it) {
-            PI_DECREASE_HEIGHT -> 0.07
-            PI_INCREASE_HEIGHT -> 0.07
+            PI_CHANGE_HEIGHT -> 0.07
             PI_CREATE_HOLE -> 0.05
 
             PI_ENEMY_GOOMBA -> 0.03
@@ -81,7 +80,7 @@ class PMPLevelGenerator(
         var currentHeight = levelMetadata.groundHeight[0]
         var lastChangeAtColumn = 0
         var lastHoleEndColumn = 0
-        val changeOptions = intArrayOf(PI_INCREASE_HEIGHT, PI_DECREASE_HEIGHT, PI_CREATE_HOLE)
+        val changeOptions = intArrayOf(PI_CHANGE_HEIGHT, PI_CREATE_HOLE)
 
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength) {
             if (column - lastHoleEndColumn <= 1 || column - lastChangeAtColumn <= 1 || column >= levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
@@ -90,13 +89,9 @@ class PMPLevelGenerator(
             }
 
             when (this.selectChangeFrom(changeOptions, this.probabilities)) {
-                PI_INCREASE_HEIGHT -> {
+                PI_CHANGE_HEIGHT -> {
                     lastChangeAtColumn = column
-                    currentHeight = (currentHeight + this.nextHeightChange).coerceAtMost(LEVEL_HEIGHT - 5)
-                }
-                PI_DECREASE_HEIGHT -> {
-                    lastChangeAtColumn = column
-                    currentHeight = (currentHeight - this.nextHeightChange).coerceAtLeast(1)
+                    currentHeight = (currentHeight + this.nextHeightChange).coerceIn(1, LEVEL_HEIGHT - 5)
                 }
                 PI_CREATE_HOLE -> {
                     val holeLength = this.randomInt(2, 4)
@@ -254,7 +249,7 @@ class PMPLevelGenerator(
         return levelMetadata.levelLength
     }
 
-    private val nextHeightChange: Int get() = this.randomInt(2, 4)
+    private val nextHeightChange: Int get() = this.randomInt(-4, 4)
 
     private fun randomInt(lowerBound: Int, higherBound: Int): Int {
         val range = higherBound - lowerBound + 1
@@ -281,21 +276,20 @@ class PMPLevelGenerator(
         private const val STARTING_HEIGHT = 5
         private const val SAFE_ZONE_LENGTH = 10
 
-        private const val PI_DECREASE_HEIGHT = 0
-        private const val PI_INCREASE_HEIGHT = 1
-        private const val PI_CREATE_HOLE = 2
-        private const val PI_ENEMY_GOOMBA = 3
-        private const val PI_ENEMY_KOOPA_GREEN = 4
-        private const val PI_ENEMY_KOOPA_RED = 5
-        private const val PI_ENEMY_SPIKES = 6
-        private const val PI_BULLET_BILL = 7
-        private const val PI_PIPE = 8
-        private const val PI_START_BOXES = 9
-        private const val PI_DOUBLE_BOXES = 10
-        private const val PI_POWER_UP = 11
-        private const val PI_STAIRS = 12
+        private const val PI_CHANGE_HEIGHT = 0
+        private const val PI_CREATE_HOLE = 1
+        private const val PI_ENEMY_GOOMBA = 2
+        private const val PI_ENEMY_KOOPA_GREEN = 3
+        private const val PI_ENEMY_KOOPA_RED = 4
+        private const val PI_ENEMY_SPIKES = 5
+        private const val PI_BULLET_BILL = 6
+        private const val PI_PIPE = 7
+        private const val PI_START_BOXES = 8
+        private const val PI_DOUBLE_BOXES = 9
+        private const val PI_POWER_UP = 10
+        private const val PI_STAIRS = 11
 
-        const val PROBABILITIES_COUNT = 13
+        const val PROBABILITIES_COUNT = 12
     }
 
 }

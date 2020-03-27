@@ -42,7 +42,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
     }
 
     private fun createInitialGenotype(): Genotype<DoubleGene> {
-        return Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(PMPLevelGenerator.PROBABILITIES_COUNT) { DoubleGene.of(0.0, 0.0, this.maxProbability) }))
+        return Genotype.of(DoubleChromosome.of(List<DoubleGene>(PMPLevelGenerator.PROBABILITIES_COUNT) { DoubleGene.of(0.0, 0.0, this.maxProbability) }))
     }
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
@@ -86,7 +86,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(levelMetadata, gameStatistics)
+            this.fitnessFunction(levelMetadata, gameStatistics, (genes[0] + genes[1]).toFloat())
         }
 
         return fitnesses.sumByFloat { it }

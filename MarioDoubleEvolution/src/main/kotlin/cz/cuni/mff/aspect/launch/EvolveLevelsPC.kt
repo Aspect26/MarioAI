@@ -14,7 +14,7 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 fun main() {
     evolvePC()
 //    playLatest()
-//    createDefaultPc()
+//    createDefaultPC()
 }
 
 fun evolvePC() {
@@ -24,7 +24,8 @@ fun evolvePC() {
         populationSize = 50,
         generationsCount = 75,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = PCLevelEvaluators::marioDistanceAndDiversity)
+        fitnessFunction = PCLevelEvaluators::distanceDiversityEnemiesLinearity
+    )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)
     ObjectStorage.store("data/latest_pc_lg.lg", levelGenerator)
@@ -38,15 +39,15 @@ fun evolvePC() {
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-fun playLatest() {
-    val generator: LevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as LevelGenerator
-    val level = generator.generate()
+fun playLatestPC() {
+    val levelGenerator: LevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as LevelGenerator
+    val level = levelGenerator.generate()
     val postProcessed = LevelPostProcessor.postProcess(level, true)
     val agent = CheaterKeyboardAgent()
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-fun createDefaultPc() {
+fun createDefaultPC() {
     val levelGenerator = ProbabilisticChunksLevelGenerator()
 
     val defaultLevel = levelGenerator.generate()

@@ -11,7 +11,6 @@ import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
-import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.Factory
 import io.jenetics.util.RandomRegistry
 import io.jenetics.util.Seq
@@ -21,7 +20,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::marioDistanceAndDiversity,
+                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::distanceDiversityEnemiesLinearity,
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution"

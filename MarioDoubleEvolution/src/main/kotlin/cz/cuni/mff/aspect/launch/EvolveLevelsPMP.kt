@@ -1,41 +1,52 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.storage.LevelStorage
+import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//     evolve()
-    createDefault()
+    evolvePMP()
+//    playLatestPMP()
+//    createDefaultPMP()
 }
 
-fun evolve() {
-    //    var agent = Agents.NeuroEvolution.Stage4Level1Solver
-//    agent = Agents.RuleBased.goingRightJumping
-
+fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitness = PMPLevelEvaluators::marioDistanceAndLevelDiversity
 
-    val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(generationsCount = 70, fitnessFunction = fitness)
+    val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
+        generationsCount = 20,
+        populationSize = 50,
+        fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity
+    )
+
     val levelGenerator = levelEvolution.evolve(agentFactory)
+    ObjectStorage.store("data/latest_pmp_lg.lg", levelGenerator)
+
     val level = levelGenerator.generate()
+    val postProcessed = LevelPostProcessor.postProcess(level, true)
+    LevelVisualiser().display(postProcessed)
 
-    val postprocessed = LevelPostProcessor.postProcess(level)
-    LevelStorage.storeLevel("current.lvl", postprocessed)
-
-    LevelVisualiser().display(postprocessed)
-
-//    agent = CheaterKeyboardAgent()
-    GameSimulator().playMario(agentFactory(), postprocessed, true)
+//    val agent = CheaterKeyboardAgent()
+    val agent = agentFactory()
+    GameSimulator().playMario(agent, postProcessed, true)
 }
 
-fun createDefault() {
+fun playLatestPMP() {
+    val levelGenerator = ObjectStorage.load("data/latest_pmp_lg.lg") as LevelGenerator
+    val level = levelGenerator.generate()
+    val postProcessed = LevelPostProcessor.postProcess(level, true)
+    val agent = CheaterKeyboardAgent()
+    GameSimulator().playMario(agent, postProcessed, true)
+}
+
+fun createDefaultPMP() {
     val defaultLevel = PMPLevelGenerator().generate()
     val postProcessed = LevelPostProcessor.postProcess(defaultLevel)
     LevelVisualiser().display(postProcessed)

@@ -7,7 +7,7 @@ typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, levelChunks: Array<Stri
 
 object PCLevelEvaluators {
 
-    fun marioDistanceAndDiversity(level: MarioLevel, levelChunks: Array<String>, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
+    fun distanceDiversityEnemiesLinearity(level: MarioLevel, levelChunks: Array<String>, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
         val distance = gameStatistic.finalMarioDistance
 
         val chunksUsed = levelChunks.distinct()
@@ -25,9 +25,11 @@ object PCLevelEvaluators {
         val enemiesCount = level.enemies.flatten().filter { it > 0 }.size
         val enemiesFactor = (enemiesCount / 10f).coerceAtMost(2.0f)
 
+        val linearityFactor = heightChangeProbability
+
 //        println("$enemiesFactor : $diversityFactor : $jumpsFactor - ${levelChunks.joinToString(", ")}")
 
-        return distance * (4 + diversityFactor + chunkUsageFactor + enemiesFactor + heightChangeProbability)
+        return distance * (4 + diversityFactor + chunkUsageFactor + enemiesFactor + linearityFactor)
     }
 
 }
