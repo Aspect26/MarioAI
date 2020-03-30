@@ -22,7 +22,8 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
     private val evaluateOnLevelsCount: Int = 5,
     private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::marioDistance,
     private val maxProbability: Double = 0.3,
-    private val chartLabel: String = "PMP Level Evolution"
+    private val chartLabel: String = "PMP Level Evolution",
+    private val displayChart: Boolean = true
 ) : LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent
@@ -58,7 +59,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
     }
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): DoubleArray {
-        this.chart.show()
+        if (this.displayChart) this.chart.show()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())

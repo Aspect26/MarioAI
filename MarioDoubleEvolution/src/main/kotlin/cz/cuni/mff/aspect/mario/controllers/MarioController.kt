@@ -14,6 +14,8 @@ interface MarioController : Serializable {
 
     fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction>
 
+    fun copy(): MarioController
+
 }
 
 enum class MarioAction {

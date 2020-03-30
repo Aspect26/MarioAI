@@ -11,6 +11,8 @@ class StandingController : MarioController {
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         return emptyList()
     }
+
+    override fun copy(): MarioController = StandingController()
 }
 
 class StandingAgent : MarioAgent(StandingController())

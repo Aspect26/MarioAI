@@ -23,7 +23,8 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
                                              private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::distanceDiversityEnemiesLinearity,
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
-                                             private val chartLabel: String = "Chunks level generator evolution"
+                                             private val chartLabel: String = "Chunks level generator evolution",
+                                             private val displayChart: Boolean = true
 ) : LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent
@@ -60,7 +61,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
     }
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Genotype<DoubleGene> {
-        this.chart.show()
+        if (this.displayChart) this.chart.show()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())

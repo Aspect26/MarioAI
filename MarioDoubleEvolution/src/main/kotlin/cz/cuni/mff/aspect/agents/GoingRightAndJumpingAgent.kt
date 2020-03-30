@@ -11,6 +11,8 @@ class GoingRightAndJumpingController : MarioController {
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         return listOf(MarioAction.RUN_RIGHT, MarioAction.JUMP)
     }
+
+    override fun copy(): MarioController = GoingRightAndJumpingController()
 }
 
 class GoingRightAndJumpingAgent : MarioAgent(GoingRightAndJumpingController())

@@ -20,7 +20,8 @@ class NeatControllerEvolution(
     private var generationsCount: Int = 200,
     private val populationSize: Int = 150,
     private val denseInput: Boolean = true,
-    private val chartName: String = "NEAT Evolution"
+    private val chartName: String = "NEAT Evolution",
+    private val displayChart: Boolean = true
 ) : ControllerEvolution {
 
     private lateinit var topGenome: Genome
@@ -86,7 +87,7 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
 
         pool.initializePool(networkInputSize, networkOutputSize)
-        this.chart.show()
+        if (this.displayChart) this.chart.show()
 
         var generation = 1
 

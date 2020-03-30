@@ -19,6 +19,8 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
         return this.network.chooseAction(tiles, entities, mario)
     }
 
+    override fun copy(): MarioController = SimpleANNController(this.network.newInstance())
+
     fun setLegacy() {
         if (this.network is UpdatedAgentNetwork) {
             (this.network as UpdatedAgentNetwork).legacy = true

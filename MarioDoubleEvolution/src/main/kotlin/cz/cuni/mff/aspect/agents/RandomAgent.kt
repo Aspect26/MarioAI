@@ -23,6 +23,8 @@ class RandomController : MarioController {
         return listOf(action)
     }
 
+    override fun copy(): MarioController = RandomController()
+
 }
 
 class RandomAgent : MarioAgent(RandomController())

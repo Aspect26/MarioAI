@@ -6,7 +6,7 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
-import java.io.Serializable
+import java.io.*
 
 
 class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val genome: Genome) : ControllerArtificialNetwork, Serializable {
@@ -27,7 +27,17 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
     }
 
     override fun newInstance(): ControllerArtificialNetwork {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // TODO: check if we can do this nicer
+        val baos = ByteArrayOutputStream()
+        val oos = ObjectOutputStream(baos)
+        oos.writeObject(this.genome)
+
+        val bais = ByteArrayInputStream(baos.toByteArray())
+        val ois = ObjectInputStream(bais)
+
+        val genomeCopy = ois.readObject() as Genome
+
+        return NeatAgentNetwork(this.networkSettings.copy(), genomeCopy)
     }
 
     override fun setNetworkWeights(weights: DoubleArray) {
