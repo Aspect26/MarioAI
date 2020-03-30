@@ -12,8 +12,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    evolvePMP()
-//    playLatestPMP()
+//    evolvePMP()
+    playLatestPMP()
 //    createDefaultPMP()
 }
 
@@ -21,9 +21,10 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
-        generationsCount = 50,
+        generationsCount = 100,
         populationSize = 50,
-        fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity
+        fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
+        evaluateOnLevelsCount = 5
     )
 
     val levelGenerator = levelEvolution.evolve(agentFactory)
@@ -45,7 +46,8 @@ fun playLatestPMP() {
 
     for (level in levels) {
         val postProcessed = LevelPostProcessor.postProcess(level, true)
-        val agent = CheaterKeyboardAgent()
+//        val agent = CheaterKeyboardAgent()
+        val agent = Agents.NEAT.Stage4Level1Solver
         gameSimulator.playMario(agent, postProcessed, true)
     }
 }

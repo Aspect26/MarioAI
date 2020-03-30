@@ -1,8 +1,8 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.ProbabilisticChunksLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
+import kotlin.math.abs
 
 typealias MetadataLevelsEvaluator<F> = (levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
 
@@ -37,12 +37,30 @@ object PMPLevelEvaluators {
         val enemiesFactor = (enemiesCount / 10f).coerceAtMost(1.0f)
         val enemiesDiversityFactor = enemyTypes / 4f
 
-        val linearityFactor = heightChangeProbability / 5f
+        val nonLinearityFactor = (heightChangeProbability * 5f).coerceAtMost(1f)
 
-//        println("$maxFeatureOccurrences : $minFeatureOccurrences : $featureUsageFactor")
+        val featureDifferenceFactor = featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.pipesCount) +
+                featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.billsCount) +
+                featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.boxPlatformsCount) +
+                featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.stoneColumnsCount) +
+                featureDifferenceFactor(levelMetadata.pipesCount, levelMetadata.billsCount) +
+                featureDifferenceFactor(levelMetadata.pipesCount, levelMetadata.boxPlatformsCount) +
+                featureDifferenceFactor(levelMetadata.pipesCount, levelMetadata.stoneColumnsCount) +
+                featureDifferenceFactor(levelMetadata.billsCount, levelMetadata.boxPlatformsCount) +
+                featureDifferenceFactor(levelMetadata.billsCount, levelMetadata.stoneColumnsCount) +
+                featureDifferenceFactor(levelMetadata.boxPlatformsCount, levelMetadata.stoneColumnsCount)
 
-//        return (distance / 5) + distance * featureUsageFactor * enemiesFactor * linearityFactor * enemiesDiversityFactor
-        return distance * (diversityFactor + featureUsageFactor + linearityFactor * enemiesDiversityFactor)
+//        return distance + distance * (featureDifferenceFactor + nonLinearityFactor + enemiesDiversityFactor + enemiesFactor + jumpsFactor)
+        return (distance) + distance * (featureDifferenceFactor + nonLinearityFactor + enemiesFactor)
+    }
+
+    fun featureDifferenceFactor(feature1Occurrence: Int, feature2Occurrence: Int): Float {
+        val occurrenceDifference = abs(feature2Occurrence - feature1Occurrence)
+        return when {
+            feature1Occurrence == 0|| feature2Occurrence == 0 -> 0f
+            occurrenceDifference > 0f -> 1f / occurrenceDifference
+            else -> 1f
+        }
     }
 
 }
