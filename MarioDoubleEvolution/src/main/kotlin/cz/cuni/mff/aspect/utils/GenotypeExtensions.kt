@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.extensions
+package cz.cuni.mff.aspect.utils
 
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import io.jenetics.DoubleGene
