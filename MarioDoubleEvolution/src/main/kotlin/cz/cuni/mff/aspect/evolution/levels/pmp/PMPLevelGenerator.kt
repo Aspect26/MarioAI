@@ -18,6 +18,7 @@ class PMPLevelGenerator(
 
             PI_ENEMY_GOOMBA -> 0.03
             PI_ENEMY_KOOPA_GREEN -> 0.03
+            PI_ENEMY_KOOPA_GREEN_WINGED -> 0.01
             PI_ENEMY_KOOPA_RED -> 0.03
             PI_ENEMY_SPIKES -> 0.03
 
@@ -91,7 +92,13 @@ class PMPLevelGenerator(
             when (this.selectChangeFrom(changeOptions, this.probabilities)) {
                 PI_CHANGE_HEIGHT -> {
                     lastChangeAtColumn = column
-                    currentHeight = (currentHeight + this.nextHeightChange).coerceIn(1, LEVEL_HEIGHT - 5)
+                    val heightChange = this.nextHeightChange
+                    val newHeight = (currentHeight + heightChange).coerceIn(1, LEVEL_HEIGHT - 5)
+                    currentHeight = if (newHeight == currentHeight) {
+                        (currentHeight - heightChange).coerceIn(1, LEVEL_HEIGHT - 5)
+                    } else {
+                        newHeight
+                    }
                 }
                 PI_CREATE_HOLE -> {
                     val holeLength = this.randomInt(2, 4)
@@ -108,8 +115,8 @@ class PMPLevelGenerator(
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < this.probabilities[PI_PIPE]
             val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
-                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
-                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+//                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
+//                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
                     && !levelMetadata.isHoleAt(column - 1)
                     && !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isHoleAt(column + 1)
@@ -249,7 +256,11 @@ class PMPLevelGenerator(
         return levelMetadata.levelLength
     }
 
-    private val nextHeightChange: Int get() = this.randomInt(-4, 4)
+    private val nextHeightChange: Int get() {
+        var change = this.randomInt(-4, 3)
+        if (change >= 0) change++
+        return change
+    }
 
     private fun randomInt(lowerBound: Int, higherBound: Int): Int {
         val range = higherBound - lowerBound + 1
@@ -272,24 +283,25 @@ class PMPLevelGenerator(
     }
 
     companion object {
+        const val SAFE_ZONE_LENGTH = 10
         private const val LEVEL_HEIGHT = 15
         private const val STARTING_HEIGHT = 5
-        private const val SAFE_ZONE_LENGTH = 10
 
         private const val PI_CHANGE_HEIGHT = 0
         private const val PI_CREATE_HOLE = 1
         private const val PI_ENEMY_GOOMBA = 2
         private const val PI_ENEMY_KOOPA_GREEN = 3
-        private const val PI_ENEMY_KOOPA_RED = 4
-        private const val PI_ENEMY_SPIKES = 5
-        private const val PI_BULLET_BILL = 6
-        private const val PI_PIPE = 7
-        private const val PI_START_BOXES = 8
-        private const val PI_DOUBLE_BOXES = 9
-        private const val PI_POWER_UP = 10
-        private const val PI_STAIRS = 11
+        private const val PI_ENEMY_KOOPA_GREEN_WINGED = 4
+        private const val PI_ENEMY_KOOPA_RED = 5
+        private const val PI_ENEMY_SPIKES = 6
+        private const val PI_BULLET_BILL = 7
+        private const val PI_PIPE = 8
+        private const val PI_START_BOXES = 9
+        private const val PI_DOUBLE_BOXES = 10
+        private const val PI_POWER_UP = 11
+        private const val PI_STAIRS = 12
 
-        const val PROBABILITIES_COUNT = 12
+        const val PROBABILITIES_COUNT = 13
     }
 
 }

@@ -4,8 +4,8 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
-import cz.cuni.mff.aspect.extensions.getDoubleValues
-import cz.cuni.mff.aspect.extensions.sumByFloat
+import cz.cuni.mff.aspect.utils.getDoubleValues
+import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*

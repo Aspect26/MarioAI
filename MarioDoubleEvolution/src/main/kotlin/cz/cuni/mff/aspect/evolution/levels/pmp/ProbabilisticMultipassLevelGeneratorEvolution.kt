@@ -5,8 +5,8 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
-import cz.cuni.mff.aspect.extensions.getDoubleValues
-import cz.cuni.mff.aspect.extensions.sumByFloat
+import cz.cuni.mff.aspect.utils.getDoubleValues
+import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
@@ -21,7 +21,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
     private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::marioDistance,
-    private val maxProbability: Double = 0.3,
+    private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
     private val displayChart: Boolean = true
 ) : LevelGeneratorEvolution {
@@ -35,7 +35,10 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
 
-        return PMPLevelGenerator(resultIndividual, this.levelLength)
+        println("BEST FROM GENERATION: ${resultIndividual.generation}")
+        val genes = resultIndividual.genotype.getDoubleValues()
+
+        return PMPLevelGenerator(genes, this.levelLength)
     }
 
     fun storeChart(path: String) {
@@ -52,13 +55,13 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
                 ForkJoinPool.commonPool()), initialGenotype)
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)
-            .alterers(UpdatedGaussianMutator(1.0, 0.6))
+            .alterers(UpdatedGaussianMutator(0.5, 0.6))
             .survivorsSelector(EliteSelector(2))
             .offspringSelector(RouletteWheelSelector())
             .build()
     }
 
-    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): DoubleArray {
+    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Phenotype<DoubleGene, Float> {
         if (this.displayChart) this.chart.show()
 
         return evolutionEngine.stream()
@@ -71,7 +74,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
                 println("new gen: ${it.generation} (best fitness: ${it.bestFitness})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
-            .bestPhenotype.genotype.getDoubleValues()
+            .bestPhenotype
     }
 
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
@@ -87,7 +90,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(levelMetadata, gameStatistics, (genes[0] + genes[1]).toFloat())
+            this.fitnessFunction(levelMetadata, gameStatistics, (genes[0]).toFloat())
         }
 
         return fitnesses.sumByFloat { it }
