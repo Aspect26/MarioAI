@@ -4,7 +4,6 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.chunks.*
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
-import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
 
@@ -21,46 +20,34 @@ class ProbabilisticChunksLevelGenerator(
     private val chunksInLevelCount: Int = DEFAULT_CHUNKS_COUNT
 ) : LevelGenerator {
 
-    private val DEFAULT_CHUNKS = arrayOf(
-        Path3Chunk(), Path4Chunk(), Path5Chunk(), Path6Chunk(),
-        Hole2Chunk(), Hole3Chunk(), Hole4Chunk(),
-        SingleBricks1Platform(), SingleBricks3Platform(), SingleBricks5Platform(),
-        SingleQM1Platform(), SingleQM3Platform(), SingleQM5Platform(),
-        Pipe2Chunk(), Pipe3Chunk(), Pipe4Chunk(),
-        BulletBill1Chunk(), BulletBill1Chunk(), BulletBill2Chunk(), BulletBill3Chunk(),
-        Stair2Chunk(), Stair3Chunk(), Stair4Chunk(), Stair5Chunk(),
-        DoubleBrickPlatforms5Chunk(), DoubleQMPlatforms5Chunk(), BrickAndQMPlatforms5Chunk())
-    private val START_CHUNK: MarioLevelChunk = PathChunk(8)
-    private val END_CHUNK: MarioLevelChunk = PathChunk(8)
-
     private lateinit var random: Random
-    private lateinit var _lastChunkNames: Array<String>
+    private lateinit var _lastChunksMetadata: ChunksLevelMetadata
 
     override fun generate(): MarioLevel {
         this.random = Random()
         return this.generate(
-            this.DEFAULT_CHUNKS,
-            this.probabilities.subList(0, this.DEFAULT_CHUNKS.size),
+            defaultChunks,
+            this.probabilities.subList(0, defaultChunks.size),
             this.probabilities.subList(
-                this.DEFAULT_CHUNKS.size,
-                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size
+                defaultChunks.size,
+                defaultChunks.size + defaultChunks.size * defaultChunks.size
             ),
             this.chunksInLevelCount,
-            this.START_CHUNK,
-            this.END_CHUNK,
+            startChunk,
+            endChunk,
             this.probabilities.subList(
-                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size,
-                this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size + Companion.ENEMY_TYPES_COUNT
+                defaultChunks.size + defaultChunks.size * defaultChunks.size,
+                defaultChunks.size + defaultChunks.size * defaultChunks.size + Companion.ENEMY_TYPES_COUNT
             ),
-            this.probabilities[this.DEFAULT_CHUNKS.size + this.DEFAULT_CHUNKS.size * this.DEFAULT_CHUNKS.size + Companion.ENEMY_TYPES_COUNT]
+            this.probabilities[defaultChunks.size + defaultChunks.size * defaultChunks.size + Companion.ENEMY_TYPES_COUNT]
         )
     }
 
-    val lastChunkNames: Array<String> get() = this._lastChunkNames
+    val lastChunksMetadata: ChunksLevelMetadata get() = this._lastChunksMetadata
 
     private fun generate(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
-               chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk, entitiesProbabilities: List<Double>,
-               heightChangeProbability: Double): MarioLevel {
+                         chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk, entityProbabilities: List<Double>,
+                         heightChangeProbability: Double): MarioLevel {
         if (transitionProbabilities.size != chunks.size * chunks.size) {
             throw IllegalArgumentException("The length of transition probabilities arrays must equal to the length of chunks array squared")
         }
@@ -69,35 +56,47 @@ class ProbabilisticChunksLevelGenerator(
             throw IllegalArgumentException("The length of starting probabilities arrays must equal to the length of chunks array")
         }
 
-        if (entitiesProbabilities.size != ENEMY_TYPES_COUNT) {
+        if (entityProbabilities.size != ENEMY_TYPES_COUNT) {
             throw IllegalArgumentException("The length of entities probabilities arrays must equal to $ENEMY_TYPES_COUNT")
         }
 
-        val (tiles, chunkNames) = this.createTiles(chunks, startingProbabilities, transitionProbabilities, chunksInLevelCount,
-            startChunk, endChunk, heightChangeProbability)
-        this._lastChunkNames = chunkNames
+        val metadata: ChunksLevelMetadata = this.createMetadata(chunks, startingProbabilities, transitionProbabilities, chunksInLevelCount,
+            startChunk, endChunk, heightChangeProbability, entityProbabilities)
 
-        val entities: Array<Array<Int>> = this.createEntities(tiles, entitiesProbabilities)
+        this._lastChunksMetadata = metadata
 
-        return DirectMarioLevel(tiles, entities)
+        return metadata.createLevel()
     }
 
-    private fun createTiles(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
-                            chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk,
-                            heightChangeProbability: Double): Pair<Array<ByteArray>, Array<String>> {
-        val tilesList: MutableList<ByteArray> = mutableListOf()
-        val chunksArray: Array<String> = Array(chunksInLevelCount) { "" }
+    private fun createMetadata(availableChunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
+                               chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk,
+                               heightChangeProbability: Double, entityProbabilities: List<Double>): ChunksLevelMetadata {
+        val chunks = this.createChunks(availableChunks, startingProbabilities, transitionProbabilities, chunksInLevelCount, 
+            startChunk, endChunk, heightChangeProbability)
+        val tiles = ChunksLevelMetadata(chunks, emptyArray()).createTiles()
+        val entities = this.createEntities(tiles, entityProbabilities)
+        
+        return ChunksLevelMetadata(chunks, entities)
+    }
 
-        var currentHeight = 10
-        tilesList.addAll(startChunk.generate(currentHeight))
+    private fun createChunks(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
+                               chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk,
+                               heightChangeProbability: Double): List<ChunkWithHeight> {
+        val chunksWithHeight: MutableList<ChunkWithHeight> = mutableListOf()
 
+        // starting chunk
+        var currentLevel = 10 + this.randomInt(-2, 2)
+        chunksWithHeight.add(ChunkWithHeight(startChunk.copySelf(), currentLevel))
+
+        // first chunk
+        currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
         var currentChunkIndex = this.randomChoice(startingProbabilities)
-        tilesList.addAll(chunks[currentChunkIndex].generate(currentHeight))
-        chunksArray[0] = chunks[currentChunkIndex].toString()
+        chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
 
+        // inner chunks
         for (chunkNumber in 1 until chunksInLevelCount) {
             if (this.random.nextDouble() < heightChangeProbability)
-                currentHeight = (currentHeight + this.nextHeightChange).coerceIn(5, 14)
+                currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
 
             val tpStartIndex = chunks.size * currentChunkIndex
             val tpEndIndex = chunks.size * (currentChunkIndex + 1)
@@ -105,13 +104,13 @@ class ProbabilisticChunksLevelGenerator(
             val nextChunkProbabilities = transitionProbabilities.subList(tpStartIndex, tpEndIndex)
             currentChunkIndex = this.randomChoice(nextChunkProbabilities)
 
-            tilesList.addAll(chunks[currentChunkIndex].generate(currentHeight))
-            chunksArray[chunkNumber] = chunks[currentChunkIndex].toString()
+            chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
         }
 
-        tilesList.addAll(endChunk.generate(currentHeight))
+        // last chunk
+        chunksWithHeight.add(ChunkWithHeight(endChunk.copySelf(), currentLevel))
 
-        return Pair(tilesList.toTypedArray(), chunksArray)
+        return chunksWithHeight
     }
 
     private fun createEntities(tiles: Array<ByteArray>, entityProbabilities: List<Double>): Array<Array<Int>> {
@@ -166,9 +165,22 @@ class ProbabilisticChunksLevelGenerator(
     }
 
     companion object {
+        private val defaultChunks = arrayOf(
+            PathChunk(3), PathChunk(4), PathChunk(5), PathChunk(6),
+            HoleChunk(2), HoleChunk(3), HoleChunk(4),
+            SinglePlatformChunk(1, Tiles.BRICK), SinglePlatformChunk(3, Tiles.BRICK), SinglePlatformChunk(5, Tiles.BRICK),
+            SinglePlatformChunk(1, Tiles.QM_WITH_COIN), SinglePlatformChunk(3, Tiles.QM_WITH_COIN), SinglePlatformChunk(5, Tiles.QM_WITH_COIN),
+            PipeChunk(2), PipeChunk(3), PipeChunk(4),
+            BulletBillChunk(1), BulletBillChunk(2), BulletBillChunk(3), BulletBillChunk(4),
+            StairChunk(2), StairChunk(3), StairChunk(4),
+            DoublePlatformChunk(5, Tiles.BRICK, Tiles.BRICK), DoublePlatformChunk(5, Tiles.QM_WITH_COIN, Tiles.QM_WITH_COIN),
+            DoublePlatformChunk(5, Tiles.BRICK, Tiles.QM_WITH_COIN))
+        private val startChunk: MarioLevelChunk = PathChunk(8)
+        private val endChunk: MarioLevelChunk = PathChunk(8)
+        
         private const val SAFE_ZONE_LENGTH: Int = 7
         const val ENEMY_TYPES_COUNT = 5
-        const val DEFAULT_CHUNKS_COUNT: Int = 27 // TODO: lol constant
+        val DEFAULT_CHUNKS_COUNT: Int = defaultChunks.size 
     }
 
 }

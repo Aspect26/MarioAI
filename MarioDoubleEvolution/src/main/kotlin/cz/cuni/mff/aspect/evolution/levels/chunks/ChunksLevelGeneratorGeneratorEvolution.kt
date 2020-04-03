@@ -83,12 +83,12 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
             val agent = this.agentFactory()
 
             val level = levelGenerator.generate()
-            val chunkNames = levelGenerator.lastChunkNames
+            val chunkMetadata = levelGenerator.lastChunksMetadata
 
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(level, chunkNames, gameStatistics, genes.last().toFloat())
+            this.fitnessFunction(level, chunkMetadata, gameStatistics, genes.last().toFloat())
         }
 
         return fitnesses.sumByFloat { it }

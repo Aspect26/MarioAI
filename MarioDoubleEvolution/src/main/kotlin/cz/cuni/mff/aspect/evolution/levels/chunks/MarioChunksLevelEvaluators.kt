@@ -3,18 +3,18 @@ package cz.cuni.mff.aspect.evolution.levels.chunks
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
-typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, levelChunks: Array<String>, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
+typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
 
 object PCLevelEvaluators {
 
-    fun distanceDiversityEnemiesLinearity(level: MarioLevel, levelChunks: Array<String>, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
+    fun distanceDiversityEnemiesLinearity(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
         val distance = gameStatistic.finalMarioDistance
 
-        val chunksUsed = levelChunks.distinct()
+        val chunksUsed: List<String> = chunkMetadata.chunks.map { it.chunk.name }.distinct()
         val chunksUsedCount = chunksUsed.size
         val diversityFactor = chunksUsedCount / (ProbabilisticChunksLevelGenerator.DEFAULT_CHUNKS_COUNT.toFloat() / 3)
 
-        val chunkUsage = chunksUsed.map { currentChunk -> Pair(currentChunk, levelChunks.filter { it == currentChunk}.size) }.toList()
+        val chunkUsage = chunksUsed.map { currentChunk -> Pair(currentChunk, chunkMetadata.chunks.filter { it.chunk.name == currentChunk}.size) }.toList()
         val minChunkUsage: Int = chunkUsage.minBy { it.second }!!.second
         val maxChunkUsage: Int = chunkUsage.maxBy { it.second }!!.second
         val minMaxDifference = maxChunkUsage - minChunkUsage
