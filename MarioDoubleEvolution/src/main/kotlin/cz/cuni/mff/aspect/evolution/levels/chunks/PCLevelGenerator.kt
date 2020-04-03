@@ -2,13 +2,15 @@ package cz.cuni.mff.aspect.evolution.levels.chunks
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.chunks.*
+import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunkWithHeight
+import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
 
 
-class ProbabilisticChunksLevelGenerator(
+class PCLevelGenerator(
     private val probabilities: List<Double> = List(DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT + 1) {
         when (it) {
             in 0 until DEFAULT_CHUNKS_COUNT -> 1.0 / DEFAULT_CHUNKS_COUNT
@@ -73,10 +75,16 @@ class ProbabilisticChunksLevelGenerator(
                                heightChangeProbability: Double, entityProbabilities: List<Double>): ChunksLevelMetadata {
         val chunks = this.createChunks(availableChunks, startingProbabilities, transitionProbabilities, chunksInLevelCount, 
             startChunk, endChunk, heightChangeProbability)
-        val tiles = ChunksLevelMetadata(chunks, emptyArray()).createTiles()
+        val tiles = ChunksLevelMetadata(
+            chunks,
+            emptyArray()
+        ).createTiles()
         val entities = this.createEntities(tiles, entityProbabilities)
         
-        return ChunksLevelMetadata(chunks, entities)
+        return ChunksLevelMetadata(
+            chunks,
+            entities
+        )
     }
 
     private fun createChunks(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
@@ -86,12 +94,22 @@ class ProbabilisticChunksLevelGenerator(
 
         // starting chunk
         var currentLevel = 10 + this.randomInt(-2, 2)
-        chunksWithHeight.add(ChunkWithHeight(startChunk.copySelf(), currentLevel))
+        chunksWithHeight.add(
+            ChunkWithHeight(
+                startChunk.copySelf(),
+                currentLevel
+            )
+        )
 
         // first chunk
         currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
         var currentChunkIndex = this.randomChoice(startingProbabilities)
-        chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
+        chunksWithHeight.add(
+            ChunkWithHeight(
+                chunks[currentChunkIndex].copySelf(),
+                currentLevel
+            )
+        )
 
         // inner chunks
         for (chunkNumber in 1 until chunksInLevelCount) {
@@ -104,11 +122,21 @@ class ProbabilisticChunksLevelGenerator(
             val nextChunkProbabilities = transitionProbabilities.subList(tpStartIndex, tpEndIndex)
             currentChunkIndex = this.randomChoice(nextChunkProbabilities)
 
-            chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
+            chunksWithHeight.add(
+                ChunkWithHeight(
+                    chunks[currentChunkIndex].copySelf(),
+                    currentLevel
+                )
+            )
         }
 
         // last chunk
-        chunksWithHeight.add(ChunkWithHeight(endChunk.copySelf(), currentLevel))
+        chunksWithHeight.add(
+            ChunkWithHeight(
+                endChunk.copySelf(),
+                currentLevel
+            )
+        )
 
         return chunksWithHeight
     }

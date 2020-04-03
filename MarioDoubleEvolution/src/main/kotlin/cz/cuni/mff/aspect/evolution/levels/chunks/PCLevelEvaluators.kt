@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks
 
+import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
@@ -42,7 +43,7 @@ object PCLevelEvaluators {
 
     private fun chunksDiversity(chunkMetadata: ChunksLevelMetadata): Float {
         val differentChunksUsed = chunkMetadata.chunks.map { it.chunk.name }.distinct().size
-        return differentChunksUsed.toFloat() / ProbabilisticChunksLevelGenerator.DEFAULT_CHUNK_TYPES_COUNT
+        return differentChunksUsed.toFloat() / PCLevelGenerator.DEFAULT_CHUNK_TYPES_COUNT
     }
 
     fun chunksRepetitionFactor(chunkMetadata: ChunksLevelMetadata): Float {

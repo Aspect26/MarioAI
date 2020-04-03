@@ -15,7 +15,7 @@ import io.jenetics.engine.EvolutionResult
 import io.jenetics.util.Factory
 import java.util.concurrent.ForkJoinPool
 
-class ProbabilisticMultipassLevelGeneratorEvolution(
+class PMPLevelGeneratorEvolution(
     private val populationSize: Int = 50,
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,

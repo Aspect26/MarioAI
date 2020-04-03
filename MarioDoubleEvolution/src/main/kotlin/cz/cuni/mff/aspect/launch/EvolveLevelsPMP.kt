@@ -1,14 +1,12 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
-import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
@@ -21,7 +19,7 @@ fun main() {
 fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
-    val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
+    val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 50,
         populationSize = 50,
         fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,

@@ -3,10 +3,9 @@ package cz.cuni.mff.aspect.launch
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.chunks.ProbabilisticChunksLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -41,7 +40,7 @@ fun evolvePC() {
 }
 
 fun playLatestPC() {
-    val levelGenerator: ProbabilisticChunksLevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as ProbabilisticChunksLevelGenerator
+    val levelGenerator: PCLevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as PCLevelGenerator
     val simulator = GameSimulator(15000)
 
     for (i in 0..15) {
@@ -56,7 +55,7 @@ fun playLatestPC() {
 }
 
 fun createDefaultPC() {
-    val levelGenerator = ProbabilisticChunksLevelGenerator()
+    val levelGenerator = PCLevelGenerator()
     val gameSimulator = GameSimulator(500000000)
 
     for (i in 0 .. 10) {
