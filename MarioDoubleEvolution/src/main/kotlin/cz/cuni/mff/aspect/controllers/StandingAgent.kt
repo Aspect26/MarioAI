@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.agents
+package cz.cuni.mff.aspect.controllers
 
 import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
@@ -7,12 +7,10 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 
-class GoingRightController : MarioController {
+class StandingController : MarioController {
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
-        return listOf(MarioAction.RUN_RIGHT)
+        return emptyList()
     }
 
-    override fun copy(): MarioController = GoingRightController()
+    override fun copy(): MarioController = StandingController()
 }
-
-class GoingRightAgent : MarioAgent(GoingRightController())

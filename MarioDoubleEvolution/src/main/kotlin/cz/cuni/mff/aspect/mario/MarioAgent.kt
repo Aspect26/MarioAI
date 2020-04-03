@@ -7,8 +7,7 @@ import ch.idsia.benchmark.mario.engine.input.MarioInput
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 
-// TODO: THIS CANT BE PUBLIC!!!!!
-open class MarioAgent(public val controller: MarioController) : MarioHijackAIBase(), IAgent {
+class MarioAgent(val controller: MarioController) : MarioHijackAIBase(), IAgent {
 
     var lastActions: List<MarioAction> = emptyList()
 
