@@ -2,13 +2,12 @@ package cz.woitee.endlessRunners.evolution.utils
 
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.extensions.getDoubleValues
-import cz.cuni.mff.aspect.extensions.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import io.jenetics.Gene
 import io.jenetics.Genotype
+import io.jenetics.NumericGene
 import io.jenetics.Phenotype
 import io.jenetics.engine.Evaluator
 import io.jenetics.internal.util.Concurrency
@@ -30,7 +29,7 @@ import java.util.stream.Stream
  * Implementation was updated to support jenetics version 5.0 and compute also objective function
  */
 // TODO: refactor
-class MarioEvaluator<G : Gene<*, G>, C : Comparable<C>>(
+class MarioEvaluator<G, C>(
     private val executor: Executor,
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
@@ -38,8 +37,10 @@ class MarioEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     private val levels: Array<MarioLevel>,
     private val alwaysEvaluate: Boolean = false,
     private val seed: Long? = null
-) : Evaluator<G, C> {
-
+) : Evaluator<G, C>
+        where G : NumericGene<*, G>,
+              C : Comparable<C>,
+              C : Number {
     private val random = if (seed != null) Random(seed) else Random()
     private val seedMap = HashMap<Int, Long>()
     private val objectiveResults = mutableListOf<HashMap<Int, C>>()
@@ -76,10 +77,9 @@ class MarioEvaluator<G : Gene<*, G>, C : Comparable<C>>(
         return this.objectiveResults.last().values.max()!!
     }
 
-    fun getAverageObjectiveFromLastGeneration(): Float {
+    fun getAverageObjectiveFromLastGeneration(): Double {
         val objectives = this.objectiveResults.last().values
-        // TODO: `it as Float` lol
-        val objectivesSum = objectives.sumByFloat { it as Float }
+        val objectivesSum = objectives.sumByDouble { it.toDouble() }
         return objectivesSum / objectives.size
     }
 
@@ -122,13 +122,16 @@ class MarioEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     }
 }
 
-private class PhenotypeEvaluation<G : Gene<*, G>, C : Comparable<C>> internal constructor(
+private class PhenotypeEvaluation<G, C> internal constructor(
     private val _phenotype: Phenotype<G, C>,
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
     private val controllerNetwork: ControllerArtificialNetwork,
     private val levels: Array<MarioLevel>
-) : Runnable {
+) : Runnable
+        where G : NumericGene<*, G>,
+              C : Comparable<C>,
+              C : Number {
     lateinit var objective: C
     private lateinit var fitness: C
 
