@@ -44,9 +44,9 @@ object LevelToImageConverter {
             }
         }
 
-        for (x in level.enemies.indices) {
-            for (y in level.enemies[x].indices) {
-                val entity = level.enemies[x][y]
+        for (x in level.entities.indices) {
+            for (y in level.entities[x].indices) {
+                val entity = level.entities[x][y]
 
                 if (entity != Entities.NOTHING) {
 

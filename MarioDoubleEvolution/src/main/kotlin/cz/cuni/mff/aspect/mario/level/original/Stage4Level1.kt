@@ -15,7 +15,7 @@ object Stage4Level1 : MarioLevel {
     private const val LEVEL_WIDTH = 230
 
     override val tiles: Array<ByteArray>
-    override val enemies: Array<Array<Int>>
+    override val entities: Array<Array<Int>>
 
     init {
         this.tiles = Array(LEVEL_WIDTH) {
@@ -85,15 +85,15 @@ object Stage4Level1 : MarioLevel {
             }
         }
 
-        this.enemies = Array(LEVEL_WIDTH) { Array(15) { 0 } }
-        enemies[21][FLOOR_LEVEL - 3] = Entities.Flower.NORMAL
-        enemies[28][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
-        enemies[111][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
-        enemies[113][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
-        enemies[129][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
-        enemies[160][FLOOR_LEVEL - 2] = Entities.Flower.NORMAL
-        enemies[191][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
-        enemies[193][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        this.entities = Array(LEVEL_WIDTH) { Array(15) { 0 } }
+        entities[21][FLOOR_LEVEL - 3] = Entities.Flower.NORMAL
+        entities[28][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        entities[111][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        entities[113][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
+        entities[129][FLOOR_LEVEL - 4] = Entities.Flower.NORMAL
+        entities[160][FLOOR_LEVEL - 2] = Entities.Flower.NORMAL
+        entities[191][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
+        entities[193][FLOOR_LEVEL - 1] = Entities.Spiky.NORMAL
     }
 
 }

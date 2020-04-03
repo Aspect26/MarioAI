@@ -20,7 +20,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::distanceDiversityEnemiesLinearity,
+                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::newest,
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution",
@@ -35,6 +35,9 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
+
+        println("BEST INDIVIDUAL:")
+        this.computeFitness(resultIndividual)
 
         return ProbabilisticChunksLevelGenerator(resultIndividual.getDoubleValues().toList(), this.chunksCount)
     }

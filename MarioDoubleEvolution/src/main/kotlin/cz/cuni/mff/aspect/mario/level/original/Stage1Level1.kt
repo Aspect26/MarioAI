@@ -15,7 +15,7 @@ object Stage1Level1 : MarioLevel {
     private const val LEVEL_WIDTH = 212
 
     override val tiles: Array<ByteArray>
-    override val enemies: Array<Array<Int>>
+    override val entities: Array<Array<Int>>
 
     init {
         this.tiles = Array(LEVEL_WIDTH) {
@@ -122,22 +122,22 @@ object Stage1Level1 : MarioLevel {
             }
         }
 
-        this.enemies = Array(LEVEL_WIDTH) { Array(15) { 0 } }
-        enemies[22][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[42][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[55][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[56][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[79][SECOND_LEVEL - 2] = Entities.Goomba.NORMAL
-        enemies[82][THIRD_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[96][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[98][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[107][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
-        enemies[124][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[125][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[127][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[128][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[174][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
-        enemies[175][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        this.entities = Array(LEVEL_WIDTH) { Array(15) { 0 } }
+        entities[22][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[42][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[55][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[56][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[79][SECOND_LEVEL - 2] = Entities.Goomba.NORMAL
+        entities[82][THIRD_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[96][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[98][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[107][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
+        entities[124][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[125][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[127][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[128][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[174][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
+        entities[175][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
     }
 
 }

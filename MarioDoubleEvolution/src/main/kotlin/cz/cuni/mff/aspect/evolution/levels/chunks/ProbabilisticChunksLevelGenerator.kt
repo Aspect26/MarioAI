@@ -180,7 +180,8 @@ class ProbabilisticChunksLevelGenerator(
         
         private const val SAFE_ZONE_LENGTH: Int = 7
         const val ENEMY_TYPES_COUNT = 5
-        val DEFAULT_CHUNKS_COUNT: Int = defaultChunks.size 
+        val DEFAULT_CHUNKS_COUNT: Int = defaultChunks.size
+        val DEFAULT_CHUNK_TYPES_COUNT: Int = defaultChunks.map { it.name }.distinct().size
     }
 
 }

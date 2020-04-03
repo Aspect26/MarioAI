@@ -12,7 +12,7 @@ object LevelSplitter {
 
     private fun getSubLevel(level: MarioLevel, split: LevelSplit): MarioLevel {
         val subTiles = level.tiles.sliceArray((split.xPosition..split.xPosition + split.length))
-        val subEnemies = level.enemies.sliceArray((split.xPosition..split.xPosition + split.length))
+        val subEnemies = level.entities.sliceArray((split.xPosition..split.xPosition + split.length))
         return DirectMarioLevel(subTiles, subEnemies)
     }
 
