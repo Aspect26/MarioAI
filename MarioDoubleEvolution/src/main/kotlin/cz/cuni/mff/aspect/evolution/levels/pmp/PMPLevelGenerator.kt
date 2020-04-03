@@ -115,8 +115,8 @@ class PMPLevelGenerator(
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < this.probabilities[PI_PIPE]
             val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
-//                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
-//                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column + 1]
+                    && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
                     && !levelMetadata.isHoleAt(column - 1)
                     && !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isHoleAt(column + 1)

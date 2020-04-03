@@ -20,7 +20,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
-    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::marioDistance,
+    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
     private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
     private val displayChart: Boolean = true
@@ -90,7 +90,7 @@ class ProbabilisticMultipassLevelGeneratorEvolution(
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(levelMetadata, gameStatistics, (genes[0]).toFloat())
+            this.fitnessFunction(level, levelMetadata, gameStatistics)
         }
 
         return fitnesses.sumByFloat { it }

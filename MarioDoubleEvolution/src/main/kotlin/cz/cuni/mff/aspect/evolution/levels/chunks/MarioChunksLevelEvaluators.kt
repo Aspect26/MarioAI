@@ -1,55 +1,26 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks
 
-import cz.cuni.mff.aspect.mario.Entities
+import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.abs
 import kotlin.math.pow
 
-typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
+typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics) -> F
 
 object PCLevelEvaluators {
 
-    fun distanceDiversityEnemiesLinearity(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
-        val distance = gameStatistic.finalMarioDistance
-
-        val chunksUsed: List<String> = chunkMetadata.chunks.map { it.chunk.name }.distinct()
-        val chunksUsedCount = chunksUsed.size
-        val diversityFactor = chunksUsedCount / (ProbabilisticChunksLevelGenerator.DEFAULT_CHUNKS_COUNT.toFloat() / 3)
-
-        val chunkUsage = chunksUsed.map { currentChunk -> Pair(currentChunk, chunkMetadata.chunks.filter { it.chunk.name == currentChunk}.size) }.toList()
-        val minChunkUsage: Int = chunkUsage.minBy { it.second }!!.second
-        val maxChunkUsage: Int = chunkUsage.maxBy { it.second }!!.second
-        val minMaxDifference = maxChunkUsage - minChunkUsage
-        val chunkUsageFactor = if (minMaxDifference > 0f) 1f / minMaxDifference else 1f
-
-        val jumpsFactor = (gameStatistic.jumps / 40.0f).coerceAtMost(1.0f)
-
-        val enemyTypes: Int = level.entities.flatten().filter { it > 0 }.distinct().size
-        val enemiesCount = level.entities.flatten().filter { it > 0 }.size
-        val enemiesFactor = (enemiesCount / 20f).coerceAtMost(2.0f)
-        val enemiesDiversityFactor = enemyTypes / ProbabilisticChunksLevelGenerator.ENEMY_TYPES_COUNT.toFloat()
-
-        val linearityFactor = heightChangeProbability
-
-//        println("$enemiesFactor : $diversityFactor : $jumpsFactor - ${levelChunks.joinToString(", ")}")
-
-        return (distance / 5) + distance * chunkUsageFactor * diversityFactor * linearityFactor * enemiesFactor * enemiesDiversityFactor
-//        return distance * (5 + diversityFactor + chunkUsageFactor + enemiesFactor + linearityFactor + jumpsFactor)
-    }
-
-    fun newest(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
+    fun difficultyLinearityDiversity(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
         val maxDistance = level.pixelWidth
 
         // TODO: do not count the starting and ending blocks (all 3 below)
         val nonLinearityFactory = averageHeightChange(level.tiles)
-        val difficultyFactor = (difficulty(level) / (level.tiles.size)).coerceAtMost(1f)
+        val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
         val chunksDiversity = chunksDiversity(chunkMetadata)
         val chunksRepetitionFactor = chunksRepetitionFactor(chunkMetadata)
 
-//        return chunksRepetitionFactor
         return distance + (maxDistance * 1f) * (difficultyFactor + nonLinearityFactory + chunksDiversity + chunksRepetitionFactor)
     }
 
@@ -67,55 +38,6 @@ object PCLevelEvaluators {
 
         val levelLength = tiles.size
         return totalHeightChange.toFloat() / levelLength
-    }
-
-    // TODO: zjednotit s tym druhym v PMP Evaluators (after merge)
-    // TODO: unit test me
-    fun difficulty(level: MarioLevel): Float {
-        val flatEntities = level.entities.flatten()
-
-        val enemiesDifficulty = flatEntities.sumBy {
-            when(it) {
-                Entities.Goomba.NORMAL -> 1
-                Entities.Koopa.GREEN -> 2
-                Entities.Koopa.GREEN_WINGED -> 4
-                Entities.Koopa.RED -> 2
-                Entities.Spiky.NORMAL -> 3
-                Entities.Flower.NORMAL -> 3
-                else -> 0
-            }
-        }
-
-        var currentHoleLength = 0
-        var holesDifficulty = 0f
-        for (tilesColumn in level.tiles) {
-            if (tilesColumn[tilesColumn.size - 1] == Tiles.NOTHING) {
-                currentHoleLength++
-            } else if (currentHoleLength > 0) {
-                holesDifficulty += when (currentHoleLength) {
-                    0 -> 0.0f
-                    1 -> 0.5f
-                    2 -> 1.5f
-                    3 -> 2.0f
-                    4 -> 2.5f
-                    else -> 3.0f
-                }
-                currentHoleLength = 0
-            }
-        }
-
-        var billsDifficulty = 0f
-        for (tilesColumn in level.tiles) {
-            val billSize = tilesColumn.filter { it == Tiles.BULLET_BLASTER_TOP || it == Tiles.BULLET_BLASTER_MIDDLE || it == Tiles.BULLET_BLASTER_BOTTOM }.size
-            billsDifficulty += when (billSize) {
-                0 -> 0.0f
-                1 -> 1.5f
-                else -> 1.0f
-            }
-        }
-
-//        println("${enemiesDifficulty + holesDifficulty + billsDifficulty} / ${level.tiles.size}")
-        return enemiesDifficulty + holesDifficulty + billsDifficulty
     }
 
     private fun chunksDiversity(chunkMetadata: ChunksLevelMetadata): Float {

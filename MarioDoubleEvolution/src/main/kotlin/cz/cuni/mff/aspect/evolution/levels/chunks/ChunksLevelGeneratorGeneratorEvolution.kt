@@ -20,7 +20,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::newest,
+                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::difficultyLinearityDiversity,
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution",
@@ -91,7 +91,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(level, chunkMetadata, gameStatistics, genes.last().toFloat())
+            this.fitnessFunction(level, chunkMetadata, gameStatistics)
         }
 
         return fitnesses.sumByFloat { it }

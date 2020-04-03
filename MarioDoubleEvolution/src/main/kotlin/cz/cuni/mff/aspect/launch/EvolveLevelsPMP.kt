@@ -46,12 +46,9 @@ fun playLatestPMP() {
 
     for (levelNumber in 0 until 5) {
         val level = levelGenerator.generate()
-        val levelMetadata = levelGenerator.lastMetadata
         val postProcessed = LevelPostProcessor.postProcess(level, true)
         val agent = CheaterKeyboardAgent()
 //        val agent = Agents.NEAT.Stage4Level1Solver
-
-        PMPLevelEvaluators.distanceDiversityEnemiesLinearity(levelMetadata, GameStatistics(1f, 1, 1, 1, 1, true, true), 0f)
 
         gameSimulator.playMario(agent, postProcessed, true)
     }

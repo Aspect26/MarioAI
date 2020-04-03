@@ -1,21 +1,20 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp
 
+import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.GameStatistics
+import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.min
 import kotlin.math.abs
 import kotlin.math.pow
 
-typealias MetadataLevelsEvaluator<F> = (levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float) -> F
+typealias MetadataLevelsEvaluator<F> = (level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics) -> F
 
 object PMPLevelEvaluators {
 
-    fun marioDistance(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float =
-        gameStatistic.finalMarioDistance
-
-    fun distanceDiversityEnemiesLinearity(levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics, heightChangeProbability: Float): Float {
+    fun distanceDiversityEnemiesLinearity(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
 
         val featuresUsed = levelMetadata.holesCount.coerceAtMost(1) + levelMetadata.pipesCount.coerceAtMost(1)
@@ -42,7 +41,7 @@ object PMPLevelEvaluators {
         val enemiesDiversityFactor = enemyTypes / 4f
 
         val nonLinearityFactor = (averageHeightChange(levelMetadata)).coerceAtMost(1f)
-        val difficultyFactor = (difficulty(levelMetadata) / (levelMetadata.levelLength - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)).coerceAtMost(1f)
+        val difficultyFactor = (levelDifficulty(level) / (levelMetadata.levelLength - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)).coerceAtMost(1f)
 
 //        val featuresDifference = featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.pipesCount) +
 //                featureDifferenceFactor(levelMetadata.holesCount, levelMetadata.billsCount) +
@@ -84,11 +83,11 @@ object PMPLevelEvaluators {
 //        return minFactor
 //
 //        // 3200 is max
-        val cappedDistance = distance.coerceAtMost(3200f)
-        return cappedDistance * (1 + minFactor)
+//        val cappedDistance = distance.coerceAtMost(3200f)
+//        return cappedDistance * (1 + minFactor)
 
 //        println("$nonLinearityFactor | $difficultyFactor")
-//        return distance * (1 + nonLinearityFactor + difficultyFactor)
+        return distance * (1 + nonLinearityFactor + difficultyFactor)
     }
 
     fun featureDifferenceFactor(feature1Occurrence: Int, feature2Occurrence: Int): Float {
@@ -101,7 +100,7 @@ object PMPLevelEvaluators {
         }
     }
 
-    fun averageHeightChange(levelMetadata: MarioLevelMetadata): Float {
+    private fun averageHeightChange(levelMetadata: MarioLevelMetadata): Float {
         var totalHeightChange = 0
         for (i in PMPLevelGenerator.SAFE_ZONE_LENGTH until levelMetadata.groundHeight.size - PMPLevelGenerator.SAFE_ZONE_LENGTH step 2) {
             totalHeightChange += abs(levelMetadata.groundHeight[i] - levelMetadata.groundHeight[i - 2])
@@ -110,41 +109,6 @@ object PMPLevelEvaluators {
         return totalHeightChange.toFloat() / (levelMetadata.groundHeight.size - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)
     }
 
-    fun difficulty(levelMetadata: MarioLevelMetadata): Float {
-        val enemiesDifficulty = levelMetadata.entities.sumBy {
-            when(it) {
-                Entities.Goomba.NORMAL -> 1
-                Entities.Koopa.GREEN -> 2
-                Entities.Koopa.GREEN_WINGED -> 4
-                Entities.Koopa.RED -> 2
-                Entities.Spiky.NORMAL -> 3
-                else -> 0
-            }
-        }
-
-        val holesDifficulty = levelMetadata.holes.sumByFloat {
-            when (it) {
-                0 -> 0.0f
-                1 -> 0.5f
-                2 -> 1.5f
-                3 -> 2.0f
-                4 -> 2.5f
-                else -> 3.0f
-            }
-        }
-
-        val billsDifficulty = levelMetadata.bulletBills.sumByFloat {
-            when (it) {
-                0 -> 0.0f
-                1 -> 1.5f
-                else -> 1.0f
-            }
-        }
-
-        val pipesDifficulty = levelMetadata.pipesCount * 3
-
-        return enemiesDifficulty + billsDifficulty + holesDifficulty + pipesDifficulty
-    }
 
 //    fun discretize(value: Float, availableValues: FloatArray): Float {
 //        val result = discretize2(value, availableValues)
@@ -154,7 +118,7 @@ object PMPLevelEvaluators {
 //        return result
 //    }
 
-    fun discretize(value: Float, availableValues: FloatArray): Float {
+    private fun discretize(value: Float, availableValues: FloatArray): Float {
         for (availableValue in availableValues.reversed()) if (value >= availableValue) return availableValue
         return availableValues.last()
     }
