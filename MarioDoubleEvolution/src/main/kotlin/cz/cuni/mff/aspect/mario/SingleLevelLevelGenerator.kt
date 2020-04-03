@@ -10,7 +10,7 @@ class SingleLevelLevelGenerator(private val level: MarioLevel) : ch.idsia.benchm
 
     override fun createLevel(): Level {
         val tiles = level.tiles
-        val enemies = level.enemies
+        val enemies = level.entities
 
         val level = Level(tiles.size, tiles[0].size)
         level.type = LevelTypes.DEFAULT

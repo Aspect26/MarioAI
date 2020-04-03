@@ -3,10 +3,7 @@ package cz.cuni.mff.aspect.evolution.results
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent
 import cz.cuni.mff.agents.aspect.MyRuleBasedAgent
-import cz.cuni.mff.aspect.agents.GoingRightAgent
-import cz.cuni.mff.aspect.agents.GoingRightAndJumpingAgent
-import cz.cuni.mff.aspect.agents.RandomAgent
-import cz.cuni.mff.aspect.agents.StandingAgent
+import cz.cuni.mff.aspect.controllers.*
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -16,10 +13,10 @@ object Agents {
     object RuleBased {
 
         // Sanity checks agents
-        val standing: MarioAgent get() = StandingAgent()
-        val random: MarioAgent get() = RandomAgent()
-        val goingRight: MarioAgent get() = GoingRightAgent()
-        val goingRightJumping: MarioAgent get() = GoingRightAndJumpingAgent()
+        val standing: MarioAgent get() = MarioAgent(StandingController())
+        val random: MarioAgent get() = MarioAgent(RandomController())
+        val goingRight: MarioAgent get() = MarioAgent(GoingRightController())
+        val goingRightJumping: MarioAgent get() = MarioAgent(GoingRightAndJumpingController())
 
         // My best implementation from AI course
         val my: IAgent get() = MyRuleBasedAgent()

@@ -123,7 +123,7 @@ class NeuroControllerEvolution(
     }
 
     private fun getAverageObjectiveValue(evaluator: MarioEvaluator<DoubleGene, Float>): Float {
-        return evaluator.getAverageObjectiveFromLastGeneration()
+        return evaluator.getAverageObjectiveFromLastGeneration().toFloat()
     }
 
     companion object {

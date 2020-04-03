@@ -1,21 +1,20 @@
 package cz.cuni.mff.aspect.utils
 
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
-import io.jenetics.DoubleGene
-import io.jenetics.Gene
 import io.jenetics.Genotype
 import io.jenetics.IntegerGene
+import io.jenetics.NumericGene
 import io.jenetics.util.Seq
 
 
-fun <G : Gene<*, G>> Genotype<G>.getDoubleValues(): DoubleArray {
-    // TODO: this unchecked cast
-    val geneSequence: Seq<DoubleGene> = this.chromosome.toSeq() as Seq<DoubleGene>
+fun <G> Genotype<G>.getDoubleValues(): DoubleArray
+        where G : NumericGene<*, G> {
+    val geneSequence: Seq<G> = this.chromosome.toSeq()
 
     val array = DoubleArray(geneSequence.size())
     var i = geneSequence.size()
     while (--i >= 0) {
-        array[i] = geneSequence[i].allele
+        array[i] = geneSequence[i].getAllele().toDouble()
     }
     return array
 }

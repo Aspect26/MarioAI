@@ -10,7 +10,7 @@ object LevelStorage {
     private val storage: ObjectStorage = ObjectStorage
 
     fun storeLevel(filePath: String, level: MarioLevel) {
-        val levelRepresentation = LevelRepresentation(level.tiles, level.enemies)
+        val levelRepresentation = LevelRepresentation(level.tiles, level.entities)
         this.storage.store(filePath, levelRepresentation)
     }
 

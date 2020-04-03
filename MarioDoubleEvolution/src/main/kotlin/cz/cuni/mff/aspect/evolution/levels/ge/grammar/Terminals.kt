@@ -8,7 +8,7 @@ import cz.cuni.mff.aspect.mario.level.MonsterSpawn
 import cz.cuni.mff.aspect.mario.level.TerminalMarioLevelChunk
 
 
-// TODO: maybe these could be Kotlin data classes?
+// TODO: reuse chunks
 abstract class LevelChunkTerminal(value: String) : Terminal(value) {
     abstract fun generateChunk(): MarioLevelChunk
     override fun equals(other: Any?): Boolean = other is LevelChunkTerminal && other.value == this.value

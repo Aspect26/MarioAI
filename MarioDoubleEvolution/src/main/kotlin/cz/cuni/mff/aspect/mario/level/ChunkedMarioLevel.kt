@@ -6,7 +6,7 @@ import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.Terminal
 class ChunkedMarioLevel(chunks: Array<MarioLevelChunk>) : MarioLevel {
 
     override val tiles: Array<ByteArray>
-    override val enemies: Array<Array<Int>>
+    override val entities: Array<Array<Int>>
 
     init {
         val totalWidth = chunks.sumBy { it.width }
@@ -27,13 +27,13 @@ class ChunkedMarioLevel(chunks: Array<MarioLevelChunk>) : MarioLevel {
 
     init {
         val totalWidth = chunks.sumBy { it.width }
-        enemies = Array(totalWidth) { Array(15) { 0 } }
+        entities = Array(totalWidth) { Array(15) { 0 } }
 
         var currentChunkStart = 0
         chunks.forEach { chunk ->
             val enemySpawns = chunk.getMonsterSpawns()
             enemySpawns.forEach {
-                enemies[currentChunkStart + it.xPos][it.yPos] = it.monsterType
+                entities[currentChunkStart + it.xPos][it.yPos] = it.monsterType
             }
 
             currentChunkStart += chunk.width

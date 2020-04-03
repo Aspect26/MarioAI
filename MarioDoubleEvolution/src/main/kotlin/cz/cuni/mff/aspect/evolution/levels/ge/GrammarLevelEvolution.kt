@@ -58,8 +58,7 @@ class GrammarLevelEvolution(private val levelsCount: Int = 1,
         return MarioGameplayEvaluators.distanceOnly(arrayOf(stats))
     }
 
-    // TODO: this may be its own class
-    fun createLevelFromSentence(sentence: GrammarSentence): MarioLevel {
+    private fun createLevelFromSentence(sentence: GrammarSentence): MarioLevel {
         val levelChunks = mutableListOf<MarioLevelChunk>()
         sentence.forEach {
             val chunkTerminal = (it as LevelChunkTerminal)
