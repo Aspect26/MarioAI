@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.ProbabilisticChunksLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
@@ -18,7 +18,7 @@ class MarioCoEvolver {
                generations: Int = DEFAULT_GENERATIONS_NUMBER): CoevolutionResult {
         lateinit var resultController: MarioController
         // TODO: what about this first generator
-        var resultLevelGenerator: LevelGenerator = ProbabilisticChunksLevelGenerator()
+        var resultLevelGenerator: LevelGenerator = PCLevelGenerator()
 
         val startTime = System.currentTimeMillis()
         for (generation in (0 until generations)) {

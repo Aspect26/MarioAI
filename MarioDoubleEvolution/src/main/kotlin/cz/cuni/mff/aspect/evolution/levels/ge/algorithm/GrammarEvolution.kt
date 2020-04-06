@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteChromosome
 import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
-import cz.cuni.mff.aspect.extensions.getByteValues
+import cz.cuni.mff.aspect.utils.getByteValues
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult

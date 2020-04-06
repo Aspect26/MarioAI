@@ -6,10 +6,8 @@ import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -30,7 +28,7 @@ fun coevolve() {
         displayChart = false
     )
 
-    val levelGenerator: LevelGeneratorEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
+    val levelGenerator: LevelGeneratorEvolution = PMPLevelGeneratorEvolution(
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,

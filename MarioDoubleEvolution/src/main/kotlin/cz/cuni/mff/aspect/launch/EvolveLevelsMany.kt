@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.MetadataLevelsEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
-import cz.cuni.mff.aspect.evolution.levels.pmp.ProbabilisticMultipassLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
@@ -21,7 +21,7 @@ fun doManyPMPEvolution() {
     val experimentsName = "pmp_v3/NEATs4l1solver"
     val generationsCount = 100
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::marioDistance
+    val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::distanceDiversityEnemiesLinearity
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(
@@ -109,7 +109,7 @@ class PMPEvolutionLauncher(
     private val levelVisualiser = LevelVisualiser()
 
     fun launch()  {
-        val levelEvolution = ProbabilisticMultipassLevelGeneratorEvolution(
+        val levelEvolution = PMPLevelGeneratorEvolution(
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
             fitnessFunction = this.fitnessFunction,

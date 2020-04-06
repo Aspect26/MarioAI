@@ -4,8 +4,8 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
-import cz.cuni.mff.aspect.extensions.getDoubleValues
-import cz.cuni.mff.aspect.extensions.sumByFloat
+import cz.cuni.mff.aspect.utils.getDoubleValues
+import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
@@ -20,7 +20,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::newest,
+                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::difficultyLinearityDiversity,
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution",
@@ -39,7 +39,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
         println("BEST INDIVIDUAL:")
         this.computeFitness(resultIndividual)
 
-        return ProbabilisticChunksLevelGenerator(resultIndividual.getDoubleValues().toList(), this.chunksCount)
+        return PCLevelGenerator(resultIndividual.getDoubleValues().toList(), this.chunksCount)
     }
 
     fun storeChart(path: String) {
@@ -47,7 +47,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
     }
 
     private fun createInitialGenotype(): Factory<Genotype<DoubleGene>> =
-        MarkovChainGenotypeFactory(ProbabilisticChunksLevelGenerator.DEFAULT_CHUNKS_COUNT, ProbabilisticChunksLevelGenerator.ENEMY_TYPES_COUNT + 1)
+        MarkovChainGenotypeFactory(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, PCLevelGenerator.ENEMY_TYPES_COUNT + 1)
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
         return Engine.Builder(
@@ -57,7 +57,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
         )
             .optimize(Optimize.MAXIMUM)
             .populationSize(this.populationSize)
-            .alterers(MarkovChainMutator(ProbabilisticChunksLevelGenerator.DEFAULT_CHUNKS_COUNT, 0.2, 0.2, 0.2))
+            .alterers(MarkovChainMutator(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, 0.2, 0.2, 0.2))
             .survivorsSelector(EliteSelector(2))
             .offspringSelector(RouletteWheelSelector())
             .build()
@@ -80,7 +80,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
 
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
         val genes = genotype.getDoubleValues()
-        val levelGenerator = ProbabilisticChunksLevelGenerator(genes.toList(), this.chunksCount)
+        val levelGenerator = PCLevelGenerator(genes.toList(), this.chunksCount)
 
         val fitnesses = (0 until this.evaluateOnLevelsCount).map {
             val agent = this.agentFactory()
@@ -91,7 +91,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
             val marioSimulator = GameSimulator()
             val gameStatistics = marioSimulator.playMario(agent, level, false)
 
-            this.fitnessFunction(level, chunkMetadata, gameStatistics, genes.last().toFloat())
+            this.fitnessFunction(level, chunkMetadata, gameStatistics)
         }
 
         return fitnesses.sumByFloat { it }

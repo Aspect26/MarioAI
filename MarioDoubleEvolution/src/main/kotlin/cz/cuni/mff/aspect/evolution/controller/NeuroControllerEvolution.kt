@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.evolution.controller
 
-import cz.cuni.mff.aspect.extensions.getDoubleValues
+import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
