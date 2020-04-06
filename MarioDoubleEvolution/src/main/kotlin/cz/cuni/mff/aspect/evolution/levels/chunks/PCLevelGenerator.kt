@@ -94,22 +94,12 @@ class PCLevelGenerator(
 
         // starting chunk
         var currentLevel = 10 + this.randomInt(-2, 2)
-        chunksWithHeight.add(
-            ChunkWithHeight(
-                startChunk.copySelf(),
-                currentLevel
-            )
-        )
+        chunksWithHeight.add(ChunkWithHeight(startChunk.copySelf(), currentLevel))
 
-        // first chunk
+        // first inner chunk
         currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
         var currentChunkIndex = this.randomChoice(startingProbabilities)
-        chunksWithHeight.add(
-            ChunkWithHeight(
-                chunks[currentChunkIndex].copySelf(),
-                currentLevel
-            )
-        )
+        chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
 
         // inner chunks
         for (chunkNumber in 1 until chunksInLevelCount) {
@@ -122,21 +112,11 @@ class PCLevelGenerator(
             val nextChunkProbabilities = transitionProbabilities.subList(tpStartIndex, tpEndIndex)
             currentChunkIndex = this.randomChoice(nextChunkProbabilities)
 
-            chunksWithHeight.add(
-                ChunkWithHeight(
-                    chunks[currentChunkIndex].copySelf(),
-                    currentLevel
-                )
-            )
+            chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(),currentLevel))
         }
 
         // last chunk
-        chunksWithHeight.add(
-            ChunkWithHeight(
-                endChunk.copySelf(),
-                currentLevel
-            )
-        )
+        chunksWithHeight.add(ChunkWithHeight(endChunk.copySelf(), currentLevel))
 
         return chunksWithHeight
     }

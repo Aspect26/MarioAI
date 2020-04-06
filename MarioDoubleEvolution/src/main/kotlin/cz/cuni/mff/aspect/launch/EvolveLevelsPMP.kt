@@ -11,8 +11,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    evolvePMP()
-//    playLatestPMP()
+//    evolvePMP()
+    playLatestPMP()
 //    createDefaultPMP()
 }
 

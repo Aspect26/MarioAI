@@ -34,8 +34,6 @@ class PMPLevelGeneratorEvolution(
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
-
-        println("BEST FROM GENERATION: ${resultIndividual.generation}")
         val genes = resultIndividual.genotype.getDoubleValues()
 
         return PMPLevelGenerator(genes, this.levelLength)
