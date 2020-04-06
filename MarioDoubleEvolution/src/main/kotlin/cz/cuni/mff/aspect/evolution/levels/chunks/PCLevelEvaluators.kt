@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.evolution.levels.chunks
 
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
+import cz.cuni.mff.aspect.evolution.levels.pmp.LevelImageCompressor
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -19,10 +20,11 @@ object PCLevelEvaluators {
         // TODO: do not count the starting and ending blocks (all 3 below)
         val nonLinearityFactory = averageHeightChange(level.tiles)
         val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
-        val chunksDiversity = chunksDiversity(chunkMetadata)
-        val chunksRepetitionFactor = chunksRepetitionFactor(chunkMetadata)
+//        val chunksDiversity = chunksDiversity(chunkMetadata)
+//        val chunksRepetitionFactor = chunksRepetitionFactor(chunkMetadata)
+        val compressionFactor = LevelImageCompressor.mediumPngSize(level).toFloat() / 200000
 
-        return distance + (maxDistance * 1f) * (difficultyFactor + nonLinearityFactory + chunksDiversity + chunksRepetitionFactor)
+        return distance + (maxDistance * 1f) * (difficultyFactor + nonLinearityFactory + compressionFactor)
     }
 
     private fun averageHeightChange(tiles: Array<ByteArray>): Float {

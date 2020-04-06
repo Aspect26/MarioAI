@@ -16,7 +16,7 @@ object LevelImageCompressor {
 
     fun largePngSize(level: MarioLevel): Int = compressionSize(level, "png", 0.8f)
 
-    fun jpgSize(level: MarioLevel): Int =compressionSize(level, "jpg", 0.1f)
+    fun jpgSize(level: MarioLevel): Int =compressionSize(level, "jpg", 0.5f)
 
     fun compressionSize(level: MarioLevel, imageType: String, compressionQuality: Float): Int {
         val image = LevelToImageConverter.create(level, noalpha=true)
