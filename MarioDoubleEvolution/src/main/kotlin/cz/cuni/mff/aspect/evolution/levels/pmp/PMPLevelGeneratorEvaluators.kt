@@ -2,8 +2,6 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 
 import cz.cuni.mff.aspect.evolution.levels.levelDifficulty
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
-import cz.cuni.mff.aspect.utils.sumByFloat
-import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.min
@@ -19,11 +17,15 @@ object PMPLevelEvaluators {
 
         val nonLinearityFactor = (averageHeightChange(levelMetadata)).coerceAtMost(1f)
         val difficultyFactor = (levelDifficulty(level) / (levelMetadata.levelLength - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)).coerceAtMost(1f)
+        val compressionFactor = LevelImageCompressor.jpgSize(level).toFloat() / 200000
 
         val allFactors = listOf(nonLinearityFactor, difficultyFactor)
         val minFactor = min(allFactors)
 
-        return distance * (1 + nonLinearityFactor + difficultyFactor)
+//        println("$compressionFactor | $nonLinearityFactor | $difficultyFactor")
+//        return compressionFactor
+//        return distance * (0.5f + compressionFactor)
+        return distance * (2 + nonLinearityFactor + difficultyFactor + 2*compressionFactor)
     }
 
     private fun featuresUniformDistributionDifference(levelMetadata: MarioLevelMetadata): Float {

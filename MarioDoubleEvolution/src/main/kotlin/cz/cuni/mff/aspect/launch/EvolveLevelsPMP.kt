@@ -11,8 +11,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePMP()
-    playLatestPMP()
+    evolvePMP()
+//    playLatestPMP()
 //    createDefaultPMP()
 }
 
@@ -20,7 +20,7 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 50,
+        generationsCount = 10,
         populationSize = 50,
         fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
         evaluateOnLevelsCount = 5

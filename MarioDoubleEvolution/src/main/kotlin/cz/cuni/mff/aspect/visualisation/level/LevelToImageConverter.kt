@@ -16,11 +16,12 @@ object LevelToImageConverter {
     private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
     private val backgroundSheet: BufferedImage = ImageIO.read(File("resources/bgsheet.png"))
 
-    fun create(level: MarioLevel): BufferedImage {
+    fun create(level: MarioLevel, noalpha: Boolean = false): BufferedImage {
         val width = level.tiles.size * this.SPRITES_SIZE
         val height = level.tiles[0].size * this.SPRITES_SIZE
 
-        val image = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+        val imageType = if (noalpha) BufferedImage.TYPE_INT_RGB else BufferedImage.TYPE_INT_ARGB
+        val image = BufferedImage(width, height, imageType)
 
         for (x in 0 until level.tiles.size * this.SPRITES_SIZE) {
             for (y in 0 until level.tiles[0].size * this.SPRITES_SIZE) {
