@@ -22,7 +22,7 @@ fun evolvePMP() {
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 10,
         populationSize = 50,
-        fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
+        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
         evaluateOnLevelsCount = 5
     )
 

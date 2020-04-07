@@ -12,8 +12,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
-    playLatestPC()
+    evolvePC()
+//    playLatestPC()
 //    createDefaultPC()
 }
 
@@ -24,7 +24,7 @@ fun evolvePC() {
         populationSize = 50,
         generationsCount = 10,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = PCLevelEvaluators::difficultyLinearityDiversity
+        fitnessFunction = PCLevelEvaluators::linearityLeniencyCompressionDiscretized
     )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)

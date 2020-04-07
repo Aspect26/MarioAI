@@ -5,16 +5,23 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 
 object LevelGenerators {
 
-    object ChunkGenerator {
+    object PCGenerator {
+
+        val difficulty = ObjectStorage.load("data/level-generators/pc_difficulty.lg") as LevelGenerator
+        val linearity = ObjectStorage.load("data/level-generators/pc_linearity.lg") as LevelGenerator
+        val compression = ObjectStorage.load("data/level-generators/pc_compression_png_01.lg") as LevelGenerator
+        val all = ObjectStorage.load("data/level-generators/pc_all.lg") as LevelGenerator
+        val allDiscretized = ObjectStorage.load("data/level-generators/pc_all_discretized.lg") as LevelGenerator
 
     }
 
     object PMPGenerator {
 
-        val NEAT1: LevelGenerator = ObjectStorage.load("data/level-generators/pmp_neat_1.lg") as LevelGenerator
-        val NonLinear: LevelGenerator = ObjectStorage.load("data/level-generators/pmp_non_linear.lg") as LevelGenerator
-        val HC: LevelGenerator = ObjectStorage.load("data/level-generators/pmp_hc.lg") as LevelGenerator
-        val NEAT2: LevelGenerator = ObjectStorage.load("data/level-generators/pmp_neat_2.lg") as LevelGenerator
+        val difficulty = ObjectStorage.load("data/level-generators/pmp_difficulty.lg") as LevelGenerator
+        val linearity = ObjectStorage.load("data/level-generators/pmp_linearity.lg") as LevelGenerator
+        val compression = ObjectStorage.load("data/level-generators/pmp_compression_png_01.lg") as LevelGenerator
+        val all = ObjectStorage.load("data/level-generators/pmp_all.lg") as LevelGenerator
+        val allDiscretized = ObjectStorage.load("data/level-generators/pmp_all_discretized.lg") as LevelGenerator
 
     }
 }

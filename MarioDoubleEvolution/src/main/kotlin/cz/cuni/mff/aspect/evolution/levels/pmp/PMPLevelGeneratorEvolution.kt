@@ -20,7 +20,7 @@ class PMPLevelGeneratorEvolution(
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
-    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
+    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
     private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
     private val displayChart: Boolean = true

@@ -17,7 +17,7 @@ fun main() {
 
 
 fun keyboardPlay() {
-    val levelGenerator = LevelGenerators.PMPGenerator.NEAT2
+    val levelGenerator = LevelGenerators.PMPGenerator.allDiscretized
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
     val marioSimulator = GameSimulator(15000)
@@ -26,8 +26,6 @@ fun keyboardPlay() {
         LevelVisualiser().display(level)
 //        val agent = Agents.NEAT.Stage4Level1Solver
         val agent = CheaterKeyboardAgent()
-        val jpgSize = LevelImageCompressor.mediumPngSize(level)
-        println(jpgSize)
         val stats = marioSimulator.playMario(agent, level, true)
     }
 }

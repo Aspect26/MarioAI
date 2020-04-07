@@ -6,6 +6,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.LevelImageCompressor
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.utils.discretize
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -13,18 +14,32 @@ typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLe
 
 object PCLevelEvaluators {
 
-    fun difficultyLinearityDiversity(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+    fun linearityLeniencyCompressionDiscretized(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
         val maxDistance = level.pixelWidth
 
         // TODO: do not count the starting and ending blocks (all 3 below)
         val nonLinearityFactory = averageHeightChange(level.tiles)
         val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
-//        val chunksDiversity = chunksDiversity(chunkMetadata)
-//        val chunksRepetitionFactor = chunksRepetitionFactor(chunkMetadata)
+        val compressionFactor = LevelImageCompressor.smallPngSize(level).toFloat() / 200000
+
+        val nonLinearityDiscretized = discretize(nonLinearityFactory, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+        val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+        val compressionDiscretized = discretize(compressionFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+
+        return distance * (1 + nonLinearityDiscretized + difficultyDiscretized + compressionDiscretized)
+    }
+
+    fun linearityLeniencyCompression(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+        val distance = gameStatistic.finalMarioDistance
+        val maxDistance = level.pixelWidth
+
+        // TODO: do not count the starting and ending blocks (all 3 below)
+        val nonLinearityFactory = averageHeightChange(level.tiles)
+        val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
         val compressionFactor = LevelImageCompressor.mediumPngSize(level).toFloat() / 200000
 
-        return distance + (maxDistance * 1f) * (difficultyFactor + nonLinearityFactory + compressionFactor)
+        return distance * (2 + difficultyFactor + nonLinearityFactory + compressionFactor)
     }
 
     private fun averageHeightChange(tiles: Array<ByteArray>): Float {

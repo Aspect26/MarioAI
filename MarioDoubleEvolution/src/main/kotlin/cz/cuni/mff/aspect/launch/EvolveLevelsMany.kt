@@ -21,7 +21,7 @@ fun doManyPMPEvolution() {
     val experimentsName = "pmp_v3/NEATs4l1solver"
     val generationsCount = 100
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::distanceDiversityEnemiesLinearity
+    val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(

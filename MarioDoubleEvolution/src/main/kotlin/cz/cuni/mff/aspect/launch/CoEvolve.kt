@@ -32,7 +32,7 @@ fun coevolve() {
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = PMPLevelEvaluators::distanceDiversityEnemiesLinearity,
+        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
         displayChart = false
     )
 
