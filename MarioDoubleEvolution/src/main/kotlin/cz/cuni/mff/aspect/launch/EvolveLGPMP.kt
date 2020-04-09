@@ -4,15 +4,18 @@ import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DifficultyEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionMinimumEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    evolvePMP()
-//    playLatestPMP()
+//    evolvePMP()
+    playLatestPMP()
 //    createDefaultPMP()
 }
 
@@ -20,9 +23,9 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 50,
+        generationsCount = 40,
         populationSize = 50,
-        fitnessFunction = DistanceLinearityDifficultyCompressionMinimumEvaluator(),
+        fitnessFunction = DifficultyEvaluator(),
         evaluateOnLevelsCount = 5
     )
 
@@ -44,6 +47,8 @@ fun playLatestPMP() {
 
     for (levelNumber in 0 until 5) {
         val level = levelGenerator.generate()
+        cz.cuni.mff.aspect.evolution.levels.evaluators.DifficultyEvaluator()(level, GameStatistics(0f, 0, 0, 0, 0, true, true))
+        LevelVisualiser().display(level)
         val postProcessed = LevelPostProcessor.postProcess(level, true)
         val agent = CheaterKeyboardAgent()
 //        val agent = Agents.NEAT.Stage4Level1Solver

@@ -50,7 +50,14 @@ class DifficultyEvaluator : LevelEvaluator<Float> {
             }
         }
 
-        return enemiesDifficulty + holesDifficulty + billsDifficulty
+        val tileColumnsUsePlatformBox = level.tiles.map {
+            it.contains(Tiles.EXPIRED_QM) || it.contains(Tiles.QM_WITH_COIN) || it.contains(Tiles.QM_WITH_POWERUP)
+                    || it.contains(Tiles.BRICK) || it.contains(Tiles.BRICK_WITH_COIN) || it.contains(Tiles.BRICK_WITH_POWERUP)
+        }
+        val columnsWithPlatformCount = tileColumnsUsePlatformBox.sumBy { if (it) 1 else 0 }
+        val platformsDifficulty = (columnsWithPlatformCount * 0.75f)
+
+        return (enemiesDifficulty + holesDifficulty + billsDifficulty - platformsDifficulty).coerceAtLeast(0f)
     }
 
 }
