@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.visualisation.level
 
 import cz.cuni.mff.aspect.mario.Entities
+import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -16,11 +17,11 @@ object LevelToImageConverter {
     private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
     private val backgroundSheet: BufferedImage = ImageIO.read(File("resources/bgsheet.png"))
 
-    fun create(level: MarioLevel, noalpha: Boolean = false): BufferedImage {
+    fun create(level: MarioLevel, noAlpha: Boolean = false): BufferedImage {
         val width = level.tiles.size * this.SPRITES_SIZE
         val height = level.tiles[0].size * this.SPRITES_SIZE
 
-        val imageType = if (noalpha) BufferedImage.TYPE_INT_RGB else BufferedImage.TYPE_INT_ARGB
+        val imageType = if (noAlpha) BufferedImage.TYPE_INT_RGB else BufferedImage.TYPE_INT_ARGB
         val image = BufferedImage(width, height, imageType)
 
         for (x in 0 until level.tiles.size * this.SPRITES_SIZE) {
@@ -71,6 +72,27 @@ object LevelToImageConverter {
         return image
     }
 
+    fun createMinified(level: MarioLevel, noAlpha: Boolean = false): BufferedImage {
+        val width = level.tiles.size
+        val height = level.tiles[0].size
+
+        val imageType = if (noAlpha) BufferedImage.TYPE_INT_RGB else BufferedImage.TYPE_INT_ARGB
+        val image = BufferedImage(width, height, imageType)
+
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                val entity = level.entities[x][y]
+                val color = if (entity != Entities.NOTHING && entity != Entities.Flower.NORMAL && entity !=  Entities.PrincessPeach.NORMAL)
+                    this.getEntityColor(level.entities[x][y]).rgb
+                else this.getTileColor(level.tiles[x][y]).rgb
+
+                image.setRGB(x, y, color)
+            }
+        }
+
+        return image
+    }
+
     private fun getBackgroundColor(x: Int, y: Int): Int {
         val xPos = 130 + x % 30
         val ySize = 95
@@ -86,6 +108,23 @@ object LevelToImageConverter {
 
         return this.tileSheet.getRGB(tileX * 16 + x, tileY * 16 + y)
     }
+
+    private fun getTileColor(tile: Byte): Color =
+        when (tile) {
+            Tiles.GRASS_TOP, Tiles.GRASS_CORNER_TOP_RIGHT, Tiles.GRASS_CORNER_TOP_LEFT, Tiles.GRASS_TOP_LEFT,
+            Tiles.GRASS_TOP_RIGHT, Tiles.GRASS_LEFT, Tiles.GRASS_RIGHT, Tiles.GRASS_CORNER_BOTTOM_LEFT,
+            Tiles.GRASS_CORNER_BOTTOM_RIGHT, Tiles.DIRT -> Color(255, 255, 0)
+            Tiles.BULLET_BLASTER_BOTTOM, Tiles.BULLET_BLASTER_MIDDLE, Tiles.BULLET_BLASTER_TOP -> Color(150, 150, 150)
+            Tiles.PIPE_TOP_LEFT, Tiles.PIPE_TOP_RIGHT, Tiles.PIPE_MIDDLE_RIGHT, Tiles.PIPE_MIDDLE_LEFT -> Color(0, 255, 0)
+            Tiles.BRICK, Tiles.BRICK_WITH_COIN, Tiles.BRICK_WITH_POWERUP -> Color(118, 81, 49)
+            Tiles.EXPIRED_QM, Tiles.QM_WITH_COIN, Tiles.QM_WITH_POWERUP -> Color(120, 20, 30)
+            Tiles.STONE -> Color(255, 156, 26)
+            Tiles.NOTHING, Tiles.ENV_GRASS_END, Tiles.ENV_GRASS_MIDDLE, Tiles.ENV_GRASS_START, Tiles.BUSH_START,
+            Tiles.BUSH_MIDDLE, Tiles.BUSH_END, Tiles.ARROW_TOP_LEFT, Tiles.ARROW_TOP_RIGHT, Tiles.ARROW_BOTTOM_RIGHT,
+            Tiles.ARROW_BOTTOM_LEFT -> Color(255, 255, 255)
+
+            else -> Color(0, 0, 0)
+        }
 
     private fun getEntityColor(entity: Int, x: Int, y: Int): Int =
         when (entity) {
@@ -105,6 +144,16 @@ object LevelToImageConverter {
             Entities.PrincessPeach.NORMAL -> Color(225, 122, 157).rgb
 
             else -> Color.BLACK.rgb
+        }
+
+    private fun getEntityColor(entity: Int): Color =
+        when (entity) {
+            Entities.Goomba.NORMAL -> Color(0, 0, 150)
+            Entities.Koopa.GREEN -> Color(0, 100, 0)
+            Entities.Koopa.GREEN_WINGED -> Color(0, 100, 100)
+            Entities.Koopa.RED -> Color(255, 0, 0)
+            Entities.Spiky.NORMAL -> Color(255,  0, 255)
+            else -> Color(0, 0, 0)
         }
 
     private fun isTransparent(color: Int): Boolean {

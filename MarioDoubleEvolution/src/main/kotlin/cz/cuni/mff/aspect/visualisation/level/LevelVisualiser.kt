@@ -11,21 +11,24 @@ import javax.swing.JScrollPane
 
 class LevelVisualiser {
 
-    fun displayAndStore(level: MarioLevel, fileName: String) {
-        val image = LevelToImageConverter.create(level)
+    fun displayAndStore(level: MarioLevel, fileName: String, minified: Boolean = false) {
+        val image = this.createImage(level, minified)
         this.storeImage(image, fileName)
         this.displayImage(image)
     }
 
-    fun display(level: MarioLevel) {
-        val image = LevelToImageConverter.create(level)
+    fun display(level: MarioLevel, minified: Boolean = false) {
+        val image = this.createImage(level, minified)
         this.displayImage(image)
     }
 
-    fun store(level: MarioLevel, fileName: String) {
-        val image = LevelToImageConverter.create(level)
+    fun store(level: MarioLevel, fileName: String, minified: Boolean = false) {
+        val image = this.createImage(level, minified)
         this.storeImage(image, fileName)
     }
+
+    private fun createImage(level: MarioLevel, minified: Boolean) : BufferedImage =
+        if (minified) LevelToImageConverter.createMinified(level) else LevelToImageConverter.create(level)
 
     private fun displayImage(image: BufferedImage) {
         val label = JLabel()

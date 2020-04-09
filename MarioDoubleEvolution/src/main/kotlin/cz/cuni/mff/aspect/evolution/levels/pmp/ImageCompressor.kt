@@ -19,7 +19,7 @@ object LevelImageCompressor {
     fun jpgSize(level: MarioLevel): Int =compressionSize(level, "jpg", 0.5f)
 
     fun compressionSize(level: MarioLevel, imageType: String, compressionQuality: Float): Int {
-        val image = LevelToImageConverter.create(level, noalpha=true)
+        val image = LevelToImageConverter.create(level, noAlpha=true)
 
         val baos = ByteArrayOutputStream()
         val writers = ImageIO.getImageWritersByFormatName(imageType)
