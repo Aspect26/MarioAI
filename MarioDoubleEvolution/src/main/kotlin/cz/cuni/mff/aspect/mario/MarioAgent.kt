@@ -23,7 +23,7 @@ class MarioAgent(val controller: MarioController) : MarioHijackAIBase(), IAgent 
                 MarioAction.RUN_RIGHT -> control.runRight()
                 MarioAction.RUN_LEFT -> control.runLeft()
                 MarioAction.JUMP -> control.jump()
-                MarioAction.SPECIAL -> control.shoot() // TODO: check which type of mario we have...
+                MarioAction.SPECIAL -> control.shoot()
             }
         }
 

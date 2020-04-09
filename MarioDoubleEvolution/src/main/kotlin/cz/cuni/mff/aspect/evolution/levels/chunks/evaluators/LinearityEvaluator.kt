@@ -10,10 +10,13 @@ import kotlin.math.abs
 class LinearityEvaluator : PCLevelEvaluator<Float> {
 
     override operator fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
-        // TODO: do not use the first and last chunks
         var totalHeightChange = 0
         var previousHeight = this.groundHeight(level.tiles[0])
-        for (columnIndex in 1 until level.tiles.size) {
+
+        val startIndex = chunkMetadata.chunks.first().chunk.length
+        val endIndex = level.tiles.size - chunkMetadata.chunks.last().chunk.length
+
+        for (columnIndex in startIndex .. endIndex) {
             val currentHeight = this.groundHeight(level.tiles[columnIndex])
             if (currentHeight == level.tiles[columnIndex].size) continue
             val currentHeightChange = abs(currentHeight - previousHeight)

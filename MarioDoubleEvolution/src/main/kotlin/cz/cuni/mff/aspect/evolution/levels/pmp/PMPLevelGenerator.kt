@@ -179,7 +179,6 @@ class PMPLevelGenerator(
             val shouldBeBoxes = this.random.nextFloat() < this.probabilities[PI_START_BOXES]
             val shouldBeDoubleBoxes = this.random.nextFloat() < this.probabilities[PI_DOUBLE_BOXES]
 
-            // TODO: refactor this
             if (canBeBoxes && shouldBeBoxes) {
                 val boxesLevel = levelMetadata.groundHeight[column] + 4
 

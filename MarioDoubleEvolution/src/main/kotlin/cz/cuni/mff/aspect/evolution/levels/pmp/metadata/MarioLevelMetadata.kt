@@ -38,7 +38,6 @@ data class MarioLevelMetadata (
     val boxPlatformsCount: Int get() = this.boxPlatforms.filter { it.length > 0}.size
     val stoneColumnsCount: Int get() = this.stoneColumns.filter { it > 0}.size
 
-    // TODO: unit test this
     fun isHoleAt(checkingColumn: Int): Boolean {
         for (currentColumn in this.holes.indices) {
             val holeLength = this.holes[currentColumn]
@@ -48,7 +47,6 @@ data class MarioLevelMetadata (
         return false
     }
 
-    // TODO: unit test this
     fun horizontalRayUntilObstacle(fromColumn: Int, fromRow: Int): Int {
         var currentLength = 0
 
@@ -60,7 +58,6 @@ data class MarioLevelMetadata (
         return currentLength
     }
 
-    // TODO: unit test this
     fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
         return this.groundHeight[checkingColumn] >= row
                 || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row

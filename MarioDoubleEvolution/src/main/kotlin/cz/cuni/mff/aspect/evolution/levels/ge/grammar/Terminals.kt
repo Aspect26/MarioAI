@@ -8,7 +8,6 @@ import cz.cuni.mff.aspect.mario.level.MonsterSpawn
 import cz.cuni.mff.aspect.mario.level.TerminalMarioLevelChunk
 
 
-// TODO: reuse chunks
 abstract class LevelChunkTerminal(value: String) : Terminal(value) {
     abstract fun generateChunk(): MarioLevelChunk
     override fun equals(other: Any?): Boolean = other is LevelChunkTerminal && other.value == this.value
@@ -333,7 +332,6 @@ class DoublePathChunkTerminal(monsterSpawns: Array<MonsterSpawn> = arrayOf(), pr
                               private var isFirstSecrets: Boolean = false, private var isSecondSecrets: Boolean = true) :
     MonsterSpawningChunkTerminal("two_paths", monsterSpawns) {
 
-    // TODO: add powerups
     override fun takeChunkParameters(iterator: Iterator<Int>) {
         this._width = iterator.next() % 7 + 3
         this.level = iterator.next() % 6 + 7

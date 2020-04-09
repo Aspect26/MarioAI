@@ -21,7 +21,7 @@ fun main() {
 }
 
 // TODO: something weird is happening - when training on only 1 level, the objective can reach 1 and then drop back to 0 with fitness distanceOnly
-// TODO: fitness is also dropping even with elite selector...
+// fitness is also dropping even with elite selector...
 
 
 fun doManyNEATEvolution() {

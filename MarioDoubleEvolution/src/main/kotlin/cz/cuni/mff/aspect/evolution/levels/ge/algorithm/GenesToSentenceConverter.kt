@@ -10,7 +10,6 @@ class GenesToSentenceConverter(private val grammar: Grammar) {
         return this.convertUnsigned(unsignedGenes, maxWrapsCount)
     }
 
-    // TODO: waiting for UByteArray to become not experimental only
     fun convertUnsigned(unsignedGenes: Array<Int>, maxWrapsCount: Int = 100): GrammarSentence {
         val currentSentence = mutableListOf<Symbol>(this.grammar.startingSymbol)
 

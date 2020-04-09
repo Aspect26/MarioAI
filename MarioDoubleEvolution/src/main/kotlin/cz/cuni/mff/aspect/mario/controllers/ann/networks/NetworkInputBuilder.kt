@@ -33,7 +33,6 @@ data class NetworkInputBuilder(
 
     private val inputLayerSize: Int get() = this.receptiveFieldSize * 2 + if (this.addMarioInTilePosition) 2 else 0
 
-    // TODO: do not use these pls :(
     fun buildDouble(): DoubleArray =
         if (this.legacy) {
             this.buildLegacy()

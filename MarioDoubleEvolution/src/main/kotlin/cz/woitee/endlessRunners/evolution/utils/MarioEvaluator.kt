@@ -28,7 +28,6 @@ import java.util.stream.Stream
  *
  * Implementation was updated to support jenetics version 5.0 and compute also objective function
  */
-// TODO: refactor
 class MarioEvaluator<G, C>(
     private val executor: Executor,
     private val fitnessFunction: MarioGameplayEvaluator<C>,

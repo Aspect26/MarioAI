@@ -2,7 +2,6 @@ package cz.cuni.mff.aspect.mario.level
 
 import cz.cuni.mff.aspect.mario.Tiles
 
-// TODO: change enemies to IntArray
 class DirectMarioLevel(override val tiles: Array<ByteArray>, override val entities: Array<Array<Int>>) : MarioLevel {
 
     companion object {

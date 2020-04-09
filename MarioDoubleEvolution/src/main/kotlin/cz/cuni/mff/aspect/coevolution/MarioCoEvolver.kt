@@ -17,7 +17,6 @@ class MarioCoEvolver {
                controllerFitness: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
                generations: Int = DEFAULT_GENERATIONS_NUMBER): CoevolutionResult {
         lateinit var resultController: MarioController
-        // TODO: what about this first generator
         var resultLevelGenerator: LevelGenerator = PCLevelGenerator()
 
         val startTime = System.currentTimeMillis()

@@ -10,7 +10,6 @@ class DistanceLinearityDifficultyCompressionMinimumEvaluator : PCLevelEvaluator<
     override fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
 
-        // TODO: do not count the starting and ending blocks (all 3 below)
         val difficultyFactor = DifficultyEvaluator()(level, chunkMetadata, gameStatistic)
         val linearityFactor = LinearityEvaluator()(level, chunkMetadata, gameStatistic)
         val compressionFactor = CompressionEvaluator()(level, chunkMetadata, gameStatistic)

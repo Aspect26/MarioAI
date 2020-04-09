@@ -28,7 +28,6 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
     }
 
     fun setDenseInput() {
-        // TODO: CRITICAL pls this :(
         if (this.network is UpdatedAgentNetwork) {
             (this.network as UpdatedAgentNetwork).denseInput = true
         }

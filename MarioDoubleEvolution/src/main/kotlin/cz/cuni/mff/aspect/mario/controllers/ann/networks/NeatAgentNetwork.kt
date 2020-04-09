@@ -6,6 +6,7 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import cz.cuni.mff.aspect.utils.DeepCopy
 import java.io.*
 
 
@@ -27,25 +28,16 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
     }
 
     override fun newInstance(): ControllerArtificialNetwork {
-        // TODO: check if we can do this nicer
-        val baos = ByteArrayOutputStream()
-        val oos = ObjectOutputStream(baos)
-        oos.writeObject(this.genome)
-
-        val bais = ByteArrayInputStream(baos.toByteArray())
-        val ois = ObjectInputStream(bais)
-
-        val genomeCopy = ois.readObject() as Genome
-
+        val genomeCopy = DeepCopy.copy(this.genome)
         return NeatAgentNetwork(this.networkSettings.copy(), genomeCopy)
     }
 
     override fun setNetworkWeights(weights: DoubleArray) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
@@ -65,7 +57,6 @@ class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val
         return networkBuilder.buildFloat()
     }
 
-    // TODO: generalise this too!
     private fun addActionIfOutputActivated(actions: ArrayList<MarioAction>, output: FloatArray, outputIndex: Int, action: MarioAction) {
         if ((output[outputIndex]) > CHOOSE_ACTION_THRESHOLD) {
             actions.add(action)
