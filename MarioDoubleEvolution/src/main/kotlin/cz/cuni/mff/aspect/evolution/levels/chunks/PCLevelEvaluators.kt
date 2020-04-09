@@ -15,33 +15,42 @@ typealias ChunkedLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLe
 
 object PCLevelEvaluators {
 
-    fun linearityLeniencyCompressionDiscretized(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+    fun linearityLeniencyCompressionMinimum(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
-        val maxDistance = level.pixelWidth
 
         // TODO: do not count the starting and ending blocks (all 3 below)
         val nonLinearityFactor = averageHeightChange(level.tiles)
         val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
-        val compressionFactor = LevelImageCompressor.smallPngSize(level).toFloat() / 200000
+        val compressionFactor = compressionFactor(level)
 
-        val nonLinearityDiscretized = discretize(nonLinearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
-        val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
-        val compressionDiscretized = discretize(compressionFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
-
-        val allFactors = listOf(nonLinearityFactor, difficultyFactor)
+        val allFactors = listOf(nonLinearityFactor, difficultyFactor, compressionFactor)
         val minFactor = min(allFactors)
 
         return distance * (1 + minFactor)
     }
 
+    fun linearityLeniencyCompressionDiscretized(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+        val distance = gameStatistic.finalMarioDistance
+
+        // TODO: do not count the starting and ending blocks (all 3 below)
+        val nonLinearityFactor = averageHeightChange(level.tiles)
+        val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
+        val compressionFactor = compressionFactor(level)
+
+        val nonLinearityDiscretized = discretize(nonLinearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+        val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+        val compressionDiscretized = discretize(compressionFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+
+        return distance * (1 + nonLinearityDiscretized + difficultyDiscretized + compressionDiscretized)
+    }
+
     fun linearityLeniencyCompression(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
-        val maxDistance = level.pixelWidth
 
         // TODO: do not count the starting and ending blocks (all 3 below)
         val nonLinearityFactory = averageHeightChange(level.tiles)
         val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
-        val compressionFactor = LevelImageCompressor.mediumPngSize(level).toFloat() / 200000
+        val compressionFactor = compressionFactor(level)
 
         return distance * (2 + difficultyFactor + nonLinearityFactory + compressionFactor)
     }
@@ -67,7 +76,7 @@ object PCLevelEvaluators {
         return differentChunksUsed.toFloat() / PCLevelGenerator.DEFAULT_CHUNK_TYPES_COUNT
     }
 
-    fun chunksRepetitionFactor(chunkMetadata: ChunksLevelMetadata): Float {
+    private fun chunksRepetitionFactor(chunkMetadata: ChunksLevelMetadata): Float {
         var chunkRepetitions = 0f
         var currentRepetitionCount = 0
 
@@ -90,6 +99,9 @@ object PCLevelEvaluators {
 
         return if (chunkRepetitions > 0) (1 / chunkRepetitions) else 1f
     }
+
+    private fun compressionFactor(level: MarioLevel): Float =
+        LevelImageCompressor.smallPngSize(level) / 3200f
 
     private fun groundHeight(tilesColumn: ByteArray): Int {
         for (tileIndex in tilesColumn.indices)

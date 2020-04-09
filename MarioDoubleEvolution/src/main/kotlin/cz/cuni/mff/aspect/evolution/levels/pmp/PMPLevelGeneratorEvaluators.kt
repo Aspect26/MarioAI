@@ -13,21 +13,31 @@ typealias MetadataLevelsEvaluator<F> = (level: MarioLevel, levelMetadata: MarioL
 
 object PMPLevelEvaluators {
 
+    fun linearityLeniencyCompressionMinimum(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
+        val distance = gameStatistic.finalMarioDistance
+
+        val nonLinearityFactor = (averageHeightChange(levelMetadata)).coerceAtMost(1f)
+        val difficultyFactor = (levelDifficulty(level) / (levelMetadata.levelLength - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)).coerceAtMost(1f)
+        val compressionFactor = LevelImageCompressor.smallPngSize(level) / 4000f
+
+        val allFactors = listOf(nonLinearityFactor, difficultyFactor, compressionFactor)
+        val minFactor = min(allFactors)
+
+        return distance * (1 + minFactor)
+    }
+
     fun linearityLeniencyCompressionDiscretized(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
         val distance = gameStatistic.finalMarioDistance
 
         val nonLinearityFactor = (averageHeightChange(levelMetadata)).coerceAtMost(1f)
         val difficultyFactor = (levelDifficulty(level) / (levelMetadata.levelLength - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)).coerceAtMost(1f)
-        val compressionFactor = LevelImageCompressor.smallPngSize(level).toFloat() / 200000
+        val compressionFactor = LevelImageCompressor.smallPngSize(level) / 4000f
 
         val nonLinearityDiscretized = discretize(nonLinearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val compressionDiscretized = discretize(compressionFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
 
-        val allFactors = listOf(nonLinearityFactor, difficultyFactor)
-        val minFactor = min(allFactors)
-
-        return distance * (1 + minFactor)
+        return distance * (1 + nonLinearityDiscretized + difficultyDiscretized + compressionDiscretized)
     }
 
     fun linearityLeniencyCompression(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {

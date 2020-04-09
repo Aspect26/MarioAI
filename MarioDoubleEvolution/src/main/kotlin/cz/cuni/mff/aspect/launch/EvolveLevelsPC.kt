@@ -12,8 +12,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
-    playLatestPC()
+    evolvePC()
+//    playLatestPC()
 //    createDefaultPC()
 }
 
@@ -22,7 +22,7 @@ fun evolvePC() {
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 25,
+        generationsCount = 50,
         evaluateOnLevelsCount = 5,
         fitnessFunction = PCLevelEvaluators::linearityLeniencyCompressionDiscretized
     )
@@ -49,7 +49,6 @@ fun playLatestPC() {
         val agent = CheaterKeyboardAgent()
 //        val agent = Agents.NEAT.Stage4Level1Solver
         LevelVisualiser().display(level)
-        println(PCLevelEvaluators.chunksRepetitionFactor(levelGenerator.lastChunksMetadata))
         val stats = simulator.playMario(agent, postProcessed, true)
     }
 }

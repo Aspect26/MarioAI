@@ -20,9 +20,9 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 10,
+        generationsCount = 50,
         populationSize = 50,
-        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
+        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionMinimum,
         evaluateOnLevelsCount = 5
     )
 
