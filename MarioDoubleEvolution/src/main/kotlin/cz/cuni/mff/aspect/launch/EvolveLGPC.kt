@@ -4,8 +4,8 @@ import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -24,7 +24,7 @@ fun evolvePC() {
         populationSize = 50,
         generationsCount = 50,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = PCLevelEvaluators::linearityLeniencyCompressionDiscretized
+        fitnessFunction = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
     )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)

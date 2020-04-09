@@ -3,6 +3,8 @@ package cz.cuni.mff.aspect.evolution.levels.chunks
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.LinearityEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.utils.sumByFloat
@@ -20,7 +22,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: ChunkedLevelEvaluator<Float> = PCLevelEvaluators::linearityLeniencyCompressionDiscretized,
+                                             private val fitnessFunction: PCLevelEvaluator<Float> = LinearityEvaluator(),
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution",

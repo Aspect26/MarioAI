@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.pmp
+package cz.cuni.mff.aspect.evolution.levels
 
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
@@ -10,13 +10,17 @@ import javax.imageio.ImageWriteParam
 
 object LevelImageCompressor {
 
-    fun smallPngSize(level: MarioLevel): Int = compressionSize(level, "png", 0.1f)
+    fun smallPngSize(level: MarioLevel): Int =
+        compressionSize(level, "png", 0.1f)
 
-    fun mediumPngSize(level: MarioLevel): Int = compressionSize(level, "png", 0.5f)
+    fun mediumPngSize(level: MarioLevel): Int =
+        compressionSize(level, "png", 0.5f)
 
-    fun largePngSize(level: MarioLevel): Int = compressionSize(level, "png", 0.8f)
+    fun largePngSize(level: MarioLevel): Int =
+        compressionSize(level, "png", 0.8f)
 
-    fun jpgSize(level: MarioLevel): Int =compressionSize(level, "jpg", 0.5f)
+    fun jpgSize(level: MarioLevel): Int =
+        compressionSize(level, "jpg", 0.5f)
 
     private fun compressionSize(level: MarioLevel, imageType: String, compressionQuality: Float): Int {
         val image = LevelToImageConverter.createMinified(level, noAlpha=true)

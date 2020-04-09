@@ -3,6 +3,8 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.utils.getDoubleValues
@@ -20,7 +22,7 @@ class PMPLevelGeneratorEvolution(
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
-    private val fitnessFunction: MetadataLevelsEvaluator<Float> = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
+    private val fitnessFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator(),
     private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
     private val displayChart: Boolean = true

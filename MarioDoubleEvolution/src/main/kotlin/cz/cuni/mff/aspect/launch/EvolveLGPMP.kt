@@ -3,8 +3,8 @@ package cz.cuni.mff.aspect.launch
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionMinimumEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -22,7 +22,7 @@ fun evolvePMP() {
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 50,
         populationSize = 50,
-        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionMinimum,
+        fitnessFunction = DistanceLinearityDifficultyCompressionMinimumEvaluator(),
         evaluateOnLevelsCount = 5
     )
 
