@@ -6,8 +6,8 @@ import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelEvaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionMinimumEvaluator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -32,7 +32,7 @@ fun coevolve() {
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = PMPLevelEvaluators::linearityLeniencyCompressionDiscretized,
+        fitnessFunction = DistanceLinearityDifficultyCompressionMinimumEvaluator(),
         displayChart = false
     )
 
