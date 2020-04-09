@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 
 class DifficultyEvaluator : LevelEvaluator<Float> {
 
+    // TODO: decrease difficulty for each platform box
     override fun invoke(level: MarioLevel, gameStatistic: GameStatistics): Float {
         val flatEntities = level.entities.flatten()
 

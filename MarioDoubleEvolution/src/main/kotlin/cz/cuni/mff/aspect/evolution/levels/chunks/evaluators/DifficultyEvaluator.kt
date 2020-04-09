@@ -7,7 +7,9 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 
 class DifficultyEvaluator : PCLevelEvaluator<Float> {
 
-    override operator fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float =
-        (DifficultyEvaluator()(level, gameStatistic) / (level.tiles.size)).coerceAtMost(1f)
+    override operator fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+        val levelLength = chunkMetadata.chunks.subList(1, chunkMetadata.chunks.size - 1).map { it.chunk.length }.sum()
+        return (DifficultyEvaluator()(level, gameStatistic) / (levelLength)).coerceAtMost(1f)
+    }
 
 }
