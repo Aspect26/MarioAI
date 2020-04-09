@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.discretize
+import cz.cuni.mff.aspect.utils.min
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -19,15 +20,18 @@ object PCLevelEvaluators {
         val maxDistance = level.pixelWidth
 
         // TODO: do not count the starting and ending blocks (all 3 below)
-        val nonLinearityFactory = averageHeightChange(level.tiles)
+        val nonLinearityFactor = averageHeightChange(level.tiles)
         val difficultyFactor = (levelDifficulty(level) / (level.tiles.size)).coerceAtMost(1f)
         val compressionFactor = LevelImageCompressor.smallPngSize(level).toFloat() / 200000
 
-        val nonLinearityDiscretized = discretize(nonLinearityFactory, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
+        val nonLinearityDiscretized = discretize(nonLinearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val compressionDiscretized = discretize(compressionFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
 
-        return distance * (1 + nonLinearityDiscretized + difficultyDiscretized + compressionDiscretized)
+        val allFactors = listOf(nonLinearityFactor, difficultyFactor)
+        val minFactor = min(allFactors)
+
+        return distance * (1 + minFactor)
     }
 
     fun linearityLeniencyCompression(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {

@@ -11,6 +11,7 @@ object LevelGenerators {
         val linearity = ObjectStorage.load("data/level-generators/pc_linearity.lg") as LevelGenerator
         val compression = ObjectStorage.load("data/level-generators/pc_compression_png_01.lg") as LevelGenerator
         val all = ObjectStorage.load("data/level-generators/pc_all.lg") as LevelGenerator
+        val min = ObjectStorage.load("data/level-generators/pc_min.lg") as LevelGenerator
         val allDiscretized = ObjectStorage.load("data/level-generators/pc_all_discretized.lg") as LevelGenerator
 
     }
@@ -21,7 +22,9 @@ object LevelGenerators {
         val linearity = ObjectStorage.load("data/level-generators/pmp_linearity.lg") as LevelGenerator
         val compression = ObjectStorage.load("data/level-generators/pmp_compression_png_01.lg") as LevelGenerator
         val all = ObjectStorage.load("data/level-generators/pmp_all.lg") as LevelGenerator
+        val min = ObjectStorage.load("data/level-generators/pmp_min.lg") as LevelGenerator
         val allDiscretized = ObjectStorage.load("data/level-generators/pmp_all_discretized.lg") as LevelGenerator
+        val lol = ObjectStorage.load("data/level-generators/pmp_lol.lg") as LevelGenerator
 
     }
 }

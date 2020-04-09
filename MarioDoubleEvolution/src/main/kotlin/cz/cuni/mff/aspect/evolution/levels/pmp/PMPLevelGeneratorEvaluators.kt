@@ -27,7 +27,7 @@ object PMPLevelEvaluators {
         val allFactors = listOf(nonLinearityFactor, difficultyFactor)
         val minFactor = min(allFactors)
 
-        return distance * (2 + nonLinearityDiscretized + difficultyDiscretized + compressionDiscretized)
+        return distance * (1 + minFactor)
     }
 
     fun linearityLeniencyCompression(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
