@@ -11,7 +11,7 @@ class DistanceLinearityDifficultyCompressionEvaluator : PCLevelEvaluator<Float> 
 
         val difficultyFactor = DifficultyEvaluator()(level, chunkMetadata, gameStatistic)
         val linearityFactor = LinearityEvaluator()(level, chunkMetadata, gameStatistic)
-        val compressionFactor = CompressionEvaluator()(level, chunkMetadata, gameStatistic)
+        val compressionFactor = HuffmanCompressionEvaluator()(level, chunkMetadata, gameStatistic)
 
         return distance * (1 + difficultyFactor + linearityFactor + compressionFactor)
     }

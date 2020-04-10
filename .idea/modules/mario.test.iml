@@ -12,6 +12,15 @@
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../MarioDoubleEvolution/lib/HuffmanCoding.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../MarioAI4J/lib/simple-logging-1.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -19,9 +28,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="RUNTIME">
-      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.50">
+      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.71">
         <CLASSES>
-          <root url="file://$USER_HOME$/Cannot resolve external dependency org.jetbrains.kotlin:kotlin-stdlib:1.3.50 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
+          <root url="file://$USER_HOME$/Cannot resolve external dependency org.jetbrains.kotlin:kotlin-stdlib:1.3.71 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -64,18 +73,18 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="RUNTIME">
-      <library name="Gradle: io.jenetics:jenetics:5.0.1">
+      <library name="Gradle: io.jenetics:jenetics:5.2.0">
         <CLASSES>
-          <root url="file://$USER_HOME$/Cannot resolve external dependency io.jenetics:jenetics:5.0.1 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
+          <root url="file://$USER_HOME$/Cannot resolve external dependency io.jenetics:jenetics:5.2.0 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="RUNTIME">
-      <library name="Gradle: org.knowm.xchart:xchart:3.6.0">
+      <library name="Gradle: org.knowm.xchart:xchart:3.6.2">
         <CLASSES>
-          <root url="file://$USER_HOME$/Cannot resolve external dependency org.knowm.xchart:xchart:3.6.0 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
+          <root url="file://$USER_HOME$/Cannot resolve external dependency org.knowm.xchart:xchart:3.6.2 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

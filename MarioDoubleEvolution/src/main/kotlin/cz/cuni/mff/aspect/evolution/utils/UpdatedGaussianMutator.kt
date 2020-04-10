@@ -3,8 +3,8 @@ package cz.cuni.mff.aspect.evolution.utils
 import io.jenetics.Alterer
 import io.jenetics.Mutator
 import io.jenetics.NumericGene
+import io.jenetics.internal.math.Basics.clamp
 import java.lang.String.format
-import io.jenetics.internal.math.base.clamp
 
 import java.util.Random
 
