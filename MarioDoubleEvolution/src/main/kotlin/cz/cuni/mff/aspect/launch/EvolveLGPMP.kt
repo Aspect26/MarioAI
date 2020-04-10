@@ -27,7 +27,7 @@ fun evolvePMP() {
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 40,
         populationSize = 50,
-        fitnessFunction = HuffmanCompressionEvaluator(),
+        fitnessFunction = DistanceLinearityDifficultyCompressionEvaluator(),
         evaluateOnLevelsCount = 5
     )
 

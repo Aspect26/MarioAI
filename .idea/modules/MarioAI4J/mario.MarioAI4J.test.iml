@@ -16,7 +16,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="HuffmanCoding" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="mario.MarioAI4J.main" />
 </module>

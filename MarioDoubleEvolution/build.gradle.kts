@@ -20,8 +20,8 @@ dependencies {
     implementation(group = "org.slf4j", name = "slf4j-nop", version = "1.7.28")
     implementation(group = "org.nd4j", name = "nd4j-native-platform", version = "0.9.1")
     implementation(group = "org.datavec", name = "datavec-api", version = "0.9.1")
-    implementation(group = "io.jenetics", name = "jenetics", version = "5.0.1")
-    implementation(group = "org.knowm.xchart", name = "xchart", version = "3.6.0")
+    implementation(group = "io.jenetics", name = "jenetics", version = "5.2.0")
+    implementation(group = "org.knowm.xchart", name = "xchart", version = "3.6.2")
     implementation(files("$projectDir/lib/HuffmanCoding.jar"))
 
     testImplementation(group = "junit", name = "junit", version = "4.12")
