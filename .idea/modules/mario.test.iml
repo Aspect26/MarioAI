@@ -90,6 +90,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="HuffmanCoding" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="mario.main" />
 </module>

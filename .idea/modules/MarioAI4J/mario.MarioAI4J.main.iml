@@ -17,5 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="HuffmanCoding" level="project" />
   </component>
 </module>
