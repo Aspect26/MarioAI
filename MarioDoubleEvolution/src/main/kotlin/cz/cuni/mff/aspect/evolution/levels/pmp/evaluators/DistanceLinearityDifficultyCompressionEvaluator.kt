@@ -11,7 +11,7 @@ class DistanceLinearityDifficultyCompressionEvaluator : PMPLevelEvaluator<Float>
 
         val linearityFactor = LinearityEvaluator()(level, levelMetadata, gameStatistic)
         val difficultyFactor = DifficultyEvaluator()(level, levelMetadata, gameStatistic)
-        val compressionFactor = CompressionEvaluator()(level, levelMetadata, gameStatistic)
+        val compressionFactor = HuffmanCompressionEvaluator()(level, levelMetadata, gameStatistic)
 
         return distance * (2 + linearityFactor + difficultyFactor + compressionFactor)
     }

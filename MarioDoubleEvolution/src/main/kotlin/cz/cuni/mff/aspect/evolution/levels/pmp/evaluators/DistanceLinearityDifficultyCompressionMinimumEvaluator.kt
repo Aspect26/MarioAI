@@ -12,7 +12,7 @@ class DistanceLinearityDifficultyCompressionMinimumEvaluator : PMPLevelEvaluator
 
         val linearityFactor = LinearityEvaluator()(level, levelMetadata, gameStatistic)
         val difficultyFactor = DifficultyEvaluator()(level, levelMetadata, gameStatistic)
-        val compressionFactor = CompressionEvaluator()(level, levelMetadata, gameStatistic)
+        val compressionFactor = HuffmanCompressionEvaluator()(level, levelMetadata, gameStatistic)
 
         val allFactors = listOf(linearityFactor, difficultyFactor, compressionFactor)
         val minFactor = min(allFactors)

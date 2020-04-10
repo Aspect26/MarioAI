@@ -12,7 +12,7 @@ class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : PMPLevelEvalu
 
         val linearityFactor = LinearityEvaluator()(level, levelMetadata, gameStatistic)
         val difficultyFactor = DifficultyEvaluator()(level, levelMetadata, gameStatistic)
-        val compressionFactor = CompressionEvaluator()(level, levelMetadata, gameStatistic)
+        val compressionFactor = HuffmanCompressionEvaluator()(level, levelMetadata, gameStatistic)
 
         val linearityDiscretized = discretize(linearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))

@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DifficultyEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionMinimumEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.HuffmanCompressionEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.GameStatistics
@@ -14,18 +15,19 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePMP()
-    playLatestPMP()
+    evolvePMP()
+//    playLatestPMP()
 //    createDefaultPMP()
 }
 
 fun evolvePMP() {
+
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 40,
         populationSize = 50,
-        fitnessFunction = DifficultyEvaluator(),
+        fitnessFunction = HuffmanCompressionEvaluator(),
         evaluateOnLevelsCount = 5
     )
 

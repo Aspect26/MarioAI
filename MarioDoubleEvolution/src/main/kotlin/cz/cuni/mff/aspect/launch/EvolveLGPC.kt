@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.DifficultyEvaluator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.HuffmanCompressionEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -26,7 +27,7 @@ fun evolvePC() {
         generationsCount = 50,
         evaluateOnLevelsCount = 5,
 //        fitnessFunction = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
-        fitnessFunction = DifficultyEvaluator()
+        fitnessFunction = HuffmanCompressionEvaluator()
     )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)

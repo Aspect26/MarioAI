@@ -38,7 +38,6 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
 
-        println("BEST INDIVIDUAL:")
         this.computeFitness(resultIndividual)
 
         return PCLevelGenerator(resultIndividual.getDoubleValues().toList(), this.chunksCount)
