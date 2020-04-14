@@ -12,8 +12,8 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-    evolvePC()
-//    playLatestPC()
+//    evolvePC()
+    playLatestPC()
 //    createDefaultPC()
 }
 

@@ -36,7 +36,7 @@ class PMPLevelGeneratorEvolution(
         val genotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(genotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
-        val genes = resultIndividual.genotype.getDoubleValues()
+        val genes = resultIndividual.genotype().getDoubleValues()
 
         return PMPLevelGenerator(genes, this.levelLength)
     }
@@ -67,14 +67,14 @@ class PMPLevelGeneratorEvolution(
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
             .peek {
-                val generation = it.generation.toInt()
-                val bestFitness = it.bestFitness.toDouble()
-                val averageFitness = it.population.asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness}) / it.population.length()
+                val generation = it.generation().toInt()
+                val bestFitness = it.bestFitness().toDouble()
+                val averageFitness = it.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / it.population().length()
                 this.chart.update(generation, bestFitness, averageFitness.toDouble(), 0.0, 0.0)
-                println("new gen: ${it.generation} (best fitness: ${it.bestFitness})")
+                println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
-            .bestPhenotype
+            .bestPhenotype()
     }
 
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
