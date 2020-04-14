@@ -55,7 +55,9 @@ class DifficultyEvaluator : LevelEvaluator<Float> {
                     || it.contains(Tiles.BRICK) || it.contains(Tiles.BRICK_WITH_COIN) || it.contains(Tiles.BRICK_WITH_POWERUP)
         }
         val columnsWithPlatformCount = tileColumnsUsePlatformBox.sumBy { if (it) 1 else 0 }
-        val platformsDifficulty = (columnsWithPlatformCount * 0.75f)
+        val platformsDifficulty = (columnsWithPlatformCount * 0.8f)
+
+//        println("enemies: $enemiesDifficulty | holes: $holesDifficulty | bills: $billsDifficulty | platforms: $platformsDifficulty | TOTAL: ${enemiesDifficulty + holesDifficulty + billsDifficulty - platformsDifficulty}")
 
         return (enemiesDifficulty + holesDifficulty + billsDifficulty - platformsDifficulty).coerceAtLeast(0f)
     }

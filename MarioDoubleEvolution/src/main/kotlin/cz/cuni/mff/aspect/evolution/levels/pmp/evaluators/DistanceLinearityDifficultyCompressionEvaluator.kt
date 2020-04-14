@@ -13,7 +13,7 @@ class DistanceLinearityDifficultyCompressionEvaluator : SummingEvaluator() {
         val difficultyFactor = DifficultyEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
         val compressionFactor = HuffmanCompressionEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
 
-        return distance * (2 + linearityFactor + difficultyFactor + compressionFactor)
+        return distance * (1 + linearityFactor + difficultyFactor + compressionFactor)
     }
 
 }
