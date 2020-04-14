@@ -1,8 +1,37 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
 
+import ch.idsia.agents.IAgent
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
+typealias PCLevelGeneratorEvaluator<F> = (levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int) -> F
 
-typealias PCLevelEvaluator<F> = (level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics) -> F
+abstract class PCLevelGeneratorEvaluatorBase : PCLevelGeneratorEvaluator<Float> {
+
+    override fun invoke(levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): Float {
+        val levels: MutableList<MarioLevel> = mutableListOf()
+        val metadata: MutableList<ChunksLevelMetadata> = mutableListOf()
+        val gameStatistics: MutableList<GameStatistics> = mutableListOf()
+
+        repeat((0 until levelsCount).count()) {
+            val agent = agentFactory()
+            val level = levelGenerator.generate()
+            val levelMetadata = levelGenerator.lastChunksMetadata
+
+            val marioSimulator = GameSimulator()
+            val currentGameStatistics = marioSimulator.playMario(agent, level, false)
+
+            levels.add(level)
+            metadata.add(levelMetadata)
+            gameStatistics.add(currentGameStatistics)
+        }
+
+        return this.evaluate(levels, metadata, gameStatistics)
+    }
+
+    abstract fun evaluate(levels: List<MarioLevel>, levelsChunkMetadata: List<ChunksLevelMetadata>, gameStatistics: List<GameStatistics>): Float
+
+}

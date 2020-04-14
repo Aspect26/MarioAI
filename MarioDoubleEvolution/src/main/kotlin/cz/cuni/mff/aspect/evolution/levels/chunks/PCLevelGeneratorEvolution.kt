@@ -4,11 +4,9 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.LinearityEvaluator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.utils.getDoubleValues
-import cz.cuni.mff.aspect.utils.sumByFloat
-import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
@@ -22,7 +20,7 @@ import java.util.concurrent.ForkJoinPool
 
 class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
                                              private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: PCLevelEvaluator<Float> = LinearityEvaluator(),
+                                             private val fitnessFunction: PCLevelGeneratorEvaluator<Float> = LinearityEvaluator(),
                                              private val evaluateOnLevelsCount: Int = 5,
                                              private val chunksCount: Int = 35,
                                              private val chartLabel: String = "Chunks level generator evolution",
@@ -70,32 +68,20 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
             .peek {
-                val generation = it.generation.toInt()
-                val bestFitness = it.bestFitness.toDouble()
-                val averageFitness = it.population.asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness}) / it.population.length()
+                val generation = it.generation().toInt()
+                val bestFitness = it.bestFitness().toDouble()
+                val averageFitness = it.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / it.population().length()
                 this.chart.update(generation, bestFitness, averageFitness.toDouble(), 0.0, 0.0)
-                println("new gen: ${it.generation} (best fitness: ${it.bestFitness})")
+                println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()})")
             } .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
-            .bestPhenotype.genotype
+            .bestPhenotype().genotype()
     }
 
     private fun computeFitness(genotype: Genotype<DoubleGene>): Float {
         val genes = genotype.getDoubleValues()
         val levelGenerator = PCLevelGenerator(genes.toList(), this.chunksCount)
 
-        val fitnesses = (0 until this.evaluateOnLevelsCount).map {
-            val agent = this.agentFactory()
-
-            val level = levelGenerator.generate()
-            val chunkMetadata = levelGenerator.lastChunksMetadata
-
-            val marioSimulator = GameSimulator()
-            val gameStatistics = marioSimulator.playMario(agent, level, false)
-
-            this.fitnessFunction(level, chunkMetadata, gameStatistics)
-        }
-
-        return fitnesses.sumByFloat { it }
+        return this.fitnessFunction(levelGenerator, this.agentFactory, this.evaluateOnLevelsCount)
     }
 
     companion object {
@@ -126,15 +112,15 @@ class MarkovChainMutator(
 ) : Alterer<DoubleGene, Float> {
 
     override fun alter(population: Seq<Phenotype<DoubleGene, Float>>, generation: Long): AltererResult<DoubleGene, Float> {
-        val random = RandomRegistry.getRandom()
+        val random = RandomRegistry.random()
 
         val mutationResults: Seq<MutatorResult<Phenotype<DoubleGene, Float>>> = population.map {
-            this.mutate(it.genotype, generation, random)
+            this.mutate(it.genotype(), generation, random)
         }
 
         return AltererResult.of(
-            mutationResults.map {it.result}.asISeq(),
-            mutationResults.stream().mapToInt { it.mutations }.sum()
+            mutationResults.map {it.result()}.asISeq(),
+            mutationResults.stream().mapToInt { it.mutations() }.sum()
         )
     }
 
@@ -144,7 +130,7 @@ class MarkovChainMutator(
 
         // mutate additional probabilities
         for (index in statesCount +  statesCount * statesCount until genes.size) {
-            val oldGene = oldIndividual.get(0, index)
+            val oldGene = oldIndividual.get(0).get(index)
             genes[index] = if (random.nextDouble() < this.additionalProbabilitiesChangeProbability) {
                 mutations++
                 (oldGene.doubleValue() + (random.nextDouble() / 2 - 0.25)).coerceIn(0.0, 1.0)

@@ -7,14 +7,14 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.abs
 
 
-class LinearityEvaluator : PCLevelEvaluator<Float> {
+class LinearityEvaluator : PCSummingEvaluator() {
 
-    override operator fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         var totalHeightChange = 0
         var previousHeight = this.groundHeight(level.tiles[0])
 
-        val startIndex = chunkMetadata.chunks.first().chunk.length
-        val endIndex = level.tiles.size - chunkMetadata.chunks.last().chunk.length
+        val startIndex = levelMetadata.chunks.first().chunk.length
+        val endIndex = level.tiles.size - levelMetadata.chunks.last().chunk.length
 
         for (columnIndex in startIndex .. endIndex) {
             val currentHeight = this.groundHeight(level.tiles[columnIndex])

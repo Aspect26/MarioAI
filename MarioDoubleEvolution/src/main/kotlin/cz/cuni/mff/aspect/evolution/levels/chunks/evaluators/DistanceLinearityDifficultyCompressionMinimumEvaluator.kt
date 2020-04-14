@@ -5,14 +5,14 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.min
 
-class DistanceLinearityDifficultyCompressionMinimumEvaluator : PCLevelEvaluator<Float> {
+class DistanceLinearityDifficultyCompressionMinimumEvaluator : PCSummingEvaluator() {
 
-    override fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
-        val distance = gameStatistic.finalMarioDistance
+    override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
+        val distance = gameStatistics.finalMarioDistance
 
-        val difficultyFactor = DifficultyEvaluator()(level, chunkMetadata, gameStatistic)
-        val linearityFactor = LinearityEvaluator()(level, chunkMetadata, gameStatistic)
-        val compressionFactor = HuffmanCompressionEvaluator()(level, chunkMetadata, gameStatistic)
+        val difficultyFactor = DifficultyEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val linearityFactor = LinearityEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val compressionFactor = HuffmanCompressionEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
 
         val allFactors = listOf(linearityFactor, difficultyFactor, compressionFactor)
         val minFactor = min(allFactors)

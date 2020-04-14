@@ -5,15 +5,15 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.pow
 
-class ChunkRepetitionEvaluator : PCLevelEvaluator<Float> {
+class ChunkRepetitionEvaluator : PCSummingEvaluator() {
 
-    override operator fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         var chunkRepetitions = 0f
         var currentRepetitionCount = 0
 
-        for (chunkIndex in 1 until chunkMetadata.chunks.size) {
-            val previousChunk = chunkMetadata.chunks[chunkIndex - 1].chunk.name
-            val currentChunk = chunkMetadata.chunks[chunkIndex].chunk.name
+        for (chunkIndex in 1 until levelMetadata.chunks.size) {
+            val previousChunk = levelMetadata.chunks[chunkIndex - 1].chunk.name
+            val currentChunk = levelMetadata.chunks[chunkIndex].chunk.name
             if (previousChunk == currentChunk) {
                 currentRepetitionCount++
             } else if (currentRepetitionCount > 0) {

@@ -14,7 +14,7 @@ class HuffmanCompressionEvaluator : PMPLevelEvaluator<Float> {
         val compressionSize = ImageHuffmanCompression(2).getSize(image)
 
         // TODO: konstanta vycucana z prsta...
-        return compressionSize / 15000f
+        return compressionSize / 3000f
     }
 
 }

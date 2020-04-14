@@ -6,10 +6,9 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 
-class PNGCompressionEvaluator :
-    PCLevelEvaluator<Float> {
+class PNGCompressionEvaluator : PCSummingEvaluator() {
 
-    override fun invoke(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         val image = LevelToImageConverter.createMinified(level, noAlpha=true)
         val compressionSize = SmallPNGCompression.getSize(image)
 
