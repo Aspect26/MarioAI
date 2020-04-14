@@ -7,9 +7,9 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 
-class HuffmanCompressionEvaluator : PMPLevelEvaluator<Float> {
+class HuffmanCompressionEvaluator : SummingEvaluator() {
 
-    override operator fun invoke(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistics: GameStatistics): Float {
         val image = LevelToImageConverter.createMinified(level, noAlpha=true)
         val compressionSize = ImageHuffmanCompression(2).getSize(image)
 

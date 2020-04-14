@@ -6,9 +6,9 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.abs
 import kotlin.math.pow
 
-class FeaturesUniformDistributionEvaluator : PMPLevelEvaluator<Float> {
+class FeaturesUniformDistributionEvaluator : SummingEvaluator() {
 
-    override fun invoke(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistics: GameStatistics): Float {
         val avg = (levelMetadata.holesCount + levelMetadata.pipesCount + levelMetadata.billsCount + levelMetadata.boxPlatformsCount +
                 levelMetadata.stoneColumnsCount) / 5f
         return (abs(levelMetadata.holesCount - avg) - 3).coerceAtLeast(0f).pow(2) +

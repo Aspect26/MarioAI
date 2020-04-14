@@ -7,7 +7,7 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.abs
 
 
-class LinearityEvaluator : PCSummingEvaluator() {
+class LinearityEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         var totalHeightChange = 0

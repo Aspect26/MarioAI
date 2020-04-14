@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.min
 
-class DistanceLinearityDifficultyCompressionMinimumEvaluator : PCSummingEvaluator() {
+class DistanceLinearityDifficultyCompressionMinimumEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         val distance = gameStatistics.finalMarioDistance

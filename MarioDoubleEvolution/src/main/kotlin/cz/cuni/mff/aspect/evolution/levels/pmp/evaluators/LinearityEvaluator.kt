@@ -6,9 +6,9 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.abs
 
-class LinearityEvaluator : PMPLevelEvaluator<Float> {
+class LinearityEvaluator : SummingEvaluator() {
 
-    override operator fun invoke(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float =
+    override fun evaluateOne(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistics: GameStatistics): Float =
         this.averageHeightChange(levelMetadata).coerceAtMost(1f)
 
     private fun averageHeightChange(levelMetadata: MarioLevelMetadata): Float {

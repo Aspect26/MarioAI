@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import kotlin.math.pow
 
-class ChunkRepetitionEvaluator : PCSummingEvaluator() {
+class ChunkRepetitionEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
         var chunkRepetitions = 0f

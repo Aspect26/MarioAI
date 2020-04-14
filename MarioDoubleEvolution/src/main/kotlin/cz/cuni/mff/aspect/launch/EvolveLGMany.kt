@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
@@ -21,7 +21,7 @@ fun doManyPMPEvolution() {
     val experimentsName = "pmp_v3/NEATs4l1solver"
     val generationsCount = 100
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitnessFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
+    val fitnessFunction: PMPLevelGeneratorEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(
@@ -100,7 +100,7 @@ class PMPEvolutionLauncher(
     private val agentFactory: () -> IAgent,
     private val populationSize: Int,
     private val generationsCount: Int,
-    private val fitnessFunction: PMPLevelEvaluator<Float>,
+    private val fitnessFunction: PMPLevelGeneratorEvaluator<Float>,
     private val resultLevelsCount: Int,
     private val evaluateOnLevelsCount: Int,
     private val postProcess: Boolean

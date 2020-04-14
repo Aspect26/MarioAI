@@ -4,12 +4,10 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.evolution.utils.AlwaysReevaluatingEvaluator
 import cz.cuni.mff.aspect.evolution.utils.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.utils.getDoubleValues
-import cz.cuni.mff.aspect.utils.sumByFloat
-import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
@@ -22,7 +20,7 @@ class PMPLevelGeneratorEvolution(
     private val generationsCount: Int = 100,
     private val levelLength: Int = 200,
     private val evaluateOnLevelsCount: Int = 5,
-    private val fitnessFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator(),
+    private val fitnessFunction: PMPLevelGeneratorEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator(),
     private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
     private val displayChart: Boolean = true
@@ -81,19 +79,7 @@ class PMPLevelGeneratorEvolution(
         val genes = genotype.getDoubleValues()
         val levelGenerator = PMPLevelGenerator(genes, this.levelLength)
 
-        val fitnesses = (0 until this.evaluateOnLevelsCount).map {
-            val agent = this.agentFactory()
-
-            val level = levelGenerator.generate()
-            val levelMetadata = levelGenerator.lastMetadata
-
-            val marioSimulator = GameSimulator()
-            val gameStatistics = marioSimulator.playMario(agent, level, false)
-
-            this.fitnessFunction(level, levelMetadata, gameStatistics)
-        }
-
-        return fitnesses.sumByFloat { it }
+        return this.fitnessFunction(levelGenerator, this.agentFactory, this.evaluateOnLevelsCount)
     }
 
 }

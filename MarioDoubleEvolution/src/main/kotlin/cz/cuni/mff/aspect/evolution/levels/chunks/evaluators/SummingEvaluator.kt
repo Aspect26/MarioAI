@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.sumByFloat
 
-abstract class PCSummingEvaluator : PCLevelGeneratorEvaluatorBase() {
+abstract class SummingEvaluator : PCLevelGeneratorEvaluatorBase() {
 
     override fun evaluate(
         levels: List<MarioLevel>,

@@ -5,14 +5,14 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.discretize
 
-class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : PMPLevelEvaluator<Float> {
+class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : SummingEvaluator() {
 
-    override fun invoke(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistic: GameStatistics): Float {
-        val distance = gameStatistic.finalMarioDistance
+    override fun evaluateOne(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistics: GameStatistics): Float {
+        val distance = gameStatistics.finalMarioDistance
 
-        val linearityFactor = LinearityEvaluator()(level, levelMetadata, gameStatistic)
-        val difficultyFactor = DifficultyEvaluator()(level, levelMetadata, gameStatistic)
-        val compressionFactor = HuffmanCompressionEvaluator()(level, levelMetadata, gameStatistic)
+        val linearityFactor = LinearityEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val difficultyFactor = DifficultyEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val compressionFactor = HuffmanCompressionEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
 
         val linearityDiscretized = discretize(linearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
