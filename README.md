@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Aspect26/MarioDoubleEvolution.svg?branch=master)](https://travis-ci.com/Aspect26/MarioDoubleEvolution)
+
 # Mario AI and LevelGenerator coevolution
 
 Welcome to my diploma thesis work! Meaningful readme coming soon...
