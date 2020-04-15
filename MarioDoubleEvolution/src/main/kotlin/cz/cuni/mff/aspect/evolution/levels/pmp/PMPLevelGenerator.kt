@@ -13,7 +13,7 @@ import kotlin.math.min
 class PMPLevelGenerator(
     private val probabilities: DoubleArray = DoubleArray(PROBABILITIES_COUNT) {
         when (it) {
-            PI_CHANGE_HEIGHT -> 0.07
+            PI_CHANGE_HEIGHT -> 0.1
             PI_CREATE_HOLE -> 0.05
 
             PI_ENEMY_GOOMBA -> 0.03
@@ -152,19 +152,7 @@ class PMPLevelGenerator(
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
 
             if (shouldBeStairs && canBeStairs) {
-                val nearestHoleIndex = this.nearestHoleOrEnd(levelMetadata, column)
-                val nearestGroundHeightChangeIndex = this.nearestHeightChangeOrEnd(levelMetadata, column)
-                val chosenLength = this.randomInt(3, 6)
-                val maxLength = min(
-                    levelMetadata.horizontalRayUntilObstacle(column, levelMetadata.groundHeight[column] + 1),
-                    min(nearestHoleIndex - column, nearestGroundHeightChangeIndex - column))
-                val stairsLength = min(chosenLength, maxLength)
-
-                if (stairsLength == 1) continue
-
-                for (step in 0 until stairsLength) {
-                    levelMetadata.stoneColumns[column + step] = step + 1
-                }
+                this.addStairs(levelMetadata, column)
             }
 
         }
@@ -180,35 +168,10 @@ class PMPLevelGenerator(
             val shouldBeDoubleBoxes = this.random.nextFloat() < this.probabilities[PI_DOUBLE_BOXES]
 
             if (canBeBoxes && shouldBeBoxes) {
-                val boxesLevel = levelMetadata.groundHeight[column] + 4
-
-                val nearestPipeIndex = this.nearestPipeOrEnd(levelMetadata, column)
-                val nearestBillIndex = this.nearestBillOrEnd(levelMetadata, column)
-
-                val chosenBoxesLength = this.randomInt(2, 7)
-                val maxBoxesLengthAvailable = min(
-                    min(levelMetadata.horizontalRayUntilObstacle(column, boxesLevel - 1), levelMetadata.horizontalRayUntilObstacle(column, boxesLevel - 1) - 1),
-                    min(nearestPipeIndex, nearestBillIndex) - column)
-                val boxesLength = min(chosenBoxesLength, maxBoxesLengthAvailable)
-
-                val type = if (this.random.nextFloat() < 0.5) BoxPlatformType.BRICKS else BoxPlatformType.QUESTION_MARKS
-                val powerUps = mutableListOf<Int>()
-                if (this.random.nextFloat() < probabilities[Companion.PI_POWER_UP])
-                    powerUps.add(this.randomInt(0, boxesLength -1))
-                levelMetadata.boxPlatforms[column] = BoxPlatform(boxesLength, boxesLevel, powerUps, type)
-
-                if (shouldBeDoubleBoxes && chosenBoxesLength > 2) {
-                    val boxesLevel2 = levelMetadata.groundHeight[column] + 8
-                    val chosenBoxesLength2 = this.randomInt(2, chosenBoxesLength - 2)
-                    val maxBoxesLengthAvailable2 = min(levelMetadata.horizontalRayUntilObstacle(column + 1, boxesLevel2 - 1),
-                        levelMetadata.horizontalRayUntilObstacle(column + 1, boxesLevel2 - 1) - 1)
-                    val boxesLength2 = min(chosenBoxesLength2, maxBoxesLengthAvailable2)
-
-                    val type2 = if (this.random.nextFloat() < 0.5) BoxPlatformType.BRICKS else BoxPlatformType.QUESTION_MARKS
-                    val powerUps2 = mutableListOf<Int>()
-                    if (this.random.nextFloat() < probabilities[Companion.PI_POWER_UP])
-                        powerUps2.add(this.randomInt(0, boxesLength2 -1))
-                    levelMetadata.boxPlatforms[column + 1] = BoxPlatform(boxesLength2, boxesLevel2, powerUps2, type2)
+                if (shouldBeDoubleBoxes) {
+                    this.addDoubleBoxPlatform(levelMetadata, column)
+                } else {
+                    this.addBoxPlatform(levelMetadata, column)
                 }
             }
         }
@@ -235,14 +198,52 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun nearestPipeOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
-        for (index in fromColumn until levelMetadata.pipes.size) if (levelMetadata.pipes[index] > 0) return index
-        return levelMetadata.levelLength
+    private fun addStairs(levelMetadata: MarioLevelMetadata, column: Int) {
+        val nearestHoleIndex = this.nearestHoleOrEnd(levelMetadata, column)
+        val nearestGroundHeightChangeIndex = this.nearestHeightChangeOrEnd(levelMetadata, column)
+        val chosenLength = this.randomInt(3, 6)
+
+        val stairsLength = min(chosenLength,
+            min(levelMetadata.horizontalRayUntilObstacle(column, levelMetadata.groundHeight[column] + 1),
+            min(nearestHoleIndex - column, nearestGroundHeightChangeIndex - column)))
+
+        if (stairsLength <= 1) return
+
+        for (step in 0 until stairsLength) {
+            levelMetadata.stoneColumns[column + step] = step + 1
+        }
     }
 
-    private fun nearestBillOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
-        for (index in fromColumn until levelMetadata.bulletBills.size) if (levelMetadata.bulletBills[index] > 0) return index
-        return levelMetadata.levelLength
+    private fun addBoxPlatform(levelMetadata: MarioLevelMetadata, column: Int) {
+        val platformLevel = levelMetadata.groundHeight[column] + 4
+        this.addBoxPlatformAt(levelMetadata, column, platformLevel)
+    }
+
+    private fun addDoubleBoxPlatform(levelMetadata: MarioLevelMetadata, column: Int) {
+        val firstPlatformLevel = levelMetadata.groundHeight[column] + 4
+        val firstPlatform = this.addBoxPlatformAt(levelMetadata, column, firstPlatformLevel) ?: return
+
+        val secondPlatformLevel = levelMetadata.groundHeight[column] + 8
+        this.addBoxPlatformAt(levelMetadata, column, secondPlatformLevel, firstPlatform.length - 2)
+    }
+
+    private fun addBoxPlatformAt(levelMetadata: MarioLevelMetadata, column: Int, platformLevel: Int, maxLength: Int? = null): BoxPlatform? {
+        val chosenPlatformLength: Int = this.randomInt(2, maxLength ?: 7)
+        val maxPlatformLengthAvailable = levelMetadata.horizontalRayUntilObstacle(column, platformLevel - 1) - 1
+        val platformLength = min(chosenPlatformLength, maxPlatformLengthAvailable)
+
+        if (platformLength <= 0) return null
+
+        val type = if (this.random.nextFloat() < 0.5) BoxPlatformType.BRICKS else BoxPlatformType.QUESTION_MARKS
+
+        val powerUps = mutableListOf<Int>()
+        if (this.random.nextFloat() < probabilities[PI_POWER_UP])
+            powerUps.add(this.randomInt(0, platformLength -1))
+
+        val platform = BoxPlatform(platformLength, platformLevel, powerUps, type)
+        levelMetadata.boxPlatforms[column] = platform
+
+        return platform
     }
 
     private fun nearestHoleOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
