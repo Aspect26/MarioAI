@@ -4,10 +4,11 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.io.Serializable
 
 object DeepCopy {
 
-    fun <T> copy(obj: T): T {
+    fun <T : Serializable> copy(obj: T): T {
         val baos = ByteArrayOutputStream()
         val oos = ObjectOutputStream(baos)
         oos.writeObject(obj)
