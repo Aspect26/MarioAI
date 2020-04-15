@@ -14,10 +14,10 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 const val FILE_PATH_LATEST_PMP = "data/latest_pmp_lg.lg"
 
 fun main() {
-    evolvePMP()
+//    evolvePMP()
 //    playLatestPMP()
 //    evaluateLatestPMP()
-//    createDefaultPMP()
+    createDefaultPMP()
 }
 
 fun evolvePMP() {
@@ -27,7 +27,7 @@ fun evolvePMP() {
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 20,
         populationSize = 50,
-        fitnessFunction = DistanceLinearityDifficultyCompressionMinimumEvaluator(),
+        fitnessFunction = AgentHalfPassing(),
         evaluateOnLevelsCount = 10
     )
 

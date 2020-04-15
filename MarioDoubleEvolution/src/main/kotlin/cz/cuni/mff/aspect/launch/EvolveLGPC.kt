@@ -24,8 +24,7 @@ fun evolvePC() {
         populationSize = 50,
         generationsCount = 50,
         evaluateOnLevelsCount = 10,
-        fitnessFunction = DistanceLinearityDifficultyCompressionEvaluator()
-//        fitnessFunction = HuffmanCompressionEvaluator()
+        fitnessFunction = AgentHalfPassing()
     )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)
@@ -47,8 +46,8 @@ fun playLatestPC() {
     for (i in 0..15) {
         val level = levelGenerator.generate()
         val postProcessed = LevelPostProcessor.postProcess(level)
-        val agent = CheaterKeyboardAgent()
-//        val agent = Agents.NEAT.Stage4Level1Solver
+//        val agent = CheaterKeyboardAgent()
+        val agent = Agents.NEAT.Stage4Level1Solver
         LevelVisualiser().display(level)
         val stats = simulator.playMario(agent, postProcessed, true)
     }

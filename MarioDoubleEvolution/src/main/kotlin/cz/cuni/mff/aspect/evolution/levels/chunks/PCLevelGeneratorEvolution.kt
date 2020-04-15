@@ -28,7 +28,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
 ) : LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent
-    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = true)
+    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = false)
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
@@ -54,7 +54,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
 //            AlwaysReevaluatingEvaluator(this::computeFitness, Concurrency.SERIAL_EXECUTOR),
             initialGenotype
         )
-            .optimize(Optimize.MAXIMUM)
+            .optimize(Optimize.MINIMUM)
             .populationSize(this.populationSize)
             .alterers(MarkovChainMutator(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, 0.2, 0.2, 0.2))
             .survivorsSelector(EliteSelector(2))

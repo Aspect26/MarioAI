@@ -27,7 +27,7 @@ class PMPLevelGeneratorEvolution(
 ) : LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent
-    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = true)
+    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = false)
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
@@ -51,7 +51,7 @@ class PMPLevelGeneratorEvolution(
         return Engine.Builder(AlwaysReevaluatingEvaluator(
                 this::computeFitness,
                 ForkJoinPool.commonPool()), initialGenotype)
-            .optimize(Optimize.MAXIMUM)
+            .optimize(Optimize.MINIMUM)
             .populationSize(this.populationSize)
             .alterers(UpdatedGaussianMutator(0.5, 0.6))
             .survivorsSelector(EliteSelector(2))
