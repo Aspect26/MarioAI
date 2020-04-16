@@ -25,11 +25,11 @@ import java.io.Serializable
  * one hidden layer with 5 neurons. The output layer has 4 neurons, corresponding to 4 mario actions (run left / right,
  * jump and special).
  */
-class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
-                          private val receptiveFieldSizeColumn: Int = 3,
-                          private val receptiveFieldRowOffset: Int = 0,
-                          private val receptiveFieldColumnOffset: Int = 1,
-                          private val hiddenLayerSize: Int = 7
+class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
+                          val receptiveFieldSizeColumn: Int = 3,
+                          val receptiveFieldRowOffset: Int = 0,
+                          val receptiveFieldColumnOffset: Int = 1,
+                          val hiddenLayerSize: Int = 7
 ) : ControllerArtificialNetwork,
     Serializable {
 
@@ -71,6 +71,13 @@ class UpdatedAgentNetwork(private val receptiveFieldSizeRow: Int = 3,
         val floatWeights = FloatArray(weights.size) { weights[it].toFloat() }
         val ndArray = NDArray(floatWeights)
         this.network.setParameters(ndArray)
+    }
+
+    fun getNetworkWeights(): DoubleArray {
+        val weights = this.network.params()
+        return DoubleArray(weights.length()) {
+            weights.getDouble(it)
+        }
     }
 
     private fun createNetwork(): MultiLayerNetwork {

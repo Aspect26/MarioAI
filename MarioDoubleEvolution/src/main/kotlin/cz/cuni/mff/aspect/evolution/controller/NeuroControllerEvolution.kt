@@ -3,8 +3,9 @@ package cz.cuni.mff.aspect.evolution.controller
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.mario.controllers.MarioController
+import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import cz.woitee.endlessRunners.evolution.utils.MarioEvaluator
 import io.jenetics.*
@@ -12,6 +13,8 @@ import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.DoubleRange
+import io.jenetics.util.Factory
+import java.lang.IllegalArgumentException
 import java.util.concurrent.ForkJoinPool
 
 
@@ -19,7 +22,7 @@ import java.util.concurrent.ForkJoinPool
  * Implementation of an evolution of ANN agent controller.
  */
 class NeuroControllerEvolution(
-    private val controllerNetwork: ControllerArtificialNetwork,
+    private var controllerNetworkSettings: NetworkSettings? = null,
     private val generationsCount: Long = DEFAULT_GENERATIONS_COUNT,
     private val populationSize: Int = DEFAULT_POPULATION_SIZE,
     private val parallel: Boolean = true,
@@ -27,18 +30,57 @@ class NeuroControllerEvolution(
     private val survivorsSelector: Selector<DoubleGene, Float> = EliteSelector(2),
     private val offspringSelector: Selector<DoubleGene, Float> = TournamentSelector(2),
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
-    chartLabel: String = "NeuroController evolution"
+    private val evaluateOnLevelsCount: Int = 5,
+    private val chartLabel: String = "NeuroController evolution"
 ) : ControllerEvolution {
 
-    private var chart = EvolutionLineChart(chartLabel, hideNegative = true)
+    private lateinit var chart: EvolutionLineChart
     private lateinit var levelGenerator: LevelGenerator
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
+    private var initialAgentNetwork: UpdatedAgentNetwork? = null
 
-    override fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
+    override fun evolve(
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController {
         this.levelGenerator = levelGenerator
         this.fitnessFunction = fitness
         this.objectiveFunction = objective
+
+        return this.doEvolution()
+    }
+
+    override fun continueEvolution(
+        controller: MarioController,
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController {
+        if (controller !is SimpleANNController) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `${SimpleANNController}` instances to continue evolution"
+        )
+
+        if (controller.network !is UpdatedAgentNetwork) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `${SimpleANNController}` with `${UpdatedAgentNetwork}` as its network"
+        )
+
+        this.initialAgentNetwork = controller.network
+        this.levelGenerator = levelGenerator
+        this.fitnessFunction = fitness
+        this.objectiveFunction = objective
+        this.controllerNetworkSettings = this.createNetworkSettings(controller.network)
+
+        return this.doEvolution()
+    }
+
+    fun storeChart(path: String) {
+        this.chart.save(path)
+    }
+
+    private fun doEvolution(): MarioController {
+        this.chart = EvolutionLineChart(this.chartLabel, hideNegative = true)
         this.chart.show()
 
         val genotype = this.createInitialGenotypes()
@@ -49,20 +91,26 @@ class NeuroControllerEvolution(
         println("Best fitness - ${result.bestFitness()}")
 
         val resultGenes = result.bestPhenotype().genotype().getDoubleValues()
-        val controllerNetwork = this.controllerNetwork.newInstance()
+        val controllerNetwork = this.createControllerNetwork()
         controllerNetwork.setNetworkWeights(resultGenes)
-
-        println(resultGenes.contentToString())
 
         return SimpleANNController(controllerNetwork)
     }
 
-    fun storeChart(path: String) {
-        this.chart.save(path)
-    }
+    private fun createInitialGenotypes(): Factory<Genotype<DoubleGene>> {
+        return if (this.initialAgentNetwork == null) {
+            Genotype.of(DoubleChromosome.of(this.weightsRange, this.createControllerNetwork().weightsCount))
+        } else {
+            val initialNetworkWeights = this.initialAgentNetwork!!.getNetworkWeights()
+            val minValue = initialNetworkWeights.min()!!
+            val maxValue = initialNetworkWeights.max()!!
 
-    private fun createInitialGenotypes(): Genotype<DoubleGene> {
-        return Genotype.of(DoubleChromosome.of(this.weightsRange, this.controllerNetwork.weightsCount))
+            Factory {
+                Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(initialNetworkWeights.size) {
+                    DoubleGene.of(initialNetworkWeights[it], DoubleRange.of(minValue, maxValue))
+                }))
+            }
+        }
     }
 
     private fun createEvaluator(): MarioEvaluator<DoubleGene, Float> {
@@ -72,14 +120,14 @@ class NeuroControllerEvolution(
             executor,
             fitnessFunction,
             objectiveFunction,
-            controllerNetwork,
+            this.createControllerNetwork(),
             levelGenerator,
-            5,
-            alwaysEvaluate = false
+            evaluateOnLevelsCount,
+            alwaysEvaluate = true
         )
     }
 
-    private fun createEvolutionEngine(initialGenotype: Genotype<DoubleGene>, evaluator: MarioEvaluator<DoubleGene, Float>): Engine<DoubleGene, Float> {
+    private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>, evaluator: MarioEvaluator<DoubleGene, Float>): Engine<DoubleGene, Float> {
         val engine = Engine.Builder(evaluator, initialGenotype)
                 .optimize(Optimize.MAXIMUM)
                 .populationSize(this.populationSize)
@@ -113,6 +161,32 @@ class NeuroControllerEvolution(
                 println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
+    }
+
+    private fun createNetworkSettings(agentNetwork: UpdatedAgentNetwork): NetworkSettings {
+        return NetworkSettings(
+            agentNetwork.receptiveFieldSizeRow,
+            agentNetwork.receptiveFieldSizeColumn,
+            agentNetwork.receptiveFieldRowOffset,
+            agentNetwork.receptiveFieldColumnOffset,
+            agentNetwork.hiddenLayerSize
+        )
+    }
+
+    private fun createControllerNetwork(): UpdatedAgentNetwork {
+        if (this.controllerNetworkSettings == null) throw UnsupportedOperationException("Controller network settings not specified")
+        val network = UpdatedAgentNetwork(
+            receptiveFieldSizeRow = this.controllerNetworkSettings!!.receptiveFieldSizeRow,
+            receptiveFieldSizeColumn = this.controllerNetworkSettings!!.receptiveFieldSizeColumn,
+            receptiveFieldRowOffset = this.controllerNetworkSettings!!.receptiveFieldRowOffset,
+            receptiveFieldColumnOffset = this.controllerNetworkSettings!!.receptiveFieldColumnOffset,
+            hiddenLayerSize = this.controllerNetworkSettings!!.hiddenLayerSize
+        )
+
+        if (this.initialAgentNetwork != null)
+            network.legacy = this.initialAgentNetwork!!.legacy
+
+        return network
     }
 
     private fun getAverageFitness(evolutionResult: EvolutionResult<DoubleGene, Float>): Float {

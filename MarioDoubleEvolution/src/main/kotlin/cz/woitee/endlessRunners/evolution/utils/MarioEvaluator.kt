@@ -142,12 +142,13 @@ private class PhenotypeEvaluation<G, C> internal constructor(
 
     private fun computeFitnessAndObjective(genotype: Genotype<G>) {
         val networkWeights: DoubleArray = genotype.getDoubleValues()
+//        println(networkWeights.contentToString())
         val controllerNetwork = this.controllerNetwork.newInstance()
         controllerNetwork.setNetworkWeights(networkWeights)
 
         val controller = SimpleANNController(controllerNetwork)
-        val marioSimulator = GameSimulator()
         val levels = Array(this.evaluateOnLevelsCount) { this.levelGenerator.generate() }
+        val marioSimulator = GameSimulator(1000)
         val statistics = marioSimulator.playMario(controller, levels, false)
 
         fitness = fitnessFunction(statistics)

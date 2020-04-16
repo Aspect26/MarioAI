@@ -14,6 +14,22 @@ interface ControllerEvolution {
      *
      * @return the evolved agent controller
      */
-    fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController
+    fun evolve(
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController
+
+    /**
+     * Continue evolution of already evolved controller.
+     *
+     * @return the evolved agent controller
+     */
+    fun continueEvolution(
+        controller: MarioController,
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController
 
 }

@@ -13,7 +13,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 /**
  * A very simple controller which uses simple ANN to control mario agent.
  */
-class SimpleANNController(private var network: ControllerArtificialNetwork) : MarioController {
+class SimpleANNController(val network: ControllerArtificialNetwork) : MarioController {
 
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         return this.network.chooseAction(tiles, entities, mario)
@@ -23,16 +23,16 @@ class SimpleANNController(private var network: ControllerArtificialNetwork) : Ma
 
     fun setLegacy() {
         if (this.network is UpdatedAgentNetwork) {
-            (this.network as UpdatedAgentNetwork).legacy = true
+            this.network.legacy = true
         }
     }
 
     fun setDenseInput() {
         if (this.network is UpdatedAgentNetwork) {
-            (this.network as UpdatedAgentNetwork).denseInput = true
+            this.network.denseInput = true
         }
         else if (this.network is NeatAgentNetwork) {
-            (this.network as NeatAgentNetwork).denseInput = true
+            this.network.denseInput = true
         }
     }
 
