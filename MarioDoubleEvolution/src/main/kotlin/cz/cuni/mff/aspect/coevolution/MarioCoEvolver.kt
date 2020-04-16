@@ -24,8 +24,7 @@ class MarioCoEvolver {
             println(" -- COEVOLUTION GENERATION ${generation + 1} -- ")
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
-            val levels = Array(5) { resultLevelGenerator.generate() }
-            resultController = controllerEvolution.evolve(levels, controllerFitness, MarioGameplayEvaluators::victoriesOnly)
+            resultController = controllerEvolution.evolve(resultLevelGenerator, controllerFitness, MarioGameplayEvaluators::victoriesOnly)
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")
             val agentFactory = { MarioAgent(resultController.copy()) }

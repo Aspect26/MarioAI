@@ -2,14 +2,12 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
-import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.custom.PathWithHolesLevel
-import cz.cuni.mff.aspect.mario.level.original.*
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
@@ -25,7 +23,7 @@ fun main() {
 
 
 fun doManyNEATEvolution() {
-    val learningLevels = TrainingLevelsSet
+    val levelGenerator = LevelGenerators.PCGenerator.all
     val evaluationName = "NEAT - All - 500-100 - fitness distance least actions"
 
     val generationsCount = 500
@@ -35,7 +33,7 @@ fun doManyNEATEvolution() {
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -47,7 +45,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -59,7 +57,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -71,7 +69,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -91,7 +89,7 @@ fun doManyNEATEvolution() {
 
 
 fun doManyNeuroEvolution() {
-    val learningLevels = arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
+    val levelGenerator = LevelGenerators.PCGenerator.all
     val evaluationName = "Newest"
 
     val generationsCount = 50
@@ -103,7 +101,7 @@ fun doManyNeuroEvolution() {
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
@@ -121,7 +119,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
@@ -139,7 +137,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
@@ -157,7 +155,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
-            levels = learningLevels,
+            levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             mutators = mutators,
@@ -186,7 +184,7 @@ interface EvolutionLauncher {
 }
 
 class NeuroEvolutionLauncher(
-    private val levels: Array<MarioLevel>,
+    private val levelGenerator: LevelGenerator,
     private val generationsCount: Int,
     private val populationSize: Int,
     private val receptiveFieldSize: Pair<Int, Int>,
@@ -224,14 +222,14 @@ class NeuroEvolutionLauncher(
             parallel = runParallel
         )
 
-        val resultController = controllerEvolution.evolve(levels, fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(levelGenerator, fitnessFunction, objectiveFunction)
         controllerEvolution.storeChart("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }
 }
 
 class NeatEvolutionLauncher(
-    private val levels: Array<MarioLevel>,
+    private val levelGenerator: LevelGenerator,
     private val generationsCount: Int,
     private val populationSize: Int,
     private val receptiveFieldSize: Pair<Int, Int>,
@@ -252,7 +250,7 @@ class NeatEvolutionLauncher(
             denseInput = denseInput,
             chartName = label)
 
-        val resultController = controllerEvolution.evolve(levels, fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(levelGenerator, fitnessFunction, objectiveFunction)
         controllerEvolution.storeChart("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }
