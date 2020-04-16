@@ -19,10 +19,11 @@ fun evolveNeatAI() {
     val controllerEvolution: ControllerEvolution = NeatControllerEvolution(
         networkSettings,
         denseInput = false,
-        generationsCount = 500,
+        generationsCount = 50,
         populationSize = 100,
+        evolveOnLevelsCount = 5,
         chartName = "NEAT Evolution S4L1")
-    val levelGenerator = LevelGenerators.PMPGenerator.all
+    val levelGenerator = LevelGenerators.PCGenerator.halfSolving
     val resultController = controllerEvolution.evolve(levelGenerator, MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
 
     val marioSimulator = GameSimulator()

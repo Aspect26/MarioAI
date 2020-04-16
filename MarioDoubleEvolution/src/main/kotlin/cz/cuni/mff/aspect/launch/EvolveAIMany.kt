@@ -1,13 +1,12 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
@@ -98,9 +97,11 @@ fun doManyNeuroEvolution() {
     val mutators = arrayOf<Alterer<DoubleGene, Float>>(GaussianMutator(0.45))
     val hiddenLayerSize = 5
     val offspringsSelector = TournamentSelector<DoubleGene, Float>(2)
+    val networkSettings = NetworkSettings(5, 5, 0, 2, hiddenLayerSize)
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
+            networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
@@ -109,9 +110,6 @@ fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
-            receptiveFieldOffset = Pair(0, 2),
-            hiddenLayerSize = hiddenLayerSize,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 1",
             runParallel = true,
@@ -119,6 +117,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
+            networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
@@ -127,9 +126,6 @@ fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
-            receptiveFieldOffset = Pair(0, 2),
-            hiddenLayerSize = hiddenLayerSize,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 2",
             runParallel = true,
@@ -137,6 +133,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
+            networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
@@ -145,9 +142,6 @@ fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
-            receptiveFieldOffset = Pair(0, 2),
-            hiddenLayerSize = hiddenLayerSize,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 3",
             runParallel = true,
@@ -155,6 +149,7 @@ fun doManyNeuroEvolution() {
         ),
 
         NeuroEvolutionLauncher(
+            networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
@@ -163,9 +158,6 @@ fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
-            receptiveFieldSize = Pair(5, 5),
-            receptiveFieldOffset = Pair(0, 2),
-            hiddenLayerSize = hiddenLayerSize,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 4",
             runParallel = true,
@@ -184,12 +176,10 @@ interface EvolutionLauncher {
 }
 
 class NeuroEvolutionLauncher(
+    private val networkSettings: NetworkSettings,
     private val levelGenerator: LevelGenerator,
     private val generationsCount: Int,
     private val populationSize: Int,
-    private val receptiveFieldSize: Pair<Int, Int>,
-    private val receptiveFieldOffset: Pair<Int, Int>,
-    private val hiddenLayerSize: Int,
     private val label: String,
     private val fitnessFunction: MarioGameplayEvaluator<Float>,
     private val objectiveFunction: MarioGameplayEvaluator<Float>,
@@ -202,16 +192,8 @@ class NeuroEvolutionLauncher(
 ) : EvolutionLauncher {
 
     override fun run() {
-        val controllerANN = UpdatedAgentNetwork(
-            receptiveFieldSize.first,
-            receptiveFieldSize.second,
-            receptiveFieldOffset.first,
-            receptiveFieldOffset.second,
-            hiddenLayerSize
-        )
-
         val controllerEvolution = NeuroControllerEvolution(
-            controllerANN,
+            networkSettings,
             generationsCount.toLong(),
             populationSize,
             chartLabel = label,

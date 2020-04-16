@@ -19,6 +19,7 @@ class NeatControllerEvolution(
     private val networkSettings: NetworkSettings,
     private var generationsCount: Int = 200,
     private val populationSize: Int = 150,
+    private val evolveOnLevelsCount: Int = 5,
     private val denseInput: Boolean = true,
     private val chartName: String = "NEAT Evolution",
     private val displayChart: Boolean = true
@@ -34,8 +35,8 @@ class NeatControllerEvolution(
                                          private val networkSettings: NetworkSettings,
                                          private val fitnessFunction: MarioGameplayEvaluator<Float>,
                                          private val objectiveFunction: MarioGameplayEvaluator<Float>,
-                                         private val denseInput: Boolean = true,
-                                         private val levelsCount: Int = 5) : Environment {
+                                         private val levelsCount: Int = 5,
+                                         private val denseInput: Boolean = true) : Environment {
 
         private lateinit var lastEvaluationFitnesses: FloatArray
         private lateinit var lastEvaluationObjectives: FloatArray
@@ -81,8 +82,7 @@ class NeatControllerEvolution(
 
     override fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
         val startTime = System.currentTimeMillis()
-        // TODO: levelsCount as parameter to the evolution
-        val evolution = ControllerEvolutionEnvironment(levelGenerator, this.networkSettings, fitness, objective, this.denseInput, levelsCount = 5)
+        val evolution = ControllerEvolutionEnvironment(levelGenerator, this.networkSettings, fitness, objective, this.evolveOnLevelsCount, this.denseInput)
         val networkInputSize = NeatAgentNetwork(this.networkSettings, Genome(0,0)).inputLayerSize
         val networkOutputSize = 4
         val pool = Pool(this.populationSize)
@@ -116,6 +116,15 @@ class NeatControllerEvolution(
         val network = NeatAgentNetwork(this.networkSettings, this.topGenome)
 
         return SimpleANNController(network)
+    }
+
+    override fun continueEvolution(
+        controller: MarioController,
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController {
+        TODO("Not yet implemented")
     }
 
     fun storeChart(path: String) = this.chart.save(path)

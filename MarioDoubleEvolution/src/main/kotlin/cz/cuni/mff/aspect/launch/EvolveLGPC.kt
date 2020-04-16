@@ -18,11 +18,11 @@ fun main() {
 }
 
 fun evolvePC() {
-    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
+    val agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver }
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 50,
+        generationsCount = 20,
         evaluateOnLevelsCount = 10,
         fitnessFunction = AgentHalfPassing()
     )
@@ -47,7 +47,7 @@ fun playLatestPC() {
         val level = levelGenerator.generate()
         val postProcessed = LevelPostProcessor.postProcess(level)
 //        val agent = CheaterKeyboardAgent()
-        val agent = Agents.NEAT.Stage4Level1Solver
+        val agent = Agents.NeuroEvolution.Stage4Level1Solver
         LevelVisualiser().display(level)
         val stats = simulator.playMario(agent, postProcessed, true)
     }

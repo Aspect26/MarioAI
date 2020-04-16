@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
+import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -11,25 +12,20 @@ import kotlin.system.exitProcess
 
 
 fun main() {
-//    aiPlayLevel()
-    neatAiPlayLevel()
-    exitProcess(0)
+    aiPlayLevel()
+//    neatAiPlayLevel()
 }
 
 
 fun aiPlayLevel() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    //val agentController = ObjectStorage.load("experiments/Newest/NeuroEvolution, experiment 1_ai.ai") as SimpleANNController
-    // agentController.setLegacy()
-    //val agent = MarioAgent(agentController)
-
-//    val levels = TrainingLevelsSet
-//    val levels = listOf<MarioLevel>(OnlyPathLevel) + arrayOf<MarioLevel>(*Stage4Level1Split.levels) + PathWithHolesLevel
-    val levels = listOf<MarioLevel>(LevelStorage.loadLevel("current.lvl"))
+    val levelGenerator = LevelGenerators.PCGenerator.halfSolving
 
     val gameSimulator = GameSimulator(1400)
-    val statistics = levels.map { gameSimulator.playMario(agent, it, true) }
-    print(statistics.sumBy { if (it.levelFinished) 1 else 0 })
+    val stats = Array(10) { levelGenerator.generate() }.map {
+        gameSimulator.playMario(agent, it, false)
+    }
+    println(stats.sumBy { if (it.levelFinished) 1 else 0 })
 }
 
 
