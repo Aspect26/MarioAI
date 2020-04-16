@@ -1,14 +1,10 @@
 package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.results.Agents
-import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.storage.LevelStorage
-import cz.cuni.mff.aspect.storage.ObjectStorage
-import kotlin.system.exitProcess
 
 
 fun main() {
@@ -19,7 +15,7 @@ fun main() {
 
 fun aiPlayLevel() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolving
+    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
 
     val gameSimulator = GameSimulator(1400)
     val stats = Array(10) { levelGenerator.generate() }.map {

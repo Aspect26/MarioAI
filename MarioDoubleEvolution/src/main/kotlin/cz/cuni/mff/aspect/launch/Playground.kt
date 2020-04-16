@@ -9,7 +9,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 
 fun main() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolving
+    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
 
     val originalNetwork = (((agent as MarioAgent).controller as SimpleANNController).network as UpdatedAgentNetwork)
     val weights = originalNetwork.getNetworkWeights()

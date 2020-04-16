@@ -14,7 +14,8 @@ object LevelGenerators {
         val min = ObjectStorage.load("data/level-generators/pc_min.lg") as LevelGenerator
         val allDiscretized = ObjectStorage.load("data/level-generators/pc_all_discretized.lg") as LevelGenerator
 
-        val halfSolving = ObjectStorage.load("data/level-generators/pc_50.lg") as LevelGenerator
+        val halfSolvingNE = ObjectStorage.load("data/level-generators/pc_50_ne.lg") as LevelGenerator
+        val halfSolvingNEAT = ObjectStorage.load("data/level-generators/pc_50_neat.lg") as LevelGenerator
 
     }
 

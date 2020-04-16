@@ -27,6 +27,18 @@ public class Pool {
         return species;
     }
 
+    // NOTE: added by Julius Flimmel
+    public void initializePool(ArrayList<Genome> genomes) {
+        if (genomes.size() != this.populationSize) {
+            throw new IllegalArgumentException("The genmoes size must be the same as population size");
+        }
+
+        for (int i = 0; i < this.populationSize; i++) {
+            addToSpecies(genomes.get(i));
+            genomes.add(genomes.get(i));
+        }
+    }
+
     public ArrayList<Genome> initializePool(int inputsCount, int outputsCount) {
 
         ArrayList<Genome> genomes = new ArrayList<>();

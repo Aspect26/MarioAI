@@ -12,13 +12,13 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
-    playLatestPC()
+    evolvePC()
+//    playLatestPC()
 //    createDefaultPC()
 }
 
 fun evolvePC() {
-    val agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver }
+    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
