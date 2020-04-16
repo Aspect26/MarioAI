@@ -14,6 +14,8 @@ object LevelGenerators {
         val min = ObjectStorage.load("data/level-generators/pc_min.lg") as LevelGenerator
         val allDiscretized = ObjectStorage.load("data/level-generators/pc_all_discretized.lg") as LevelGenerator
 
+        val halfSolving = ObjectStorage.load("data/level-generators/pc_50.lg") as LevelGenerator
+
     }
 
     object PMPGenerator {
@@ -25,6 +27,8 @@ object LevelGenerators {
         val min = ObjectStorage.load("data/level-generators/pmp_min.lg") as LevelGenerator
         val allDiscretized = ObjectStorage.load("data/level-generators/pmp_all_discretized.lg") as LevelGenerator
         val lol = ObjectStorage.load("data/level-generators/pmp_lol.lg") as LevelGenerator
+
+        val halfSolving = ObjectStorage.load("data/level-generators/pmp_50.lg") as LevelGenerator
 
     }
 }

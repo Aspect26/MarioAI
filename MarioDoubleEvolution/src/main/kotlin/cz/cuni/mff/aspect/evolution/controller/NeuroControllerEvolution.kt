@@ -1,10 +1,10 @@
 package cz.cuni.mff.aspect.evolution.controller
 
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
-import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import cz.woitee.endlessRunners.evolution.utils.MarioEvaluator
 import io.jenetics.*
@@ -31,12 +31,12 @@ class NeuroControllerEvolution(
 ) : ControllerEvolution {
 
     private var chart = EvolutionLineChart(chartLabel, hideNegative = true)
-    private lateinit var levels: Array<MarioLevel>
+    private lateinit var levelGenerator: LevelGenerator
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
 
-    override fun evolve(levels: Array<MarioLevel>, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
-        this.levels = levels
+    override fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
+        this.levelGenerator = levelGenerator
         this.fitnessFunction = fitness
         this.objectiveFunction = objective
         this.chart.show()
@@ -46,9 +46,9 @@ class NeuroControllerEvolution(
         val engine = this.createEvolutionEngine(genotype, evaluator)
         val result = this.doEvolution(engine, evaluator)
 
-        println("Best fitness - ${result.bestFitness}")
+        println("Best fitness - ${result.bestFitness()}")
 
-        val resultGenes = result.bestPhenotype.genotype.getDoubleValues()
+        val resultGenes = result.bestPhenotype().genotype().getDoubleValues()
         val controllerNetwork = this.controllerNetwork.newInstance()
         controllerNetwork.setNetworkWeights(resultGenes)
 
@@ -73,7 +73,8 @@ class NeuroControllerEvolution(
             fitnessFunction,
             objectiveFunction,
             controllerNetwork,
-            levels,
+            levelGenerator,
+            5,
             alwaysEvaluate = false
         )
     }
@@ -103,19 +104,19 @@ class NeuroControllerEvolution(
         return evolutionEngine.stream()
             .limit(this.generationsCount)
             .peek {
-                val generation = it.generation.toInt()
-                val bestFitness = it.bestFitness.toDouble()
+                val generation = it.generation().toInt()
+                val bestFitness = it.bestFitness().toDouble()
                 val averageFitness = this.getAverageFitness(it).toDouble()
                 val maxObjective = this.getBestObjectiveValue(evaluator).toDouble()
                 val averageObjective = this.getAverageObjectiveValue(evaluator).toDouble()
                 this.chart.update(generation, bestFitness, averageFitness, maxObjective, averageObjective)
-                println("new gen: ${it.generation} (best fitness: ${it.bestFitness}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
+                println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
     }
 
     private fun getAverageFitness(evolutionResult: EvolutionResult<DoubleGene, Float>): Float {
-        return evolutionResult.population.asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness}) / evolutionResult.population.length()
+        return evolutionResult.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / evolutionResult.population().length()
     }
 
     private fun getBestObjectiveValue(evaluator: MarioEvaluator<DoubleGene, Float>): Float {

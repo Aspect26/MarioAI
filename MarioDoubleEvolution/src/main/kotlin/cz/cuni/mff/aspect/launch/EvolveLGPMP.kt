@@ -14,10 +14,10 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 const val FILE_PATH_LATEST_PMP = "data/latest_pmp_lg.lg"
 
 fun main() {
-//    evolvePMP()
+    evolvePMP()
 //    playLatestPMP()
 //    evaluateLatestPMP()
-    createDefaultPMP()
+//    createDefaultPMP()
 }
 
 fun evolvePMP() {
@@ -25,7 +25,7 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 20,
+        generationsCount = 40,
         populationSize = 50,
         fitnessFunction = AgentHalfPassing(),
         evaluateOnLevelsCount = 10

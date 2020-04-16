@@ -1,11 +1,11 @@
 package cz.woitee.endlessRunners.evolution.utils
 
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
-import cz.cuni.mff.aspect.utils.getDoubleValues
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
-import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.utils.getDoubleValues
 import io.jenetics.Genotype
 import io.jenetics.NumericGene
 import io.jenetics.Phenotype
@@ -33,7 +33,8 @@ class MarioEvaluator<G, C>(
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
     private val controllerNetwork: ControllerArtificialNetwork,
-    private val levels: Array<MarioLevel>,
+    private val levelGenerator: LevelGenerator,
+    private val evaluateOnLevelsCount: Int,
     private val alwaysEvaluate: Boolean = false,
     private val seed: Long? = null
 ) : Evaluator<G, C>
@@ -50,7 +51,7 @@ class MarioEvaluator<G, C>(
     override fun eval(population: Seq<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         seedMap.clear()
         population.forEach {
-            val genotypeId = System.identityHashCode(it.genotype)
+            val genotypeId = System.identityHashCode(it.genotype())
             seedMap[genotypeId] = random.nextLong()
         }
 
@@ -84,7 +85,7 @@ class MarioEvaluator<G, C>(
 
     private fun evaluate(phenotypes: Stream<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         val phenotypeRunnables = phenotypes
-            .map { pt -> PhenotypeEvaluation(pt, fitnessFunction, objectiveFunction, controllerNetwork, levels) }
+            .map { pt -> PhenotypeEvaluation(pt, fitnessFunction, objectiveFunction, controllerNetwork, levelGenerator, evaluateOnLevelsCount) }
             .collect(ISeq.toISeq())
 
         val concurrency = Concurrency.with(executor)
@@ -94,7 +95,7 @@ class MarioEvaluator<G, C>(
         val newPhenotypes = phenotypeRunnables.map { it.phenotype() }
         val objectives = hashMapOf<Int, C>()
         phenotypeRunnables.forEach {
-            val genotypeHash = System.identityHashCode(it.phenotype().genotype)
+            val genotypeHash = System.identityHashCode(it.phenotype().genotype())
             val objectiveValue = it.objective
             objectives[genotypeHash] = objectiveValue
         }
@@ -126,7 +127,8 @@ private class PhenotypeEvaluation<G, C> internal constructor(
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
     private val controllerNetwork: ControllerArtificialNetwork,
-    private val levels: Array<MarioLevel>
+    private val levelGenerator: LevelGenerator,
+    private val evaluateOnLevelsCount: Int
 ) : Runnable
         where G : NumericGene<*, G>,
               C : Comparable<C>,
@@ -135,7 +137,7 @@ private class PhenotypeEvaluation<G, C> internal constructor(
     private lateinit var fitness: C
 
     override fun run() {
-        this.computeFitnessAndObjective(_phenotype.genotype)
+        this.computeFitnessAndObjective(_phenotype.genotype())
     }
 
     private fun computeFitnessAndObjective(genotype: Genotype<G>) {
@@ -145,8 +147,8 @@ private class PhenotypeEvaluation<G, C> internal constructor(
 
         val controller = SimpleANNController(controllerNetwork)
         val marioSimulator = GameSimulator()
-        // TODO: levelsCount as parameter
-        val statistics = marioSimulator.playRandomLevels(controller, levels, 999999, false)
+        val levels = Array(this.evaluateOnLevelsCount) { this.levelGenerator.generate() }
+        val statistics = marioSimulator.playMario(controller, levels, false)
 
         fitness = fitnessFunction(statistics)
         objective = objectiveFunction(statistics)

@@ -3,12 +3,12 @@ package cz.cuni.mff.aspect.evolution.controller
 import com.evo.NEAT.Environment
 import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
-import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -30,12 +30,12 @@ class NeatControllerEvolution(
         hideNegative = true
     )
 
-    class ControllerEvolutionEnvironment(private val levels: Array<MarioLevel>,
+    class ControllerEvolutionEnvironment(private val levelGenerator: LevelGenerator,
                                          private val networkSettings: NetworkSettings,
                                          private val fitnessFunction: MarioGameplayEvaluator<Float>,
                                          private val objectiveFunction: MarioGameplayEvaluator<Float>,
                                          private val denseInput: Boolean = true,
-                                         private val levelsCount: Int = levels.size) : Environment {
+                                         private val levelsCount: Int = 5) : Environment {
 
         private lateinit var lastEvaluationFitnesses: FloatArray
         private lateinit var lastEvaluationObjectives: FloatArray
@@ -53,7 +53,8 @@ class NeatControllerEvolution(
                 }
 
                 val marioSimulator = GameSimulator()
-                val statistics = marioSimulator.playRandomLevels(controller, this.levels, this.levelsCount, false)
+                val levels = Array(this.levelsCount) { this.levelGenerator.generate() }
+                val statistics = marioSimulator.playRandomLevels(controller, levels, this.levelsCount, false)
 
                 val fitnessValue = this.fitnessFunction(statistics)
                 val objectiveValue = this.objectiveFunction(statistics)
@@ -78,10 +79,10 @@ class NeatControllerEvolution(
             this.lastEvaluationObjectives.fold(Float.MIN_VALUE, { accumulator, objectiveValue -> max(accumulator, objectiveValue) })
     }
 
-    override fun evolve(levels: Array<MarioLevel>, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
+    override fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
         val startTime = System.currentTimeMillis()
         // TODO: levelsCount as parameter to the evolution
-        val evolution = ControllerEvolutionEnvironment(levels, this.networkSettings, fitness, objective, this.denseInput)
+        val evolution = ControllerEvolutionEnvironment(levelGenerator, this.networkSettings, fitness, objective, this.denseInput, levelsCount = 5)
         val networkInputSize = NeatAgentNetwork(this.networkSettings, Genome(0,0)).inputLayerSize
         val networkOutputSize = 4
         val pool = Pool(this.populationSize)
