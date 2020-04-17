@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -17,5 +18,7 @@ class FeaturesUniformDistributionEvaluator : SummingEvaluator() {
                 (abs(levelMetadata.boxPlatformsCount - avg) - 3).coerceAtLeast(0f).pow(2) +
                 (abs(levelMetadata.stoneColumnsCount * avg) - 3).coerceAtLeast(0f).pow(2)
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

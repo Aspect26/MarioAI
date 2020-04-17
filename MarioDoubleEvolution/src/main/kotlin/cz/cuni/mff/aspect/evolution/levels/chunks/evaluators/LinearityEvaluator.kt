@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 import kotlin.math.abs
 
 
@@ -35,5 +36,7 @@ class LinearityEvaluator : SummingEvaluator() {
 
         return tilesColumn.size
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

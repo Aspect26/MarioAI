@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCo
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
+import io.jenetics.Optimize
 
 class HuffmanCompressionEvaluator : SummingEvaluator() {
 
@@ -15,5 +16,7 @@ class HuffmanCompressionEvaluator : SummingEvaluator() {
         // TODO: konstanta vycucana z prsta...
         return compressionSize / 2400f
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

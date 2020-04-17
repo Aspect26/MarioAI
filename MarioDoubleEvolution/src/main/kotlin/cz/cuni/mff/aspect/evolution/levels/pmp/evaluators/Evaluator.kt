@@ -6,8 +6,17 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 
-typealias PMPLevelGeneratorEvaluator<F> = (levelGenerator: PMPLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int) -> F
+
+interface PMPLevelGeneratorEvaluator<F> {
+
+    operator fun invoke(levelGenerator: PMPLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): F
+
+    val optimize: Optimize
+
+}
+
 
 abstract class PMPLevelGeneratorEvaluatorBase : PMPLevelGeneratorEvaluator<Float> {
 

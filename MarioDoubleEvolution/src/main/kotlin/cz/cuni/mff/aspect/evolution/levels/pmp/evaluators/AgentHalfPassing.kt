@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 import kotlin.math.abs
 
 class AgentHalfPassing : PMPLevelGeneratorEvaluatorBase() {
@@ -18,5 +19,7 @@ class AgentHalfPassing : PMPLevelGeneratorEvaluatorBase() {
         val wonLostDifference = abs(wonCount - lostCount)
         return wonLostDifference.toFloat()
     }
+
+    override val optimize: Optimize get() = Optimize.MINIMUM
 
 }

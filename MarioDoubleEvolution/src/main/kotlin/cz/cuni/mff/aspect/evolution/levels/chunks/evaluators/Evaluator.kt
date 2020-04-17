@@ -6,12 +6,19 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 
-typealias PCLevelGeneratorEvaluator<F> = (levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int) -> F
+interface PCLevelGeneratorEvaluator<F> {
+
+    operator fun invoke(levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): F
+
+    val optimize: Optimize
+
+}
 
 abstract class PCLevelGeneratorEvaluatorBase : PCLevelGeneratorEvaluator<Float> {
 
-    override fun invoke(levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): Float {
+    override operator fun invoke(levelGenerator: PCLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): Float {
         val levels: MutableList<MarioLevel> = mutableListOf()
         val metadata: MutableList<ChunksLevelMetadata> = mutableListOf()
         val gameStatistics: MutableList<GameStatistics> = mutableListOf()

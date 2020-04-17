@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.discretize
+import io.jenetics.Optimize
 
 class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : SummingEvaluator() {
 
@@ -20,5 +21,7 @@ class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : SummingEvalua
 
         return distance * (1 + linearityDiscretized + difficultyDiscretized + compressionDiscretized)
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

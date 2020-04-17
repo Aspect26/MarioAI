@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 import kotlin.math.abs
 
 class LinearityEvaluator : SummingEvaluator() {
@@ -19,5 +20,7 @@ class LinearityEvaluator : SummingEvaluator() {
 
         return totalHeightChange.toFloat() / (levelMetadata.groundHeight.size - 2 * PMPLevelGenerator.SAFE_ZONE_LENGTH)
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

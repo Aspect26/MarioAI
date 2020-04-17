@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.SmallPNGCompre
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
+import io.jenetics.Optimize
 
 class PNGCompressionEvaluator : SummingEvaluator() {
 
@@ -15,5 +16,7 @@ class PNGCompressionEvaluator : SummingEvaluator() {
         // TODO: konstanta vycucana z prsta...
         return compressionSize / 3200f
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

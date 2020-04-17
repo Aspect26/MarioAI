@@ -54,7 +54,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
 //            AlwaysReevaluatingEvaluator(this::computeFitness, Concurrency.SERIAL_EXECUTOR),
             initialGenotype
         )
-            .optimize(Optimize.MINIMUM)
+            .optimize(this.fitnessFunction.optimize)
             .populationSize(this.populationSize)
             .alterers(MarkovChainMutator(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, 0.2, 0.2, 0.2))
             .survivorsSelector(EliteSelector(2))

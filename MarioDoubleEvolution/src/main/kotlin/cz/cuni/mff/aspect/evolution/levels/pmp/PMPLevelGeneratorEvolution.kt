@@ -51,7 +51,7 @@ class PMPLevelGeneratorEvolution(
         return Engine.Builder(AlwaysReevaluatingEvaluator(
                 this::computeFitness,
                 ForkJoinPool.commonPool()), initialGenotype)
-            .optimize(Optimize.MINIMUM)
+            .optimize(this.fitnessFunction.optimize)
             .populationSize(this.populationSize)
             .alterers(UpdatedGaussianMutator(0.5, 0.6))
             .survivorsSelector(EliteSelector(2))

@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 import kotlin.math.pow
 
 class ChunkRepetitionEvaluator : SummingEvaluator() {
@@ -30,5 +31,7 @@ class ChunkRepetitionEvaluator : SummingEvaluator() {
 
         return if (chunkRepetitions > 0) (1 / chunkRepetitions) else 1f
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 
 class ChunksDiversityEvaluator : SummingEvaluator() {
 
@@ -11,5 +12,7 @@ class ChunksDiversityEvaluator : SummingEvaluator() {
         val differentChunksUsed = levelMetadata.chunks.map { it.chunk.name }.distinct().size
         return differentChunksUsed.toFloat() / PCLevelGenerator.DEFAULT_CHUNK_TYPES_COUNT
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

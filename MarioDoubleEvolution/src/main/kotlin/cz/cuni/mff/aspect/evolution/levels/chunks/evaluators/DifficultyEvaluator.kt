@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.evaluators.DifficultyEvaluator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import io.jenetics.Optimize
 
 class DifficultyEvaluator : SummingEvaluator() {
 
@@ -11,5 +12,7 @@ class DifficultyEvaluator : SummingEvaluator() {
         val levelLength = levelMetadata.chunks.subList(1, levelMetadata.chunks.size - 1).map { it.chunk.length }.sum()
         return (DifficultyEvaluator()(level, gameStatistics) / (levelLength)).coerceAtMost(1f)
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }

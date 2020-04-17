@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.min
+import io.jenetics.Optimize
 
 class DistanceLinearityDifficultyCompressionMinimumEvaluator : SummingEvaluator() {
 
@@ -19,5 +20,7 @@ class DistanceLinearityDifficultyCompressionMinimumEvaluator : SummingEvaluator(
 
         return distance * (1 + minFactor)
     }
+
+    override val optimize: Optimize get() = Optimize.MAXIMUM
 
 }
