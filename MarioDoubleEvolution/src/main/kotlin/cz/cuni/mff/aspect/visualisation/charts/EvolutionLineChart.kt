@@ -7,11 +7,11 @@ class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int
     private val lineChart = LineChart(label, "Generations", "Fitness")
 
     private val data: List<Triple<String, Color, MutableList<Pair<Double, Double>>>> = listOf(
-        Triple("Max fitness", Color(255, 0, 0), mutableListOf(Pair(0.0, 0.0))),
-        Triple("Average fitness", Color(255, 113, 96), mutableListOf(Pair(0.0, 0.0))),
+        Triple("Max fitness", Color(255, 0, 0), mutableListOf()),
+        Triple("Average fitness", Color(255, 113, 96), mutableListOf()),
 
-        Triple("Max objective value", Color(0, 0, 255), mutableListOf(Pair(0.0, 0.0))),
-        Triple("Average objective value", Color(78, 147, 255), mutableListOf(Pair(0.0, 0.0)))
+        Triple("Max objective value", Color(0, 0, 255), mutableListOf()),
+        Triple("Average objective value", Color(78, 147, 255), mutableListOf())
     )
 
     fun show() {
