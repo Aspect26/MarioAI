@@ -10,7 +10,7 @@ import cz.cuni.mff.aspect.utils.DeepCopy
 import java.io.*
 
 
-class NeatAgentNetwork(private val networkSettings: NetworkSettings, private val genome: Genome) : ControllerArtificialNetwork, Serializable {
+class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome) : ControllerArtificialNetwork, Serializable {
 
     var denseInput: Boolean = false
 

@@ -9,8 +9,9 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
+import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
-import java.util.*
+import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
@@ -80,20 +81,61 @@ class NeatControllerEvolution(
             this.lastEvaluationObjectives.fold(Float.MIN_VALUE, { accumulator, objectiveValue -> max(accumulator, objectiveValue) })
     }
 
-    override fun evolve(levelGenerator: LevelGenerator, fitness: MarioGameplayEvaluator<Float>, objective: MarioGameplayEvaluator<Float>): MarioController {
-        val startTime = System.currentTimeMillis()
-        val evolution = ControllerEvolutionEnvironment(levelGenerator, this.networkSettings, fitness, objective, this.evolveOnLevelsCount, this.denseInput)
-        val networkInputSize = NeatAgentNetwork(this.networkSettings, Genome(0,0)).inputLayerSize
+    override fun evolve(
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController {
+        val networkInputSize = NeatAgentNetwork(this.networkSettings, Genome(0, 0)).inputLayerSize
         val networkOutputSize = 4
-        val pool = Pool(this.populationSize)
 
+        val pool = Pool(this.populationSize)
         pool.initializePool(networkInputSize, networkOutputSize)
+
+        return this.doEvolution(levelGenerator, fitness, objective, pool, this.networkSettings, this.denseInput)
+    }
+
+    override fun continueEvolution(
+        controller: MarioController,
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>
+    ): MarioController {
+        if (controller !is SimpleANNController) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `$SimpleANNController` instances to continue evolution"
+        )
+        if (controller.network !is NeatAgentNetwork) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `$SimpleANNController` with `$NeatAgentNetwork` as its network"
+        )
+
+        val controllerGenome = controller.network.genome
+
+        val genomes: ArrayList<Genome> = ArrayList(this.populationSize)
+        repeat((0 until this.populationSize).count()) { genomes.add(DeepCopy.copy(controllerGenome)) }
+
+        val pool = Pool(this.populationSize)
+        pool.initializePool(genomes)
+
+        return this.doEvolution(levelGenerator, fitness, objective, pool, controller.network.networkSettings, controller.network.denseInput)
+    }
+
+    private fun doEvolution(
+        levelGenerator: LevelGenerator,
+        fitness: MarioGameplayEvaluator<Float>,
+        objective: MarioGameplayEvaluator<Float>,
+        genotypePool: Pool,
+        networkSettings: NetworkSettings,
+        denseInput: Boolean
+    ): MarioController {
+
+        val evolution = ControllerEvolutionEnvironment(levelGenerator, networkSettings, fitness, objective, this.evolveOnLevelsCount, denseInput)
+
         if (this.displayChart) this.chart.show()
 
         var generation = 1
-
+        val startTime = System.currentTimeMillis()
         while (generation < this.generationsCount) {
-            pool.evaluateFitness(evolution)
+            genotypePool.evaluateFitness(evolution)
 
             val averageFitness = evolution.getAverageFitnessFromLastGeneration()
             val maxFitness = evolution.getMaxFitnessFromLastGeneration()
@@ -108,23 +150,14 @@ class NeatControllerEvolution(
             )
             println("($timeString) Neat gen: $generation: Fitness - Max: $maxFitness, Avg: $averageFitness")
 
-            pool.breedNewGeneration()
+            genotypePool.breedNewGeneration()
             generation++
         }
 
-        this.topGenome = pool.topGenome
-        val network = NeatAgentNetwork(this.networkSettings, this.topGenome)
+        this.topGenome = genotypePool.topGenome
+        val network = NeatAgentNetwork(networkSettings, this.topGenome)
 
         return SimpleANNController(network)
-    }
-
-    override fun continueEvolution(
-        controller: MarioController,
-        levelGenerator: LevelGenerator,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>
-    ): MarioController {
-        TODO("Not yet implemented")
     }
 
     fun storeChart(path: String) = this.chart.save(path)
