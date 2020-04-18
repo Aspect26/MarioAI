@@ -97,7 +97,8 @@ class PCLevelGenerator(
         chunksWithHeight.add(ChunkWithHeight(startChunk.copySelf(), currentLevel))
 
         // first inner chunk
-        currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
+        if (this.random.nextDouble() < heightChangeProbability)
+            currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
         var currentChunkIndex = this.randomChoice(startingProbabilities)
         chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
 
@@ -190,6 +191,16 @@ class PCLevelGenerator(
         const val ENEMY_TYPES_COUNT = 5
         val DEFAULT_CHUNKS_COUNT: Int = defaultChunks.size
         val DEFAULT_CHUNK_TYPES_COUNT: Int = defaultChunks.map { it.name }.distinct().size
+
+        fun createSimplest(): PCLevelGenerator = PCLevelGenerator(
+            List(DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT + 1) {
+                when (it) {
+                    in 0 until DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT -> if (it % DEFAULT_CHUNKS_COUNT == 0) 1.0 else 0.0
+                    else -> 0.0
+                }
+            },
+            DEFAULT_CHUNKS_COUNT
+        )
     }
 
 }
