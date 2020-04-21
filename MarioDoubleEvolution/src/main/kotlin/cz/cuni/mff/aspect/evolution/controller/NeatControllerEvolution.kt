@@ -130,7 +130,7 @@ class NeatControllerEvolution(
 
         val evolution = ControllerEvolutionEnvironment(levelGenerator, networkSettings, fitness, objective, this.evolveOnLevelsCount, denseInput)
 
-        if (this.displayChart) this.chart.show()
+        if (this.displayChart && !this.chart.isShown) this.chart.show()
 
         var generation = 1
         val startTime = System.currentTimeMillis()
@@ -142,7 +142,7 @@ class NeatControllerEvolution(
             val averageObjective = evolution.getAverageObjectiveFromLastGeneration()
             val maxObjective = evolution.getMaxObjectiveFromLastGeneration()
 
-            this.chart.update(generation, maxFitness.toDouble(), averageFitness.toDouble(), maxObjective.toDouble(), averageObjective.toDouble())
+            this.chart.nextGeneration(maxFitness.toDouble(), averageFitness.toDouble(), maxObjective.toDouble(), averageObjective.toDouble())
             val currentTimeMillis = System.currentTimeMillis() - startTime
             val timeString = String.format("%02d min, %02d sec",
                 TimeUnit.MILLISECONDS.toMinutes(currentTimeMillis),

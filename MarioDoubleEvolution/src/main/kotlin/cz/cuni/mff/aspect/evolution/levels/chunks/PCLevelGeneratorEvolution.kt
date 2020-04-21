@@ -63,15 +63,14 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
     }
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Genotype<DoubleGene> {
-        if (this.displayChart) this.chart.show()
+        if (this.displayChart && !this.chart.isShown) this.chart.show()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
             .peek {
-                val generation = it.generation().toInt()
                 val bestFitness = it.bestFitness().toDouble()
                 val averageFitness = it.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / it.population().length()
-                this.chart.update(generation, bestFitness, averageFitness.toDouble(), 0.0, 0.0)
+                this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), 0.0, 0.0)
                 println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()})")
             } .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
             .bestPhenotype().genotype()
