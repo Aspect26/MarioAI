@@ -25,7 +25,7 @@ fun evolvePMP() {
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 40,
+        generationsCount = 20,
         populationSize = 50,
         fitnessFunction = AgentHalfPassing(),
         evaluateOnLevelsCount = 10
@@ -52,8 +52,8 @@ fun playLatestPMP() {
         cz.cuni.mff.aspect.evolution.levels.evaluators.DifficultyEvaluator()(level, GameStatistics(0f, 0, 0, 0, 0, true, true))
         LevelVisualiser().display(level)
         val postProcessed = LevelPostProcessor.postProcess(level, true)
-        val agent = CheaterKeyboardAgent()
-//        val agent = Agents.NEAT.Stage4Level1Solver
+//        val agent = CheaterKeyboardAgent()
+        val agent = Agents.NeuroEvolution.Stage4Level1Solver
 
         gameSimulator.playMario(agent, postProcessed, true)
     }
