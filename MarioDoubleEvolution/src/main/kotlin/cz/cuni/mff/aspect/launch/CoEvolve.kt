@@ -15,7 +15,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/third"
+private val RESULT_FILES_PATH = "data/coev/second"
 
 fun main() {
 //    coevolve()
@@ -79,7 +79,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
     simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 14 .. 20) {
+    for (i in 1 .. 10) {
         println("Update AI ($i)")
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
         simulator.playMario(currentController, currentGenerator.generate())
