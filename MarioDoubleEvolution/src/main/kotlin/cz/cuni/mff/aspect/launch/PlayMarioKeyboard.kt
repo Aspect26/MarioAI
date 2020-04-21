@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -17,7 +18,7 @@ fun main() {
 
 
 fun keyboardPlay() {
-    val levelGenerator = LevelGenerators.PMPGenerator.compression
+    val levelGenerator = PCLevelGenerator.createSimplest()
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
     val marioSimulator = GameSimulator(15000)

@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.evolution.controller
 
+import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.GameStatistics
 
@@ -7,7 +8,20 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 typealias MarioGameplayEvaluator<F> = (gameStatistics: Array<GameStatistics>) -> F
 
 
+// TODO: refactor me (add evaluators to class)
 object MarioGameplayEvaluators {
+
+    /*
+    fun obstaclesOvercome(statistics: Array<GameStatistics>, levelMetadata: Array<MarioLevelMetadata>): Float {
+        for (i in statistics.indices) {
+            val marioDistanceTile: Int = statistics[i].finalMarioDistance.toInt() / 16
+            val currentLevelMetadata = levelMetadata[i]
+            val holesOvercome = currentLevelMetadata.holes.filterIndexed { columnIndex, holeLength -> columnIndex < marioDistanceTile && holeLength > 0 }.size
+            val
+        }
+        return 0f
+    }
+     */
 
     fun distanceOnly(statistics: Array<GameStatistics>): Float {
         return statistics.sumByFloat { it.finalMarioDistance }

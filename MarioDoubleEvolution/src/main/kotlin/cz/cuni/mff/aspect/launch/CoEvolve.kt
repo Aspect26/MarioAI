@@ -3,57 +3,90 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolver
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionMinimumEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
-import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
+import io.jenetics.GaussianMutator
+
+private val RESULT_FILES_PATH = "data/coev/second"
 
 fun main() {
-    coevolve()
-//    playLatestCo()
+//    coevolve()
+    playLatestCo()
 }
 
 fun coevolve() {
-    val controllerEvolution: ControllerEvolution = NeatControllerEvolution(
-        networkSettings = NetworkSettings(),
-        populationSize = 100,
-        generationsCount = 5,
-        denseInput = false,
+    val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
+        null,
+        20,
+        50,
+        evaluateOnLevelsCount = 10,
+        mutators = arrayOf(GaussianMutator(0.55)),
+        parallel = true,
+        showChart = false
+    )
+
+    val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
+        populationSize = 50,
+        generationsCount = 20,
+        evaluateOnLevelsCount = 10,
+        fitnessFunction = AgentHalfPassing(),
         displayChart = false
     )
 
-    val levelGenerator: LevelGeneratorEvolution = PMPLevelGeneratorEvolution(
-        populationSize = 50,
-        generationsCount = 5,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = DistanceLinearityDifficultyCompressionMinimumEvaluator(),
-        displayChart = false
-    )
+    val initialLevelGenerator = PCLevelGenerator.createSimplest()
+
+    val initialController = SimpleANNController(UpdatedAgentNetwork(
+        receptiveFieldSizeRow = 5,
+        receptiveFieldSizeColumn = 5,
+        receptiveFieldRowOffset = 0,
+        receptiveFieldColumnOffset = 2,
+        hiddenLayerSize = 7
+    ))
 
     val coevolver = MarioCoEvolver()
-    val result = coevolver.evolve(controllerEvolution, levelGenerator, MarioGameplayEvaluators::distanceOnly, 10)
 
-    ObjectStorage.store("data/coev/controller.ai", result.controller)
-    ObjectStorage.store("data/coev/generator.lg", result.levelGenerator)
+    // TODO: omg wtf preco AI evolucia ma fitness v evolve() a lg evolucia v c'tore -_-
+    val result = coevolver.evolve(
+        controllerEvolution,
+        levelGeneratorEvolution,
+        initialController,
+        initialLevelGenerator,
+        MarioGameplayEvaluators::distanceOnly,
+        25,
+        RESULT_FILES_PATH
+    )
 
 }
 
 fun playLatestCo() {
-    val controller = ObjectStorage.load("data/coev/controller.ai") as MarioController
-    val levelGenerator = ObjectStorage.load("data/coev/generator.lg") as LevelGenerator
-
-    val levels = Array(5) { levelGenerator.generate() }
     val simulator = GameSimulator()
 
-    levels.forEach {
-        val agent = MarioAgent(controller)
+    var currentController: MarioController = SimpleANNController(UpdatedAgentNetwork(
+        receptiveFieldSizeRow = 5,
+        receptiveFieldSizeColumn = 5,
+        receptiveFieldRowOffset = 0,
+        receptiveFieldColumnOffset = 2,
+        hiddenLayerSize = 7
+    ))
+    var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
+    simulator.playMario(currentController, currentGenerator.generate())
 
-        simulator.playMario(agent, it, true)
+    for (i in 1 .. 10) {
+        println("Update AI ($i)")
+        currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
+        simulator.playMario(currentController, currentGenerator.generate())
+
+        println("Update Level Generator ($i)")
+        currentGenerator = ObjectStorage.load("$RESULT_FILES_PATH/lg_$i.lg") as LevelGenerator
+        simulator.playMario(currentController, currentGenerator.generate())
     }
+
 }

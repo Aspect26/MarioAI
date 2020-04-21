@@ -3,6 +3,8 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -24,13 +26,13 @@ fun main() {
 fun evolveAI() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
         NetworkSettings(5, 5, 0, 2, 7),
+        5,
         50,
-        50,
-        evaluateOnLevelsCount = 10,
+        evaluateOnLevelsCount = 5,
         chartLabel = "NeuroEvolution - Update half",
         mutators = arrayOf(GaussianMutator(0.55))
     )
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
+    val levelGenerator = PCLevelGenerator.createSimplest()
     val resultController = controllerEvolution.evolve(levelGenerator, MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
@@ -52,7 +54,8 @@ fun continueEvolveAI() {
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true
     )
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
+//    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
+    val levelGenerator = ObjectStorage.load("data/coev/second_lg.lg") as LevelGenerator
     val initialController = (Agents.NeuroEvolution.Stage4Level1Solver as MarioAgent).controller
 
     val fitness = MarioGameplayEvaluators::distanceOnly

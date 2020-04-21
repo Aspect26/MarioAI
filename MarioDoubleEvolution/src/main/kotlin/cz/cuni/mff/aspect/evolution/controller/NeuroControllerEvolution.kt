@@ -31,7 +31,8 @@ class NeuroControllerEvolution(
     private val offspringSelector: Selector<DoubleGene, Float> = TournamentSelector(2),
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
     private val evaluateOnLevelsCount: Int = 5,
-    private val chartLabel: String = "NeuroController evolution"
+    private val chartLabel: String = "NeuroController evolution",
+    private val showChart: Boolean = true
 ) : ControllerEvolution {
 
     private lateinit var chart: EvolutionLineChart
@@ -80,8 +81,10 @@ class NeuroControllerEvolution(
     }
 
     private fun doEvolution(): MarioController {
-        this.chart = EvolutionLineChart(this.chartLabel, hideNegative = true)
-        this.chart.show()
+        if (this.showChart) {
+            this.chart = EvolutionLineChart(this.chartLabel, hideNegative = true)
+            this.chart.show()
+        }
 
         val genotype = this.createInitialGenotypes()
         val evaluator = this.createEvaluator()
@@ -157,7 +160,7 @@ class NeuroControllerEvolution(
                 val averageFitness = this.getAverageFitness(it).toDouble()
                 val maxObjective = this.getBestObjectiveValue(evaluator).toDouble()
                 val averageObjective = this.getAverageObjectiveValue(evaluator).toDouble()
-                this.chart.update(generation, bestFitness, averageFitness, maxObjective, averageObjective)
+                if (this.showChart) this.chart.update(generation, bestFitness, averageFitness, maxObjective, averageObjective)
                 println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())

@@ -28,7 +28,7 @@ abstract class PCLevelGeneratorEvaluatorBase : PCLevelGeneratorEvaluator<Float> 
             val level = levelGenerator.generate()
             val levelMetadata = levelGenerator.lastChunksMetadata
 
-            val marioSimulator = GameSimulator()
+            val marioSimulator = GameSimulator(2500)
             val currentGameStatistics = marioSimulator.playMario(agent, level, false)
 
             levels.add(level)

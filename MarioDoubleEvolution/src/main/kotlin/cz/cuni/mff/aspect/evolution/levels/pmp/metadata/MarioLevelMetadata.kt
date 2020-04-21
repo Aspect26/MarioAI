@@ -61,9 +61,12 @@ data class MarioLevelMetadata (
     fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
         return this.groundHeight[checkingColumn] >= row
                 || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row
-                || (this.pipes[checkingColumn - 1] > 0 && this.groundHeight[checkingColumn] + this.pipes[checkingColumn - 1] >= row)
+                || checkingColumn > 0 && (this.pipes[checkingColumn - 1] > 0 && this.groundHeight[checkingColumn] + this.pipes[checkingColumn - 1] >= row)
                 || this.groundHeight[checkingColumn] + this.bulletBills[checkingColumn] >= row
                 || this.groundHeight[checkingColumn] + this.stoneColumns[checkingColumn] >= row
+                || this.boxPlatforms.filterIndexed { column, boxPlatform ->
+                        boxPlatform.length > 0 && boxPlatform.boxesLevel == row && checkingColumn in (column until column + boxPlatform.length)
+                    }.isNotEmpty()
     }
 
     private fun createEntities(): Array<Array<Int>> = Array(this.levelLength) { column ->

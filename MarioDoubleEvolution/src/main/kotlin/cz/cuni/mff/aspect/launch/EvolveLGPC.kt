@@ -8,17 +8,20 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.*
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.MarioAgent
+import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 fun main() {
-//    evolvePC()
+    evolvePC()
 //    playLatestPC()
-    createDefaultPC()
+//    createDefaultPC()
 }
 
 fun evolvePC() {
-    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
+    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController) }
+//    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
@@ -47,7 +50,8 @@ fun playLatestPC() {
         val level = levelGenerator.generate()
         val postProcessed = LevelPostProcessor.postProcess(level)
 //        val agent = CheaterKeyboardAgent()
-        val agent = Agents.NeuroEvolution.Stage4Level1Solver
+//        val agent = Agents.NeuroEvolution.Stage4Level1Solver
+        val agent = MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController)
         LevelVisualiser().display(level)
         val stats = simulator.playMario(agent, postProcessed, true)
     }
