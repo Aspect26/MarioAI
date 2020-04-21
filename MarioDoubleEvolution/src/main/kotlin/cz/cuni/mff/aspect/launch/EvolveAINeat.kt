@@ -45,14 +45,16 @@ private fun continueEvolution() {
     val controllerEvolution = NeatControllerEvolution(
         networkSettings,
         denseInput = false,
-        generationsCount = 250,
+        generationsCount = 50,
         populationSize = 100,
         evolveOnLevelsCount = 10,
         chartName = "NEAT Evolution continuation")
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val initialController = (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller
 
-    val resultController = controllerEvolution.continueEvolution(initialController, levelGenerator, MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
+    val fitness = MarioGameplayEvaluators::distanceOnly
+
+    val resultController = controllerEvolution.continueEvolution(initialController, levelGenerator, fitness, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
     val marioSimulator = GameSimulator()

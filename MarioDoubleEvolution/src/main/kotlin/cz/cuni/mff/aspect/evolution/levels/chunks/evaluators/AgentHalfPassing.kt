@@ -16,6 +16,8 @@ class AgentHalfPassing : PCLevelGeneratorEvaluatorBase() {
         val wonCount = gameStatistics.sumBy { if (it.levelFinished) 1 else 0 }
         val lostCount = gameStatistics.size - wonCount
 
+//        println("$wonCount : $lostCount")
+
         val wonLostDifference = abs(wonCount - lostCount)
         return wonLostDifference.toFloat()
     }
