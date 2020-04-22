@@ -1,8 +1,10 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
 import org.knowm.xchart.*
+import org.knowm.xchart.internal.chartpart.*
 import org.knowm.xchart.internal.series.Series
 import org.knowm.xchart.style.Styler
+import org.knowm.xchart.style.XYStyler
 import org.knowm.xchart.style.markers.SeriesMarkers
 import java.awt.BorderLayout
 import java.awt.Color
@@ -21,6 +23,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         .xAxisTitle(xLabel)
         .yAxisTitle(yLabel)
         .build()
+    private lateinit var customPlotContent: XYPlotContentWithStops
 
     private var series: MutableList<Series> = mutableListOf()
     private lateinit var chartUIPanel: XChartPanel<XYChart>
@@ -32,6 +35,18 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         chart.styler.legendPosition = Styler.LegendPosition.InsideNW
         chart.styler.isLegendVisible = true
         chart.styler.markerSize = 16
+
+        // TODO: why not override XYChart
+        val plot = Chart::class.java.getDeclaredField("plot").apply { isAccessible = true }.get(chart) as Plot_<*, *>
+        val plotContent = Plot_::class.java.getDeclaredField("plotContent").apply { isAccessible = true }.get(plot) as PlotContent_<*, *>
+        val plotContentChart = PlotContent_::class.java.getDeclaredField("chart").apply { isAccessible = true }.get(plotContent) as Chart<XYStyler, XYSeries>
+
+        this.customPlotContent = XYPlotContentWithStops(plotContentChart)
+        val field = Plot_::class.java.getDeclaredField("plotContent")
+        field.trySetAccessible()
+        field.set(plot, this.customPlotContent)
+
+        println(plotContentChart.toString())
     }
 
     fun renderChart() {
@@ -54,7 +69,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         }
     }
 
-    fun updateChart(values: List<Triple<String, Color, List<Pair<Double, Double>>>>) {
+    fun updateChart(values: List<Triple<String, Color, List<Pair<Double, Double>>>>, stops: List<Double> = emptyList()) {
         for ((seriesLabel, seriesColor, seriesData) in values) {
             val currentSeries = this.getOrCreateSeries(seriesLabel, seriesColor)
 
@@ -63,6 +78,8 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
 
             this.chart.updateXYSeries(currentSeries.name, xData, yData, null)
         }
+
+        this.customPlotContent.stops = stops
 
         if (this::chartUIPanel.isInitialized) {
             this.chartUIPanel.revalidate()
