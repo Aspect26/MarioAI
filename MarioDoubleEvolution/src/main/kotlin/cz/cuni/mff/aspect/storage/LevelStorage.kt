@@ -19,7 +19,7 @@ object LevelStorage {
         return DirectMarioLevel(levelRepresentation.tiles, levelRepresentation.enemies)
     }
 
-    data class LevelRepresentation(val tiles: Array<ByteArray>, val enemies: Array<Array<Int>>): Serializable {
+    data class LevelRepresentation(val tiles: Array<ByteArray>, val enemies: Array<IntArray>): Serializable {
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

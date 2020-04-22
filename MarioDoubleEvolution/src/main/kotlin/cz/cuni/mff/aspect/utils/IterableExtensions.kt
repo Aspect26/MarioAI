@@ -31,3 +31,13 @@ inline fun IntArray.sumByFloat(selector: (Int) -> Float): Float {
     }
     return sum
 }
+
+fun Array<out IntArray>.flatten(): List<Int> {
+    val result = ArrayList<Int>(sumBy { it.size })
+    for (innerArray in this) {
+        for (element in innerArray) {
+            result.add(element)
+        }
+    }
+    return result
+}

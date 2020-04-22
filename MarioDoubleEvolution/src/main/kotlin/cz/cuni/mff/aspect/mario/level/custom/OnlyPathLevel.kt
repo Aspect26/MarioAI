@@ -11,5 +11,5 @@ object OnlyPathLevel : MarioLevel {
         ColumnHelpers.getPathColumn(10)
     }
 
-    override val entities: Array<Array<Int>> = emptyArray()
+    override val entities: Array<IntArray> = emptyArray()
 }

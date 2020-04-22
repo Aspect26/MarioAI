@@ -20,7 +20,7 @@ data class MarioLevelMetadata (
     val levelLength: Int get() = this.groundHeight.size
 
     fun createLevel(): MarioLevel {
-        val entities: Array<Array<Int>> = this.createEntities()
+        val entities: Array<IntArray> = this.createEntities()
         val tiles: Array<ByteArray> = this.createGround()
         this.insertHoles(tiles)
         this.insertPipes(tiles, entities)
@@ -69,8 +69,8 @@ data class MarioLevelMetadata (
                     }.isNotEmpty()
     }
 
-    private fun createEntities(): Array<Array<Int>> = Array(this.levelLength) { column ->
-        Array(this.levelHeight) { height ->
+    private fun createEntities(): Array<IntArray> = Array(this.levelLength) { column ->
+        IntArray(this.levelHeight) { height ->
             when (height) {
                 this.levelHeight - (groundHeight[column] + 1 + stoneColumns[column]) -> entities[column]
                 else -> Entities.NOTHING
@@ -93,7 +93,7 @@ data class MarioLevelMetadata (
         }
     }
 
-    private fun insertPipes(tiles: Array<ByteArray>, entities: Array<Array<Int>>) {
+    private fun insertPipes(tiles: Array<ByteArray>, entities: Array<IntArray>) {
         for (column in this.pipes.indices) {
             val pipeHeight = this.pipes[column]
             if (pipeHeight > 0) {
@@ -134,7 +134,7 @@ data class MarioLevelMetadata (
         }
     }
 
-    private fun insertPipe(tiles: Array<ByteArray>, entities: Array<Array<Int>>, column: Int, pipeHeight: Int) {
+    private fun insertPipe(tiles: Array<ByteArray>, entities: Array<IntArray>, column: Int, pipeHeight: Int) {
         val groundLevel = this.levelHeight - this.groundHeight[column]
         for (level in groundLevel - pipeHeight + 1 until groundLevel) {
             tiles[column][level] = Tiles.PIPE_MIDDLE_LEFT

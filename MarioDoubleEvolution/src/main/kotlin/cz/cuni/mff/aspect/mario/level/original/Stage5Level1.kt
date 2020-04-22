@@ -15,7 +15,7 @@ object Stage5Level1 : MarioLevel {
     private const val LEVEL_WIDTH = 207
 
     override val tiles: Array<ByteArray>
-    override val entities: Array<Array<Int>>
+    override val entities: Array<IntArray>
 
     init {
         this.tiles = Array(LEVEL_WIDTH) {
@@ -68,7 +68,7 @@ object Stage5Level1 : MarioLevel {
             }
         }
 
-        this.entities = Array(LEVEL_WIDTH) { Array(15) { 0 } }
+        this.entities = Array(LEVEL_WIDTH) { IntArray(15) { 0 } }
         entities[16][FLOOR_LEVEL - 1] = Entities.Koopa.GREEN
 
         entities[19][FLOOR_LEVEL - 1] = Entities.Goomba.NORMAL
