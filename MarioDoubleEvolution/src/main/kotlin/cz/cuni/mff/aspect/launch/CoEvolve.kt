@@ -25,8 +25,8 @@ fun main() {
 fun coevolve() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
         null,
-        3,
-        50,
+        populationSize = 50,
+        generationsCount = 10,
         evaluateOnLevelsCount = 10,
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true,

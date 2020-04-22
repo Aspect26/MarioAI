@@ -127,10 +127,10 @@ class NeatControllerEvolution(
         networkSettings: NetworkSettings,
         denseInput: Boolean
     ): MarioController {
-
         val evolution = ControllerEvolutionEnvironment(levelGenerator, networkSettings, fitness, objective, this.evolveOnLevelsCount, denseInput)
 
         if (this.displayChart && !this.chart.isShown) this.chart.show()
+        this.chart.addStop()
 
         var generation = 1
         val startTime = System.currentTimeMillis()
