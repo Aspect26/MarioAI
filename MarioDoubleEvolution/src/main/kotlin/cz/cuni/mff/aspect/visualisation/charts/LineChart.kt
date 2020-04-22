@@ -1,10 +1,9 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
+import cz.cuni.mff.aspect.visualisation.charts.xcharts.XYChartWithStops
 import org.knowm.xchart.*
-import org.knowm.xchart.internal.chartpart.*
 import org.knowm.xchart.internal.series.Series
 import org.knowm.xchart.style.Styler
-import org.knowm.xchart.style.XYStyler
 import org.knowm.xchart.style.markers.SeriesMarkers
 import java.awt.BorderLayout
 import java.awt.Color
@@ -16,14 +15,15 @@ import javax.swing.JFrame
 
 class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: String = "Y") {
 
-    private val chart: XYChart = XYChartBuilder()
-        .width(600)
-        .height(480)
-        .title(label)
-        .xAxisTitle(xLabel)
-        .yAxisTitle(yLabel)
-        .build()
-    private lateinit var customPlotContent: XYPlotContentWithStops
+    private val chart: XYChartWithStops =
+        XYChartWithStops(
+            XYChartBuilder()
+                .width(600)
+                .height(480)
+                .title(label)
+                .xAxisTitle(xLabel)
+                .yAxisTitle(yLabel)
+        )
 
     private var series: MutableList<Series> = mutableListOf()
     private lateinit var chartUIPanel: XChartPanel<XYChart>
@@ -35,18 +35,6 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         chart.styler.legendPosition = Styler.LegendPosition.InsideNW
         chart.styler.isLegendVisible = true
         chart.styler.markerSize = 16
-
-        // TODO: why not override XYChart
-        val plot = Chart::class.java.getDeclaredField("plot").apply { isAccessible = true }.get(chart) as Plot_<*, *>
-        val plotContent = Plot_::class.java.getDeclaredField("plotContent").apply { isAccessible = true }.get(plot) as PlotContent_<*, *>
-        val plotContentChart = PlotContent_::class.java.getDeclaredField("chart").apply { isAccessible = true }.get(plotContent) as Chart<XYStyler, XYSeries>
-
-        this.customPlotContent = XYPlotContentWithStops(plotContentChart)
-        val field = Plot_::class.java.getDeclaredField("plotContent")
-        field.trySetAccessible()
-        field.set(plot, this.customPlotContent)
-
-        println(plotContentChart.toString())
     }
 
     fun renderChart() {
@@ -79,7 +67,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
             this.chart.updateXYSeries(currentSeries.name, xData, yData, null)
         }
 
-        this.customPlotContent.stops = stops
+        this.chart.setStops(stops)
 
         if (this::chartUIPanel.isInitialized) {
             this.chartUIPanel.revalidate()
