@@ -14,11 +14,18 @@ class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int
         Triple("Average objective value", Color(78, 147, 255), mutableListOf())
     )
 
+    val isShown get() = this.lineChart.isShown
+
     fun show() {
         this.lineChart.renderChart()
     }
 
-    fun update(generation: Int, maxFitness: Double, averageFitness: Double, maxObjective: Double, averageObjective: Double) {
+    fun nextGeneration(maxFitness: Double, averageFitness: Double, maxObjective: Double, averageObjective: Double) {
+        val currentGeneration = this.data[0].third.map { it.first }.max()?.toInt() ?: 0
+        this.setGeneration(currentGeneration + 1, maxFitness, averageFitness, maxObjective, averageObjective)
+    }
+
+    fun setGeneration(generation: Int, maxFitness: Double, averageFitness: Double, maxObjective: Double, averageObjective: Double) {
         this.data[0].third.add(Pair(generation.toDouble(), if (hideNegative) 0.0.coerceAtLeast(maxFitness) else maxFitness))
         this.data[1].third.add(Pair(generation.toDouble(), if (hideNegative) 0.0.coerceAtLeast(averageFitness) else averageFitness))
         this.data[2].third.add(Pair(generation.toDouble(), if (hideNegative) 0.0.coerceAtLeast(maxObjective) else maxObjective))

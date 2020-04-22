@@ -6,6 +6,8 @@ import org.knowm.xchart.style.Styler
 import org.knowm.xchart.style.markers.SeriesMarkers
 import java.awt.BorderLayout
 import java.awt.Color
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import java.io.File
 import javax.swing.JFrame
 
@@ -22,6 +24,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
 
     private var series: MutableList<Series> = mutableListOf()
     private lateinit var chartUIPanel: XChartPanel<XYChart>
+    private var windowShown = false
 
     init {
         chart.styler.defaultSeriesRenderStyle = XYSeries.XYSeriesRenderStyle.Line
@@ -32,6 +35,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
     }
 
     fun renderChart() {
+        this.windowShown = true
         javax.swing.SwingUtilities.invokeLater {
             val frame = JFrame("Chart")
             frame.layout = BorderLayout()
@@ -42,6 +46,11 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
             frame.pack()
             frame.isVisible = true
             frame.extendedState = frame.extendedState or JFrame.MAXIMIZED_BOTH
+            frame.addWindowListener(object : WindowAdapter() {
+                override fun windowClosed(e: WindowEvent?) {
+                    windowShown = false
+                }
+            })
         }
     }
 
@@ -67,8 +76,10 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         val directory = File(directoryPath)
         if (!directory.exists()) directory.mkdirs()
 
-        VectorGraphicsEncoder.saveVectorGraphic(this.chart, path, VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        VectorGraphicsEncoder.saveVectorGraphic(this.chart, path, VectorGraphicsEncoder.VectorGraphicsFormat.SVG)
     }
+
+    val isShown get() = this.windowShown
 
     private fun getOrCreateSeries(label: String, color: Color): Series {
         val existingSeries = this.series.find { it.name == label }

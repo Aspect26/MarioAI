@@ -35,7 +35,7 @@ class NeuroControllerEvolution(
     private val showChart: Boolean = true
 ) : ControllerEvolution {
 
-    private lateinit var chart: EvolutionLineChart
+    private var chart: EvolutionLineChart = EvolutionLineChart(this.chartLabel, hideNegative = true)
     private lateinit var levelGenerator: LevelGenerator
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
@@ -81,10 +81,7 @@ class NeuroControllerEvolution(
     }
 
     private fun doEvolution(): MarioController {
-        if (this.showChart) {
-            this.chart = EvolutionLineChart(this.chartLabel, hideNegative = true)
-            this.chart.show()
-        }
+        if (this.showChart && !this.chart.isShown) this.chart.show()
 
         val genotype = this.createInitialGenotypes()
         val evaluator = this.createEvaluator()
@@ -155,12 +152,11 @@ class NeuroControllerEvolution(
         return evolutionEngine.stream()
             .limit(this.generationsCount)
             .peek {
-                val generation = it.generation().toInt()
                 val bestFitness = it.bestFitness().toDouble()
                 val averageFitness = this.getAverageFitness(it).toDouble()
                 val maxObjective = this.getBestObjectiveValue(evaluator).toDouble()
                 val averageObjective = this.getAverageObjectiveValue(evaluator).toDouble()
-                if (this.showChart) this.chart.update(generation, bestFitness, averageFitness, maxObjective, averageObjective)
+                this.chart.nextGeneration(bestFitness, averageFitness, maxObjective, averageObjective)
                 println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
             }
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
