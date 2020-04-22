@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.utils.flatten
 
 class DifficultyEvaluator : LevelEvaluator<Float> {
 

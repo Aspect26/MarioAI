@@ -13,9 +13,8 @@ data class ChunkWithHeight(
 
 data class ChunksLevelMetadata(
     val chunks: List<ChunkWithHeight>,
-    val entities: Array<Array<Int>>
+    val entities: Array<IntArray>
 ) {
-
     fun createLevel(): MarioLevel {
         val tiles: Array<ByteArray> = this.createTiles()
         return DirectMarioLevel(tiles, this.entities)

@@ -105,8 +105,8 @@ object LevelPostProcessor {
             }
         }
 
-        val enemies: Array<Array<Int>> = Array(level.entities.size) { column ->
-            Array(level.entities[column].size) { row ->
+        val enemies: Array<IntArray> = Array(level.entities.size) { column ->
+            IntArray(level.entities[column].size) { row ->
                 level.entities[column][row]
             }
         }

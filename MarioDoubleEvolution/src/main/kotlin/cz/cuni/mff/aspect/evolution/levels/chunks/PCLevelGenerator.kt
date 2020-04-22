@@ -39,9 +39,9 @@ class PCLevelGenerator(
             endChunk,
             this.probabilities.subList(
                 defaultChunks.size + defaultChunks.size * defaultChunks.size,
-                defaultChunks.size + defaultChunks.size * defaultChunks.size + Companion.ENEMY_TYPES_COUNT
+                defaultChunks.size + defaultChunks.size * defaultChunks.size + ENEMY_TYPES_COUNT
             ),
-            this.probabilities[defaultChunks.size + defaultChunks.size * defaultChunks.size + Companion.ENEMY_TYPES_COUNT]
+            this.probabilities[defaultChunks.size + defaultChunks.size * defaultChunks.size + ENEMY_TYPES_COUNT]
         )
     }
 
@@ -122,14 +122,14 @@ class PCLevelGenerator(
         return chunksWithHeight
     }
 
-    private fun createEntities(tiles: Array<ByteArray>, entityProbabilities: List<Double>): Array<Array<Int>> {
-        val entities: Array<Array<Int>> = Array(tiles.size) { column ->
-            Array(tiles[column].size) { row ->
+    private fun createEntities(tiles: Array<ByteArray>, entityProbabilities: List<Double>): Array<IntArray> {
+        val entities: Array<IntArray> = Array(tiles.size) { column ->
+            IntArray(tiles[column].size) { row ->
                 if (tiles[column][row] != Tiles.PIPE_TOP_LEFT) Entities.NOTHING else Entities.Flower.NORMAL
             }
         }
 
-        for (column in SAFE_ZONE_LENGTH until tiles.size - Companion.SAFE_ZONE_LENGTH) {
+        for (column in SAFE_ZONE_LENGTH until tiles.size - SAFE_ZONE_LENGTH) {
             val firstEmpty = tiles[column].size - tiles[column].reversedArray().indexOfFirst { it == Tiles.NOTHING }
             if (firstEmpty <= 0 || firstEmpty >= tiles[column].size) continue
 

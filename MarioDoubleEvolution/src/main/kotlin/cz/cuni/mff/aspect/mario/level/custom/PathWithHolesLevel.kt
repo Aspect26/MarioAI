@@ -23,5 +23,5 @@ object PathWithHolesLevel : MarioLevel {
         }
     }
 
-    override val entities: Array<Array<Int>> = emptyArray()
+    override val entities: Array<IntArray> = emptyArray()
 }
