@@ -82,6 +82,7 @@ class NeuroControllerEvolution(
 
     private fun doEvolution(): MarioController {
         if (this.showChart && !this.chart.isShown) this.chart.show()
+        this.chart.addStop()
 
         val genotype = this.createInitialGenotypes()
         val evaluator = this.createEvaluator()

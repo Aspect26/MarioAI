@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
+import cz.cuni.mff.aspect.visualisation.charts.xcharts.XYChartWithStops
 import org.knowm.xchart.*
 import org.knowm.xchart.internal.series.Series
 import org.knowm.xchart.style.Styler
@@ -14,13 +15,15 @@ import javax.swing.JFrame
 
 class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: String = "Y") {
 
-    private val chart: XYChart = XYChartBuilder()
-        .width(600)
-        .height(480)
-        .title(label)
-        .xAxisTitle(xLabel)
-        .yAxisTitle(yLabel)
-        .build()
+    private val chart: XYChartWithStops =
+        XYChartWithStops(
+            XYChartBuilder()
+                .width(600)
+                .height(480)
+                .title(label)
+                .xAxisTitle(xLabel)
+                .yAxisTitle(yLabel)
+        )
 
     private var series: MutableList<Series> = mutableListOf()
     private lateinit var chartUIPanel: XChartPanel<XYChart>
@@ -54,7 +57,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         }
     }
 
-    fun updateChart(values: List<Triple<String, Color, List<Pair<Double, Double>>>>) {
+    fun updateChart(values: List<Triple<String, Color, List<Pair<Double, Double>>>>, stops: List<Double> = emptyList()) {
         for ((seriesLabel, seriesColor, seriesData) in values) {
             val currentSeries = this.getOrCreateSeries(seriesLabel, seriesColor)
 
@@ -63,6 +66,8 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
 
             this.chart.updateXYSeries(currentSeries.name, xData, yData, null)
         }
+
+        this.chart.setStops(stops)
 
         if (this::chartUIPanel.isInitialized) {
             this.chartUIPanel.revalidate()

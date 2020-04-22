@@ -64,6 +64,7 @@ class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = P
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Genotype<DoubleGene> {
         if (this.displayChart && !this.chart.isShown) this.chart.show()
+        this.chart.addStop()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())

@@ -61,6 +61,7 @@ class PMPLevelGeneratorEvolution(
 
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Phenotype<DoubleGene, Float> {
         if (this.displayChart && !this.chart.isShown) this.chart.show()
+        this.chart.addStop()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
