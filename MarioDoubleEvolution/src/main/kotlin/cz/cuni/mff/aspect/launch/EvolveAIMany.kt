@@ -22,7 +22,7 @@ fun main() {
 
 
 fun doManyNEATEvolution() {
-    val levelGenerator = LevelGenerators.PCGenerator.all
+    val levelGenerators = listOf(LevelGenerators.PCGenerator.all)
     val evaluationName = "NEAT - All - 500-100 - fitness distance least actions"
 
     val generationsCount = 500
@@ -32,7 +32,7 @@ fun doManyNEATEvolution() {
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
-            levelGenerator = levelGenerator,
+            levelGenerators = levelGenerators,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -44,7 +44,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levelGenerator = levelGenerator,
+            levelGenerators = levelGenerators,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -56,7 +56,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levelGenerator = levelGenerator,
+            levelGenerators = levelGenerators,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -68,7 +68,7 @@ fun doManyNEATEvolution() {
             denseInput = false
         ),
         NeatEvolutionLauncher(
-            levelGenerator = levelGenerator,
+            levelGenerators = levelGenerators,
             fitnessFunction = fitness,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             generationsCount = generationsCount,
@@ -204,14 +204,14 @@ class NeuroEvolutionLauncher(
             parallel = runParallel
         )
 
-        val resultController = controllerEvolution.evolve(levelGenerator, fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(listOf(levelGenerator), fitnessFunction, objectiveFunction)
         controllerEvolution.storeChart("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }
 }
 
 class NeatEvolutionLauncher(
-    private val levelGenerator: LevelGenerator,
+    private val levelGenerators: List<LevelGenerator>,
     private val generationsCount: Int,
     private val populationSize: Int,
     private val receptiveFieldSize: Pair<Int, Int>,
@@ -232,7 +232,7 @@ class NeatEvolutionLauncher(
             denseInput = denseInput,
             chartName = label)
 
-        val resultController = controllerEvolution.evolve(levelGenerator, fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(levelGenerators, fitnessFunction, objectiveFunction)
         controllerEvolution.storeChart("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }

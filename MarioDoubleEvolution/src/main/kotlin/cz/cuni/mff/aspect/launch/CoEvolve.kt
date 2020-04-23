@@ -15,7 +15,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/test"
+private val RESULT_FILES_PATH = "data/coev/repeat-lgs"
 
 fun main() {
     coevolve()
@@ -26,8 +26,8 @@ fun coevolve() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
         null,
         populationSize = 50,
-        generationsCount = 10,
-        evaluateOnLevelsCount = 10,
+        generationsCount = 20,
+        levelsPerGeneratorCount = 5,
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true,
         showChart = true,
@@ -36,11 +36,11 @@ fun coevolve() {
 
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 3,
-        evaluateOnLevelsCount = 10,
+        generationsCount = 5,
+        evaluateOnLevelsCount = 5,
         fitnessFunction = AgentHalfPassing(),
         displayChart = true,
-        chartLabel = "PC Leven Generator"
+        chartLabel = "PC Level Generator"
     )
 
     val initialLevelGenerator = PCLevelGenerator.createSimplest()

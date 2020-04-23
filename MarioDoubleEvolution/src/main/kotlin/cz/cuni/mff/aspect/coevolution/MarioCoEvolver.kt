@@ -9,6 +9,7 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.utils.DeepCopy
+import cz.cuni.mff.aspect.utils.LimitedHistory
 import java.util.concurrent.TimeUnit
 
 class MarioCoEvolver {
@@ -20,7 +21,9 @@ class MarioCoEvolver {
                storagePath: String
     ): CoevolutionResult {
         var currentController: MarioController = initialController
-        var currentLevelGenerator: LevelGenerator = initialLevelGenerator
+        val generatorsHistory: LimitedHistory<LevelGenerator> = LimitedHistory(5)
+        generatorsHistory.push(initialLevelGenerator)
+        var latestGenerator: LevelGenerator = initialLevelGenerator
 
         val startTime = System.currentTimeMillis()
         for (generation in (0 until generations)) {
@@ -29,20 +32,22 @@ class MarioCoEvolver {
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
             currentController = controllerEvolution.continueEvolution(
                 currentController,
-                currentLevelGenerator,
+                generatorsHistory.getAll(),
                 controllerFitness,
                 MarioGameplayEvaluators::victoriesOnly
             )
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")
             val agentFactory = { MarioAgent(DeepCopy.copy(currentController)) }
-            currentLevelGenerator = generatorEvolution.evolve(agentFactory)
+            latestGenerator = generatorEvolution.evolve(agentFactory)
 
             ObjectStorage.store("$storagePath/ai_${generation + 1}.ai", currentController)
-            ObjectStorage.store("$storagePath/lg_${generation + 1}.lg", currentLevelGenerator)
+            ObjectStorage.store("$storagePath/lg_${generation + 1}.lg", latestGenerator)
+
+            generatorsHistory.push(latestGenerator)
         }
 
-        return CoevolutionResult(currentController, currentLevelGenerator)
+        return CoevolutionResult(currentController, latestGenerator)
     }
 
     private fun timeString(currentTimeMillis: Long): String {

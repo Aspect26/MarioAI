@@ -30,23 +30,23 @@ class NeuroControllerEvolution(
     private val survivorsSelector: Selector<DoubleGene, Float> = EliteSelector(2),
     private val offspringSelector: Selector<DoubleGene, Float> = TournamentSelector(2),
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
-    private val evaluateOnLevelsCount: Int = 5,
+    private val levelsPerGeneratorCount: Int = 5,
     private val chartLabel: String = "NeuroController evolution",
     private val showChart: Boolean = true
 ) : ControllerEvolution {
 
     private var chart: EvolutionLineChart = EvolutionLineChart(this.chartLabel, hideNegative = true)
-    private lateinit var levelGenerator: LevelGenerator
+    private lateinit var levelGenerators: List<LevelGenerator>
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
     private var initialAgentNetwork: UpdatedAgentNetwork? = null
 
     override fun evolve(
-        levelGenerator: LevelGenerator,
+        levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
         objective: MarioGameplayEvaluator<Float>
     ): MarioController {
-        this.levelGenerator = levelGenerator
+        this.levelGenerators = levelGenerators
         this.fitnessFunction = fitness
         this.objectiveFunction = objective
 
@@ -55,7 +55,7 @@ class NeuroControllerEvolution(
 
     override fun continueEvolution(
         controller: MarioController,
-        levelGenerator: LevelGenerator,
+        levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
         objective: MarioGameplayEvaluator<Float>
     ): MarioController {
@@ -68,7 +68,7 @@ class NeuroControllerEvolution(
         )
 
         this.initialAgentNetwork = controller.network
-        this.levelGenerator = levelGenerator
+        this.levelGenerators = levelGenerators
         this.fitnessFunction = fitness
         this.objectiveFunction = objective
         this.controllerNetworkSettings = this.createNetworkSettings(controller.network)
@@ -122,8 +122,8 @@ class NeuroControllerEvolution(
             fitnessFunction,
             objectiveFunction,
             this.createControllerNetwork(),
-            levelGenerator,
-            evaluateOnLevelsCount,
+            levelGenerators,
+            levelsPerGeneratorCount,
             alwaysEvaluate = true
         )
     }
