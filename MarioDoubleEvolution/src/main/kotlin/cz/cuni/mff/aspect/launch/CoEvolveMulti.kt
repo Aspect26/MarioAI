@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
+import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolver
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
@@ -11,14 +12,15 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import io.jenetics.GaussianMutator
 
 fun main() {
-    coevNeatPMP()
-    coevNeatPC()
     coevNeuroPMP()
     coevNeuroPC()
+    coevNeatPMP()
+    coevNeatPC()
 }
 
 fun coevNeuroPMP() {
@@ -124,9 +126,10 @@ fun coevNeuroPC() {
 }
 
 fun coevNeatPMP() {
+    val networkSettings = NetworkSettings(7, 7, 0, 2)
 
     val controllerEvolution = NeatControllerEvolution(
-        NetworkSettings(7, 7, 0, 2),
+        networkSettings,
         populationSize = 50,
         generationsCount = 35,
         levelsPerGeneratorCount = 5,
@@ -143,14 +146,12 @@ fun coevNeatPMP() {
         chartLabel = "PMP Level Generator"
     )
 
+    val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
     val initialLevelGenerator = PMPLevelGenerator.createSimplest()
     val initialController = SimpleANNController(
-        UpdatedAgentNetwork(
-            receptiveFieldSizeRow = 5,
-            receptiveFieldSizeColumn = 5,
-            receptiveFieldRowOffset = 0,
-            receptiveFieldColumnOffset = 2,
-            hiddenLayerSize = 7
+        NeatAgentNetwork(
+            networkSettings,
+            Genome(inputsCount, 4)
         )
     )
 
@@ -173,9 +174,9 @@ fun coevNeatPMP() {
 }
 
 fun coevNeatPC() {
-
+    val networkSettings = NetworkSettings(7, 7, 0, 2)
     val controllerEvolution = NeatControllerEvolution(
-        NetworkSettings(7, 7, 0, 2),
+        networkSettings,
         populationSize = 50,
         generationsCount = 35,
         levelsPerGeneratorCount = 5,
@@ -193,13 +194,11 @@ fun coevNeatPC() {
     )
 
     val initialLevelGenerator = PCLevelGenerator.createSimplest()
+    val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
     val initialController = SimpleANNController(
-        UpdatedAgentNetwork(
-            receptiveFieldSizeRow = 5,
-            receptiveFieldSizeColumn = 5,
-            receptiveFieldRowOffset = 0,
-            receptiveFieldColumnOffset = 2,
-            hiddenLayerSize = 7
+        NeatAgentNetwork(
+            networkSettings,
+            Genome(inputsCount, 4)
         )
     )
 
