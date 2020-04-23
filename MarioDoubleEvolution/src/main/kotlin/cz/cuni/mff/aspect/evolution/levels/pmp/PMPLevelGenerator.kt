@@ -302,6 +302,10 @@ class PMPLevelGenerator(
         private const val PI_STAIRS = 12
 
         const val PROBABILITIES_COUNT = 13
+
+        fun createSimplest(): PMPLevelGenerator = PMPLevelGenerator(
+            DoubleArray(PROBABILITIES_COUNT) { 0.0 }, 200
+        )
     }
 
 }

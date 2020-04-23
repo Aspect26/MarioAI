@@ -22,13 +22,13 @@ class NeatControllerEvolution(
     private val populationSize: Int = 150,
     private val levelsPerGeneratorCount: Int = 5,
     private val denseInput: Boolean = true,
-    private val chartName: String = "NEAT Evolution",
-    private val displayChart: Boolean = true
+    private val chartLabel: String = "NEAT Evolution",
+    private val showChart: Boolean = true
 ) : ControllerEvolution {
 
     private lateinit var topGenome: Genome
     private val chart = EvolutionLineChart(
-        label = this.chartName,
+        label = this.chartLabel,
         hideNegative = true
     )
 
@@ -131,7 +131,7 @@ class NeatControllerEvolution(
     ): MarioController {
         val evolution = ControllerEvolutionEnvironment(levelGenerators, networkSettings, fitness, objective, this.levelsPerGeneratorCount, denseInput)
 
-        if (this.displayChart && !this.chart.isShown) this.chart.show()
+        if (this.showChart && !this.chart.isShown) this.chart.show()
         this.chart.addStop()
 
         var generation = 1

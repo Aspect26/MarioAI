@@ -18,13 +18,13 @@ import java.util.*
 import java.util.concurrent.ForkJoinPool
 
 
-class ChunksLevelGeneratorGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
-                                             private val generationsCount: Int = GENERATIONS_COUNT,
-                                             private val fitnessFunction: PCLevelGeneratorEvaluator<Float> = LinearityEvaluator(),
-                                             private val evaluateOnLevelsCount: Int = 5,
-                                             private val chunksCount: Int = 35,
-                                             private val chartLabel: String = "Chunks level generator evolution",
-                                             private val displayChart: Boolean = true
+class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION_SIZE,
+                                    private val generationsCount: Int = GENERATIONS_COUNT,
+                                    private val fitnessFunction: PCLevelGeneratorEvaluator<Float> = LinearityEvaluator(),
+                                    private val evaluateOnLevelsCount: Int = 5,
+                                    private val chunksCount: Int = 35,
+                                    private val chartLabel: String = "Chunks level generator evolution",
+                                    private val displayChart: Boolean = true
 ) : LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent
