@@ -27,7 +27,7 @@ fun coevolve() {
         null,
         populationSize = 50,
         generationsCount = 10,
-        evaluateOnLevelsCount = 10,
+        levelsPerGeneratorCount = 5,
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true,
         showChart = true,
@@ -37,7 +37,7 @@ fun coevolve() {
     val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
         populationSize = 50,
         generationsCount = 3,
-        evaluateOnLevelsCount = 10,
+        evaluateOnLevelsCount = 5,
         fitnessFunction = AgentHalfPassing(),
         displayChart = true,
         chartLabel = "PC Leven Generator"

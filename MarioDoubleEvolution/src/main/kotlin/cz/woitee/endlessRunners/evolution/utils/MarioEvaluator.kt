@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
+import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import io.jenetics.Genotype
 import io.jenetics.NumericGene
@@ -33,8 +34,8 @@ class MarioEvaluator<G, C>(
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
     private val controllerNetwork: ControllerArtificialNetwork,
-    private val levelGenerator: LevelGenerator,
-    private val evaluateOnLevelsCount: Int,
+    private val levelGenerators: List<LevelGenerator>,
+    private val levelsPerGeneratorCount: Int,
     private val alwaysEvaluate: Boolean = false,
     private val seed: Long? = null
 ) : Evaluator<G, C>
@@ -85,7 +86,7 @@ class MarioEvaluator<G, C>(
 
     private fun evaluate(phenotypes: Stream<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         val phenotypeRunnables = phenotypes
-            .map { pt -> PhenotypeEvaluation(pt, fitnessFunction, objectiveFunction, controllerNetwork, levelGenerator, evaluateOnLevelsCount) }
+            .map { pt -> PhenotypeEvaluation(pt, fitnessFunction, objectiveFunction, controllerNetwork, levelGenerators, levelsPerGeneratorCount) }
             .collect(ISeq.toISeq())
 
         val concurrency = Concurrency.with(executor)
@@ -127,7 +128,7 @@ private class PhenotypeEvaluation<G, C> internal constructor(
     private val fitnessFunction: MarioGameplayEvaluator<C>,
     private val objectiveFunction: MarioGameplayEvaluator<C>,
     private val controllerNetwork: ControllerArtificialNetwork,
-    private val levelGenerator: LevelGenerator,
+    private val levelGenerators: List<LevelGenerator>,
     private val evaluateOnLevelsCount: Int
 ) : Runnable
         where G : NumericGene<*, G>,
@@ -142,12 +143,11 @@ private class PhenotypeEvaluation<G, C> internal constructor(
 
     private fun computeFitnessAndObjective(genotype: Genotype<G>) {
         val networkWeights: DoubleArray = genotype.getDoubleValues()
-//        println(networkWeights.contentToString())
         val controllerNetwork = this.controllerNetwork.newInstance()
         controllerNetwork.setNetworkWeights(networkWeights)
 
         val controller = SimpleANNController(controllerNetwork)
-        val levels = Array(this.evaluateOnLevelsCount) { this.levelGenerator.generate() }
+        val levels = this.generateLevelsToPlay()
         val marioSimulator = GameSimulator(1000)
         val statistics = marioSimulator.playMario(controller, levels, false)
 
@@ -158,5 +158,10 @@ private class PhenotypeEvaluation<G, C> internal constructor(
     internal fun phenotype(): Phenotype<G, C> {
         return _phenotype.withFitness(fitness)
     }
+
+    private fun generateLevelsToPlay(): Array<MarioLevel> =
+        Array(this.evaluateOnLevelsCount * this.levelGenerators.size) {
+            this.levelGenerators[it % this.levelGenerators.size].generate()
+        }
 
 }

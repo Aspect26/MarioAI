@@ -29,7 +29,7 @@ class MarioCoEvolver {
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
             currentController = controllerEvolution.continueEvolution(
                 currentController,
-                currentLevelGenerator,
+                listOf(currentLevelGenerator),
                 controllerFitness,
                 MarioGameplayEvaluators::victoriesOnly
             )

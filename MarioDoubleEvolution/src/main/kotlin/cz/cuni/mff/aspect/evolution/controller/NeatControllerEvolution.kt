@@ -20,7 +20,7 @@ class NeatControllerEvolution(
     private val networkSettings: NetworkSettings,
     private var generationsCount: Int = 200,
     private val populationSize: Int = 150,
-    private val evolveOnLevelsCount: Int = 5,
+    private val levelsPerGeneratorCount: Int = 5,
     private val denseInput: Boolean = true,
     private val chartName: String = "NEAT Evolution",
     private val displayChart: Boolean = true
@@ -32,11 +32,11 @@ class NeatControllerEvolution(
         hideNegative = true
     )
 
-    class ControllerEvolutionEnvironment(private val levelGenerator: LevelGenerator,
+    class ControllerEvolutionEnvironment(private val levelGenerators: List<LevelGenerator>,
                                          private val networkSettings: NetworkSettings,
                                          private val fitnessFunction: MarioGameplayEvaluator<Float>,
                                          private val objectiveFunction: MarioGameplayEvaluator<Float>,
-                                         private val levelsCount: Int = 5,
+                                         private val levelsPerGeneratorCount: Int = 5,
                                          private val denseInput: Boolean = true) : Environment {
 
         private lateinit var lastEvaluationFitnesses: FloatArray
@@ -55,8 +55,10 @@ class NeatControllerEvolution(
                 }
 
                 val marioSimulator = GameSimulator()
-                val levels = Array(this.levelsCount) { this.levelGenerator.generate() }
-                val statistics = marioSimulator.playRandomLevels(controller, levels, this.levelsCount, false)
+                val levels = Array(this.levelsPerGeneratorCount * this.levelGenerators.size) {
+                    this.levelGenerators[it % this.levelGenerators.size].generate()
+                }
+                val statistics = marioSimulator.playRandomLevels(controller, levels, this.levelsPerGeneratorCount, false)
 
                 val fitnessValue = this.fitnessFunction(statistics)
                 val objectiveValue = this.objectiveFunction(statistics)
@@ -82,7 +84,7 @@ class NeatControllerEvolution(
     }
 
     override fun evolve(
-        levelGenerator: LevelGenerator,
+        levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
         objective: MarioGameplayEvaluator<Float>
     ): MarioController {
@@ -92,12 +94,12 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(networkInputSize, networkOutputSize)
 
-        return this.doEvolution(levelGenerator, fitness, objective, pool, this.networkSettings, this.denseInput)
+        return this.doEvolution(levelGenerators, fitness, objective, pool, this.networkSettings, this.denseInput)
     }
 
     override fun continueEvolution(
         controller: MarioController,
-        levelGenerator: LevelGenerator,
+        levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
         objective: MarioGameplayEvaluator<Float>
     ): MarioController {
@@ -116,18 +118,18 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(genomes)
 
-        return this.doEvolution(levelGenerator, fitness, objective, pool, controller.network.networkSettings, controller.network.denseInput)
+        return this.doEvolution(levelGenerators, fitness, objective, pool, controller.network.networkSettings, controller.network.denseInput)
     }
 
     private fun doEvolution(
-        levelGenerator: LevelGenerator,
+        levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
         objective: MarioGameplayEvaluator<Float>,
         genotypePool: Pool,
         networkSettings: NetworkSettings,
         denseInput: Boolean
     ): MarioController {
-        val evolution = ControllerEvolutionEnvironment(levelGenerator, networkSettings, fitness, objective, this.evolveOnLevelsCount, denseInput)
+        val evolution = ControllerEvolutionEnvironment(levelGenerators, networkSettings, fitness, objective, this.levelsPerGeneratorCount, denseInput)
 
         if (this.displayChart && !this.chart.isShown) this.chart.show()
         this.chart.addStop()

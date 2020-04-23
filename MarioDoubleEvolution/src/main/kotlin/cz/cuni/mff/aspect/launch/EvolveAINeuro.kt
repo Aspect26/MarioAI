@@ -28,12 +28,12 @@ fun evolveAI() {
         NetworkSettings(5, 5, 0, 2, 7),
         5,
         50,
-        evaluateOnLevelsCount = 5,
+        levelsPerGeneratorCount = 5,
         chartLabel = "NeuroEvolution - Update half",
         mutators = arrayOf(GaussianMutator(0.55))
     )
     val levelGenerator = PCLevelGenerator.createSimplest()
-    val resultController = controllerEvolution.evolve(levelGenerator, MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
+    val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
     val marioSimulator = GameSimulator()
@@ -49,7 +49,7 @@ fun continueEvolveAI() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(null,
         20,
         50,
-        evaluateOnLevelsCount = 10,
+        levelsPerGeneratorCount = 10,
         chartLabel = "NeuroEvolution Update half",
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true
@@ -60,7 +60,7 @@ fun continueEvolveAI() {
 
     val fitness = MarioGameplayEvaluators::distanceOnly
 
-    val resultController = controllerEvolution.continueEvolution(initialController, levelGenerator, fitness, MarioGameplayEvaluators::victoriesOnly)
+    val resultController = controllerEvolution.continueEvolution(initialController, listOf(levelGenerator), fitness, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
     val marioSimulator = GameSimulator()
