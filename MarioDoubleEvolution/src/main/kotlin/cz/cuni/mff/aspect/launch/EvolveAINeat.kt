@@ -26,7 +26,7 @@ private fun evolve() {
         generationsCount = 50,
         populationSize = 100,
         levelsPerGeneratorCount = 5,
-        chartName = "NEAT Evolution S4L1")
+        chartLabel = "NEAT Evolution S4L1")
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
 
     val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
@@ -48,7 +48,7 @@ private fun continueEvolution() {
         generationsCount = 50,
         populationSize = 100,
         levelsPerGeneratorCount = 10,
-        chartName = "NEAT Evolution continuation")
+        chartLabel = "NEAT Evolution continuation")
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val initialController = (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller
 

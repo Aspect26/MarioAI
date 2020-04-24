@@ -2,11 +2,10 @@ package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.*
-import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -23,7 +22,7 @@ fun evolvePC() {
     val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController) }
 //    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
-    val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
+    val levelGeneratorEvolution = ChunksLevelGeneratorEvolution(
         populationSize = 50,
         generationsCount = 20,
         evaluateOnLevelsCount = 10,

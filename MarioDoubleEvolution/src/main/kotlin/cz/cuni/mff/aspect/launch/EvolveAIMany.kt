@@ -230,7 +230,8 @@ class NeatEvolutionLauncher(
             generationsCount = generationsCount,
             populationSize = populationSize,
             denseInput = denseInput,
-            chartName = label)
+            chartLabel = label
+        )
 
         val resultController = controllerEvolution.evolve(levelGenerators, fitnessFunction, objectiveFunction)
         controllerEvolution.storeChart("data/experiments/$dataLocation/${label}_chart.svg")

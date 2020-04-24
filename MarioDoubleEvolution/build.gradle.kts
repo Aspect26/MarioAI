@@ -42,7 +42,7 @@ tasks.withType<Test> {
 
 val jar by tasks.getting(Jar::class) {
     manifest {
-        attributes["Main-Class"] = "cz.cuni.mff.aspect.MainKt"
+        attributes["Main-Class"] = "cz.cuni.mff.aspect.launch.CoEvolveMultiKt"
     }
 
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })

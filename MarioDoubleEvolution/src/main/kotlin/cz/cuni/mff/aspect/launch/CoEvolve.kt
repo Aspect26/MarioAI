@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -13,13 +13,14 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
+import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import io.jenetics.GaussianMutator
 
 private val RESULT_FILES_PATH = "data/coev/repeat-lgs"
 
 fun main() {
-    coevolve()
-//    playLatestCo()
+//    coevolve()
+    playLatestCo()
 }
 
 fun coevolve() {
@@ -34,7 +35,7 @@ fun coevolve() {
         chartLabel = "Agent NeuroEvolution"
     )
 
-    val levelGeneratorEvolution = ChunksLevelGeneratorGeneratorEvolution(
+    val levelGeneratorEvolution = ChunksLevelGeneratorEvolution(
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,
@@ -79,15 +80,16 @@ fun playLatestCo() {
         hiddenLayerSize = 7
     ))
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
-    simulator.playMario(currentController, currentGenerator.generate())
+//    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 10) {
+    for (i in 1 .. 25) {
         println("Update AI ($i)")
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
         simulator.playMario(currentController, currentGenerator.generate())
 
         println("Update Level Generator ($i)")
         currentGenerator = ObjectStorage.load("$RESULT_FILES_PATH/lg_$i.lg") as LevelGenerator
+        repeat(5) { LevelVisualiser().display(currentGenerator.generate()) }
         simulator.playMario(currentController, currentGenerator.generate())
     }
 
