@@ -15,5 +15,8 @@ run-coev: build-jar
 	# TODO: make custom gradle command to build coevolution jar
 	java -jar ./MarioDoubleEvolution/build/libs/MarioDoubleEvolution.jar 
 
-simulator-changes:
+changes-simulator:
 	git difftool 5ab3f ./MarioAI4J/
+
+changes-neat:
+	git difftool c69ab ./MarioDoubleEvolution/src/main/java/com/evo/NEAT
