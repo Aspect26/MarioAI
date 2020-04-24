@@ -2,7 +2,7 @@ MARIO_SIMULATOR_PROJECT = "MarioAI4J"
 MARIO_COEVOLUTION_PROJECT = "MarioDoubleEvolution"
 
 get-gradle-wrapper:
-	gradle wrapper --gradle-version 5.5.1
+	gradle wrapper --gradle-version 6.3
 
 build-jar: get-gradle-wrapper
 	./gradlew $(MARIO_SIMULATOR_PROJECT):jar
