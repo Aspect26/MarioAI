@@ -1,8 +1,10 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
+import cz.cuni.mff.aspect.evolution.Charted
 import java.awt.Color
 
-class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int = 0, private val hideNegative: Boolean = false) {
+class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int = 0, private val hideNegative: Boolean = false) :
+    Charted {
 
     private val lineChart = LineChart(label, "Generations", "Fitness")
     private val stops = mutableListOf<Double>()
@@ -46,7 +48,7 @@ class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int
         }
     }
 
-    fun save(path: String) {
+    override fun storeChart(path: String) {
         this.lineChart.save(path)
     }
 

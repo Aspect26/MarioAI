@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp
 
 import ch.idsia.agents.IAgent
+import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
@@ -23,11 +24,10 @@ class PMPLevelGeneratorEvolution(
     private val fitnessFunction: PMPLevelGeneratorEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator(),
     private val maxProbability: Double = 1.0,
     private val chartLabel: String = "PMP Level Evolution",
-    private val displayChart: Boolean = true
-) : LevelGeneratorEvolution {
-
+    private val displayChart: Boolean = true,
+    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = false)
+) : LevelGeneratorEvolution, Charted by chart {
     private lateinit var agentFactory: () -> IAgent
-    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = false)
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
@@ -37,10 +37,6 @@ class PMPLevelGeneratorEvolution(
         val genes = resultIndividual.genotype().getDoubleValues()
 
         return PMPLevelGenerator(genes, this.levelLength)
-    }
-
-    fun storeChart(path: String) {
-        this.chart.save(path)
     }
 
     private fun createInitialGenotype(): Genotype<DoubleGene> {

@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks
 
 import ch.idsia.agents.IAgent
+import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.LinearityEvaluator
@@ -24,11 +25,10 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
                                     private val evaluateOnLevelsCount: Int = 5,
                                     private val chunksCount: Int = 35,
                                     private val chartLabel: String = "Chunks level generator evolution",
-                                    private val displayChart: Boolean = true
-) : LevelGeneratorEvolution {
-
+                                    private val displayChart: Boolean = true,
+                                    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = false)
+) : LevelGeneratorEvolution, Charted by chart {
     private lateinit var agentFactory: () -> IAgent
-    private val chart = EvolutionLineChart(label = this.chartLabel, hideNegative = false)
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
@@ -39,10 +39,6 @@ class ChunksLevelGeneratorEvolution(private val populationSize: Int = POPULATION
         this.computeFitness(resultIndividual)
 
         return PCLevelGenerator(resultIndividual.getDoubleValues().toList(), this.chunksCount)
-    }
-
-    fun storeChart(path: String) {
-        this.chart.save(path)
     }
 
     private fun createInitialGenotype(): Factory<Genotype<DoubleGene>> =

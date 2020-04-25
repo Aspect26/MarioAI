@@ -2,220 +2,154 @@ package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolver
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.Charted
+import cz.cuni.mff.aspect.evolution.controller.*
+import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import io.jenetics.GaussianMutator
 
+private const val generations = 30
+
 fun main() {
-    coevNeuroPMP()
-    coevNeuroPC()
-    coevNeatPMP()
-    coevNeatPC()
+    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations)
+    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
+    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations)
+    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations)
 }
 
-fun coevNeuroPMP() {
-
-    val controllerEvolution = NeuroControllerEvolution(
-        null,
-        populationSize = 50,
-        generationsCount = 20,
-        levelsPerGeneratorCount = 5,
-        mutators = arrayOf(GaussianMutator(0.55)),
-        parallel = true,
-        showChart = false,
-        chartLabel = "Agent NeuroEvolution"
-    )
-
-    val levelGeneratorEvolution = PMPLevelGeneratorEvolution(
-        populationSize = 50,
-        generationsCount = 5,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
-        displayChart = false,
-        chartLabel = "PMP Level Generator"
-    )
-
-    val initialLevelGenerator = PMPLevelGenerator.createSimplest()
-
-    val initialController = SimpleANNController(
-        UpdatedAgentNetwork(
-        receptiveFieldSizeRow = 5,
-        receptiveFieldSizeColumn = 5,
-        receptiveFieldRowOffset = 0,
-        receptiveFieldColumnOffset = 2,
-        hiddenLayerSize = 7
-    )
-    )
-
-    val coevolver = MarioCoEvolver()
-    val storagePath = "result/neuro_pmp"
-
-    coevolver.evolve(
-        controllerEvolution,
-        levelGeneratorEvolution,
-        initialController,
-        initialLevelGenerator,
-        MarioGameplayEvaluators::distanceOnly,
-        25,
-        storagePath
-    )
-
-    levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
-    controllerEvolution.storeChart("$storagePath/lg.svg")
+private interface ControllerEvolutionSettings {
+    val evolution: ControllerEvolution
+    val initialController: MarioController
+    val fitnessFunction: MarioGameplayEvaluator<Float>
 }
 
-fun coevNeuroPC() {
-
-    val controllerEvolution = NeuroControllerEvolution(
-        null,
-        populationSize = 50,
-        generationsCount = 20,
-        levelsPerGeneratorCount = 5,
-        mutators = arrayOf(GaussianMutator(0.55)),
-        parallel = true,
-        showChart = false,
-        chartLabel = "Agent NeuroEvolution"
-    )
-
-    val levelGeneratorEvolution = ChunksLevelGeneratorEvolution(
-        populationSize = 50,
-        generationsCount = 5,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = AgentHalfPassing(),
-        displayChart = false,
-        chartLabel = "PC Level Generator"
-    )
-
-    val initialLevelGenerator = PMPLevelGenerator.createSimplest()
-
-    val initialController = SimpleANNController(
-        UpdatedAgentNetwork(
-            receptiveFieldSizeRow = 5,
-            receptiveFieldSizeColumn = 5,
-            receptiveFieldRowOffset = 0,
-            receptiveFieldColumnOffset = 2,
-            hiddenLayerSize = 7
-        )
-    )
-
-    val coevolver = MarioCoEvolver()
-    val storagePath = "result/neuro_pc"
-
-    coevolver.evolve(
-        controllerEvolution,
-        levelGeneratorEvolution,
-        initialController,
-        initialLevelGenerator,
-        MarioGameplayEvaluators::distanceOnly,
-        25,
-        storagePath
-    )
-
-    levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
-    controllerEvolution.storeChart("$storagePath/lg.svg")
+private interface LevelGeneratorEvolutionSettings {
+    val evolution: LevelGeneratorEvolution
+    val initialLevelGenerator: LevelGenerator
 }
 
-fun coevNeatPMP() {
-    val networkSettings = NetworkSettings(7, 7, 0, 2)
+private object NeuroEvolution : ControllerEvolutionSettings {
+    override val evolution
+            get() = NeuroControllerEvolution(
+                null,
+                populationSize = 50,
+                generationsCount = 20,
+                levelsPerGeneratorCount = 5,
+                mutators = arrayOf(GaussianMutator(0.55)),
+                parallel = true,
+                showChart = false,
+                chartLabel = "Agent NeuroEvolution"
+            )
 
-    val controllerEvolution = NeatControllerEvolution(
-        networkSettings,
-        populationSize = 50,
-        generationsCount = 35,
-        levelsPerGeneratorCount = 5,
-        showChart = false,
-        chartLabel = "Agent NeuroEvolution"
-    )
+    override val fitnessFunction: MarioGameplayEvaluator<Float>
+            get() = MarioGameplayEvaluators::distanceOnly
 
-    val levelGeneratorEvolution = PMPLevelGeneratorEvolution(
-        populationSize = 50,
-        generationsCount = 5,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
-        displayChart = false,
-        chartLabel = "PMP Level Generator"
-    )
+    override val initialController
+            get() = SimpleANNController(
+                UpdatedAgentNetwork(
+                    receptiveFieldSizeRow = 5,
+                    receptiveFieldSizeColumn = 5,
+                    receptiveFieldRowOffset = 0,
+                    receptiveFieldColumnOffset = 2,
+                    hiddenLayerSize = 7
+                )
+            )
+}
 
-    val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
-    val initialLevelGenerator = PMPLevelGenerator.createSimplest()
-    val initialController = SimpleANNController(
-        NeatAgentNetwork(
+private object NEATEvolution : ControllerEvolutionSettings {
+    private val networkSettings = NetworkSettings(7, 7, 0, 2)
+    private val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
+
+    override val evolution: ControllerEvolution
+        get() = NeatControllerEvolution(
             networkSettings,
-            Genome(inputsCount, 4)
+            populationSize = 50,
+            generationsCount = 35,
+            levelsPerGeneratorCount = 5,
+            showChart = false,
+            chartLabel = "Agent NeuroEvolution"
         )
-    )
 
-    val coevolver = MarioCoEvolver()
-    val storagePath = "result/neat_pmp"
+    override val initialController: MarioController
+        get() = SimpleANNController(
+            NeatAgentNetwork(
+                networkSettings,
+                Genome(inputsCount, 4)
+            )
+        )
 
-    coevolver.evolve(
-        controllerEvolution,
-        levelGeneratorEvolution,
-        initialController,
-        initialLevelGenerator,
-        MarioGameplayEvaluators::distanceOnly,
-        25,
-        storagePath
-    )
-
-    levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
-    controllerEvolution.storeChart("$storagePath/lg.svg")
+    override val fitnessFunction: MarioGameplayEvaluator<Float>
+        get() = MarioGameplayEvaluators::distanceOnly
 
 }
 
-fun coevNeatPC() {
-    val networkSettings = NetworkSettings(7, 7, 0, 2)
-    val controllerEvolution = NeatControllerEvolution(
-        networkSettings,
-        populationSize = 50,
-        generationsCount = 35,
-        levelsPerGeneratorCount = 5,
-        showChart = false,
-        chartLabel = "Agent NeuroEvolution"
-    )
+private object PCEvolution : LevelGeneratorEvolutionSettings {
+    override val evolution: LevelGeneratorEvolution
+            get() =
+                ChunksLevelGeneratorEvolution(
+                    populationSize = 50,
+                    generationsCount = 15,
+                    evaluateOnLevelsCount = 5,
+                    fitnessFunction = AgentHalfPassing(),
+                    displayChart = false,
+                    chartLabel = "PC Level Generator"
+                )
 
-    val levelGeneratorEvolution = ChunksLevelGeneratorEvolution(
-        populationSize = 50,
-        generationsCount = 5,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = AgentHalfPassing(),
-        displayChart = false,
-        chartLabel = "PC Level Generator"
-    )
+    override val initialLevelGenerator: LevelGenerator
+        get() = PCLevelGenerator.createSimplest()
 
-    val initialLevelGenerator = PCLevelGenerator.createSimplest()
-    val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
-    val initialController = SimpleANNController(
-        NeatAgentNetwork(
-            networkSettings,
-            Genome(inputsCount, 4)
+}
+
+private object PMPEvolution : LevelGeneratorEvolutionSettings {
+    override val evolution: LevelGeneratorEvolution
+        get() = PMPLevelGeneratorEvolution(
+            populationSize = 50,
+            generationsCount = 5,
+            evaluateOnLevelsCount = 5,
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
+            displayChart = false,
+            chartLabel = "PMP Level Generator"
         )
-    )
 
+    override val initialLevelGenerator: LevelGenerator
+        get() = PMPLevelGenerator.createSimplest()
+
+}
+
+private fun coevolve(
+    storagePath: String,
+    controllerEvolutionSettings: ControllerEvolutionSettings,
+    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
+    generations: Int
+) {
+    val controllerEvolution = controllerEvolutionSettings.evolution
+    val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
     val coevolver = MarioCoEvolver()
-    val storagePath = "result/neat_pc"
 
     coevolver.evolve(
         controllerEvolution,
         levelGeneratorEvolution,
-        initialController,
-        initialLevelGenerator,
-        MarioGameplayEvaluators::distanceOnly,
-        25,
+        controllerEvolutionSettings.initialController,
+        levelGeneratorEvolutionSettings.initialLevelGenerator,
+        controllerEvolutionSettings.fitnessFunction,
+        generations,
         storagePath
     )
 
-    levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
-    controllerEvolution.storeChart("$storagePath/lg.svg")
 
+    if (controllerEvolution is Charted)
+        controllerEvolution.storeChart("$storagePath/lg.svg")
+
+    if (levelGeneratorEvolution is Charted)
+        levelGeneratorEvolution.storeChart("$storagePath/ai.svg")
 }

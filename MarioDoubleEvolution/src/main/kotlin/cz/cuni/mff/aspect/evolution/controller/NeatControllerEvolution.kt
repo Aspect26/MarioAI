@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.controller
 import com.evo.NEAT.Environment
 import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
+import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -23,14 +24,10 @@ class NeatControllerEvolution(
     private val levelsPerGeneratorCount: Int = 5,
     private val denseInput: Boolean = true,
     private val chartLabel: String = "NEAT Evolution",
-    private val showChart: Boolean = true
-) : ControllerEvolution {
-
+    private val showChart: Boolean = true,
+    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
+) : ControllerEvolution, Charted by chart {
     private lateinit var topGenome: Genome
-    private val chart = EvolutionLineChart(
-        label = this.chartLabel,
-        hideNegative = true
-    )
 
     class ControllerEvolutionEnvironment(private val levelGenerators: List<LevelGenerator>,
                                          private val networkSettings: NetworkSettings,
@@ -161,7 +158,5 @@ class NeatControllerEvolution(
 
         return SimpleANNController(network)
     }
-
-    fun storeChart(path: String) = this.chart.save(path)
 
 }

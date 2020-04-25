@@ -18,8 +18,8 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
     private val chart: XYChartWithStops =
         XYChartWithStops(
             XYChartBuilder()
-                .width(600)
-                .height(480)
+                .width(1920)
+                .height(1080)
                 .title(label)
                 .xAxisTitle(xLabel)
                 .yAxisTitle(yLabel)

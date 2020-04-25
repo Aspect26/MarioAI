@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.evolution.controller
 
+import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -32,10 +33,10 @@ class NeuroControllerEvolution(
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
     private val levelsPerGeneratorCount: Int = 5,
     private val chartLabel: String = "NeuroController evolution",
-    private val showChart: Boolean = true
-) : ControllerEvolution {
+    private val showChart: Boolean = true,
+    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
+) : ControllerEvolution, Charted by chart {
 
-    private var chart: EvolutionLineChart = EvolutionLineChart(this.chartLabel, hideNegative = true)
     private lateinit var levelGenerators: List<LevelGenerator>
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
@@ -74,10 +75,6 @@ class NeuroControllerEvolution(
         this.controllerNetworkSettings = this.createNetworkSettings(controller.network)
 
         return this.doEvolution()
-    }
-
-    fun storeChart(path: String) {
-        this.chart.save(path)
     }
 
     private fun doEvolution(): MarioController {
