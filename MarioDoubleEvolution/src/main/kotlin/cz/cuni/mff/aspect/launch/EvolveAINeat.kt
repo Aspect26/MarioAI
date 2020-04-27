@@ -14,8 +14,9 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 private val PATH_TO_LATEST_AI = "data/latest_neat_ai.ai"
 
 fun main() {
-//    evolve()
-    continueEvolution()
+    evolve()
+//    continueEvolution()
+//    playLatest()
 }
 
 private fun evolve() {

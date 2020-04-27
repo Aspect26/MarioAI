@@ -23,6 +23,7 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
         this.addActionIfOutputActivated(actions, output, 1, MarioAction.RUN_RIGHT)
         this.addActionIfOutputActivated(actions, output, 2, MarioAction.JUMP)
         this.addActionIfOutputActivated(actions, output, 3, MarioAction.SPECIAL)
+        this.addActionIfOutputActivated(actions, output, 4, MarioAction.SPRINT)
 
         return actions
     }
@@ -66,7 +67,7 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
     companion object {
         private val serialVersionUID = -6994844472540119145L
 
-        private const val OUTPUT_LAYER_SIZE = 4
+        private const val OUTPUT_LAYER_SIZE = 5
         private const val CHOOSE_ACTION_THRESHOLD = 0.95
     }
 

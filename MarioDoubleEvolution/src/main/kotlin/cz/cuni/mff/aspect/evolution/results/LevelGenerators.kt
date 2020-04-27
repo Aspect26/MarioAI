@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.evolution.results
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
 object LevelGenerators {
@@ -30,6 +31,14 @@ object LevelGenerators {
         val lol = ObjectStorage.load("data/level-generators/pmp_lol.lg") as LevelGenerator
 
         val halfSolving = ObjectStorage.load("data/level-generators/pmp_50.lg") as LevelGenerator
+
+    }
+
+    class StaticGenerator(private val levels: Array<MarioLevel>) : LevelGenerator {
+
+        private var currentLevel = 0
+
+        override fun generate(): MarioLevel = this.levels[this.currentLevel++ % this.levels.size]
 
     }
 }

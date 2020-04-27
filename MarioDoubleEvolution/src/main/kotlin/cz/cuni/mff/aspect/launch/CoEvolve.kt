@@ -16,7 +16,7 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/multi-result/neuro_pmp"
+private val RESULT_FILES_PATH = "data/coev/multi-result-2/neuro_pc"
 
 fun main() {
 //    coevolve()

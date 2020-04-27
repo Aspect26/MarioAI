@@ -11,28 +11,31 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
 private val PATH_TO_LATEST_AI = "data/latest_neuro_ai.ai"
 
 fun main() {
-//    evolveAI()
-    continueEvolveAI()
-//    playLatestAI()
+    evolve()
+//    continueEvolve()
+//    playLatest()
 }
 
 
-fun evolveAI() {
+private fun evolve() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
         NetworkSettings(5, 5, 0, 2, 7),
-        5,
         50,
-        levelsPerGeneratorCount = 5,
-        chartLabel = "NeuroEvolution - Update half",
+        50,
+        levelsPerGeneratorCount = 1,
+        chartLabel = "NeuroEvolution - wins",
         mutators = arrayOf(GaussianMutator(0.55))
     )
-    val levelGenerator = PCLevelGenerator.createSimplest()
+    val levelGenerator = LevelGenerators.StaticGenerator(arrayOf(Stage4Level1))
+//    val levelGenerator = PCLevelGenerator()
     val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
@@ -45,7 +48,7 @@ fun evolveAI() {
 }
 
 
-fun continueEvolveAI() {
+private fun continueEvolve() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(null,
         20,
         50,
@@ -72,9 +75,9 @@ fun continueEvolveAI() {
 }
 
 
-fun playLatestAI() {
+private fun playLatest() {
     val controller = ObjectStorage.load(PATH_TO_LATEST_AI) as MarioController
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
+    val levelGenerator = LevelGenerators.StaticGenerator(arrayOf(Stage1Level1))
     val marioSimulator = GameSimulator()
 
     Array(5) { levelGenerator.generate() }.forEach {

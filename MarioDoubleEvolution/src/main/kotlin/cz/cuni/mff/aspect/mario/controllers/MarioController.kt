@@ -22,5 +22,6 @@ enum class MarioAction {
     RUN_RIGHT,
     RUN_LEFT,
     JUMP,
-    SPECIAL
+    SPECIAL,
+    SPRINT
 }

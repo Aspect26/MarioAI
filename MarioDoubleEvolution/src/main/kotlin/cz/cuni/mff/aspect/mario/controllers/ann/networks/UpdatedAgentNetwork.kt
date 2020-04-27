@@ -41,8 +41,8 @@ class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
     override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
+    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
     private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
 
     override fun newInstance(): ControllerArtificialNetwork =
@@ -63,6 +63,7 @@ class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
         this.addActionIfOutputActivated(actions, output, 1, MarioAction.RUN_RIGHT)
         this.addActionIfOutputActivated(actions, output, 2, MarioAction.JUMP)
         this.addActionIfOutputActivated(actions, output, 3, MarioAction.SPECIAL)
+        this.addActionIfOutputActivated(actions, output, 4, MarioAction.SPRINT)
 
         return actions
     }
@@ -122,7 +123,7 @@ class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
 
     companion object {
         private val serialVersionUID = -1794183199102411681L
-        private const val OUTPUT_LAYER_SIZE = 4
+        private const val OUTPUT_LAYER_SIZE = 5
         private const val CHOOSE_ACTION_THRESHOLD = 0.95
     }
 }
