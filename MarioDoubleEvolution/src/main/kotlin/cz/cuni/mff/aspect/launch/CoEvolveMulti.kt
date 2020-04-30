@@ -21,10 +21,10 @@ import io.jenetics.GaussianMutator
 private const val generations = 30
 
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations)
-    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
-    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations)
-    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations)
+    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 10)
+//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
+//    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations)
+//    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations)
 }
 
 private interface ControllerEvolutionSettings {
@@ -130,7 +130,8 @@ private fun coevolve(
     storagePath: String,
     controllerEvolutionSettings: ControllerEvolutionSettings,
     levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
-    generations: Int
+    generations: Int,
+    repeatGeneratorsCount: Int
 ) {
     val controllerEvolution = controllerEvolutionSettings.evolution
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
@@ -143,6 +144,7 @@ private fun coevolve(
         levelGeneratorEvolutionSettings.initialLevelGenerator,
         controllerEvolutionSettings.fitnessFunction,
         generations,
+        repeatGeneratorsCount,
         storagePath
     )
 

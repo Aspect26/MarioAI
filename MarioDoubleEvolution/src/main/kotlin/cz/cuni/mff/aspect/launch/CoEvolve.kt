@@ -55,7 +55,6 @@ fun coevolve() {
 
     val coevolver = MarioCoEvolver()
 
-    // TODO: omg wtf preco AI evolucia ma fitness v evolve() a lg evolucia v c'tore -_-
     val result = coevolver.evolve(
         controllerEvolution,
         levelGeneratorEvolution,

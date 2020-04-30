@@ -18,10 +18,11 @@ class MarioCoEvolver {
                initialController: MarioController, initialLevelGenerator: LevelGenerator,
                controllerFitness: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
                generations: Int = DEFAULT_GENERATIONS_NUMBER,
+               repeatGeneratorsCount: Int = DEFAULT_REPEAT_GENERATORS_COUNT,
                storagePath: String
     ): CoevolutionResult {
         var currentController: MarioController = initialController
-        val generatorsHistory: LimitedHistory<LevelGenerator> = LimitedHistory(5)
+        val generatorsHistory: LimitedHistory<LevelGenerator> = LimitedHistory(repeatGeneratorsCount)
         generatorsHistory.push(initialLevelGenerator)
         var latestGenerator: LevelGenerator = initialLevelGenerator
 
@@ -58,6 +59,7 @@ class MarioCoEvolver {
     }
 
     companion object {
-        private const val DEFAULT_GENERATIONS_NUMBER: Int = 1
+        private const val DEFAULT_GENERATIONS_NUMBER: Int = 10
+        private const val DEFAULT_REPEAT_GENERATORS_COUNT: Int = 5
     }
 }
