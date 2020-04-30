@@ -8,12 +8,12 @@ import io.jenetics.Optimize
 
 class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : SummingEvaluator() {
 
-    override fun evaluateOne(level: MarioLevel, chunkMetadata: ChunksLevelMetadata, gameStatistic: GameStatistics): Float {
-        val distance = gameStatistic.finalMarioDistance
+    override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {
+        val distance = gameStatistics.finalMarioDistance
 
-        val difficultyFactor = DifficultyEvaluator().evaluateOne(level, chunkMetadata, gameStatistic)
-        val linearityFactor = LinearityEvaluator().evaluateOne(level, chunkMetadata, gameStatistic)
-        val compressionFactor = HuffmanCompressionEvaluator().evaluateOne(level, chunkMetadata, gameStatistic)
+        val difficultyFactor = DifficultyEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val linearityFactor = LinearityEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
+        val compressionFactor = HuffmanCompressionEvaluator().evaluateOne(level, levelMetadata, gameStatistics)
 
         val linearityDiscretized = discretize(linearityFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))
         val difficultyDiscretized = discretize(difficultyFactor, arrayOf(0.0f, 0.3f, 0.6f, 1.0f))

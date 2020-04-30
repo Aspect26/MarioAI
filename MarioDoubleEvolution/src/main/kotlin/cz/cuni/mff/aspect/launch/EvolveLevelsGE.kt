@@ -15,7 +15,6 @@ fun main() {
 
 fun grammarEvolution() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val marioAgent = agent as MarioAgent
 
     val levelEvolution = GrammarLevelEvolution()
     val levels = levelEvolution.evolve { Agents.NeuroEvolution.Stage4Level1Solver }

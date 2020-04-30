@@ -54,7 +54,7 @@ fun playLatestPC() {
 //        val agent = Agents.NeuroEvolution.Stage4Level1Solver
         val agent = MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController)
         LevelVisualiser().display(level)
-        val stats = simulator.playMario(agent, postProcessed, true)
+        simulator.playMario(agent, postProcessed, true)
     }
 }
 
@@ -65,10 +65,6 @@ fun createDefaultPC() {
     for (i in 0 .. 10) {
         val agent = CheaterKeyboardAgent()
         val defaultLevel = levelGenerator.generate()
-        val chunksMetadata: ChunksLevelMetadata = levelGenerator.lastChunksMetadata
-
-//        levelDifficulty(defaultLevel)
-//        println(chunksMetadata.chunks.joinToString(", ") { it.chunk.name })
 
         LevelVisualiser().display(defaultLevel)
         val postProcessed = LevelPostProcessor.postProcess(defaultLevel)

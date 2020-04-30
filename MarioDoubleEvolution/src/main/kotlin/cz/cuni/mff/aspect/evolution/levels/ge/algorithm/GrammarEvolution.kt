@@ -27,12 +27,12 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
         return when {
             this.resultsCount == 1 -> {
                 val result = this.evolveBest(evolutionEngine, this.generationsCount)
-                val genes = result.bestPhenotype.genotype.getByteValues()
+                val genes = result.bestPhenotype().genotype().getByteValues()
                 listOf(this.getGrammarSentence(genes))
             }
             this.resultsCount > 1 -> {
                 val result = this.evolveMultipleBest(evolutionEngine, this.generationsCount, this.resultsCount)
-                result.map { it.genotype.getByteValues() }.map { this.getGrammarSentence(it) }
+                result.map { it.genotype().getByteValues() }.map { this.getGrammarSentence(it) }
             }
             else -> {
                 throw IllegalArgumentException("Result count cannot be less than 1")
@@ -50,7 +50,7 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
             .survivorsSelector(EliteSelector(10))
             .offspringSelector(RouletteWheelSelector())
             .mapping { evolutionResult ->
-                println("[GE] new gen: ${evolutionResult.generation} (best fitness: ${evolutionResult.bestFitness})")
+                println("[GE] new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()})")
                 evolutionResult
             }
             .build()
@@ -65,8 +65,8 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
             .limit(generationsCount)
             .collect(Collectors.toList())
 
-        val allIndividuals = allGenerations.map { it.population.toList() }.flatten()
-        return allIndividuals.sortedByDescending { it.fitness }.subList(0, resultCount)
+        val allIndividuals = allGenerations.map { it.population().toList() }.flatten()
+        return allIndividuals.sortedByDescending { it.fitness() }.subList(0, resultCount)
     }
 
     private val fitness = java.util.function.Function<Genotype<ByteGene>, Float> { genotype -> fitness(genotype) }

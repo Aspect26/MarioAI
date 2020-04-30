@@ -55,7 +55,7 @@ fun coevolve() {
 
     val coevolver = MarioCoEvolver()
 
-    val result = coevolver.evolve(
+    coevolver.evolve(
         controllerEvolution,
         levelGeneratorEvolution,
         initialController,
@@ -79,7 +79,7 @@ fun playLatestCo() {
         hiddenLayerSize = 7
     ))
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
-//    simulator.playMario(currentController, currentGenerator.generate())
+    simulator.playMario(currentController, currentGenerator.generate())
 
     for (i in 3 .. 25) {
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController

@@ -16,6 +16,7 @@ object DeepCopy {
         val bais = ByteArrayInputStream(baos.toByteArray())
         val ois = ObjectInputStream(bais)
 
+        @Suppress("UNCHECKED_CAST")
         return ois.readObject() as T
     }
 

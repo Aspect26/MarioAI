@@ -60,7 +60,6 @@ fun playLatestPMP() {
 }
 
 fun evaluateLatestPMP() {
-    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
     val levelGenerator = ObjectStorage.load(FILE_PATH_LATEST_PMP) as PMPLevelGenerator
     val evaluator = DifficultyEvaluator()
 

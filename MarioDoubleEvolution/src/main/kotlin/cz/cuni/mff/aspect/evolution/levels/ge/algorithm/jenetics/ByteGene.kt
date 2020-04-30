@@ -36,7 +36,7 @@ class ByteGene(private val value: Byte) : NumericGene<Byte, ByteGene> {
         private var randomBytesIndex: Int = randomBytes.size
 
         fun seq(lengthRange: IntRange): ISeq<ByteGene> {
-            val length = lengthRange.min + random.nextInt(lengthRange.size())
+            val length = lengthRange.min() + random.nextInt(lengthRange.size())
             val values = RandomUtils.nextBytes(length)
             var current = 0
 
