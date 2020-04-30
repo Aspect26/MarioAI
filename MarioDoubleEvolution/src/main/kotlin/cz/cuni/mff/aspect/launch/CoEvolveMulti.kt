@@ -6,7 +6,7 @@ import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
@@ -96,7 +96,7 @@ private object NEATEvolution : ControllerEvolutionSettings {
 private object PCEvolution : LevelGeneratorEvolutionSettings {
     override val evolution: LevelGeneratorEvolution
             get() =
-                ChunksLevelGeneratorEvolution(
+                PCLevelGeneratorEvolution(
                     populationSize = 50,
                     generationsCount = 15,
                     evaluateOnLevelsCount = 5,

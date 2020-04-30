@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.ChunksLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -13,10 +13,9 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
-import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/multi-result/neuro_pmp"
+private val RESULT_FILES_PATH = "data/coev/multi-result-3/neuro_pc"
 
 fun main() {
 //    coevolve()
@@ -35,7 +34,7 @@ fun coevolve() {
         chartLabel = "Agent NeuroEvolution"
     )
 
-    val levelGeneratorEvolution = ChunksLevelGeneratorEvolution(
+    val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,
@@ -82,7 +81,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 25) {
+    for (i in 3 .. 25) {
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
         currentGenerator = ObjectStorage.load("$RESULT_FILES_PATH/lg_$i.lg") as LevelGenerator
 

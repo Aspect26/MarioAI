@@ -17,9 +17,6 @@ fun main() {
     doManyNEATEvolution()
 }
 
-// TODO: something weird is happening - when training on only 1 level, the objective can reach 1 and then drop back to 0 with fitness distanceOnly
-// fitness is also dropping even with elite selector...
-
 
 fun doManyNEATEvolution() {
     val levelGenerators = listOf(LevelGenerators.PCGenerator.all)

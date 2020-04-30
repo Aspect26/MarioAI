@@ -19,6 +19,8 @@ class EvolutionLineChart(label: String = "Evolution", private val hideFirst: Int
 
     val isShown get() = this.lineChart.isShown
 
+    val isEmpty get() = this.data[0].third.isEmpty()
+
     fun show() {
         this.lineChart.renderChart()
     }

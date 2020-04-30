@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.utils
+package cz.cuni.mff.aspect.evolution.jenetics.alterers
 
 import io.jenetics.Alterer
 import io.jenetics.Mutator
@@ -17,8 +17,8 @@ class UpdatedGaussianMutator<G : NumericGene<*, G>, C : Comparable<C>> @JvmOverl
 ) : Mutator<G, C>(probability) {
 
     override fun mutate(gene: G, random: Random): G {
-        val min = gene.getMin().toDouble()
-        val max = gene.getMax().toDouble()
+        val min = gene.min().toDouble()
+        val max = gene.max().toDouble()
         val std = (max - min) * this.standardDeviation
 
         val value = gene.doubleValue()
