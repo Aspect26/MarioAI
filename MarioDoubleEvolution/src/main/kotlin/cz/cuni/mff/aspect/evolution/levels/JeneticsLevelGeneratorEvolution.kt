@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.evolution.levels
 
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.Charted
-import cz.cuni.mff.aspect.evolution.jenetics.evaluators.AlwaysReevaluatingEvaluator
+import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
@@ -10,7 +10,6 @@ import io.jenetics.engine.EvolutionResult
 import io.jenetics.util.Factory
 import java.util.concurrent.ForkJoinPool
 
-// TODO: make generic
 abstract class JeneticsLevelGeneratorEvolution(
     protected val populationSize: Int,
     protected val generationsCount: Int,
@@ -23,10 +22,11 @@ abstract class JeneticsLevelGeneratorEvolution(
 ) : LevelGeneratorEvolution, Charted by chart {
 
     protected lateinit var agentFactory: () -> IAgent
-    private lateinit var evaluator: AlwaysReevaluatingEvaluator<DoubleGene, Float>
+    private lateinit var evaluator: MarioJeneticsEvaluator<DoubleGene, Float>
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
+        this.evaluator = this.createNewEvaluator()
         val initialGenotype = this.createInitialGenotype()
         val evolutionEngine = this.createEvolutionEngine(initialGenotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
@@ -35,6 +35,13 @@ abstract class JeneticsLevelGeneratorEvolution(
         return levelGeneratorFromIndividual(resultGenotype)
     }
 
+    private fun createNewEvaluator(): MarioJeneticsEvaluator<DoubleGene, Float> =
+        MarioJeneticsEvaluator(
+            this::computeFitnessAndObjective,
+            true,
+            ForkJoinPool.commonPool()
+        )
+
     protected abstract fun createInitialGenotype(): Factory<Genotype<DoubleGene>>
 
     protected abstract fun levelGeneratorFromIndividual(genotype: Genotype<DoubleGene>): LevelGenerator
@@ -42,11 +49,6 @@ abstract class JeneticsLevelGeneratorEvolution(
     protected abstract fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float>
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
-        this.evaluator = AlwaysReevaluatingEvaluator(
-            ForkJoinPool.commonPool(),
-            this::computeFitnessAndObjective
-        )
-
         return Engine.Builder(this.evaluator, initialGenotype)
             .optimize(this.optimize)
             .populationSize(this.populationSize)
@@ -76,6 +78,6 @@ abstract class JeneticsLevelGeneratorEvolution(
 
         this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), bestObjective!!.toDouble(), averageObjective)
 
-        println("new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()})")
+        println("new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()}, best objective: ${bestObjective})")
     }
 }
