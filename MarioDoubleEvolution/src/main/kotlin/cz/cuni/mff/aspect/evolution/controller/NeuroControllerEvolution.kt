@@ -1,21 +1,21 @@
 package cz.cuni.mff.aspect.evolution.controller
 
 import cz.cuni.mff.aspect.evolution.Charted
+import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.utils.getDoubleValues
+import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
-import cz.woitee.endlessRunners.evolution.utils.MarioEvaluator
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult
 import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.DoubleRange
 import io.jenetics.util.Factory
-import java.lang.IllegalArgumentException
 import java.util.concurrent.ForkJoinPool
 
 
@@ -32,6 +32,7 @@ class NeuroControllerEvolution(
     private val offspringSelector: Selector<DoubleGene, Float> = TournamentSelector(2),
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
     private val levelsPerGeneratorCount: Int = 5,
+    private val alwaysReevaluate: Boolean = true,
     private val chartLabel: String = "NeuroController evolution",
     private val showChart: Boolean = true,
     private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
@@ -41,6 +42,8 @@ class NeuroControllerEvolution(
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
     private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
     private var initialAgentNetwork: UpdatedAgentNetwork? = null
+    private lateinit var evaluator: MarioJeneticsEvaluator<DoubleGene, Float>
+    private val optimize = Optimize.MAXIMUM
 
     override fun evolve(
         levelGenerators: List<LevelGenerator>,
@@ -81,10 +84,10 @@ class NeuroControllerEvolution(
         if (this.showChart && !this.chart.isShown) this.chart.show()
         this.chart.addStop()
 
+        this.evaluator = this.createEvaluator()
         val genotype = this.createInitialGenotypes()
-        val evaluator = this.createEvaluator()
-        val engine = this.createEvolutionEngine(genotype, evaluator)
-        val result = this.doEvolution(engine, evaluator)
+        val engine = this.createEvolutionEngine(genotype)
+        val result = this.doEvolution(engine)
 
         println("Best fitness - ${result.bestFitness()}")
 
@@ -111,23 +114,19 @@ class NeuroControllerEvolution(
         }
     }
 
-    private fun createEvaluator(): MarioEvaluator<DoubleGene, Float> {
+    private fun createEvaluator(): MarioJeneticsEvaluator<DoubleGene, Float> {
         val executor = if (this.parallel) ForkJoinPool.commonPool() else Concurrency.SERIAL_EXECUTOR
 
-        return MarioEvaluator(
-            executor,
-            fitnessFunction,
-            objectiveFunction,
-            this.createControllerNetwork(),
-            levelGenerators,
-            levelsPerGeneratorCount,
-            alwaysEvaluate = true
+        return MarioJeneticsEvaluator(
+            this::computeFitnessAndObjective,
+            this.alwaysReevaluate,
+            executor
         )
     }
 
-    private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>, evaluator: MarioEvaluator<DoubleGene, Float>): Engine<DoubleGene, Float> {
-        val engine = Engine.Builder(evaluator, initialGenotype)
-                .optimize(Optimize.MAXIMUM)
+    private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
+        val engine = Engine.Builder(this.evaluator, initialGenotype)
+                .optimize(this.optimize)
                 .populationSize(this.populationSize)
 
         if (this.mutators.isNotEmpty()) {
@@ -146,18 +145,23 @@ class NeuroControllerEvolution(
         return Pair(data[0], rest)
     }
 
-    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>, evaluator: MarioEvaluator<DoubleGene, Float>): EvolutionResult<DoubleGene, Float> {
+    private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): EvolutionResult<DoubleGene, Float> {
         return evolutionEngine.stream()
             .limit(this.generationsCount)
-            .peek {
-                val bestFitness = it.bestFitness().toDouble()
-                val averageFitness = this.getAverageFitness(it).toDouble()
-                val maxObjective = this.getBestObjectiveValue(evaluator).toDouble()
-                val averageObjective = this.getAverageObjectiveValue(evaluator).toDouble()
-                this.chart.nextGeneration(bestFitness, averageFitness, maxObjective, averageObjective)
-                println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()}, best objective: ${evaluator.getBestObjectiveFromLastGeneration()})")
-            }
+            .peek (this::onGenerationPassed)
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
+    }
+
+    private fun onGenerationPassed(evolutionResult: EvolutionResult<DoubleGene, Float>) {
+        val bestFitness = evolutionResult.bestFitness().toDouble()
+        val averageFitness = evolutionResult.population().asList().fold(0.0f, { acc, genotype -> acc + genotype.fitness() }) / evolutionResult.population().length()
+
+        val averageObjective = this.evaluator.lastGenerationObjectives.average()
+        val bestObjective = if (this.optimize == Optimize.MAXIMUM) this.evaluator.lastGenerationObjectives.max() else this.evaluator.lastGenerationObjectives.min()
+
+        this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), bestObjective!!.toDouble(), averageObjective)
+
+        println("new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()}, best objective: ${bestObjective})")
     }
 
     private fun createNetworkSettings(agentNetwork: UpdatedAgentNetwork): NetworkSettings {
@@ -186,16 +190,19 @@ class NeuroControllerEvolution(
         return network
     }
 
-    private fun getAverageFitness(evolutionResult: EvolutionResult<DoubleGene, Float>): Float {
-        return evolutionResult.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / evolutionResult.population().length()
-    }
+    private fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float> {
+        val networkWeights: DoubleArray = genotype.getDoubleValues()
+        val controllerNetwork = this.createControllerNetwork()
+        controllerNetwork.setNetworkWeights(networkWeights)
 
-    private fun getBestObjectiveValue(evaluator: MarioEvaluator<DoubleGene, Float>): Float {
-        return evaluator.getBestObjectiveFromLastGeneration()
-    }
+        val controller = SimpleANNController(controllerNetwork)
+        val levels = Array(this.levelsPerGeneratorCount * this.levelGenerators.size) {
+            this.levelGenerators[it % this.levelGenerators.size].generate()
+        }
+        val marioSimulator = GameSimulator(1000)
+        val statistics = marioSimulator.playMario(controller, levels, false)
 
-    private fun getAverageObjectiveValue(evaluator: MarioEvaluator<DoubleGene, Float>): Float {
-        return evaluator.getAverageObjectiveFromLastGeneration().toFloat()
+        return Pair(fitnessFunction(statistics), objectiveFunction(statistics))
     }
 
     companion object {

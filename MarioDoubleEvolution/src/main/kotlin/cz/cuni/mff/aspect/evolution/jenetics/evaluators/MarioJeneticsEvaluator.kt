@@ -8,16 +8,17 @@ import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.ISeq
 import io.jenetics.util.Seq
 import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
 
 /**
  * This evaluator evaluates also objective value, not only fitness and has the ability to evaluate fitness of each
  * individual in each generation whereas the default Jenetics evaluator evaluates fitness of an individual only once
  * throughout the whole evolution.
  */
-class AlwaysReevaluatingEvaluator<G : Gene<*, G>, C : Comparable<C>>(
-    private val executor: Executor? = null,
+class MarioJeneticsEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     private val fitnessAndObjectiveFunction: (genotype: Genotype<G>) -> Pair<C, C>,
-    private val alwaysEvaluate: Boolean = false
+    private val alwaysEvaluate: Boolean,
+    private val executor: Executor = ForkJoinPool.commonPool()
 ) : Evaluator<G, C> {
     private val concurrency = Concurrency.with(this.executor)
 

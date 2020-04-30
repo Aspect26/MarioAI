@@ -11,14 +11,17 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
 private val PATH_TO_LATEST_AI = "data/latest_neuro_ai.ai"
 
 fun main() {
-//    evolveAI()
-    continueEvolveAI()
+    evolveAI()
+//    continueEvolveAI()
 //    playLatestAI()
 }
 
@@ -26,13 +29,15 @@ fun main() {
 fun evolveAI() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
         NetworkSettings(5, 5, 0, 2, 7),
-        5,
+        15,
         50,
         levelsPerGeneratorCount = 5,
         chartLabel = "NeuroEvolution - Update half",
-        mutators = arrayOf(GaussianMutator(0.55))
+        mutators = arrayOf(GaussianMutator(0.55)),
+        alwaysReevaluate = false
     )
-    val levelGenerator = PCLevelGenerator.createSimplest()
+//    val levelGenerator = PCLevelGenerator.createSimplest()
+    val levelGenerator = LevelGenerators.StaticGenerator(Stage1Level1Split.levels)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
