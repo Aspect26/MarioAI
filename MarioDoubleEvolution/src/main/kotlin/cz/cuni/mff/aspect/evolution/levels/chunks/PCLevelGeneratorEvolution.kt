@@ -11,14 +11,13 @@ import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.util.Factory
 
-
-class ChunksLevelGeneratorEvolution(
-    populationSize: Int = POPULATION_SIZE,
-    generationsCount: Int = GENERATIONS_COUNT,
-    private val fitnessFunction: PCLevelGeneratorEvaluator<Float> = LinearityEvaluator(),
-    private val evaluateOnLevelsCount: Int = 5,
-    private val chunksCount: Int = 35,
-    chartLabel: String = "Chunks level generator evolution",
+class PCLevelGeneratorEvolution(
+    populationSize: Int,
+    generationsCount: Int,
+    private val fitnessFunction: PCLevelGeneratorEvaluator<Float>,
+    private val evaluateOnLevelsCount: Int = DEFAULT_EVALUATE_ON_LEVELS_COUNT,
+    private val chunksCount: Int = DEFAULT_CHUNKS_COUNT,
+    chartLabel: String = DEFAULT_CHART_LABEL,
     displayChart: Boolean = true
 ) : JeneticsLevelGeneratorEvolution(
     populationSize,
@@ -45,8 +44,9 @@ class ChunksLevelGeneratorEvolution(
     }
 
     companion object {
-        private const val POPULATION_SIZE: Int = 70
-        private const val GENERATIONS_COUNT: Int = 50
+        private const val DEFAULT_CHUNKS_COUNT: Int = 35
+        private const val DEFAULT_EVALUATE_ON_LEVELS_COUNT: Int = 5
+        private const val DEFAULT_CHART_LABEL: String = "PC Level Generator Evolution"
     }
 
 }

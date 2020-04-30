@@ -8,7 +8,6 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 
-
 interface PMPLevelGeneratorEvaluator<F> {
 
     operator fun invoke(levelGenerator: PMPLevelGenerator, agentFactory: () -> IAgent, levelsCount: Int): F
@@ -16,7 +15,6 @@ interface PMPLevelGeneratorEvaluator<F> {
     val optimize: Optimize
 
 }
-
 
 abstract class PMPLevelGeneratorEvaluatorBase : PMPLevelGeneratorEvaluator<Float> {
 

@@ -10,6 +10,7 @@ import io.jenetics.engine.EvolutionResult
 import io.jenetics.util.Factory
 import java.util.concurrent.ForkJoinPool
 
+// TODO: make generic
 abstract class JeneticsLevelGeneratorEvolution(
     protected val populationSize: Int,
     protected val generationsCount: Int,
@@ -22,6 +23,7 @@ abstract class JeneticsLevelGeneratorEvolution(
 ) : LevelGeneratorEvolution, Charted by chart {
 
     protected lateinit var agentFactory: () -> IAgent
+    private lateinit var evaluator: AlwaysReevaluatingEvaluator<DoubleGene, Float>
 
     override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
         this.agentFactory = agentFactory
@@ -40,13 +42,12 @@ abstract class JeneticsLevelGeneratorEvolution(
     protected abstract fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float>
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> {
-        return Engine.Builder(
-            AlwaysReevaluatingEvaluator(
-                ForkJoinPool.commonPool(),
-                this::computeFitnessAndObjective
-            ),
-            initialGenotype
+        this.evaluator = AlwaysReevaluatingEvaluator(
+            ForkJoinPool.commonPool(),
+            this::computeFitnessAndObjective
         )
+
+        return Engine.Builder(this.evaluator, initialGenotype)
             .optimize(this.optimize)
             .populationSize(this.populationSize)
             .alterers(this.alterers[0], *this.alterers.slice(1 until this.alterers.size).toTypedArray())
@@ -55,21 +56,26 @@ abstract class JeneticsLevelGeneratorEvolution(
             .build()
     }
 
-    // TODO: add stop to chart only if empty
-    // TODO: add objective to chart
     private fun doEvolution(evolutionEngine: Engine<DoubleGene, Float>): Phenotype<DoubleGene, Float> {
         if (this.displayChart && !this.chart.isShown) this.chart.show()
-        this.chart.addStop()
+        if (!this.chart.isEmpty) this.chart.addStop()
 
         return evolutionEngine.stream()
             .limit(this.generationsCount.toLong())
-            .peek {
-                val bestFitness = it.bestFitness().toDouble()
-                val averageFitness = it.population().asList().fold(0.0f, {accumulator, genotype -> accumulator + genotype.fitness()}) / it.population().length()
-                this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), 0.0, 0.0)
-                println("new gen: ${it.generation()} (best fitness: ${it.bestFitness()})")
-            }
+            .peek(this::onGenerationPassed)
             .collect(EvolutionResult.toBestEvolutionResult<DoubleGene, Float>())
             .bestPhenotype()
+    }
+
+    private fun onGenerationPassed(evolutionResult: EvolutionResult<DoubleGene, Float>) {
+        val bestFitness = evolutionResult.bestFitness().toDouble()
+        val averageFitness = evolutionResult.population().asList().fold(0.0f, { acc, genotype -> acc + genotype.fitness() }) / evolutionResult.population().length()
+
+        val averageObjective = this.evaluator.lastGenerationObjectives.average()
+        val bestObjective = if (this.optimize == Optimize.MAXIMUM) this.evaluator.lastGenerationObjectives.max() else this.evaluator.lastGenerationObjectives.min()
+
+        this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), bestObjective!!.toDouble(), averageObjective)
+
+        println("new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()})")
     }
 }
