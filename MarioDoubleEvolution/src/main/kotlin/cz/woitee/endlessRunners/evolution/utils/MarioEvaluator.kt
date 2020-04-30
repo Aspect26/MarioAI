@@ -36,26 +36,17 @@ class MarioEvaluator<G, C>(
     private val controllerNetwork: ControllerArtificialNetwork,
     private val levelGenerators: List<LevelGenerator>,
     private val levelsPerGeneratorCount: Int,
-    private val alwaysEvaluate: Boolean = false,
-    private val seed: Long? = null
+    private val alwaysEvaluate: Boolean = false
 ) : Evaluator<G, C>
         where G : NumericGene<*, G>,
               C : Comparable<C>,
               C : Number {
-    private val random = if (seed != null) Random(seed) else Random()
-    private val seedMap = HashMap<Int, Long>()
     private val objectiveResults = mutableListOf<HashMap<Int, C>>()
 
     /**
      * Evaluate implementation, possibly reevaluating all individuals in a population.
      */
     override fun eval(population: Seq<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
-        seedMap.clear()
-        population.forEach {
-            val genotypeId = System.identityHashCode(it.genotype())
-            seedMap[genotypeId] = random.nextLong()
-        }
-
         // Evaluation happens twice per evolution step in jenetics
         // But we should do the "always evaluation" only once, since it would be wasteful otherwise
         val shouldReevaluateAll = alwaysEvaluate && isEverybodyEvaluated(population)
@@ -103,13 +94,6 @@ class MarioEvaluator<G, C>(
         this.objectiveResults.add(objectives)
 
         return newPhenotypes
-    }
-
-    /**
-     * Returns a seed a specific genotype should be evaluated with.
-     */
-    fun seedForGenotype(genotype: Genotype<G>): Long {
-        return seedMap[System.identityHashCode(genotype)]!!
     }
 
     /**

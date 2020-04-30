@@ -16,7 +16,7 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/multi-result/neuro_pmp"
+private val RESULT_FILES_PATH = "data/coev/multi-result-3/neuro_pc"
 
 fun main() {
 //    coevolve()
@@ -82,7 +82,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 25) {
+    for (i in 3 .. 25) {
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
         currentGenerator = ObjectStorage.load("$RESULT_FILES_PATH/lg_$i.lg") as LevelGenerator
 
