@@ -62,6 +62,7 @@ fun coevolve() {
         initialLevelGenerator,
         MarioGameplayEvaluators::distanceOnly,
         25,
+        5,
         RESULT_FILES_PATH
     )
 
