@@ -14,7 +14,7 @@ class EvolutionLineChart(label: String = "Evolution", private val hideNegative: 
     private val bestObjectiveSeries = DataSeries("Best objective value", Color(0, 0, 255), mutableListOf())
     private val averageObjectiveSeries = DataSeries("Average objective value", Color(78, 147, 255), mutableListOf())
 
-    private val _dataSeries: List<DataSeries> = listOf(
+    private val _dataSeries: EvolutionDataSeries = EvolutionDataSeries(
         bestFitnessSeries,
         averageFitnessSeries,
         bestObjectiveSeries,
@@ -27,7 +27,7 @@ class EvolutionLineChart(label: String = "Evolution", private val hideNegative: 
 
     val isEmpty get() = this.bestFitnessSeries.data.isEmpty()
 
-    val dataSeries: List<DataSeries> get() = this._dataSeries
+    val dataSeries: EvolutionDataSeries get() = this._dataSeries
 
     val stops: List<Double> get() = this._stops
 
@@ -40,7 +40,7 @@ class EvolutionLineChart(label: String = "Evolution", private val hideNegative: 
 
     private fun setGeneration(generation: Int, bestFitness: Double, averageFitness: Double, bestObjective: Double, averageObjective: Double) {
         this.addData(generation, bestFitness, averageFitness, bestObjective, averageObjective)
-        this.lineChart.updateChart(this._dataSeries, this._stops)
+        this.lineChart.updateChart(this._dataSeries.asList(), this._stops)
     }
 
     private fun addData(generation: Int, bestFitness: Double, averageFitness: Double, bestObjective: Double, averageObjective: Double) {

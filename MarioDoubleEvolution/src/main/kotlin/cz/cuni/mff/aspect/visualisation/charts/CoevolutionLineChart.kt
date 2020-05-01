@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
 import java.awt.Color
-import kotlin.math.max
+import kotlin.math.min
 
 class CoevolutionLineChart(
     private val firstChart: EvolutionLineChart,
@@ -19,67 +19,84 @@ class CoevolutionLineChart(
 
     fun storeChart(path: String) = this.lineChart.save(path)
 
-    // TODO: refactor me
     private fun updateChartData() {
-        val bestFitnessSeries = DataSeries("Best fitness", Color(255, 0, 0), mutableListOf())
-        val averageFitnessSeries = DataSeries("Average fitness", Color(255, 113, 96), mutableListOf())
-        val bestObjectiveSeries = DataSeries("Best objective value", Color(0, 0, 255), mutableListOf())
-        val averageObjectiveSeries = DataSeries("Average objective value", Color(78, 147, 255), mutableListOf())
-
-        val dataSeries = listOf(bestFitnessSeries, averageFitnessSeries, bestObjectiveSeries, averageObjectiveSeries)
+        val evolutionDataSeries = this.createEmptyDataSeries()
 
         val firstChartData = this.getChartData(this.firstChart)
         val secondChartData = this.getChartData(this.secondChart)
 
-        val coevolutionStops = mutableListOf<Double>()
-        var firstEvolutionGenerationShift = 0.0
-        var secondEvolutionGenerationShift = 0.0
+        this.adjustGenerationStart(firstChartData, secondChartData)
+        val coevolutionStops = this.createCoevolutionStops(firstChartData, secondChartData)
 
-        for (coevolutionIndex in 0 until max(firstChartData[0].size, secondChartData[0].size)) {
-            if (coevolutionIndex < firstChartData[0].size) {
-                secondEvolutionGenerationShift = firstChartData[0][coevolutionIndex].data.maxBy { it.first }!!.first
-
-                firstChartData.forEachIndexed { index, chartSeries ->
-                    val chartData = chartSeries[coevolutionIndex].data
-                    dataSeries[index].data.addAll(chartData.map {
-                            dataPoint -> Pair(dataPoint.first + firstEvolutionGenerationShift, dataPoint.second)
-                    })
-                }
-            }
-            coevolutionStops.add(bestFitnessSeries.data.maxBy { it.first }!!.first)
-
-            if (coevolutionIndex < secondChartData[0].size) {
-                firstEvolutionGenerationShift = secondChartData[0][coevolutionIndex].data.maxBy { it.first }!!.first
-
-                secondChartData.forEachIndexed { index, chartSeries ->
-                    val chartData = chartSeries[coevolutionIndex].data
-                    dataSeries[index].data.addAll(chartData.map {
-                            dataPoint -> Pair(dataPoint.first + secondEvolutionGenerationShift, dataPoint.second)
-                    })
-                }
-
-            }
-            coevolutionStops.add(bestFitnessSeries.data.maxBy { it.first }!!.first)
+        evolutionDataSeries.asList().forEachIndexed { seriesIndex, dataSeries ->
+            dataSeries.data = listOf(firstChartData, secondChartData).asSequence().flatten().map { evolutionDataSeries ->
+                evolutionDataSeries.asList()[seriesIndex].data
+            }.flatten().sortedBy { it.first }.toMutableList()
         }
 
         this.lineChart.updateChart(
-            dataSeries,
+            evolutionDataSeries.asList(),
             coevolutionStops
         )
     }
 
+    private fun createEmptyDataSeries(): EvolutionDataSeries =
+        EvolutionDataSeries(
+            DataSeries("Best fitness", Color(255, 0, 0), mutableListOf()),
+            DataSeries("Average fitness", Color(255, 113, 96), mutableListOf()),
+            DataSeries("Best objective value", Color(0, 0, 255), mutableListOf()),
+            DataSeries("Average objective value", Color(78, 147, 255), mutableListOf())
+        )
+
     /**
      * Splits the chart's data series according to chart's stops
      */
-    private fun getChartData(chart: EvolutionLineChart): List<List<DataSeries>> =
-        chart.dataSeries.map { dataSeries ->
-            val data: List<MutableList<Pair<Double, Double>>> = dataSeries.data.withIndex()
-                .groupBy { chart.stops.reversed().firstOrNull { stop -> (stop - 1) < it.index } }
-                .map { it.value.map { it.value }.toMutableList() }
+    private fun getChartData(chart: EvolutionLineChart): List<EvolutionDataSeries> =
+        chart.stops.mapIndexed { stopIndex, currentStop ->
+            val fromIndex = if (stopIndex == 0) 0 else chart.stops[stopIndex - 1].toInt()
+            val toIndex = currentStop.toInt()
 
-            data.map {
-                DataSeries(dataSeries.label, dataSeries.color, it)
-            }
+            EvolutionDataSeries(
+                DataSeries(data = this.copySeriesData(chart.dataSeries.bestFitness.data, fromIndex, toIndex)),
+                DataSeries(data = this.copySeriesData(chart.dataSeries.averageFitness.data, fromIndex, toIndex)),
+                DataSeries(data = this.copySeriesData(chart.dataSeries.bestObjective.data, fromIndex, toIndex)),
+                DataSeries(data = this.copySeriesData(chart.dataSeries.averageObjective.data, fromIndex, toIndex))
+            )
         }
 
+    private fun copySeriesData(dataSeries: List<Pair<Double, Double>>, fromIndex: Int, toIndex: Int): MutableList<Pair<Double, Double>> =
+        dataSeries.subList(fromIndex, toIndex).map { Pair(it.first, it.second) }.toMutableList()
+
+    private fun adjustGenerationStart(firstEvolution: List<EvolutionDataSeries>, secondEvolution: List<EvolutionDataSeries>) {
+        val maxCoevolutionGeneration = min(firstEvolution.size, secondEvolution.size)
+
+        for (coevolutionGeneration in 0 until maxCoevolutionGeneration) {
+            val firstEvolutionShouldStartAt = if (coevolutionGeneration == 0) 1.0 else secondEvolution[coevolutionGeneration - 1].bestFitness.data.map { it.first }.max()!! + 1
+            this.adjustGenerationStart(firstEvolution[coevolutionGeneration], firstEvolutionShouldStartAt)
+
+            val secondEvolutionShouldStartAt = firstEvolution[coevolutionGeneration].bestFitness.data.map { it.first }.max()!! + 1
+            this.adjustGenerationStart(secondEvolution[coevolutionGeneration], secondEvolutionShouldStartAt)
+        }
+    }
+
+    private fun adjustGenerationStart(evolutionSeries: EvolutionDataSeries, shouldStartAt: Double) {
+        evolutionSeries.bestFitness = this.adjustGenerationStart(evolutionSeries.bestFitness, shouldStartAt)
+        evolutionSeries.averageFitness = this.adjustGenerationStart(evolutionSeries.averageFitness, shouldStartAt)
+        evolutionSeries.bestObjective = this.adjustGenerationStart(evolutionSeries.bestObjective, shouldStartAt)
+        evolutionSeries.averageObjective = this.adjustGenerationStart(evolutionSeries.averageObjective, shouldStartAt)
+    }
+
+    private fun adjustGenerationStart(dataSeries: DataSeries, shouldStartAt: Double): DataSeries {
+        val startsAt = dataSeries.data[0].first
+        val adjustment = shouldStartAt - startsAt
+
+        return DataSeries(dataSeries.label, dataSeries.color, dataSeries.data.map { dataPoint ->
+            Pair(dataPoint.first + adjustment, dataPoint.second)
+        }.toMutableList())
+    }
+
+    private fun createCoevolutionStops(firstEvolution: List<EvolutionDataSeries>, secondEvolution: List<EvolutionDataSeries>): List<Double> =
+        listOf(firstEvolution, secondEvolution).flatten().map { evolutionDataSeries ->
+            evolutionDataSeries.bestFitness.data.maxBy { it.first }!!.first
+        }.sorted()
 }

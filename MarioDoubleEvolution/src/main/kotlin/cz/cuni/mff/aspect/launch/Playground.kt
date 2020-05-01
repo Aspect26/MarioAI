@@ -45,7 +45,7 @@ fun main() {
     chart2.nextGeneration(3.0, 0.0, 0.0, 0.0)
     chart2.addStop()
 
-    chart1.nextGeneration(1.0, 0.0, 0.0, 2.0)
+    chart1.nextGeneration(3.0, 0.0, 0.0, 2.0)
     chart1.nextGeneration(7.0, 0.0, 0.0, 2.0)
     chart1.nextGeneration(7.0, 0.0, 0.0, 2.0)
     chart1.nextGeneration(7.0, 0.0, 0.0, 2.0)
