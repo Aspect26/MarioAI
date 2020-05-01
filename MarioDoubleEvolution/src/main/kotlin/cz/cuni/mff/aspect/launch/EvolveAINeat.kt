@@ -25,7 +25,7 @@ private fun evolve() {
         denseInput = false,
         generationsCount = 50,
         populationSize = 100,
-        levelsPerGeneratorCount = 5,
+        evaluateOnLevelsCount = 5,
         chartLabel = "NEAT Evolution S4L1")
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
 
@@ -47,7 +47,7 @@ private fun continueEvolution() {
         denseInput = false,
         generationsCount = 50,
         populationSize = 100,
-        levelsPerGeneratorCount = 10,
+        evaluateOnLevelsCount = 10,
         chartLabel = "NEAT Evolution continuation")
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val initialController = (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller

@@ -30,7 +30,7 @@ class NeuroControllerEvolution(
     private val survivorsSelector: Selector<DoubleGene, Float> = EliteSelector(2),
     private val offspringSelector: Selector<DoubleGene, Float> = TournamentSelector(2),
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
-    private val levelsPerGeneratorCount: Int = 5,
+    private val evaluateOnLevelsCount: Int = 25,
     private val alwaysReevaluate: Boolean = true,
     private val displayChart: Boolean = true,
     chartLabel: String = "NeuroController evolution"
@@ -196,7 +196,7 @@ class NeuroControllerEvolution(
         controllerNetwork.setNetworkWeights(networkWeights)
 
         val controller = SimpleANNController(controllerNetwork)
-        val levels = Array(this.levelsPerGeneratorCount * this.levelGenerators.size) {
+        val levels = Array(this.evaluateOnLevelsCount) {
             this.levelGenerators[it % this.levelGenerators.size].generate()
         }
         val marioSimulator = GameSimulator(1000)
