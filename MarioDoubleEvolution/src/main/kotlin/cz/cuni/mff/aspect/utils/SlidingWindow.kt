@@ -1,12 +1,12 @@
 package cz.cuni.mff.aspect.utils
 
 /**
- * Represents an ordered limited history of entries. It keeps its elements in the order in which they were added and
+ * Represents an ordered limited list of entries. It keeps its elements in the order in which they were added and
  * never exceeds its limit. The entries which would exceed the limit are removed.
  *
  * The implementation is not thread safe!
  */
-class LimitedHistory<T>(private val limit: Int) {
+class SlidingWindow<T>(private val limit: Int) {
 
     private val entries: MutableList<T> = mutableListOf()
 

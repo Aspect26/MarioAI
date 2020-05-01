@@ -9,7 +9,7 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.utils.DeepCopy
-import cz.cuni.mff.aspect.utils.LimitedHistory
+import cz.cuni.mff.aspect.utils.SlidingWindow
 import java.util.concurrent.TimeUnit
 
 class MarioCoEvolver {
@@ -22,7 +22,7 @@ class MarioCoEvolver {
                storagePath: String
     ): CoevolutionResult {
         var currentController: MarioController = initialController
-        val generatorsHistory: LimitedHistory<LevelGenerator> = LimitedHistory(repeatGeneratorsCount)
+        val generatorsHistory: SlidingWindow<LevelGenerator> = SlidingWindow(repeatGeneratorsCount)
         generatorsHistory.push(initialLevelGenerator)
         var latestGenerator: LevelGenerator = initialLevelGenerator
 
