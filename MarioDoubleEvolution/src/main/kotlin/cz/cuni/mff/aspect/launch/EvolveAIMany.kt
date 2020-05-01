@@ -191,10 +191,10 @@ class NeuroEvolutionLauncher(
     override fun run() {
         val controllerEvolution = NeuroControllerEvolution(
             networkSettings,
-            generationsCount.toLong(),
+            generationsCount,
             populationSize,
             chartLabel = label,
-            mutators = mutators,
+            alterers = mutators,
             survivorsSelector = survivorsSelector,
             offspringSelector = offspringSelector,
             weightsRange = weightsRange,

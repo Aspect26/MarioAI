@@ -1,10 +1,11 @@
 package cz.cuni.mff.aspect.evolution.levels.chunks
 
+import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator
 import cz.cuni.mff.aspect.evolution.jenetics.genotype.MarkovChainGenotypeFactory
-import cz.cuni.mff.aspect.evolution.levels.JeneticsLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.LinearityEvaluator
+import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
@@ -19,7 +20,7 @@ class PCLevelGeneratorEvolution(
     private val chunksCount: Int = DEFAULT_CHUNKS_COUNT,
     chartLabel: String = DEFAULT_CHART_LABEL,
     displayChart: Boolean = true
-) : JeneticsLevelGeneratorEvolution(
+) : ChartedJeneticsEvolution<LevelGenerator>(
     populationSize,
     generationsCount,
     optimize = fitnessFunction.optimize,
@@ -28,12 +29,19 @@ class PCLevelGeneratorEvolution(
     offspringSelector = RouletteWheelSelector(),
     displayChart = displayChart,
     chart = EvolutionLineChart(chartLabel, hideNegative = false)
-) {
+), LevelGeneratorEvolution {
+
+    private lateinit var agentFactory: () -> IAgent
+
+    override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
+        this.agentFactory = agentFactory
+        return this.evolve()
+    }
 
     override fun createInitialGenotype(): Factory<Genotype<DoubleGene>> =
         MarkovChainGenotypeFactory(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, PCLevelGenerator.ENEMY_TYPES_COUNT + 1)
 
-    override fun levelGeneratorFromIndividual(genotype: Genotype<DoubleGene>): LevelGenerator =
+    override fun entityFromIndividual(genotype: Genotype<DoubleGene>): LevelGenerator =
         PCLevelGenerator(genotype.getDoubleValues().toList(), this.chunksCount)
 
     override fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float> {

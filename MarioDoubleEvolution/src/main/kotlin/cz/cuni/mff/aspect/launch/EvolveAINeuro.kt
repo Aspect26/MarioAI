@@ -4,7 +4,6 @@ import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -12,8 +11,6 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
@@ -33,7 +30,7 @@ fun evolveAI() {
         50,
         evaluateOnLevelsCount = 5,
         chartLabel = "NeuroEvolution - Update half",
-        mutators = arrayOf(GaussianMutator(0.55)),
+        alterers = arrayOf(GaussianMutator(0.55)),
         alwaysReevaluate = false
     )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
@@ -56,7 +53,7 @@ fun continueEvolveAI() {
         50,
         evaluateOnLevelsCount = 10,
         chartLabel = "NeuroEvolution Update half",
-        mutators = arrayOf(GaussianMutator(0.55)),
+        alterers = arrayOf(GaussianMutator(0.55)),
         parallel = true
     )
 //    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
