@@ -3,7 +3,7 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
@@ -23,16 +23,17 @@ fun main() {
 }
 
 fun coevolve() {
-    val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
-        null,
-        populationSize = 50,
-        generationsCount = 20,
-        evaluateOnLevelsCount = 25,
-        alterers = arrayOf(GaussianMutator(0.55)),
-        parallel = true,
-        displayChart = true,
-        chartLabel = "Agent NeuroEvolution"
-    )
+    val controllerEvolution: ControllerEvolution =
+        NeuroControllerEvolution(
+            null,
+            populationSize = 50,
+            generationsCount = 20,
+            evaluateOnLevelsCount = 25,
+            alterers = arrayOf(GaussianMutator(0.55)),
+            parallel = true,
+            displayChart = true,
+            chartLabel = "Agent NeuroEvolution"
+        )
 
     val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,

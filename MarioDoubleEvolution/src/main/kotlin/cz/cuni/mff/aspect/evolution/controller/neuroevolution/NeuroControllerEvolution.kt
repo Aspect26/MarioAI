@@ -1,6 +1,8 @@
-package cz.cuni.mff.aspect.evolution.controller
+package cz.cuni.mff.aspect.evolution.controller.neuroevolution
 
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
+import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController

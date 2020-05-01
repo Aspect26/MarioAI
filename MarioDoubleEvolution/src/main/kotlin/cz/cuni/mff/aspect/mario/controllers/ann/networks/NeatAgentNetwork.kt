@@ -40,8 +40,8 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
         TODO("not implemented")
     }
 
-    override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
-    val inputLayerSize: Int get() = 2 * this.networkSettings.receptiveFieldSizeRow * this.networkSettings.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
+    override val weightsCount: Int get() =
+        inputLayerSize(this.networkSettings, this.denseInput) * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
 
     private fun createInput(tiles: Tiles, entities: Entities, mario: MarioEntity): FloatArray {
         val networkBuilder = NetworkInputBuilder()
@@ -66,8 +66,12 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
     companion object {
         private val serialVersionUID = -6994844472540119145L
 
-        private const val OUTPUT_LAYER_SIZE = 4
         private const val CHOOSE_ACTION_THRESHOLD = 0.95
+
+        const val OUTPUT_LAYER_SIZE = 4
+
+        fun inputLayerSize(networkSettings: NetworkSettings, denseInput: Boolean = false): Int =
+            2 * networkSettings.receptiveFieldSizeRow * networkSettings.receptiveFieldSizeColumn * if (denseInput) 4 else 1
     }
 
 }

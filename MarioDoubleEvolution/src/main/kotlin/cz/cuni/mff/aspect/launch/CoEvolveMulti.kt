@@ -3,6 +3,8 @@ package cz.cuni.mff.aspect.launch
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
 import cz.cuni.mff.aspect.evolution.controller.*
+import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
@@ -68,7 +70,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
 
 private object NEATEvolution : ControllerEvolutionSettings {
     private val networkSettings = NetworkSettings(7, 7, 0, 2)
-    private val inputsCount = NeatAgentNetwork(networkSettings, Genome(0, 0)).inputLayerSize
+    private val inputsCount = NeatAgentNetwork.inputLayerSize(networkSettings)
 
     override val evolution: ControllerEvolution
         get() = NeatControllerEvolution(

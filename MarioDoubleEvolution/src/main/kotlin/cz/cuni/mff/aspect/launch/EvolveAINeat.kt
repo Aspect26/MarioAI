@@ -2,33 +2,36 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
+import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
 private val PATH_TO_LATEST_AI = "data/latest_neat_ai.ai"
 
 fun main() {
-//    evolve()
-    continueEvolution()
+    evolve()
+//    continueEvolution()
+//    playLatest()
 }
 
 private fun evolve() {
     val networkSettings = NetworkSettings(5, 5, 0, 2)
-    val controllerEvolution: ControllerEvolution = NeatControllerEvolution(
-        networkSettings,
-        denseInput = false,
-        generationsCount = 50,
-        populationSize = 100,
-        evaluateOnLevelsCount = 5,
-        chartLabel = "NEAT Evolution S4L1")
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
-
+    val controllerEvolution: ControllerEvolution =
+        NeatControllerEvolution(
+            networkSettings,
+            denseInput = false,
+            generationsCount = 50,
+            populationSize = 100,
+            evaluateOnLevelsCount = 4,
+            chartLabel = "NEAT Evolution S4L1"
+        )
+    val levelGenerator = LevelGenerators.StaticGenerator(Stage1Level1Split.levels)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
@@ -42,13 +45,15 @@ private fun evolve() {
 
 private fun continueEvolution() {
     val networkSettings = NetworkSettings(5, 5, 0, 2)
-    val controllerEvolution = NeatControllerEvolution(
-        networkSettings,
-        denseInput = false,
-        generationsCount = 50,
-        populationSize = 100,
-        evaluateOnLevelsCount = 10,
-        chartLabel = "NEAT Evolution continuation")
+    val controllerEvolution =
+        NeatControllerEvolution(
+            networkSettings,
+            denseInput = false,
+            generationsCount = 50,
+            populationSize = 100,
+            evaluateOnLevelsCount = 10,
+            chartLabel = "NEAT Evolution continuation"
+        )
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val initialController = (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller
 

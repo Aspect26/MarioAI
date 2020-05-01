@@ -2,8 +2,8 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeatControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -189,17 +189,18 @@ class NeuroEvolutionLauncher(
 ) : EvolutionLauncher {
 
     override fun run() {
-        val controllerEvolution = NeuroControllerEvolution(
-            networkSettings,
-            generationsCount,
-            populationSize,
-            chartLabel = label,
-            alterers = mutators,
-            survivorsSelector = survivorsSelector,
-            offspringSelector = offspringSelector,
-            weightsRange = weightsRange,
-            parallel = runParallel
-        )
+        val controllerEvolution =
+            NeuroControllerEvolution(
+                networkSettings,
+                generationsCount,
+                populationSize,
+                chartLabel = label,
+                alterers = mutators,
+                survivorsSelector = survivorsSelector,
+                offspringSelector = offspringSelector,
+                weightsRange = weightsRange,
+                parallel = runParallel
+            )
 
         val resultController = controllerEvolution.evolve(listOf(levelGenerator), fitnessFunction, objectiveFunction)
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
@@ -222,13 +223,14 @@ class NeatEvolutionLauncher(
 
     override fun run() {
         val networkSettings = NetworkSettings(receptiveFieldSize.first, receptiveFieldSize.second, receptiveFieldOffset.first, receptiveFieldOffset.second)
-        val controllerEvolution = NeatControllerEvolution(
-            networkSettings,
-            generationsCount = generationsCount,
-            populationSize = populationSize,
-            denseInput = denseInput,
-            chartLabel = label
-        )
+        val controllerEvolution =
+            NeatControllerEvolution(
+                networkSettings,
+                generationsCount = generationsCount,
+                populationSize = populationSize,
+                denseInput = denseInput,
+                chartLabel = label
+            )
 
         val resultController = controllerEvolution.evolve(levelGenerators, fitnessFunction, objectiveFunction)
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")

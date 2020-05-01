@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
-import cz.cuni.mff.aspect.evolution.controller.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
@@ -24,15 +24,16 @@ fun main() {
 
 
 fun evolveAI() {
-    val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(
-        NetworkSettings(5, 5, 0, 2, 7),
-        15,
-        50,
-        evaluateOnLevelsCount = 5,
-        chartLabel = "NeuroEvolution - Update half",
-        alterers = arrayOf(GaussianMutator(0.55)),
-        alwaysReevaluate = false
-    )
+    val controllerEvolution: ControllerEvolution =
+        NeuroControllerEvolution(
+            NetworkSettings(5, 5, 0, 2, 7),
+            15,
+            50,
+            evaluateOnLevelsCount = 5,
+            chartLabel = "NeuroEvolution - Update half",
+            alterers = arrayOf(GaussianMutator(0.55)),
+            alwaysReevaluate = false
+        )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
     val levelGenerator = LevelGenerators.StaticGenerator(Stage1Level1Split.levels)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator), MarioGameplayEvaluators::distanceOnly, MarioGameplayEvaluators::victoriesOnly)
@@ -48,14 +49,16 @@ fun evolveAI() {
 
 
 fun continueEvolveAI() {
-    val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(null,
-        20,
-        50,
-        evaluateOnLevelsCount = 10,
-        chartLabel = "NeuroEvolution Update half",
-        alterers = arrayOf(GaussianMutator(0.55)),
-        parallel = true
-    )
+    val controllerEvolution: ControllerEvolution =
+        NeuroControllerEvolution(
+            null,
+            20,
+            50,
+            evaluateOnLevelsCount = 10,
+            chartLabel = "NeuroEvolution Update half",
+            alterers = arrayOf(GaussianMutator(0.55)),
+            parallel = true
+        )
 //    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val levelGenerator = ObjectStorage.load("data/coev/second_lg.lg") as LevelGenerator
     val initialController = (Agents.NeuroEvolution.Stage4Level1Solver as MarioAgent).controller
