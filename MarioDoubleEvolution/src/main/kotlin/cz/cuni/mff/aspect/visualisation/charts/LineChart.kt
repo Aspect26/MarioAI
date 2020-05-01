@@ -57,7 +57,7 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
         }
     }
 
-    fun updateChart(values: List<Triple<String, Color, List<Pair<Double, Double>>>>, stops: List<Double> = emptyList()) {
+    fun updateChart(values: List<SeriesData>, stops: List<Double> = emptyList()) {
         for ((seriesLabel, seriesColor, seriesData) in values) {
             val currentSeries = this.getOrCreateSeries(seriesLabel, seriesColor)
 
