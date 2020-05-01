@@ -10,6 +10,7 @@ import io.jenetics.util.IntRange
 import java.util.stream.Collectors
 
 
+@Deprecated("No longer maintained")
 class GrammarEvolution private constructor(private val grammar: Grammar,
                                            private val fitnessComputation: (sentence: GrammarSentence) -> Float,
                                            private val chromosomeLengthRange: IntRange,
