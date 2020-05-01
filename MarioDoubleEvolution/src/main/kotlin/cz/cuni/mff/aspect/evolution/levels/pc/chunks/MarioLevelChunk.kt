@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
+package cz.cuni.mff.aspect.evolution.levels.pc.chunks
 
 import java.io.Serializable
 

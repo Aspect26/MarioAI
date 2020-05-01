@@ -1,6 +1,6 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
+package cz.cuni.mff.aspect.evolution.levels.pc.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.evaluators.DifficultyEvaluator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel

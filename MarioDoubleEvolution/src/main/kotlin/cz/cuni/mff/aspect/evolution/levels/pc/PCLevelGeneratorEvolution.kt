@@ -1,11 +1,10 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks
+package cz.cuni.mff.aspect.evolution.levels.pc
 
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator
 import cz.cuni.mff.aspect.evolution.jenetics.genotype.MarkovChainGenotypeFactory
 import cz.cuni.mff.aspect.evolution.levels.JeneticsLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.LinearityEvaluator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelGeneratorEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pc.evaluators.PCLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*

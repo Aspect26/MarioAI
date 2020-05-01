@@ -5,9 +5,9 @@ import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.pc.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.MarioController

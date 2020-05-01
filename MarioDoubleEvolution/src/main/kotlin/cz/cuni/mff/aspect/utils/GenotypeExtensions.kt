@@ -1,6 +1,5 @@
 package cz.cuni.mff.aspect.utils
 
-import cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics.ByteGene
 import io.jenetics.Genotype
 import io.jenetics.IntegerGene
 import io.jenetics.NumericGene
@@ -27,17 +26,6 @@ fun Genotype<IntegerGene>.getIntValues(): IntArray {
     var i = geneSequence.size()
     while (--i >= 0) {
         array[i] = geneSequence[i].allele()
-    }
-    return array
-}
-
-fun Genotype<ByteGene>.getByteValues(): ByteArray {
-    val geneSequence: Seq<ByteGene> = ISeq.of(this.chromosome())
-
-    val array = ByteArray(geneSequence.size())
-    var i = geneSequence.size()
-    while (--i >= 0) {
-        array[i] = geneSequence[i].allele
     }
     return array
 }

@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.mario.level.custom
 
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
+import cz.cuni.mff.aspect.evolution.levels.pc.chunks.ColumnHelpers
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
 object PathWithHolesLevel : MarioLevel {

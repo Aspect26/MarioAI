@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.ge.grammar
+package cz.cuni.mff.aspect.evolution.levels.pc.chunks
 
 import cz.cuni.mff.aspect.mario.Tiles
 
@@ -7,10 +7,10 @@ object ColumnHelpers {
 
     private const val DEFAULT_HEIGHT: Int = 15
 
-    fun getSpaceColumn(height: Int = this.DEFAULT_HEIGHT): ByteArray =
+    fun getSpaceColumn(height: Int = DEFAULT_HEIGHT): ByteArray =
         ByteArray(height) { Tiles.NOTHING }
 
-    fun getPathColumn(level: Int, height: Int = this.DEFAULT_HEIGHT): ByteArray = ByteArray(height) {
+    fun getPathColumn(level: Int, height: Int = DEFAULT_HEIGHT): ByteArray = ByteArray(height) {
         when {
             it < level -> Tiles.NOTHING
             it > level -> Tiles.DIRT

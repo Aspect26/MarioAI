@@ -1,9 +1,9 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks
+package cz.cuni.mff.aspect.evolution.levels.pc
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.chunks.*
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunkWithHeight
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.chunks.*
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunkWithHeight
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel

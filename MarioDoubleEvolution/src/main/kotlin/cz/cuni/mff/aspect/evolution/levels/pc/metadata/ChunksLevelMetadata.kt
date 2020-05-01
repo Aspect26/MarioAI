@@ -1,6 +1,6 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.metadata
+package cz.cuni.mff.aspect.evolution.levels.pc.metadata
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.chunks.MarioLevelChunk
+import cz.cuni.mff.aspect.evolution.levels.pc.chunks.MarioLevelChunk
 import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 

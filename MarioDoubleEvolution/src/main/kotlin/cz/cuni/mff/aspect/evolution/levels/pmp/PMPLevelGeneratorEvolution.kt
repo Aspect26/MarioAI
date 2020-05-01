@@ -2,10 +2,8 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 
 import cz.cuni.mff.aspect.evolution.levels.JeneticsLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelGeneratorEvaluator
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*

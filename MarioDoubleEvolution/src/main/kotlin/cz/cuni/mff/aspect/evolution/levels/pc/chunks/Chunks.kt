@@ -1,6 +1,4 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
-
-import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
+package cz.cuni.mff.aspect.evolution.levels.pc.chunks
 
 
 data class HoleChunk(private val holeLength: Int): MarioLevelChunk("hole") {

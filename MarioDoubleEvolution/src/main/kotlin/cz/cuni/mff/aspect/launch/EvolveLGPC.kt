@@ -2,10 +2,9 @@ package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.*
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.pc.evaluators.*
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
