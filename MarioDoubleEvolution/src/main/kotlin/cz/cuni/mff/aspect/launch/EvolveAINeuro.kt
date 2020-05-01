@@ -31,7 +31,7 @@ fun evolveAI() {
         NetworkSettings(5, 5, 0, 2, 7),
         15,
         50,
-        levelsPerGeneratorCount = 5,
+        evaluateOnLevelsCount = 5,
         chartLabel = "NeuroEvolution - Update half",
         mutators = arrayOf(GaussianMutator(0.55)),
         alwaysReevaluate = false
@@ -54,7 +54,7 @@ fun continueEvolveAI() {
     val controllerEvolution: ControllerEvolution = NeuroControllerEvolution(null,
         20,
         50,
-        levelsPerGeneratorCount = 10,
+        evaluateOnLevelsCount = 10,
         chartLabel = "NeuroEvolution Update half",
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true

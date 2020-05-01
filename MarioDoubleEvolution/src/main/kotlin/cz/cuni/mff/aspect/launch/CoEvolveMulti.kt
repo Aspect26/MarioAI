@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
-import cz.cuni.mff.aspect.coevolution.MarioCoEvolver
+import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
@@ -44,7 +44,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
                 null,
                 populationSize = 50,
                 generationsCount = 5,
-                levelsPerGeneratorCount = 5,
+                evaluateOnLevelsCount = 25,
                 mutators = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
                 displayChart = false,
@@ -75,7 +75,7 @@ private object NEATEvolution : ControllerEvolutionSettings {
             networkSettings,
             populationSize = 50,
             generationsCount = 35,
-            levelsPerGeneratorCount = 5,
+            evaluateOnLevelsCount = 25,
             displayChart = false,
             chartLabel = "Agent NeuroEvolution"
         )
@@ -135,7 +135,7 @@ private fun coevolve(
 ) {
     val controllerEvolution = controllerEvolutionSettings.evolution
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
-    val coevolver = MarioCoEvolver()
+    val coevolver = MarioCoEvolution()
 
     coevolver.evolve(
         controllerEvolution,
