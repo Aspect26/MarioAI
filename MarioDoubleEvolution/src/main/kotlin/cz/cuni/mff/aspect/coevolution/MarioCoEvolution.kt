@@ -16,7 +16,6 @@ class MarioCoEvolution {
 
     fun evolve(controllerEvolution: ControllerEvolution, generatorEvolution: LevelGeneratorEvolution,
                initialController: MarioController, initialLevelGenerator: LevelGenerator,
-               controllerFitness: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
                generations: Int = DEFAULT_GENERATIONS_NUMBER,
                repeatGeneratorsCount: Int = DEFAULT_REPEAT_GENERATORS_COUNT,
                storagePath: String
@@ -33,9 +32,7 @@ class MarioCoEvolution {
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
             currentController = controllerEvolution.continueEvolution(
                 currentController,
-                generatorsHistory.getAll(),
-                controllerFitness,
-                MarioGameplayEvaluators::victoriesOnly
+                generatorsHistory.getAll()
             )
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")

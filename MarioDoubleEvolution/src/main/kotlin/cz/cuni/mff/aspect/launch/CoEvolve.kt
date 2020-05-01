@@ -28,6 +28,8 @@ fun coevolve() {
             null,
             populationSize = 50,
             generationsCount = 20,
+            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
+            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             evaluateOnLevelsCount = 25,
             alterers = arrayOf(GaussianMutator(0.55)),
             parallel = true,
@@ -61,7 +63,6 @@ fun coevolve() {
         levelGeneratorEvolution,
         initialController,
         initialLevelGenerator,
-        MarioGameplayEvaluators::distanceOnly,
         25,
         5,
         RESULT_FILES_PATH

@@ -4,6 +4,7 @@ import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -19,6 +20,8 @@ class NeatControllerEvolution(
     private var generationsCount: Int = 200,
     private val populationSize: Int = 150,
     private val evaluateOnLevelsCount: Int = 25,
+    private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
+    private val objectiveFunction: MarioGameplayEvaluator<Float>  = MarioGameplayEvaluators::victoriesOnly,
     private val denseInput: Boolean = true,
     private val displayChart: Boolean = true,
     chartLabel: String = "NEAT Evolution"
@@ -27,26 +30,17 @@ class NeatControllerEvolution(
 
     override val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
 
-    override fun evolve(
-        levelGenerators: List<LevelGenerator>,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>
-    ): MarioController {
+    override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
         val networkInputSize = NeatAgentNetwork.inputLayerSize(this.networkSettings)
         val networkOutputSize = NeatAgentNetwork.OUTPUT_LAYER_SIZE
 
         val pool = Pool(this.populationSize)
         pool.initializePool(networkInputSize, networkOutputSize)
 
-        return this.doEvolution(levelGenerators, fitness, objective, pool, this.networkSettings, this.denseInput)
+        return this.doEvolution(levelGenerators, pool, this.networkSettings, this.denseInput)
     }
 
-    override fun continueEvolution(
-        controller: MarioController,
-        levelGenerators: List<LevelGenerator>,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>
-    ): MarioController {
+    override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
         if (controller !is SimpleANNController) throw IllegalArgumentException(
             "This implementation of controller evolution supports only `$SimpleANNController` instances to continue evolution"
         )
@@ -62,18 +56,18 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(genomes)
 
-        return this.doEvolution(levelGenerators, fitness, objective, pool, controller.network.networkSettings, controller.network.denseInput)
+        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings, controller.network.denseInput)
     }
 
     private fun doEvolution(
         levelGenerators: List<LevelGenerator>,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>,
         genotypePool: Pool,
         networkSettings: NetworkSettings,
         denseInput: Boolean
     ): MarioController {
-        val environment = ControllerEvolutionEnvironment(levelGenerators, networkSettings, fitness, objective, this.evaluateOnLevelsCount, denseInput)
+        val environment = ControllerEvolutionEnvironment(
+            levelGenerators, networkSettings, this.fitnessFunction, this.objectiveFunction, this.evaluateOnLevelsCount, denseInput
+        )
 
         if (this.displayChart && !this.chart.isShown) this.chart.show()
         if (!this.chart.isEmpty) this.chart.addStop()

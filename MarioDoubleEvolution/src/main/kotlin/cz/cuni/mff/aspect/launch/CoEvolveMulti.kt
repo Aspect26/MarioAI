@@ -32,7 +32,6 @@ fun main() {
 private interface ControllerEvolutionSettings {
     val evolution: ControllerEvolution
     val initialController: MarioController
-    val fitnessFunction: MarioGameplayEvaluator<Float>
 }
 
 private interface LevelGeneratorEvolutionSettings {
@@ -46,15 +45,14 @@ private object NeuroEvolution : ControllerEvolutionSettings {
                 null,
                 populationSize = 50,
                 generationsCount = 5,
+                fitnessFunction = MarioGameplayEvaluators::distanceOnly,
+                objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
                 evaluateOnLevelsCount = 25,
                 alterers = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
                 displayChart = false,
                 chartLabel = "Agent NeuroEvolution"
             )
-
-    override val fitnessFunction: MarioGameplayEvaluator<Float>
-            get() = MarioGameplayEvaluators::distanceOnly
 
     override val initialController
             get() = SimpleANNController(
@@ -77,6 +75,8 @@ private object NEATEvolution : ControllerEvolutionSettings {
             networkSettings,
             populationSize = 50,
             generationsCount = 35,
+            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
+            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             evaluateOnLevelsCount = 25,
             displayChart = false,
             chartLabel = "Agent NeuroEvolution"
@@ -89,9 +89,6 @@ private object NEATEvolution : ControllerEvolutionSettings {
                 Genome(inputsCount, 4)
             )
         )
-
-    override val fitnessFunction: MarioGameplayEvaluator<Float>
-        get() = MarioGameplayEvaluators::distanceOnly
 
 }
 
@@ -144,7 +141,6 @@ private fun coevolve(
         levelGeneratorEvolution,
         controllerEvolutionSettings.initialController,
         levelGeneratorEvolutionSettings.initialLevelGenerator,
-        controllerEvolutionSettings.fitnessFunction,
         generations,
         repeatGeneratorsCount,
         storagePath

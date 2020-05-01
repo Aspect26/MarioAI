@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.controller.neuroevolution
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -23,6 +24,8 @@ class NeuroControllerEvolution(
     private var controllerNetworkSettings: NetworkSettings? = null,
     generationsCount: Int = DEFAULT_GENERATIONS_COUNT,
     populationSize: Int = DEFAULT_POPULATION_SIZE,
+    private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
+    private val objectiveFunction: MarioGameplayEvaluator<Float>  = MarioGameplayEvaluators::victoriesOnly,
     parallel: Boolean = true,
     alterers: Array<Alterer<DoubleGene, Float>> = arrayOf(Mutator(0.05)),
     survivorsSelector: Selector<DoubleGene, Float> = EliteSelector(2),
@@ -46,29 +49,15 @@ class NeuroControllerEvolution(
 ), ControllerEvolution {
 
     private lateinit var levelGenerators: List<LevelGenerator>
-    private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
-    private lateinit var objectiveFunction: MarioGameplayEvaluator<Float>
 
     private var initialAgentNetwork: UpdatedAgentNetwork? = null
 
-    override fun evolve(
-        levelGenerators: List<LevelGenerator>,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>
-    ): MarioController {
+    override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
         this.levelGenerators = levelGenerators
-        this.fitnessFunction = fitness
-        this.objectiveFunction = objective
-
         return this.evolve()
     }
 
-    override fun continueEvolution(
-        controller: MarioController,
-        levelGenerators: List<LevelGenerator>,
-        fitness: MarioGameplayEvaluator<Float>,
-        objective: MarioGameplayEvaluator<Float>
-    ): MarioController {
+    override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
         if (controller !is SimpleANNController) throw IllegalArgumentException(
             "This implementation of controller evolution supports only `${SimpleANNController}` instances to continue evolution"
         )
@@ -79,8 +68,6 @@ class NeuroControllerEvolution(
 
         this.initialAgentNetwork = controller.network
         this.levelGenerators = levelGenerators
-        this.fitnessFunction = fitness
-        this.objectiveFunction = objective
         this.controllerNetworkSettings = NetworkSettings(
             controller.network.receptiveFieldSizeRow,
             controller.network.receptiveFieldSizeColumn,

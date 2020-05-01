@@ -194,6 +194,8 @@ class NeuroEvolutionLauncher(
                 networkSettings,
                 generationsCount,
                 populationSize,
+                fitnessFunction = fitnessFunction,
+                objectiveFunction = objectiveFunction,
                 chartLabel = label,
                 alterers = mutators,
                 survivorsSelector = survivorsSelector,
@@ -202,7 +204,7 @@ class NeuroEvolutionLauncher(
                 parallel = runParallel
             )
 
-        val resultController = controllerEvolution.evolve(listOf(levelGenerator), fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(listOf(levelGenerator))
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }
@@ -228,11 +230,13 @@ class NeatEvolutionLauncher(
                 networkSettings,
                 generationsCount = generationsCount,
                 populationSize = populationSize,
+                fitnessFunction = fitnessFunction,
+                objectiveFunction = objectiveFunction,
                 denseInput = denseInput,
                 chartLabel = label
             )
 
-        val resultController = controllerEvolution.evolve(levelGenerators, fitnessFunction, objectiveFunction)
+        val resultController = controllerEvolution.evolve(levelGenerators)
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
     }
