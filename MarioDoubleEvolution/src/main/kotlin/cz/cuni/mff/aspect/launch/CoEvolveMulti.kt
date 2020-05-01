@@ -43,7 +43,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 null,
                 populationSize = 50,
-                generationsCount = 20,
+                generationsCount = 25,
                 levelsPerGeneratorCount = 5,
                 mutators = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
@@ -98,8 +98,8 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
             get() =
                 PCLevelGeneratorEvolution(
                     populationSize = 50,
-                    generationsCount = 15,
-                    evaluateOnLevelsCount = 5,
+                    generationsCount = 10,
+                    evaluateOnLevelsCount = 15,
                     fitnessFunction = AgentHalfPassing(),
                     displayChart = false,
                     chartLabel = "PC Level Generator"
@@ -150,8 +150,8 @@ private fun coevolve(
 
 
     if (controllerEvolution is Charted)
-        controllerEvolution.storeChart("$storagePath/lg.svg")
+        controllerEvolution.storeChart("$storagePath/ai.svg")
 
     if (levelGeneratorEvolution is Charted)
-        levelGeneratorEvolution.storeChart("$storagePath/ai.svg")
+        levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
 }
