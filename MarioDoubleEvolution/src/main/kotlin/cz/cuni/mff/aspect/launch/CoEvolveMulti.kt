@@ -16,6 +16,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.GaussianMutator
 
 private const val generations = 30
@@ -43,7 +44,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 null,
                 populationSize = 50,
-                generationsCount = 25,
+                generationsCount = 5,
                 levelsPerGeneratorCount = 5,
                 mutators = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
@@ -98,7 +99,7 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
             get() =
                 PCLevelGeneratorEvolution(
                     populationSize = 50,
-                    generationsCount = 10,
+                    generationsCount = 3,
                     evaluateOnLevelsCount = 15,
                     fitnessFunction = AgentHalfPassing(),
                     displayChart = false,
