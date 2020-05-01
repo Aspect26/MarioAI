@@ -125,7 +125,7 @@ class PMPEvolutionLauncher(
 
         levels.forEachIndexed { index, level -> LevelStorage.storeLevel("data/levels/experiments/$storageLocation/${label}_$index.lvl", level) }
         levels.forEachIndexed { index, level -> levelVisualiser.store(level, "data/levels/experiments/$storageLocation/${label}_$index") }
-        levelEvolution.storeChart("data/levels/experiments/$storageLocation/$label")
+        levelEvolution.chart.store("data/levels/experiments/$storageLocation/$label")
     }
 }
 

@@ -1,7 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
@@ -18,8 +17,8 @@ abstract class JeneticsLevelGeneratorEvolution(
     protected val survivorsSelector: Selector<DoubleGene, Float>,
     protected val offspringSelector: Selector<DoubleGene, Float>,
     private val displayChart: Boolean,
-    private val chart: EvolutionLineChart
-) : LevelGeneratorEvolution, Charted by chart {
+    override val chart: EvolutionLineChart
+) : LevelGeneratorEvolution {
 
     protected lateinit var agentFactory: () -> IAgent
     private lateinit var evaluator: MarioJeneticsEvaluator<DoubleGene, Float>

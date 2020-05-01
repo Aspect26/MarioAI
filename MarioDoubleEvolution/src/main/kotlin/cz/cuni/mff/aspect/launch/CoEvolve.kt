@@ -30,7 +30,7 @@ fun coevolve() {
         levelsPerGeneratorCount = 5,
         mutators = arrayOf(GaussianMutator(0.55)),
         parallel = true,
-        showChart = true,
+        displayChart = true,
         chartLabel = "Agent NeuroEvolution"
     )
 

@@ -3,7 +3,6 @@ package cz.cuni.mff.aspect.evolution.controller
 import com.evo.NEAT.Environment
 import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
-import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -23,10 +22,9 @@ class NeatControllerEvolution(
     private val populationSize: Int = 150,
     private val levelsPerGeneratorCount: Int = 5,
     private val denseInput: Boolean = true,
-    private val chartLabel: String = "NEAT Evolution",
-    private val showChart: Boolean = true,
-    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
-) : ControllerEvolution, Charted by chart {
+    private val displayChart: Boolean = true,
+    chartLabel: String = "NEAT Evolution"
+) : ControllerEvolution {
     private lateinit var topGenome: Genome
 
     class ControllerEvolutionEnvironment(private val levelGenerators: List<LevelGenerator>,
@@ -80,6 +78,8 @@ class NeatControllerEvolution(
             this.lastEvaluationObjectives.fold(Float.MIN_VALUE, { accumulator, objectiveValue -> max(accumulator, objectiveValue) })
     }
 
+    override val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
+
     override fun evolve(
         levelGenerators: List<LevelGenerator>,
         fitness: MarioGameplayEvaluator<Float>,
@@ -128,7 +128,7 @@ class NeatControllerEvolution(
     ): MarioController {
         val evolution = ControllerEvolutionEnvironment(levelGenerators, networkSettings, fitness, objective, this.levelsPerGeneratorCount, denseInput)
 
-        if (this.showChart && !this.chart.isShown) this.chart.show()
+        if (this.displayChart && !this.chart.isShown) this.chart.show()
         this.chart.addStop()
 
         var generation = 1

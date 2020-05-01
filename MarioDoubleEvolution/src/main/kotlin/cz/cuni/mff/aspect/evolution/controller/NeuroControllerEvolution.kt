@@ -1,6 +1,5 @@
 package cz.cuni.mff.aspect.evolution.controller
 
-import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -33,10 +32,9 @@ class NeuroControllerEvolution(
     private val weightsRange: DoubleRange = DoubleRange.of(-1.0, 1.0),
     private val levelsPerGeneratorCount: Int = 5,
     private val alwaysReevaluate: Boolean = true,
-    private val chartLabel: String = "NeuroController evolution",
-    private val showChart: Boolean = true,
-    private val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
-) : ControllerEvolution, Charted by chart {
+    private val displayChart: Boolean = true,
+    chartLabel: String = "NeuroController evolution"
+) : ControllerEvolution {
 
     private lateinit var levelGenerators: List<LevelGenerator>
     private lateinit var fitnessFunction: MarioGameplayEvaluator<Float>
@@ -44,6 +42,8 @@ class NeuroControllerEvolution(
     private var initialAgentNetwork: UpdatedAgentNetwork? = null
     private lateinit var evaluator: MarioJeneticsEvaluator<DoubleGene, Float>
     private val optimize = Optimize.MAXIMUM
+
+    override val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
 
     override fun evolve(
         levelGenerators: List<LevelGenerator>,
@@ -81,7 +81,7 @@ class NeuroControllerEvolution(
     }
 
     private fun doEvolution(): MarioController {
-        if (this.showChart && !this.chart.isShown) this.chart.show()
+        if (this.displayChart && !this.chart.isShown) this.chart.show()
         this.chart.addStop()
 
         this.evaluator = this.createEvaluator()

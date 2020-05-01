@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels
 
 import ch.idsia.agents.IAgent
+import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 
 
 /**
@@ -8,6 +9,14 @@ import ch.idsia.agents.IAgent
  */
 interface LevelGeneratorEvolution {
 
+    /**
+     * Get line chart of the evolution
+     */
+    val chart: EvolutionLineChart
+
+    /**
+     * Evolved a level generator using agents from the given agent factory
+     */
     fun evolve(agentFactory: () -> IAgent): LevelGenerator
 
 }

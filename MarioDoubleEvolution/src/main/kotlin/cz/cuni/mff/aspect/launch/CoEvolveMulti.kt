@@ -2,7 +2,6 @@ package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.coevolution.MarioCoEvolver
-import cz.cuni.mff.aspect.evolution.Charted
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
@@ -16,7 +15,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
 private const val generations = 30
@@ -48,7 +47,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
                 levelsPerGeneratorCount = 5,
                 mutators = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
-                showChart = false,
+                displayChart = false,
                 chartLabel = "Agent NeuroEvolution"
             )
 
@@ -77,7 +76,7 @@ private object NEATEvolution : ControllerEvolutionSettings {
             populationSize = 50,
             generationsCount = 35,
             levelsPerGeneratorCount = 5,
-            showChart = false,
+            displayChart = false,
             chartLabel = "Agent NeuroEvolution"
         )
 
@@ -149,10 +148,12 @@ private fun coevolve(
         storagePath
     )
 
+    val controllerChart = controllerEvolution.chart
+    val levelGeneratorChart = levelGeneratorEvolution.chart
+    val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
 
-    if (controllerEvolution is Charted)
-        controllerEvolution.storeChart("$storagePath/ai.svg")
+    controllerChart.store("$storagePath/ai.svg")
+    levelGeneratorChart.store("$storagePath/lg.svg")
 
-    if (levelGeneratorEvolution is Charted)
-        levelGeneratorEvolution.storeChart("$storagePath/lg.svg")
+    coevolutionChart.storeChart("$storagePath/coev.svg")
 }
