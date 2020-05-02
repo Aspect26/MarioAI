@@ -44,7 +44,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 null,
                 populationSize = 50,
-                generationsCount = 5,
+                generationsCount = 35,
                 fitnessFunction = MarioGameplayEvaluators::distanceOnly,
                 objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
                 evaluateOnLevelsCount = 25,
@@ -97,7 +97,7 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
             get() =
                 PCLevelGeneratorEvolution(
                     populationSize = 50,
-                    generationsCount = 3,
+                    generationsCount = 10,
                     evaluateOnLevelsCount = 15,
                     fitnessFunction = AgentHalfPassing(),
                     displayChart = false,

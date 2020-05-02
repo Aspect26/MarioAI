@@ -11,6 +11,7 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
@@ -27,17 +28,17 @@ fun evolveAI() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
             NetworkSettings(5, 5, 0, 2, 7),
-            15,
+            25,
             50,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
-            evaluateOnLevelsCount = 5,
+            evaluateOnLevelsCount = 6,
             chartLabel = "NeuroEvolution - Update half",
             alterers = arrayOf(GaussianMutator(0.55)),
             alwaysReevaluate = false
         )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
-    val levelGenerator = LevelGenerators.StaticGenerator(Stage1Level1Split.levels)
+    val levelGenerator = LevelGenerators.StaticGenerator(Stage4Level1Split.levels)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator))
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
