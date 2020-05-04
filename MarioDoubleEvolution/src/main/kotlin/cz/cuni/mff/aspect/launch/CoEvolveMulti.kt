@@ -20,7 +20,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
 import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
-private const val generations = 30
+private const val generations = 20
 
 fun main() {
     coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 10)
@@ -97,9 +97,10 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
             get() =
                 PCLevelGeneratorEvolution(
                     populationSize = 50,
-                    generationsCount = 10,
-                    evaluateOnLevelsCount = 15,
+                    generationsCount = 7,
+                    evaluateOnLevelsCount = 36,
                     fitnessFunction = AgentHalfPassing(),
+                    chunksCount = 50,
                     displayChart = false,
                     chartLabel = "PC Level Generator"
                 )

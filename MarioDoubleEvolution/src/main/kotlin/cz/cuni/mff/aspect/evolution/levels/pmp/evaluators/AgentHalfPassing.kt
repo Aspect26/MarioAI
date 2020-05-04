@@ -16,7 +16,7 @@ class AgentHalfPassing : PMPLevelGeneratorEvaluatorBase() {
         val wonCount = gameStatistics.sumBy { if (it.levelFinished) 1 else 0 }
         val lostCount = gameStatistics.size - wonCount
 
-        val wonLostDifference = abs(wonCount - lostCount)
+        val wonLostDifference = abs(wonCount - lostCount) * 1000
         return wonLostDifference.toFloat()
     }
 

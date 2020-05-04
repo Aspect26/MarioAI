@@ -18,7 +18,7 @@ class AgentHalfPassing : PCLevelGeneratorEvaluatorBase() {
 
 //        println("$wonCount : $lostCount")
 
-        val wonLostDifference = abs(wonCount - lostCount)
+        val wonLostDifference = abs(wonCount - lostCount) * 1000
         return wonLostDifference.toFloat()
     }
 
