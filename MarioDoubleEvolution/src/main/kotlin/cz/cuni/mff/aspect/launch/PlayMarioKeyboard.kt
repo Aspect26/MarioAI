@@ -13,7 +13,6 @@ import kotlin.system.exitProcess
 
 fun main() {
     keyboardPlay()
-    exitProcess(0)
 }
 
 
