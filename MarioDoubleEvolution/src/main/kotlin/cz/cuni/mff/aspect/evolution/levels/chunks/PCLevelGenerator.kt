@@ -113,7 +113,7 @@ class PCLevelGenerator(
             val nextChunkProbabilities = transitionProbabilities.subList(tpStartIndex, tpEndIndex)
             currentChunkIndex = this.randomChoice(nextChunkProbabilities)
 
-            chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(),currentLevel))
+            chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
         }
 
         // last chunk
@@ -196,6 +196,7 @@ class PCLevelGenerator(
             List(DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT + 1) {
                 when (it) {
                     in 0 until DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT -> if (it % DEFAULT_CHUNKS_COUNT == 0) 1.0 else 0.0
+                    DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT -> 1.0
                     else -> 0.0
                 }
             },

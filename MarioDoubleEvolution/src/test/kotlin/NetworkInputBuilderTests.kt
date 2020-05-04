@@ -11,7 +11,26 @@ import org.junit.Test
 
 class NetworkInputBuilderTests {
 
-    // TODO: add test with no dense input
+    @Test
+    fun `test not dense input`() {
+        val networkBuilder = this.givenDenseBuilderWithTiles(arrayOf (
+            arrayOf(Tile.NOTHING, Tile.NOTHING, Tile.NOTHING),
+            arrayOf(Tile.BRICK, Tile.NOTHING, Tile.BRICK),
+            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK),
+            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK)
+        ), marioPosition = Pair(1, 1),
+            receptiveFieldSize = Pair(3, 3), receptiveFieldSizeOffset = Pair(1, 0), useDenseInput = false)
+
+        val input = networkBuilder.build()
+
+        val expectedTilesResult = arrayOf(
+            arrayOf(Tile.BRICK, Tile.NOTHING, Tile.BRICK),
+            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK),
+            arrayOf(Tile.BRICK, Tile.BRICK, Tile.BRICK)
+        )
+
+        this.assertInputTilesEqual(input, expectedTilesResult)
+    }
 
     @Test
     fun `test dense tiles - mario aligned`() {
@@ -131,7 +150,14 @@ class NetworkInputBuilderTests {
         this.assertInputEntitiesEqual(input, expectedEntitiesResult)
     }
 
-    fun givenDenseBuilderWithTiles(tilesArray: Array<Array<Tile>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
+    private fun givenDenseBuilderWithTiles(
+        tilesArray: Array<Array<Tile>>,
+        marioPosition: Pair<Int, Int> = Pair(1, 1),
+        marioInTilePosition: Pair<Int, Int> = Pair(0, 0),
+        receptiveFieldSize: Pair<Int, Int> = Pair(3, 3),
+        receptiveFieldSizeOffset: Pair<Int, Int> = Pair(0, 0),
+        useDenseInput: Boolean = true): NetworkInputBuilder
+    {
         val tiles = Tiles()
         tiles.tileField = tilesArray
 
@@ -143,10 +169,17 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-        return this.givenNetworkInputBuilder(tiles, entities, mario)
+        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput)
     }
 
-    fun givenDenseBuilderWithEntities(entitiesArray: Array<Array<List<Entity<Sprite>>>>, marioPosition: Pair<Int, Int> = Pair(1, 1), marioInTilePosition: Pair<Int, Int> = Pair(0, 0)): NetworkInputBuilder {
+    private fun givenDenseBuilderWithEntities(
+        entitiesArray: Array<Array<List<Entity<Sprite>>>>,
+        marioPosition: Pair<Int, Int> = Pair(1, 1),
+        marioInTilePosition: Pair<Int, Int> = Pair(0, 0),
+        receptiveFieldSize: Pair<Int, Int> = Pair(3, 3),
+        receptiveFieldSizeOffset: Pair<Int, Int> = Pair(0, 0),
+        useDenseInput: Boolean = true): NetworkInputBuilder
+    {
         val entities = Entities()
         entities.entityField = entitiesArray
 
@@ -158,10 +191,10 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-        return this.givenNetworkInputBuilder(tiles, entities, mario)
+        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput)
     }
 
-    fun givenMario(marioPosition: Pair<Int, Int>, marioInTilePosition: Pair<Int, Int>): MarioEntity {
+    private fun givenMario(marioPosition: Pair<Int, Int>, marioInTilePosition: Pair<Int, Int>): MarioEntity {
         val mario = MarioEntity()
         mario.egoCol = marioPosition.first
         mario.egoRow = marioPosition.second
@@ -171,17 +204,24 @@ class NetworkInputBuilderTests {
         return mario
     }
 
-    fun givenNetworkInputBuilder(tiles: Tiles, entities: Entities, mario: MarioEntity): NetworkInputBuilder {
+    private fun givenNetworkInputBuilder(
+        tiles: Tiles,
+        entities: Entities,
+        mario: MarioEntity,
+        receptiveFieldSize: Pair<Int, Int>,
+        receptiveFieldSizeOffset: Pair<Int, Int>,
+        useDenseInput: Boolean): NetworkInputBuilder
+    {
         return NetworkInputBuilder()
             .tiles(tiles)
             .entities(entities)
             .mario(mario)
-            .receptiveFieldOffset(0, 0)
-            .receptiveFieldSize(3, 3)
-            .useDenserInput()
+            .receptiveFieldOffset(receptiveFieldSizeOffset.first, receptiveFieldSizeOffset.second)
+            .receptiveFieldSize(receptiveFieldSize.first, receptiveFieldSize.second)
+            .apply { if (useDenseInput) useDenserInput() }
     }
 
-    fun assertInputTilesEqual(input: IntArray, expectedTiles: Array<Array<Tile>>) {
+    private fun assertInputTilesEqual(input: IntArray, expectedTiles: Array<Array<Tile>>) {
         val flatExpected = expectedTiles.flatten()
         val receptiveFieldGridSize = flatExpected.size
 
@@ -191,7 +231,7 @@ class NetworkInputBuilderTests {
         }
     }
 
-    fun assertInputEntitiesEqual(input: IntArray, expectedEntities: Array<Array<Entity<Sprite>>>) {
+    private fun assertInputEntitiesEqual(input: IntArray, expectedEntities: Array<Array<Entity<Sprite>>>) {
         val flatExpected = expectedEntities.flatten()
         val receptiveFieldGridSize = flatExpected.size
 

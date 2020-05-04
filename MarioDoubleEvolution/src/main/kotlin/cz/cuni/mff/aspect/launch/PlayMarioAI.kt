@@ -20,9 +20,9 @@ fun main() {
 
 fun aiPlayLevel() {
 //    val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val agent = MarioAgent(ObjectStorage.load("data/coev/third_ai.ai") as MarioController)
-//    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
-    val levelGenerator = ObjectStorage.load("data/coev/third_lg.lg") as LevelGenerator
+    val agent = MarioAgent(ObjectStorage.load("data/coev/better-coev-params/neuro_pc/ai_10.ai") as MarioController)
+    val levelGenerator = PCLevelGenerator.createSimplest()
+//    val levelGenerator = ObjectStorage.load("data/coev/third_lg.lg") as LevelGenerator
 
     val gameSimulator = GameSimulator(1400)
     val stats = Array(10) { levelGenerator.generate() }.map {
