@@ -10,6 +10,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassingAndHuffman
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -23,7 +24,7 @@ import io.jenetics.GaussianMutator
 private const val generations = 20
 
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 10)
+    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 5)
 //    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations)
@@ -99,8 +100,8 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
                     populationSize = 50,
                     generationsCount = 7,
                     evaluateOnLevelsCount = 36,
-                    fitnessFunction = AgentHalfPassing(),
-                    chunksCount = 50,
+                    fitnessFunction = AgentHalfPassingAndHuffman(),
+                    chunksCount = 55,
                     displayChart = false,
                     chartLabel = "PC Level Generator"
                 )

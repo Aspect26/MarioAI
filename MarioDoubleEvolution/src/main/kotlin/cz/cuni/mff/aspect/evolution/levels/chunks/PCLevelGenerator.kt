@@ -196,7 +196,6 @@ class PCLevelGenerator(
             List(DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT + 1) {
                 when (it) {
                     in 0 until DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT -> if (it % DEFAULT_CHUNKS_COUNT == 0) 1.0 else 0.0
-                    DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT -> 1.0
                     else -> 0.0
                 }
             },

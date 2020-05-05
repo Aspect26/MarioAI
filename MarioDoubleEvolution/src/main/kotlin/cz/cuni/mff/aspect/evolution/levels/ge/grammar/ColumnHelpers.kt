@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.Tiles
 
 object ColumnHelpers {
 
-    private const val DEFAULT_HEIGHT: Int = 20
+    private const val DEFAULT_HEIGHT: Int = 15
 
     fun getSpaceColumn(height: Int = this.DEFAULT_HEIGHT): ByteArray =
         ByteArray(height) { Tiles.NOTHING }
