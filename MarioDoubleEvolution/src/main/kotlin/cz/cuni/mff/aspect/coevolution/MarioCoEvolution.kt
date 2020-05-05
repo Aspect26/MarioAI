@@ -12,6 +12,9 @@ import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.utils.SlidingWindow
 import java.util.concurrent.TimeUnit
 
+/**
+ *
+ */
 class MarioCoEvolution {
 
     fun evolve(controllerEvolution: ControllerEvolution, generatorEvolution: LevelGeneratorEvolution,

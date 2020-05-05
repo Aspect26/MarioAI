@@ -1,6 +1,9 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     `java-library`
     kotlin("jvm") version "1.3.71"
+    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 repositories {
@@ -27,8 +30,6 @@ dependencies {
     testImplementation(group = "junit", name = "junit", version = "4.12")
 }
 
-
-
 tasks.withType<Test> {
     testLogging {
         events("PASSED", "FAILED", "SKIPPED")
@@ -39,6 +40,16 @@ tasks.withType<Test> {
     }
 }
 
+val dokka by tasks.getting(DokkaTask::class) {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/dokka"
+
+    configuration {
+        includes = listOf("docs/packages.md")
+        includeNonPublic = false
+        reportUndocumented = true
+    }
+}
 
 val jar by tasks.getting(Jar::class) {
     manifest {

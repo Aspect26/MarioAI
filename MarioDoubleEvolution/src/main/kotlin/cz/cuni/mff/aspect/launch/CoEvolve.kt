@@ -84,7 +84,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.eplayMario(currentController, currentGenerator.generate())
 
-    for (i in 3 .. 30) {
+    for (i in 15 .. 20) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController

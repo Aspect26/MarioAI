@@ -20,3 +20,7 @@ changes-simulator:
 
 changes-neat:
 	git difftool c69ab ./MarioDoubleEvolution/src/main/java/com/evo/NEAT
+
+documentation:
+	./gradlew ${MARIO_COEVOLUTION_PROJECT}:dokka
+

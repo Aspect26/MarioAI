@@ -23,7 +23,6 @@ fun keyboardPlay() {
     val marioSimulator = GameSimulator(15000)
 
     for (level in levels) {
-        LevelVisualiser().store(level, "test.png", true)
 //        val agent = Agents.NEAT.Stage4Level1Solver
         val agent = CheaterKeyboardAgent()
         marioSimulator.playMario(agent, level, true)
