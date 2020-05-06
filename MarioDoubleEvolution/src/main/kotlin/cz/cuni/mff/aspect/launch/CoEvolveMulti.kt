@@ -9,7 +9,6 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassingAndHuffman
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
@@ -17,7 +16,7 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
@@ -57,7 +56,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
 
     override val initialController
             get() = SimpleANNController(
-                UpdatedAgentNetwork(
+                HiddenLayerControllerNetwork(
                     receptiveFieldSizeRow = 5,
                     receptiveFieldSizeColumn = 5,
                     receptiveFieldRowOffset = 0,

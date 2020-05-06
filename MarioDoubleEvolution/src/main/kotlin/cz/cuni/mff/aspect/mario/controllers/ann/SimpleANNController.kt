@@ -7,7 +7,7 @@ import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 
 
 /**
@@ -22,13 +22,13 @@ class SimpleANNController(val network: ControllerArtificialNetwork) : MarioContr
     override fun copy(): MarioController = SimpleANNController(this.network.newInstance())
 
     fun setLegacy() {
-        if (this.network is UpdatedAgentNetwork) {
+        if (this.network is HiddenLayerControllerNetwork) {
             this.network.legacy = true
         }
     }
 
     fun setDenseInput() {
-        if (this.network is UpdatedAgentNetwork) {
+        if (this.network is HiddenLayerControllerNetwork) {
             this.network.denseInput = true
         }
         else if (this.network is NeatAgentNetwork) {

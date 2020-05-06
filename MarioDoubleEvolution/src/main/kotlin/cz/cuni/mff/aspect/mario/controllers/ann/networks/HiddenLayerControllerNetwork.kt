@@ -19,17 +19,19 @@ import java.io.Serializable
 
 
 /**
- * Neural network controlling [SimpleANNController].
+ * Neural network controlling [cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController].
  *
- * The network contains 18 input nodes (3x3 matrix for tiles, and another 3x3 matrix for enemies). It contains
- * one hidden layer with 5 neurons. The output layer has 4 neurons, corresponding to 4 mario actions (run left / right,
- * jump and special).
+ * The network contains one hidden dense layer of a configurable size. The input size is also configurable, in a way that
+ * the size of mario's receptive field can be specified. The output layer is always 4 neurons, each one representing
+ * one of Mario's actions (go left, go right, jump and shoot).
+ *
+ * @see cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder
  */
-class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
-                          val receptiveFieldSizeColumn: Int = 3,
-                          val receptiveFieldRowOffset: Int = 0,
-                          val receptiveFieldColumnOffset: Int = 1,
-                          val hiddenLayerSize: Int = 7
+class HiddenLayerControllerNetwork(val receptiveFieldSizeRow: Int = 3,
+                                   val receptiveFieldSizeColumn: Int = 3,
+                                   val receptiveFieldRowOffset: Int = 0,
+                                   val receptiveFieldColumnOffset: Int = 1,
+                                   val hiddenLayerSize: Int = 7
 ) : ControllerArtificialNetwork,
     Serializable {
 
@@ -46,7 +48,7 @@ class UpdatedAgentNetwork(val receptiveFieldSizeRow: Int = 3,
     private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
 
     override fun newInstance(): ControllerArtificialNetwork =
-        UpdatedAgentNetwork(
+        HiddenLayerControllerNetwork(
             this.receptiveFieldSizeRow,
             this.receptiveFieldSizeColumn,
             this.receptiveFieldRowOffset,

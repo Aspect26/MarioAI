@@ -9,14 +9,13 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/3_increased-levels-on-lg-evaluation/neuro_pc"
+private val RESULT_FILES_PATH = "data/coev/4_lg_with_huffman/neuro_pc"
 
 fun main() {
 //    coevolve()
@@ -49,7 +48,7 @@ fun coevolve() {
 
     val initialLevelGenerator = PCLevelGenerator.createSimplest()
 
-    val initialController = SimpleANNController(UpdatedAgentNetwork(
+    val initialController = SimpleANNController(HiddenLayerControllerNetwork(
         receptiveFieldSizeRow = 5,
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
@@ -74,7 +73,7 @@ fun coevolve() {
 fun playLatestCo() {
     val simulator = GameSimulator()
 
-    var currentController: MarioController = SimpleANNController(UpdatedAgentNetwork(
+    var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(
         receptiveFieldSizeRow = 5,
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
@@ -84,22 +83,22 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.eplayMario(currentController, currentGenerator.generate())
 
-    for (i in 15 .. 20) {
+    for (i in 1 .. 20) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
-        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
-        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
-        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
-        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
         simulator.playMario(currentController, currentGenerator.generate())
 
         currentGenerator = ObjectStorage.load("$RESULT_FILES_PATH/lg_$i.lg") as LevelGenerator
 //        repeat(5) { LevelVisualiser().display(currentGenerator.generate()) }
-        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
-        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
-        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
-        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
         simulator.playMario(currentController, currentGenerator.generate())
     }
 

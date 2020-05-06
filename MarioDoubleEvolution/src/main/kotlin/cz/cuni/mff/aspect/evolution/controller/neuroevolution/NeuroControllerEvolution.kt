@@ -9,7 +9,7 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.UpdatedAgentNetwork
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
@@ -50,7 +50,7 @@ class NeuroControllerEvolution(
 
     private lateinit var levelGenerators: List<LevelGenerator>
 
-    private var initialAgentNetwork: UpdatedAgentNetwork? = null
+    private var initialAgentNetwork: HiddenLayerControllerNetwork? = null
 
     override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
         this.levelGenerators = levelGenerators
@@ -62,8 +62,8 @@ class NeuroControllerEvolution(
             "This implementation of controller evolution supports only `${SimpleANNController}` instances to continue evolution"
         )
 
-        if (controller.network !is UpdatedAgentNetwork) throw IllegalArgumentException(
-            "This implementation of controller evolution supports only `${SimpleANNController}` with `${UpdatedAgentNetwork}` as its network"
+        if (controller.network !is HiddenLayerControllerNetwork) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `${SimpleANNController}` with `${HiddenLayerControllerNetwork}` as its network"
         )
 
         this.initialAgentNetwork = controller.network
@@ -117,9 +117,9 @@ class NeuroControllerEvolution(
         return Pair(fitnessFunction(statistics), objectiveFunction(statistics))
     }
 
-    private fun createControllerNetwork(): UpdatedAgentNetwork {
+    private fun createControllerNetwork(): HiddenLayerControllerNetwork {
         if (this.controllerNetworkSettings == null) throw UnsupportedOperationException("Controller network settings not specified")
-        val network = UpdatedAgentNetwork(
+        val network = HiddenLayerControllerNetwork(
             receptiveFieldSizeRow = this.controllerNetworkSettings!!.receptiveFieldSizeRow,
             receptiveFieldSizeColumn = this.controllerNetworkSettings!!.receptiveFieldSizeColumn,
             receptiveFieldRowOffset = this.controllerNetworkSettings!!.receptiveFieldRowOffset,
