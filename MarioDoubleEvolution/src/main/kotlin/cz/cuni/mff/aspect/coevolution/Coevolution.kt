@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 /**
  *
  */
-class MarioCoEvolution {
+class Coevolution {
 
     fun evolve(controllerEvolution: ControllerEvolution, generatorEvolution: LevelGeneratorEvolution,
                initialController: MarioController, initialLevelGenerator: LevelGenerator,

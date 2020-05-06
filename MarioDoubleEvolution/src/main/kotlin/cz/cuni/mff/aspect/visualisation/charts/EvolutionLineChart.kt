@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.visualisation.charts
 
 import java.awt.Color
 
-class EvolutionLineChart(label: String = "Evolution", private val hideNegative: Boolean = false) {
+class EvolutionLineChart(val label: String = "Evolution", private val hideNegative: Boolean = false) {
 
     private val _stops = mutableListOf<Double>()
     private val lineChart = LineChart(label, "Generations", "Fitness/Objective")

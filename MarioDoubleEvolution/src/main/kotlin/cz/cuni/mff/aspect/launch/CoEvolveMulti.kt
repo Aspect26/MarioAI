@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
-import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
+import cz.cuni.mff.aspect.coevolution.Coevolution
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
@@ -135,7 +135,7 @@ private fun coevolve(
 ) {
     val controllerEvolution = controllerEvolutionSettings.evolution
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
-    val coevolver = MarioCoEvolution()
+    val coevolver = Coevolution()
 
     coevolver.evolve(
         controllerEvolution,

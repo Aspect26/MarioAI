@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.coevolution.MarioCoEvolution
+import cz.cuni.mff.aspect.coevolution.Coevolution
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
@@ -56,7 +56,7 @@ fun coevolve() {
         hiddenLayerSize = 7
     ))
 
-    val coevolver = MarioCoEvolution()
+    val coevolver = Coevolution()
 
     coevolver.evolve(
         controllerEvolution,

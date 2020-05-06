@@ -4,8 +4,8 @@ import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 
 fun main() {
-    val chart1 = EvolutionLineChart(label="TEST1")
-    val chart2 = EvolutionLineChart(label="TEST2")
+    val chart1 = EvolutionLineChart(label="AI Evolution")
+    val chart2 = EvolutionLineChart(label="LG Evolution")
 
     chart1.nextGeneration(1.0, 0.0, 0.0, 2.0)
     chart1.nextGeneration(7.0, 0.0, 0.0, 2.0)
@@ -141,5 +141,5 @@ fun main() {
     chart2.addStop()
 
     val coevolutionLineChart = CoevolutionLineChart(chart1, chart2, "Coevolution chart")
-    coevolutionLineChart.show()
+    coevolutionLineChart.storeChart("sijebnuty.svg")
 }

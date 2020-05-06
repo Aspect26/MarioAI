@@ -76,10 +76,12 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
     }
 
     fun save(path: String) {
-        val directoryPath = path.replaceAfterLast("/", "")
-
-        val directory = File(directoryPath)
-        if (!directory.exists()) directory.mkdirs()
+        println("AAAAAAAAAAAAAAAAAAAAA")
+        if (path.contains("/")) {
+            val directoryPath = path.replaceAfterLast("/", "")
+            val directory = File(directoryPath)
+            if (!directory.exists()) directory.mkdirs()
+        }
 
         VectorGraphicsEncoder.saveVectorGraphic(this.chart, path, VectorGraphicsEncoder.VectorGraphicsFormat.SVG)
     }

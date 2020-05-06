@@ -27,7 +27,7 @@ class AgentHalfPassingAndHuffman : PCLevelGeneratorEvaluatorBase() {
             ImageHuffmanCompression(2).getSize(image)
         }.sum()
 
-        return reversedWonLostDifference.toFloat() * compressionSize
+        return (reversedWonLostDifference.toFloat() * compressionSize) / 10f
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

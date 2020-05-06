@@ -4,7 +4,7 @@ MARIO_COEVOLUTION_PROJECT = "MarioDoubleEvolution"
 get-gradle-wrapper:
 	gradle wrapper --gradle-version 6.3
 
-build-jar: get-gradle-wrapper
+jar: get-gradle-wrapper
 	./gradlew $(MARIO_SIMULATOR_PROJECT):jar
 	./gradlew $(MARIO_COEVOLUTION_PROJECT):jar
 
