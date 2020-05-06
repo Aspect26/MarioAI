@@ -21,4 +21,4 @@ Welcome to my diploma thesis work! Meaningful readme coming soon...
 5. [HuffmanEncoding](https://github.com/marvinjason/HuffmanCoding) - Huffman encoding
 
 ## Notes
-The game simulator does not work properly in Java 12 (see https://github.com/Aspect26/MarioDoubleEvolution/issues/47)
+The game simulator does not work properly in Java 12 and 14 (see https://github.com/Aspect26/MarioDoubleEvolution/issues/47).
