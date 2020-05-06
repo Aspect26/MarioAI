@@ -11,7 +11,7 @@ jar: get-gradle-wrapper
 test: get-gradle-wrapper
 	./gradlew $(MARIO_COEVOLUTION_PROJECT):test
 
-run-coev: build-jar
+run-coev: jar
 	# TODO: make custom gradle command to build coevolution jar
 	java -jar ./MarioDoubleEvolution/build/libs/MarioDoubleEvolution.jar 
 
