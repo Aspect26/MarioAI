@@ -3,7 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatform
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatformType
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
@@ -37,8 +37,8 @@ class PMPLevelGenerator(
     private val length: Int = 200
 ) : LevelGenerator {
 
-    private val random = Random()
-    private lateinit var _lastMetadata: MarioLevelMetadata
+    private val random = Random(26275)
+    private lateinit var _lastMetadata: PMPLevelMetadata
 
     override fun generate(): MarioLevel {
         val levelMetadata = this.createInitialLevel()
@@ -54,9 +54,9 @@ class PMPLevelGenerator(
         return levelMetadata.createLevel()
     }
 
-    val lastMetadata: MarioLevelMetadata get() = this._lastMetadata
+    val lastMetadata: PMPLevelMetadata get() = this._lastMetadata
 
-    private fun createInitialLevel(): MarioLevelMetadata {
+    private fun createInitialLevel(): PMPLevelMetadata {
         val groundHeight = IntArray(this.length) { STARTING_HEIGHT }
         val entities = IntArray(this.length) { Entities.NOTHING }
         val holes = IntArray(this.length) { 0 }
@@ -65,7 +65,7 @@ class PMPLevelGenerator(
         val boxPlatforms = Array(this.length) { BoxPlatform(0, 0, listOf(), BoxPlatformType.BRICKS) }
         val stairs = IntArray(this.length) { 0 }
 
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             LEVEL_HEIGHT,
             groundHeight,
             entities,
@@ -77,7 +77,7 @@ class PMPLevelGenerator(
         )
     }
 
-    private fun groundPass(levelMetadata: MarioLevelMetadata) {
+    private fun groundPass(levelMetadata: PMPLevelMetadata) {
         var currentHeight = levelMetadata.groundHeight[0]
         var lastChangeAtColumn = 0
         var lastHoleEndColumn = 0
@@ -111,7 +111,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun pipesPass(levelMetadata: MarioLevelMetadata) {
+    private fun pipesPass(levelMetadata: PMPLevelMetadata) {
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             val shouldBePipe = this.random.nextFloat() < this.probabilities[PI_PIPE]
             val canBePipe: Boolean = levelMetadata.pipes[column - 1] == 0
@@ -128,7 +128,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun bulletBillsPass(levelMetadata: MarioLevelMetadata) {
+    private fun bulletBillsPass(levelMetadata: PMPLevelMetadata) {
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             val shouldBeBulletBill = this.random.nextFloat() < this.probabilities[PI_BULLET_BILL]
             val canBeBulletBill: Boolean = levelMetadata.pipes[column - 1] == 0
@@ -144,7 +144,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun stairsPass(levelMetadata: MarioLevelMetadata) {
+    private fun stairsPass(levelMetadata: PMPLevelMetadata) {
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             val shouldBeStairs = this.random.nextFloat() < this.probabilities[PI_STAIRS]
             val canBeStairs = !levelMetadata.isHoleAt(column)
@@ -158,7 +158,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun boxesPass(levelMetadata: MarioLevelMetadata) {
+    private fun boxesPass(levelMetadata: PMPLevelMetadata) {
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[column] == 0) continue
             val canBeBoxes = levelMetadata.pipes[column] == 0
@@ -177,7 +177,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun enemiesPass(levelMetadata: MarioLevelMetadata) {
+    private fun enemiesPass(levelMetadata: PMPLevelMetadata) {
         val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES)
 
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
@@ -198,7 +198,7 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun addStairs(levelMetadata: MarioLevelMetadata, column: Int) {
+    private fun addStairs(levelMetadata: PMPLevelMetadata, column: Int) {
         val nearestHoleIndex = this.nearestHoleOrEnd(levelMetadata, column)
         val nearestGroundHeightChangeIndex = this.nearestHeightChangeOrEnd(levelMetadata, column)
         val chosenLength = this.randomInt(3, 6)
@@ -214,12 +214,12 @@ class PMPLevelGenerator(
         }
     }
 
-    private fun addBoxPlatform(levelMetadata: MarioLevelMetadata, column: Int) {
+    private fun addBoxPlatform(levelMetadata: PMPLevelMetadata, column: Int) {
         val platformLevel = levelMetadata.groundHeight[column] + 4
         this.addBoxPlatformAt(levelMetadata, column, platformLevel)
     }
 
-    private fun addDoubleBoxPlatform(levelMetadata: MarioLevelMetadata, column: Int) {
+    private fun addDoubleBoxPlatform(levelMetadata: PMPLevelMetadata, column: Int) {
         val firstPlatformLevel = levelMetadata.groundHeight[column] + 4
         val firstPlatform = this.addBoxPlatformAt(levelMetadata, column, firstPlatformLevel) ?: return
 
@@ -227,7 +227,7 @@ class PMPLevelGenerator(
         this.addBoxPlatformAt(levelMetadata, column, secondPlatformLevel, firstPlatform.length - 2)
     }
 
-    private fun addBoxPlatformAt(levelMetadata: MarioLevelMetadata, column: Int, platformLevel: Int, maxLength: Int? = null): BoxPlatform? {
+    private fun addBoxPlatformAt(levelMetadata: PMPLevelMetadata, column: Int, platformLevel: Int, maxLength: Int? = null): BoxPlatform? {
         val chosenPlatformLength: Int = this.randomInt(2, maxLength ?: 7)
         val maxPlatformLengthAvailable = levelMetadata.horizontalRayUntilObstacle(column, platformLevel - 1) - 1
         val platformLength = min(chosenPlatformLength, maxPlatformLengthAvailable)
@@ -246,12 +246,12 @@ class PMPLevelGenerator(
         return platform
     }
 
-    private fun nearestHoleOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
+    private fun nearestHoleOrEnd(levelMetadata: PMPLevelMetadata, fromColumn: Int): Int {
         for (index in fromColumn until levelMetadata.holes.size) if (levelMetadata.holes[index] > 0) return index
         return levelMetadata.levelLength
     }
 
-    private fun nearestHeightChangeOrEnd(levelMetadata: MarioLevelMetadata, fromColumn: Int): Int {
+    private fun nearestHeightChangeOrEnd(levelMetadata: PMPLevelMetadata, fromColumn: Int): Int {
         for (index in fromColumn + 1 until levelMetadata.groundHeight.size) if (levelMetadata.groundHeight[index] != levelMetadata.groundHeight[index - 1]) return index
         return levelMetadata.levelLength
     }

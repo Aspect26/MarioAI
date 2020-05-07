@@ -9,7 +9,8 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassingAndHuffman
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -97,9 +98,10 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
             get() =
                 PCLevelGeneratorEvolution(
                     populationSize = 50,
-                    generationsCount = 7,
+                    generationsCount = 15,
                     evaluateOnLevelsCount = 36,
-                    fitnessFunction = AgentHalfPassingAndHuffman(),
+                    fitnessFunction = All(),
+                    objectiveFunction = AgentHalfPassing(),
                     chunksCount = 55,
                     displayChart = false,
                     chartLabel = "PC Level Generator"
@@ -117,6 +119,7 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
             generationsCount = 5,
             evaluateOnLevelsCount = 5,
             fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
+            objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
             displayChart = false,
             chartLabel = "PMP Level Generator"
         )

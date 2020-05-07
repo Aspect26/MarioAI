@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelGeneratorEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
@@ -21,7 +21,8 @@ fun doManyPMPEvolution() {
     val experimentsName = "pmp_v3/NEATs4l1solver"
     val generationsCount = 100
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitnessFunction: PMPLevelGeneratorEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
+    val fitnessFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
+    val objectiveFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(
@@ -31,6 +32,7 @@ fun doManyPMPEvolution() {
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
             evaluateOnLevelsCount = 5,
             resultLevelsCount = 5,
             postProcess = false
@@ -43,6 +45,7 @@ fun doManyPMPEvolution() {
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
             evaluateOnLevelsCount = 5,
             resultLevelsCount = 5,
             postProcess = false
@@ -55,6 +58,7 @@ fun doManyPMPEvolution() {
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
             evaluateOnLevelsCount = 5,
             resultLevelsCount = 5,
             postProcess = false
@@ -67,6 +71,7 @@ fun doManyPMPEvolution() {
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
             evaluateOnLevelsCount = 5,
             resultLevelsCount = 5,
             postProcess = false
@@ -100,7 +105,8 @@ class PMPEvolutionLauncher(
     private val agentFactory: () -> IAgent,
     private val populationSize: Int,
     private val generationsCount: Int,
-    private val fitnessFunction: PMPLevelGeneratorEvaluator<Float>,
+    private val fitnessFunction: PMPLevelEvaluator<Float>,
+    private val objectiveFunction: PMPLevelEvaluator<Float>,
     private val resultLevelsCount: Int,
     private val evaluateOnLevelsCount: Int,
     private val postProcess: Boolean
@@ -113,6 +119,7 @@ class PMPEvolutionLauncher(
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
             fitnessFunction = this.fitnessFunction,
+            objectiveFunction = this.fitnessFunction,
             evaluateOnLevelsCount = this.evaluateOnLevelsCount,
             chartLabel = this.label
         )

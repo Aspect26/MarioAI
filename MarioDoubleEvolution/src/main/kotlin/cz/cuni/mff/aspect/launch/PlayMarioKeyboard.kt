@@ -17,7 +17,7 @@ fun main() {
 
 
 fun keyboardPlay() {
-    val levelGenerator = PCLevelGenerator.createSimplest()
+    val levelGenerator = PCLevelGenerator()
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
     val marioSimulator = GameSimulator(15000)

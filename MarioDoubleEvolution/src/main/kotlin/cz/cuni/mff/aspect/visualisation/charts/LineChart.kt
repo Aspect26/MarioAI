@@ -76,7 +76,6 @@ class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: Stri
     }
 
     fun save(path: String) {
-        println("AAAAAAAAAAAAAAAAAAAAA")
         if (path.contains("/")) {
             val directoryPath = path.replaceAfterLast("/", "")
             val directory = File(directoryPath)

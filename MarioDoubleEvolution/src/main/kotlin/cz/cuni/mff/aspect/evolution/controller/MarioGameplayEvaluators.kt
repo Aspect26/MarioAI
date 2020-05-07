@@ -1,6 +1,5 @@
 package cz.cuni.mff.aspect.evolution.controller
 
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
 import cz.cuni.mff.aspect.utils.sumByFloat
 import cz.cuni.mff.aspect.mario.GameStatistics
 

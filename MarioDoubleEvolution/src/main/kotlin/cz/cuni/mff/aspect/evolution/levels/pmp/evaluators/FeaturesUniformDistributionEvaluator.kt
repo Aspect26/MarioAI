@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
@@ -9,7 +9,7 @@ import kotlin.math.pow
 
 class FeaturesUniformDistributionEvaluator : SummingEvaluator() {
 
-    override fun evaluateOne(level: MarioLevel, levelMetadata: MarioLevelMetadata, gameStatistics: GameStatistics): Float {
+    override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float {
         val avg = (levelMetadata.holesCount + levelMetadata.pipesCount + levelMetadata.billsCount + levelMetadata.boxPlatformsCount +
                 levelMetadata.stoneColumnsCount) / 5f
         return (abs(levelMetadata.holesCount - avg) - 3).coerceAtLeast(0f).pow(2) +
