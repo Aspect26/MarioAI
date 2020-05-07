@@ -95,17 +95,17 @@ private object NEATEvolution : ControllerEvolutionSettings {
 
 private object PCEvolution : LevelGeneratorEvolutionSettings {
     override val evolution: LevelGeneratorEvolution
-            get() =
-                PCLevelGeneratorEvolution(
-                    populationSize = 50,
-                    generationsCount = 15,
-                    evaluateOnLevelsCount = 36,
-                    fitnessFunction = All(),
-                    objectiveFunction = AgentHalfPassing(),
-                    chunksCount = 55,
-                    displayChart = false,
-                    chartLabel = "PC Level Generator"
-                )
+        get() =
+            PCLevelGeneratorEvolution(
+                populationSize = 50,
+                generationsCount = 15,
+                evaluateOnLevelsCount = 36,
+                fitnessFunction = All(),
+                objectiveFunction = AgentHalfPassing(),
+                chunksCount = 55,
+                displayChart = false,
+                chartLabel = "PC Level Generator"
+            )
 
     override val initialLevelGenerator: LevelGenerator
         get() = PCLevelGenerator.createSimplest()

@@ -37,7 +37,7 @@ class PMPLevelGenerator(
     private val length: Int = 200
 ) : LevelGenerator {
 
-    private val random = Random(26275)
+    private val random = Random()
     private lateinit var _lastMetadata: PMPLevelMetadata
 
     override fun generate(): MarioLevel {
