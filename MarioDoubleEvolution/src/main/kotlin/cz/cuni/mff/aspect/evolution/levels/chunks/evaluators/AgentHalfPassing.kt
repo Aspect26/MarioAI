@@ -6,17 +6,15 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 import kotlin.math.abs
 
-class AgentHalfPassing : PCLevelGeneratorEvaluatorBase() {
+class AgentHalfPassing : PCLevelEvaluator<Float> {
 
-    override fun evaluate(
+    override fun invoke(
         levels: List<MarioLevel>,
         levelsChunkMetadata: List<ChunksLevelMetadata>,
         gameStatistics: List<GameStatistics>
     ): Float {
         val wonCount = gameStatistics.sumBy { if (it.levelFinished) 1 else 0 }
         val lostCount = gameStatistics.size - wonCount
-
-//        println("$wonCount : $lostCount")
 
         val wonLostDifference = abs(wonCount - lostCount) * 1000
         return wonLostDifference.toFloat()

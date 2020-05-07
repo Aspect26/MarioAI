@@ -28,6 +28,7 @@ fun evolvePMP() {
         generationsCount = 20,
         populationSize = 50,
         fitnessFunction = HuffmanCompressionEvaluator(),
+        objectiveFunction = HuffmanCompressionEvaluator(),
         evaluateOnLevelsCount = 10
     )
 

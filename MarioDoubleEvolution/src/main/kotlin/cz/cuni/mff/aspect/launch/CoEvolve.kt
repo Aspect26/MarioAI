@@ -8,6 +8,7 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
@@ -15,7 +16,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/4_lg_with_huffman/neuro_pc"
+private val RESULT_FILES_PATH = "data/coev/5_chart_update/neuro_pc"
 
 fun main() {
 //    coevolve()
@@ -41,7 +42,8 @@ fun coevolve() {
         populationSize = 50,
         generationsCount = 5,
         evaluateOnLevelsCount = 5,
-        fitnessFunction = AgentHalfPassing(),
+        fitnessFunction = All(),
+        objectiveFunction = AgentHalfPassing(),
         displayChart = true,
         chartLabel = "PC Level Generator"
     )

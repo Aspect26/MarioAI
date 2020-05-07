@@ -17,10 +17,10 @@ fun main() {
 
 
 fun keyboardPlay() {
-    val levelGenerator = PCLevelGenerator.createSimplest()
+    val levelGenerator = PCLevelGenerator(chunksInLevelCount = 55)
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
-    val marioSimulator = GameSimulator(15000)
+    val marioSimulator = GameSimulator(2500)
 
     for (level in levels) {
 //        val agent = Agents.NEAT.Stage4Level1Solver

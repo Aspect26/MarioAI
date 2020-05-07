@@ -8,7 +8,8 @@ import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import io.jenetics.Optimize
 import kotlin.math.abs
 
-class AgentHalfPassingAndHuffman : PCLevelEvaluator<Float> {
+// TODO: better name...
+class All : PCLevelEvaluator<Float> {
 
     override fun invoke(
         levels: List<MarioLevel>,
@@ -22,12 +23,16 @@ class AgentHalfPassingAndHuffman : PCLevelEvaluator<Float> {
         val wonLostDifference = abs(wonCount - lostCount)
         val reversedWonLostDifference = maxDifference - wonLostDifference
 
-        val compressionSize = List(levels.size) {
+        val compressionFactor = List(levels.size) {
             val image = LevelToImageConverter.createMinified(levels[it], noAlpha=true)
             ImageHuffmanCompression(2).getSize(image)
-        }.sum()
+        }.sum() / 125180f
 
-        return (reversedWonLostDifference.toFloat() * compressionSize) / 10f
+        val linearityFactor = List(levels.size) {
+            LinearityEvaluator().evaluateOne(levels[it], levelsChunkMetadata[it], gameStatistics[it])
+        }.average().toFloat()
+
+        return reversedWonLostDifference.toFloat() * (1 + compressionFactor + linearityFactor)
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

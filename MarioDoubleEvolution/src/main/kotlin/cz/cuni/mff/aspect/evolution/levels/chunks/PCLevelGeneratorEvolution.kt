@@ -6,7 +6,11 @@ import cz.cuni.mff.aspect.evolution.jenetics.genotype.MarkovChainGenotypeFactory
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelGeneratorEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
+import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.GameStatistics
+import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import io.jenetics.*
@@ -15,7 +19,8 @@ import io.jenetics.util.Factory
 class PCLevelGeneratorEvolution(
     populationSize: Int,
     generationsCount: Int,
-    private val fitnessFunction: PCLevelGeneratorEvaluator<Float>,
+    private val fitnessFunction: PCLevelEvaluator<Float>,
+    private val objectiveFunction: PCLevelEvaluator<Float>,
     private val evaluateOnLevelsCount: Int = DEFAULT_EVALUATE_ON_LEVELS_COUNT,
     private val chunksCount: Int = DEFAULT_CHUNKS_COUNT,
     chartLabel: String = DEFAULT_CHART_LABEL,
@@ -48,7 +53,24 @@ class PCLevelGeneratorEvolution(
         val genes = genotype.getDoubleValues()
         val levelGenerator = PCLevelGenerator(genes.toList(), this.chunksCount)
 
-        return Pair(this.fitnessFunction(levelGenerator, this.agentFactory, this.evaluateOnLevelsCount), 0f)
+        val levels: MutableList<MarioLevel> = mutableListOf()
+        val metadata: MutableList<ChunksLevelMetadata> = mutableListOf()
+        val gameStatistics: MutableList<GameStatistics> = mutableListOf()
+
+        repeat(this.evaluateOnLevelsCount) {
+            val agent = agentFactory()
+            val level = levelGenerator.generate()
+            val levelMetadata = levelGenerator.lastChunksMetadata
+
+            val marioSimulator = GameSimulator(2500)
+            val currentGameStatistics = marioSimulator.playMario(agent, level, false)
+
+            levels.add(level)
+            metadata.add(levelMetadata)
+            gameStatistics.add(currentGameStatistics)
+        }
+
+        return Pair(this.fitnessFunction(levels, metadata, gameStatistics), this.objectiveFunction(levels, metadata, gameStatistics))
     }
 
     companion object {

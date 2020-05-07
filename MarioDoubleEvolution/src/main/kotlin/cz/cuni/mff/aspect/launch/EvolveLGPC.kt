@@ -1,4 +1,4 @@
-package cz.cuni.mff.aspect.launch
+    package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
@@ -21,13 +21,15 @@ fun main() {
 
 fun evolvePC() {
 //    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController) }
-    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
+    val agentFactory = { Agents.RuleBased.goingRight }
 
     val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 20,
-        evaluateOnLevelsCount = 10,
+        generationsCount = 50,
+        evaluateOnLevelsCount = 36,
         fitnessFunction = HuffmanCompressionEvaluator(),
+        objectiveFunction = HuffmanCompressionEvaluator(),
+        chunksCount = 55,
         displayChart = true
     )
 

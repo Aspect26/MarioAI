@@ -1,10 +1,10 @@
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatform
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatformType
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.MarioLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import org.junit.Test
 import org.junit.Assert
 
-class MarioLevelMetadataTests {
+class PMPLevelMetadataTests {
 
     @Test
     fun `is hole at`() {
@@ -118,7 +118,7 @@ class MarioLevelMetadataTests {
 
     @Test
     fun `is obstacle at - platform`() {
-        val metadata: MarioLevelMetadata = givenMetadataWithBoxPlatforms(
+        val metadata: PMPLevelMetadata = givenMetadataWithBoxPlatforms(
             arrayOf(
                 BoxPlatform(0, 7, listOf(), BoxPlatformType.BRICKS),
                 BoxPlatform(2, 7, listOf(), BoxPlatformType.BRICKS)
@@ -157,41 +157,41 @@ class MarioLevelMetadataTests {
         Assert.assertEquals(0, metadata.horizontalRayUntilObstacle(6, 7))
     }
 
-    private fun givenMetadataWithHoles(holes: IntArray): MarioLevelMetadata = MarioLevelMetadata(
+    private fun givenMetadataWithHoles(holes: IntArray): PMPLevelMetadata = PMPLevelMetadata(
         15, intArrayOf(), intArrayOf(), holes, intArrayOf(), intArrayOf(), arrayOf(), intArrayOf()
     )
 
-    private fun givenMetadataWithGroundHeight(groundHeight: IntArray): MarioLevelMetadata {
+    private fun givenMetadataWithGroundHeight(groundHeight: IntArray): PMPLevelMetadata {
         val emptyData = IntArray(groundHeight.size) { 0 }
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             15, groundHeight, emptyData, emptyData, emptyData, emptyData, arrayOf(), emptyData
         )
     }
 
-    private fun givenMetadataWithPipes(groundHeight: IntArray, pipes: IntArray): MarioLevelMetadata {
+    private fun givenMetadataWithPipes(groundHeight: IntArray, pipes: IntArray): PMPLevelMetadata {
         val emptyData = IntArray(pipes.size) { 0 }
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             15, groundHeight, emptyData, emptyData, pipes, emptyData, arrayOf(), emptyData
         )
     }
 
-    private fun givenMetadataWithBills(groundHeight: IntArray, bills: IntArray): MarioLevelMetadata {
+    private fun givenMetadataWithBills(groundHeight: IntArray, bills: IntArray): PMPLevelMetadata {
         val emptyData = IntArray(bills.size) { 0 }
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             15, groundHeight, emptyData, emptyData, emptyData, bills, arrayOf(), emptyData
         )
     }
 
-    private fun givenMetadataWithStoneColumns(groundHeight: IntArray, stoneColumns: IntArray): MarioLevelMetadata {
+    private fun givenMetadataWithStoneColumns(groundHeight: IntArray, stoneColumns: IntArray): PMPLevelMetadata {
         val emptyData = IntArray(stoneColumns.size) { 0 }
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             15, groundHeight, emptyData, emptyData, emptyData, emptyData, arrayOf(), stoneColumns
         )
     }
 
-    private fun givenMetadataWithBoxPlatforms(boxPlatforms: Array<BoxPlatform>, levelLength: Int): MarioLevelMetadata {
+    private fun givenMetadataWithBoxPlatforms(boxPlatforms: Array<BoxPlatform>, levelLength: Int): PMPLevelMetadata {
         val emptyData = IntArray(levelLength) { 0 }
-        return MarioLevelMetadata(
+        return PMPLevelMetadata(
             15, emptyData, emptyData, emptyData, emptyData, emptyData, boxPlatforms, emptyData
         )
     }

@@ -7,7 +7,7 @@ import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
 
-data class MarioLevelMetadata (
+data class PMPLevelMetadata (
     val levelHeight: Int,
     val groundHeight: IntArray,
     val entities: IntArray,
