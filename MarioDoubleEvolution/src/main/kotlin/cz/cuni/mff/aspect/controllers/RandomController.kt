@@ -7,6 +7,9 @@ import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import java.util.*
 
+/**
+ * Controller which does random actions in each tick.
+ */
 class RandomController : MarioController {
 
     val random = Random()

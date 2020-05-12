@@ -6,6 +6,9 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 
+/**
+ * Controller which only goes to the right and jumps all the time.
+ */
 class GoingRightAndJumpingController : MarioController {
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         return listOf(MarioAction.RUN_RIGHT, MarioAction.JUMP)
