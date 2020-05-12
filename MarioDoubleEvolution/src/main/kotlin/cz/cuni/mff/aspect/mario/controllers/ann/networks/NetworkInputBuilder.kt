@@ -29,10 +29,6 @@ data class NetworkInputBuilder(
     fun useDenserInput() = apply { this.denseInput = true }
     fun legacy() = apply { this.legacy = true }
 
-    private val receptiveFieldSize: Int get() = this.receptiveFieldRows * this.receptiveFieldColumns * if (this.denseInput) 4 else 1
-
-    private val inputLayerSize: Int get() = this.receptiveFieldSize * 2 + if (this.addMarioInTilePosition) 2 else 0
-
     fun buildDouble(): DoubleArray =
         if (this.legacy) {
             this.buildLegacy()
@@ -69,7 +65,10 @@ data class NetworkInputBuilder(
 
     private fun createFlatArrays(): Triple<IntArray, IntArray, Int> {
         this.checkInput()
-        return Triple(this.createFlatTiles(), this.createFlatEntities(), this.inputLayerSize)
+        return Triple(
+            this.createFlatTiles(),
+            this.createFlatEntities(),
+            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput, this.addMarioInTilePosition))
     }
 
     private fun checkInput() {
@@ -79,7 +78,7 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatTiles(): IntArray {
-        val flatTilesSize = this.receptiveFieldSize
+        val flatTilesSize = receptiveFieldSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput)
         val flatTiles = IntArray(flatTilesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
@@ -96,7 +95,7 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatEntities(): IntArray {
-        val flatEntitiesSize = this.receptiveFieldSize
+        val flatEntitiesSize = receptiveFieldSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput)
         val flatEntities = IntArray(flatEntitiesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
@@ -146,6 +145,15 @@ data class NetworkInputBuilder(
                 index++
             }
         }
+    }
+
+    companion object {
+        private fun receptiveFieldSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
+            receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1
+
+        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, addMarioInTilePosition: Boolean): Int =
+            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2 + if (addMarioInTilePosition) 2 else 0
+
     }
 
 }

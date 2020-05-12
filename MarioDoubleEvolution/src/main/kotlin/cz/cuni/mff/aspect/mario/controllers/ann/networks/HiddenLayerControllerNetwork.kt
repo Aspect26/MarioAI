@@ -40,12 +40,12 @@ class HiddenLayerControllerNetwork(val receptiveFieldSizeRow: Int = 3,
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
-    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
     override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
-    private val inputLayerSize: Int get() = 2 * this.receptiveFieldSizeRow * this.receptiveFieldSizeColumn * if (this.denseInput) 4 else 1
+    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
+    private val inputLayerSize: Int get() = NetworkInputBuilder.inputSize(this.receptiveFieldSizeRow, this.receptiveFieldSizeColumn, this.denseInput, false)
 
     override fun newInstance(): ControllerArtificialNetwork =
         HiddenLayerControllerNetwork(
