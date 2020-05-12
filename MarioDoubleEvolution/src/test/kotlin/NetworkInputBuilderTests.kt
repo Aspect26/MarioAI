@@ -218,7 +218,7 @@ class NetworkInputBuilderTests {
             .mario(mario)
             .receptiveFieldOffset(receptiveFieldSizeOffset.first, receptiveFieldSizeOffset.second)
             .receptiveFieldSize(receptiveFieldSize.first, receptiveFieldSize.second)
-            .apply { if (useDenseInput) useDenserInput() }
+            .useDenseInput(useDenseInput)
     }
 
     private fun assertInputTilesEqual(input: IntArray, expectedTiles: Array<Array<Tile>>) {

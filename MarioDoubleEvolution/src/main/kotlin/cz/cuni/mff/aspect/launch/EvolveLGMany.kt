@@ -88,7 +88,7 @@ fun doManyGrammarEvolution() {
     val launchers = arrayOf(
         GrammarEvolutionLauncher(
             label = "firstManyTest",
-            agentFactory = { Agents.NeuroEvolution.BestGeneric },
+            agentFactory = { Agents.NeuroEvolution.Stage4Level1Solver },
             populationSize = 50,
             generationsCount = 50,
             levelsCount = 1,

@@ -15,8 +15,7 @@ internal class ControllerEvolutionEnvironment(
     private val networkSettings: NetworkSettings,
     private val fitnessFunction: MarioGameplayEvaluator<Float>,
     private val objectiveFunction: MarioGameplayEvaluator<Float>,
-    private val evaluateOnLevelsCount: Int,
-    private val denseInput: Boolean = true
+    private val evaluateOnLevelsCount: Int
 ) : Environment {
     private lateinit var lastEvaluationFitnesses: FloatArray
     private lateinit var lastEvaluationObjectives: FloatArray
@@ -28,10 +27,6 @@ internal class ControllerEvolutionEnvironment(
         population.forEachIndexed { index, genome ->
             val neatNetwork = NeatAgentNetwork(this.networkSettings, genome)
             val controller = SimpleANNController(neatNetwork)
-
-            if (this.denseInput) {
-                controller.setDenseInput()
-            }
 
             val marioSimulator = GameSimulator()
             val levels = Array(this.evaluateOnLevelsCount) {

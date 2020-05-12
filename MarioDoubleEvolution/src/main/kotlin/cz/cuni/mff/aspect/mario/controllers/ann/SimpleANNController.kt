@@ -21,21 +21,6 @@ class SimpleANNController(val network: ControllerArtificialNetwork) : MarioContr
 
     override fun copy(): MarioController = SimpleANNController(this.network.newInstance())
 
-    fun setLegacy() {
-        if (this.network is HiddenLayerControllerNetwork) {
-            this.network.legacy = true
-        }
-    }
-
-    fun setDenseInput() {
-        if (this.network is HiddenLayerControllerNetwork) {
-            this.network.denseInput = true
-        }
-        else if (this.network is NeatAgentNetwork) {
-            this.network.denseInput = true
-        }
-    }
-
     companion object {
         private val serialVersionUID = -9169720247413687669L
     }

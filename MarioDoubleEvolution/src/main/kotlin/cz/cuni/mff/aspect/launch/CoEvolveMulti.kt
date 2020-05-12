@@ -57,13 +57,13 @@ private object NeuroEvolution : ControllerEvolutionSettings {
 
     override val initialController
             get() = SimpleANNController(
-                HiddenLayerControllerNetwork(
+                HiddenLayerControllerNetwork(NetworkSettings(
                     receptiveFieldSizeRow = 5,
                     receptiveFieldSizeColumn = 5,
                     receptiveFieldRowOffset = 0,
                     receptiveFieldColumnOffset = 2,
                     hiddenLayerSize = 7
-                )
+                ))
             )
 }
 

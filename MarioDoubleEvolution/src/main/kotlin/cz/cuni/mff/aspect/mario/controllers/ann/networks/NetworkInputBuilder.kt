@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.mario.controllers.ann.networks
 import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
+import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 
 
 data class NetworkInputBuilder(
@@ -13,9 +14,7 @@ data class NetworkInputBuilder(
     private var receptiveFieldColumns: Int = 5,
     private var receptiveFieldOffsetRows: Int = 0,
     private var receptiveFieldOffsetColumns: Int = 0,
-    private var addMarioInTilePosition: Boolean = false,
-    private var denseInput: Boolean = false,
-    private var legacy: Boolean = false
+    private var denseInput: Boolean = false
 ) {
 
     class NetworkInputBuilderException(error: String) : Exception(error)
@@ -25,16 +24,9 @@ data class NetworkInputBuilder(
     fun mario(mario: MarioEntity) = apply { this.mario = mario }
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
-    fun addMarioInTilePosition() = apply { this.addMarioInTilePosition = false }
-    fun useDenserInput() = apply { this.denseInput = true }
-    fun legacy() = apply { this.legacy = true }
+    fun useDenseInput(useIt: Boolean) = apply { this.denseInput = useIt }
 
-    fun buildDouble(): DoubleArray =
-        if (this.legacy) {
-            this.buildLegacy()
-        } else {
-            this.build().map { it.toDouble() }.toDoubleArray()
-        }
+    fun buildDouble(): DoubleArray = this.build().map { it.toDouble() }.toDoubleArray()
 
     fun buildFloat(): FloatArray = this.build().map { it.toFloat() }.toFloatArray()
 
@@ -43,22 +35,8 @@ data class NetworkInputBuilder(
 
         return IntArray(inputLayerSize) {
             when {
-                this.addMarioInTilePosition && it == inputLayerSize - 1 -> this.mario!!.inTileX
-                this.addMarioInTilePosition && it == inputLayerSize - 2 -> this.mario!!.inTileY
                 it >= flatEntities.size -> flatTiles[it - flatEntities.size]
                 else -> flatEntities[it]
-            }
-        }
-    }
-
-    private fun buildLegacy(): DoubleArray {
-        val (flatTiles, flatEntities, inputLayerSize) = this.createFlatArrays()
-        return DoubleArray(inputLayerSize) {
-            when {
-                it == inputLayerSize - 1 -> this.mario!!.dX.toDouble()
-                it == inputLayerSize - 2 -> this.mario!!.dY.toDouble()
-                it >= flatEntities.size -> flatTiles[it - flatEntities.size].toDouble()
-                else -> flatEntities[it].toDouble()
             }
         }
     }
@@ -68,7 +46,7 @@ data class NetworkInputBuilder(
         return Triple(
             this.createFlatTiles(),
             this.createFlatEntities(),
-            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput, this.addMarioInTilePosition))
+            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput))
     }
 
     private fun checkInput() {
@@ -151,8 +129,11 @@ data class NetworkInputBuilder(
         private fun receptiveFieldSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
             receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1
 
-        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, addMarioInTilePosition: Boolean): Int =
-            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2 + if (addMarioInTilePosition) 2 else 0
+        fun inputSize(networkSettings: NetworkSettings): Int =
+            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput)
+
+        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
+            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2
 
     }
 

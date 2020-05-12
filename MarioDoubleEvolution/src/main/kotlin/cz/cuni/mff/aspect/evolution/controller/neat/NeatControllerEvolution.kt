@@ -22,7 +22,6 @@ class NeatControllerEvolution(
     private val evaluateOnLevelsCount: Int = 25,
     private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
     private val objectiveFunction: MarioGameplayEvaluator<Float>  = MarioGameplayEvaluators::victoriesOnly,
-    private val denseInput: Boolean = true,
     private val displayChart: Boolean = true,
     chartLabel: String = "NEAT Evolution"
 ) : ControllerEvolution {
@@ -37,7 +36,7 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(networkInputSize, networkOutputSize)
 
-        return this.doEvolution(levelGenerators, pool, this.networkSettings, this.denseInput)
+        return this.doEvolution(levelGenerators, pool, this.networkSettings)
     }
 
     override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
@@ -56,17 +55,16 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(genomes)
 
-        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings, controller.network.denseInput)
+        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings)
     }
 
     private fun doEvolution(
         levelGenerators: List<LevelGenerator>,
         genotypePool: Pool,
-        networkSettings: NetworkSettings,
-        denseInput: Boolean
+        networkSettings: NetworkSettings
     ): MarioController {
         val environment = ControllerEvolutionEnvironment(
-            levelGenerators, networkSettings, this.fitnessFunction, this.objectiveFunction, this.evaluateOnLevelsCount, denseInput
+            levelGenerators, networkSettings, this.fitnessFunction, this.objectiveFunction, this.evaluateOnLevelsCount
         )
 
         if (this.displayChart && !this.chart.isShown) this.chart.show()

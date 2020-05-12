@@ -69,13 +69,7 @@ class NeuroControllerEvolution(
 
         this.initialAgentNetwork = controller.network
         this.levelGenerators = levelGenerators
-        this.controllerNetworkSettings = NetworkSettings(
-            controller.network.receptiveFieldSizeRow,
-            controller.network.receptiveFieldSizeColumn,
-            controller.network.receptiveFieldRowOffset,
-            controller.network.receptiveFieldColumnOffset,
-            controller.network.hiddenLayerSize
-        )
+        this.controllerNetworkSettings = controller.network.networkSettings.copy()
 
         return this.evolve()
     }
@@ -120,18 +114,7 @@ class NeuroControllerEvolution(
 
     private fun createControllerNetwork(): HiddenLayerControllerNetwork {
         if (this.controllerNetworkSettings == null) throw UnsupportedOperationException("Controller network settings not specified")
-        val network = HiddenLayerControllerNetwork(
-            receptiveFieldSizeRow = this.controllerNetworkSettings!!.receptiveFieldSizeRow,
-            receptiveFieldSizeColumn = this.controllerNetworkSettings!!.receptiveFieldSizeColumn,
-            receptiveFieldRowOffset = this.controllerNetworkSettings!!.receptiveFieldRowOffset,
-            receptiveFieldColumnOffset = this.controllerNetworkSettings!!.receptiveFieldColumnOffset,
-            hiddenLayerSize = this.controllerNetworkSettings!!.hiddenLayerSize
-        )
-
-        if (this.initialAgentNetwork != null)
-            network.legacy = this.initialAgentNetwork!!.legacy
-
-        return network
+        return HiddenLayerControllerNetwork(this.controllerNetworkSettings!!)
     }
 
     companion object {
