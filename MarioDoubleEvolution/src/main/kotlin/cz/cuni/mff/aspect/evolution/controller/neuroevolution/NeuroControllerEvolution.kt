@@ -114,12 +114,7 @@ class NeuroControllerEvolution(
 
     private fun createControllerNetwork(): HiddenLayerControllerNetwork {
         if (this.controllerNetworkSettings == null) throw UnsupportedOperationException("Controller network settings not specified")
-        val network = HiddenLayerControllerNetwork(this.controllerNetworkSettings!!)
-
-        if (this.initialAgentNetwork != null)
-            network.legacy = this.initialAgentNetwork!!.legacy
-
-        return network
+        return HiddenLayerControllerNetwork(this.controllerNetworkSettings!!)
     }
 
     companion object {

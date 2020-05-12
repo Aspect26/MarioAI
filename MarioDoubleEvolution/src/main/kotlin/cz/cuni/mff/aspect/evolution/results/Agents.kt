@@ -36,7 +36,6 @@ object Agents {
                 // experiments/Phase I - AI/Gaussian test evaluation - S4S - Population 100/NeuroEvolution, Mutator 0.10_ai.ai  // solves also PathWithHoles but fails on one part of S4S
                 // experiments/Phase I - AI/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 15_ai.ai  // solves also PathWithHoles nicely but fails on one part of S4S and is overfited
                 val controller = ObjectStorage.load("data/experiments/Phase I - AI/NeuroEvolution/Hidden layer test evaluation - S4S/NeuroEvolution, hidden layer size 5_ai.ai") as SimpleANNController
-                controller.setLegacy()
 
                 return MarioAgent(controller)
             }

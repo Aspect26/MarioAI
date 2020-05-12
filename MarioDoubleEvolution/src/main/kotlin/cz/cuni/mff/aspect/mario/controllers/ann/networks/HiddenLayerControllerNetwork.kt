@@ -30,7 +30,6 @@ import java.io.Serializable
  */
 class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : ControllerArtificialNetwork, Serializable {
 
-    var legacy: Boolean = false
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
@@ -94,10 +93,6 @@ class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : Contr
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
             .useDenseInput(this.networkSettings.denseInput)
-
-        if (this.legacy) {
-            networkInputBuilder.legacy()
-        }
 
         return networkInputBuilder.buildDouble()
     }

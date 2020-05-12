@@ -25,7 +25,7 @@ private fun evolve() {
     val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,
-            denseInput = true,
+            denseInput = false,
             generationsCount = 500,
             populationSize = 100,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
@@ -52,7 +52,6 @@ private fun continueEvolution() {
     val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,
-            denseInput = false,
             generationsCount = 50,
             populationSize = 100,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
