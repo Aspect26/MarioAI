@@ -6,6 +6,10 @@ import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 
 
+/**
+ * This builder is used to build input for ANNs for given Mario game environment and ANN settings.
+ */
+// TODO: would be better to pass NetworkSettings but that would break serialization
 data class NetworkInputBuilder(
     private var tiles: Tiles? = null,
     private var entities: Entities? = null,
@@ -14,9 +18,9 @@ data class NetworkInputBuilder(
     private var receptiveFieldColumns: Int = 5,
     private var receptiveFieldOffsetRows: Int = 0,
     private var receptiveFieldOffsetColumns: Int = 0,
-    private var denseInput: Boolean = false
+    private var denseInput: Boolean = false,
+    private var oneHotOnEnemies: Boolean = false
 ) {
-
     class NetworkInputBuilderException(error: String) : Exception(error)
 
     fun tiles(tiles: Tiles) = apply { this.tiles = tiles }
@@ -25,6 +29,7 @@ data class NetworkInputBuilder(
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
     fun useDenseInput(useIt: Boolean) = apply { this.denseInput = useIt }
+    fun oneHotOnEnemies(useIt: Boolean) = apply { this.oneHotOnEnemies = useIt }
 
     fun buildDouble(): DoubleArray = this.build().map { it.toDouble() }.toDoubleArray()
 
@@ -46,7 +51,7 @@ data class NetworkInputBuilder(
         return Triple(
             this.createFlatTiles(),
             this.createFlatEntities(),
-            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput))
+            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput, this.oneHotOnEnemies))
     }
 
     private fun checkInput() {
@@ -56,7 +61,7 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatTiles(): IntArray {
-        val flatTilesSize = receptiveFieldSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput)
+        val flatTilesSize = receptiveFieldSizeTiles(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput)
         val flatTiles = IntArray(flatTilesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
@@ -73,12 +78,30 @@ data class NetworkInputBuilder(
     }
 
     private fun createFlatEntities(): IntArray {
-        val flatEntitiesSize = receptiveFieldSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput)
+        val flatEntitiesSize = receptiveFieldSizeEntities(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput, this.oneHotOnEnemies)
         val flatEntities = IntArray(flatEntitiesSize) { 0 }
 
         this.iterateOverReceptiveField { index, row, column ->
             val entitiesAtPosition = this.entities!!.entityField[row][column]
-            flatEntities[index] = if (entitiesAtPosition.size > 0) entitiesAtPosition[0].type.code else 0
+            if (entitiesAtPosition.size >= 0) {
+                if (this.oneHotOnEnemies) {
+                    if (entitiesAtPosition.size > 0) {
+                        val oneHotIndex: Int = when (entitiesAtPosition[0].type.code) {
+                            cz.cuni.mff.aspect.mario.Entities.Goomba.NORMAL -> index * ONE_HOT_ENEMY_TYPES + 0
+                            cz.cuni.mff.aspect.mario.Entities.Koopa.GREEN -> index * ONE_HOT_ENEMY_TYPES + 1
+                            cz.cuni.mff.aspect.mario.Entities.Koopa.RED -> index * ONE_HOT_ENEMY_TYPES + 2
+                            cz.cuni.mff.aspect.mario.Entities.Koopa.GREEN_WINGED -> index * ONE_HOT_ENEMY_TYPES + 3
+                            cz.cuni.mff.aspect.mario.Entities.Spiky.NORMAL -> index * ONE_HOT_ENEMY_TYPES + 4
+                            cz.cuni.mff.aspect.mario.Entities.Flower.NORMAL -> index * ONE_HOT_ENEMY_TYPES + 5
+                            cz.cuni.mff.aspect.mario.Entities.BulletBill.NORMAL -> index * ONE_HOT_ENEMY_TYPES + 6
+                            else -> -1
+                        }
+                        if (oneHotIndex != -1) flatEntities[oneHotIndex] = 1
+                    }
+                } else {
+                    flatEntities[index] = if (entitiesAtPosition.size > 0) entitiesAtPosition[0].type.code else 0
+                }
+            }
         }
 
         return flatEntities
@@ -126,14 +149,19 @@ data class NetworkInputBuilder(
     }
 
     companion object {
-        private fun receptiveFieldSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
+        private const val ONE_HOT_ENEMY_TYPES = 7
+        private fun receptiveFieldSizeTiles(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
             receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1
 
-        fun inputSize(networkSettings: NetworkSettings): Int =
-            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput)
+        private fun receptiveFieldSizeEntities(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, oneHotEncoding: Boolean): Int =
+            receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1 * if (oneHotEncoding) ONE_HOT_ENEMY_TYPES else 1
 
-        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
-            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2
+        fun inputSize(networkSettings: NetworkSettings): Int =
+            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput, networkSettings.oneHotOnEnemies)
+
+        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, enemiesOneHotEncoded: Boolean): Int =
+            receptiveFieldSizeTiles(receptiveFieldRows, receptiveFieldColumns, denseInput) +
+                    receptiveFieldSizeEntities(receptiveFieldRows, receptiveFieldColumns, denseInput, enemiesOneHotEncoded)
 
     }
 

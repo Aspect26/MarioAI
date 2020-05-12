@@ -150,6 +150,31 @@ class NetworkInputBuilderTests {
         this.assertInputEntitiesEqual(input, expectedEntitiesResult)
     }
 
+    @Test
+    fun `test one hot encoded enemies`() {
+        val goombaEntity = Entity<Sprite>(null, EntityType.GOOMBA, 0, 0, 0f, 0f, 0f)
+        val spikyEntity = Entity<Sprite>(null, EntityType.SPIKY, 0, 0, 0f, 0f, 0f)
+        val koopaEntity = Entity<Sprite>(null, EntityType.GREEN_KOOPA, 0, 0, 0f, 0f, 0f)
+
+        val networkBuilder = this.givenDenseBuilderWithEntities(arrayOf (
+            arrayOf(listOf(goombaEntity), emptyList(), emptyList()),
+            arrayOf(emptyList(), emptyList(), listOf(spikyEntity)),
+            arrayOf(emptyList(), listOf(koopaEntity), emptyList())
+        ), marioPosition = Pair(1, 1), useDenseInput = false, oneHotEncodedEntities = true)
+
+        val input = networkBuilder.build()
+
+        val expectedEntitiesInput = arrayOf(
+            arrayOf(1, 0, 0, 0, 0, 0, 0), arrayOf(0, 0, 0, 0, 0, 0, 0), arrayOf(0, 0, 0, 0, 0, 0, 0),
+            arrayOf(0, 0, 0, 0, 0, 0, 0), arrayOf(0, 0, 0, 0, 0, 0, 0), arrayOf(0, 0, 0, 0, 1, 0, 0),
+            arrayOf(0, 0, 0, 0, 0, 0, 0), arrayOf(0, 1, 0, 0, 0, 0, 0), arrayOf(0, 0, 0, 0, 0, 0, 0)
+        ).flatten()
+
+        for (index in expectedEntitiesInput.indices) {
+            assertEquals("Error in one-hot encoding number ${index / 7}, on index ${index % 7}.",  expectedEntitiesInput[index], input[index])
+        }
+    }
+
     private fun givenDenseBuilderWithTiles(
         tilesArray: Array<Array<Tile>>,
         marioPosition: Pair<Int, Int> = Pair(1, 1),
@@ -169,7 +194,7 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput)
+        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput, false)
     }
 
     private fun givenDenseBuilderWithEntities(
@@ -178,7 +203,8 @@ class NetworkInputBuilderTests {
         marioInTilePosition: Pair<Int, Int> = Pair(0, 0),
         receptiveFieldSize: Pair<Int, Int> = Pair(3, 3),
         receptiveFieldSizeOffset: Pair<Int, Int> = Pair(0, 0),
-        useDenseInput: Boolean = true): NetworkInputBuilder
+        useDenseInput: Boolean = true,
+        oneHotEncodedEntities: Boolean = false): NetworkInputBuilder
     {
         val entities = Entities()
         entities.entityField = entitiesArray
@@ -191,7 +217,7 @@ class NetworkInputBuilderTests {
         }
 
         val mario = this.givenMario(marioPosition, marioInTilePosition)
-        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput)
+        return this.givenNetworkInputBuilder(tiles, entities, mario, receptiveFieldSize, receptiveFieldSizeOffset, useDenseInput, oneHotEncodedEntities)
     }
 
     private fun givenMario(marioPosition: Pair<Int, Int>, marioInTilePosition: Pair<Int, Int>): MarioEntity {
@@ -210,7 +236,8 @@ class NetworkInputBuilderTests {
         mario: MarioEntity,
         receptiveFieldSize: Pair<Int, Int>,
         receptiveFieldSizeOffset: Pair<Int, Int>,
-        useDenseInput: Boolean): NetworkInputBuilder
+        useDenseInput: Boolean,
+        oneHotEncodedEntities: Boolean): NetworkInputBuilder
     {
         return NetworkInputBuilder()
             .tiles(tiles)
@@ -219,6 +246,7 @@ class NetworkInputBuilderTests {
             .receptiveFieldOffset(receptiveFieldSizeOffset.first, receptiveFieldSizeOffset.second)
             .receptiveFieldSize(receptiveFieldSize.first, receptiveFieldSize.second)
             .useDenseInput(useDenseInput)
+            .oneHotOnEnemies(oneHotEncodedEntities)
     }
 
     private fun assertInputTilesEqual(input: IntArray, expectedTiles: Array<Array<Tile>>) {
