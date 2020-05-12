@@ -39,7 +39,7 @@ class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : Contr
     override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize +
             this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
     private val biasSize: Int get() = this.networkSettings.hiddenLayerSize + OUTPUT_LAYER_SIZE
-    private val inputLayerSize: Int get() = NetworkInputBuilder.inputSize(this.networkSettings, false)
+    private val inputLayerSize: Int get() = NetworkInputBuilder.inputSize(this.networkSettings)
 
     override fun newInstance(): ControllerArtificialNetwork =
         HiddenLayerControllerNetwork(this.networkSettings.copy())

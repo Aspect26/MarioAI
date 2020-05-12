@@ -14,7 +14,6 @@ data class NetworkInputBuilder(
     private var receptiveFieldColumns: Int = 5,
     private var receptiveFieldOffsetRows: Int = 0,
     private var receptiveFieldOffsetColumns: Int = 0,
-    private var addMarioInTilePosition: Boolean = false,
     private var denseInput: Boolean = false
 ) {
 
@@ -25,7 +24,6 @@ data class NetworkInputBuilder(
     fun mario(mario: MarioEntity) = apply { this.mario = mario }
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
-    fun addMarioInTilePosition() = apply { this.addMarioInTilePosition = false }
     fun useDenseInput(useIt: Boolean) = apply { this.denseInput = useIt }
 
     fun buildDouble(): DoubleArray = this.build().map { it.toDouble() }.toDoubleArray()
@@ -37,8 +35,6 @@ data class NetworkInputBuilder(
 
         return IntArray(inputLayerSize) {
             when {
-                this.addMarioInTilePosition && it == inputLayerSize - 1 -> this.mario!!.inTileX
-                this.addMarioInTilePosition && it == inputLayerSize - 2 -> this.mario!!.inTileY
                 it >= flatEntities.size -> flatTiles[it - flatEntities.size]
                 else -> flatEntities[it]
             }
@@ -50,7 +46,7 @@ data class NetworkInputBuilder(
         return Triple(
             this.createFlatTiles(),
             this.createFlatEntities(),
-            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput, this.addMarioInTilePosition))
+            inputSize(this.receptiveFieldRows, this.receptiveFieldColumns, this.denseInput))
     }
 
     private fun checkInput() {
@@ -133,11 +129,11 @@ data class NetworkInputBuilder(
         private fun receptiveFieldSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
             receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1
 
-        fun inputSize(networkSettings: NetworkSettings, marioInTilePosition: Boolean): Int =
-            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput, marioInTilePosition)
+        fun inputSize(networkSettings: NetworkSettings): Int =
+            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput)
 
-        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, addMarioInTilePosition: Boolean): Int =
-            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2 + if (addMarioInTilePosition) 2 else 0
+        fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
+            receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2
 
     }
 

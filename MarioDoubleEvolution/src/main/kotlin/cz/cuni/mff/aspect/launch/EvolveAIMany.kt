@@ -18,7 +18,7 @@ fun main() {
 }
 
 
-fun doManyNEATEvolution() {
+private fun doManyNEATEvolution() {
     val levelGenerators = listOf(LevelGenerators.PCGenerator.all)
     val evaluationName = "NEAT - All - 500-100 - fitness distance least actions"
 
@@ -84,7 +84,7 @@ fun doManyNEATEvolution() {
 }
 
 
-fun doManyNeuroEvolution() {
+private fun doManyNeuroEvolution() {
     val levelGenerator = LevelGenerators.PCGenerator.all
     val evaluationName = "Newest"
 
@@ -168,11 +168,11 @@ fun doManyNeuroEvolution() {
 }
 
 
-interface EvolutionLauncher {
+private interface EvolutionLauncher {
     fun run()
 }
 
-class NeuroEvolutionLauncher(
+private class NeuroEvolutionLauncher(
     private val networkSettings: NetworkSettings,
     private val levelGenerator: LevelGenerator,
     private val generationsCount: Int,
@@ -224,7 +224,13 @@ class NeatEvolutionLauncher(
 ) : EvolutionLauncher {
 
     override fun run() {
-        val networkSettings = NetworkSettings(receptiveFieldSize.first, receptiveFieldSize.second, receptiveFieldOffset.first, receptiveFieldOffset.second)
+        val networkSettings = NetworkSettings(
+            receptiveFieldSize.first,
+            receptiveFieldSize.second,
+            receptiveFieldOffset.first,
+            receptiveFieldOffset.second,
+            denseInput = denseInput)
+
         val controllerEvolution =
             NeatControllerEvolution(
                 networkSettings,
@@ -232,7 +238,6 @@ class NeatEvolutionLauncher(
                 populationSize = populationSize,
                 fitnessFunction = fitnessFunction,
                 objectiveFunction = objectiveFunction,
-                denseInput = denseInput,
                 chartLabel = label
             )
 

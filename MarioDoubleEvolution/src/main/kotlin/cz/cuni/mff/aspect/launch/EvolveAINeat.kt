@@ -21,11 +21,10 @@ fun main() {
 }
 
 private fun evolve() {
-    val networkSettings = NetworkSettings(5, 5, 0, 2)
+    val networkSettings = NetworkSettings(5, 5, 0, 2, denseInput = false)
     val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,
-            denseInput = false,
             generationsCount = 500,
             populationSize = 100,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
@@ -48,7 +47,7 @@ private fun evolve() {
 
 
 private fun continueEvolution() {
-    val networkSettings = NetworkSettings(5, 5, 0, 2)
+    val networkSettings = NetworkSettings(5, 5, 0, 2, denseInput = false)
     val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,
