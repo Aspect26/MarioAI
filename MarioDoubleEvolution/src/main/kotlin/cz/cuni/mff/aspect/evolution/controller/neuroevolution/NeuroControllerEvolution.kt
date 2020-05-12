@@ -38,7 +38,8 @@ class NeuroControllerEvolution(
 ) : ChartedJeneticsEvolution<MarioController>(
     populationSize = populationSize,
     generationsCount = generationsCount,
-    optimize = Optimize.MAXIMUM,
+    fitnessOptimization = Optimize.MAXIMUM,
+    objectiveOptimization = Optimize.MAXIMUM,
     alterers = alterers,
     survivorsSelector = survivorsSelector,
     offspringSelector = offspringSelector,

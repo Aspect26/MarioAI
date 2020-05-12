@@ -25,9 +25,9 @@ fun evolvePC() {
 
     val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 50,
-        evaluateOnLevelsCount = 36,
-        fitnessFunction = HuffmanCompressionEvaluator(),
+        generationsCount = 20,
+        evaluateOnLevelsCount = 5,
+        fitnessFunction = LinearityEvaluator(),
         objectiveFunction = HuffmanCompressionEvaluator(),
         chunksCount = 55,
         displayChart = true

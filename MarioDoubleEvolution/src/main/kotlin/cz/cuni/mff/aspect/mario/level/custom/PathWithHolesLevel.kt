@@ -24,4 +24,7 @@ object PathWithHolesLevel : MarioLevel {
     }
 
     override val entities: Array<IntArray> = emptyArray()
+
+    override fun toString(): String = "PathWithHoles"
+
 }

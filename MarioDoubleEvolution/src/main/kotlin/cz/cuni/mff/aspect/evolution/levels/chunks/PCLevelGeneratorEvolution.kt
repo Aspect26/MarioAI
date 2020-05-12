@@ -28,7 +28,8 @@ class PCLevelGeneratorEvolution(
 ) : ChartedJeneticsEvolution<LevelGenerator>(
     populationSize,
     generationsCount,
-    optimize = fitnessFunction.optimize,
+    fitnessOptimization = fitnessFunction.optimize,
+    objectiveOptimization = objectiveFunction.optimize,
     alterers = arrayOf(MarkovChainMutator(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, 0.2, 0.2, 0.2)),
     survivorsSelector = EliteSelector(2),
     offspringSelector = RouletteWheelSelector(),

@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
+import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
@@ -8,6 +9,7 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
@@ -20,9 +22,10 @@ fun main() {
 
 fun aiPlayLevel() {
 //    val agent = Agents.NeuroEvolution.Stage4Level1Solver
-    val agent = MarioAgent(ObjectStorage.load("data/coev/better-coev-params/neuro_pc/ai_10.ai") as MarioController)
-    val levelGenerator = PCLevelGenerator.createSimplest()
+    val agent = MarioAgent(ObjectStorage.load("data/coev/6_all_fitness_lg/neuro_pc/ai_20.ai") as MarioController)
+    val levelGenerator = PCLevelGenerator()
 //    val levelGenerator = ObjectStorage.load("data/coev/third_lg.lg") as LevelGenerator
+//    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
 
     val gameSimulator = GameSimulator(1400)
     val stats = Array(10) { levelGenerator.generate() }.map {

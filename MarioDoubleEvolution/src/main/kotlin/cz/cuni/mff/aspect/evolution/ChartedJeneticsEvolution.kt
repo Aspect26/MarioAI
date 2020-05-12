@@ -12,7 +12,8 @@ import java.util.concurrent.ForkJoinPool
 abstract class ChartedJeneticsEvolution<T>(
     protected val populationSize: Int,
     protected val generationsCount: Int,
-    protected val optimize: Optimize,
+    protected val fitnessOptimization: Optimize,
+    protected val objectiveOptimization: Optimize,
     protected val alterers: Array<Alterer<DoubleGene, Float>>,
     protected val survivorsSelector: Selector<DoubleGene, Float>,
     protected val offspringSelector: Selector<DoubleGene, Float>,
@@ -47,7 +48,7 @@ abstract class ChartedJeneticsEvolution<T>(
 
     private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> =
         Engine.Builder(this.evaluator, initialGenotype)
-            .optimize(this.optimize)
+            .optimize(this.fitnessOptimization)
             .populationSize(this.populationSize)
             .alterers(this.alterers[0], *this.alterers.slice(1 until this.alterers.size).toTypedArray())
             .survivorsSelector(this.survivorsSelector)
@@ -71,7 +72,7 @@ abstract class ChartedJeneticsEvolution<T>(
             .fold(0.0f, { acc, genotype -> acc + genotype.fitness() }) / evolutionResult.population().length()
 
         val averageObjective = this.evaluator.lastGenerationObjectives.average()
-        val bestObjective = if (this.optimize == Optimize.MAXIMUM) this.evaluator.lastGenerationObjectives.max() else this.evaluator.lastGenerationObjectives.min()
+        val bestObjective = if (this.objectiveOptimization == Optimize.MAXIMUM) this.evaluator.lastGenerationObjectives.max() else this.evaluator.lastGenerationObjectives.min()
 
         this.chart.nextGeneration(bestFitness, averageFitness.toDouble(), bestObjective!!.toDouble(), averageObjective)
 

@@ -26,7 +26,8 @@ class PMPLevelGeneratorEvolution(
 ) : ChartedJeneticsEvolution<LevelGenerator>(
     populationSize,
     generationsCount,
-    optimize = fitnessFunction.optimize,
+    fitnessOptimization = fitnessFunction.optimize,
+    objectiveOptimization = objectiveFunction.optimize,
     alterers = arrayOf(UpdatedGaussianMutator(0.5, 0.6)),
     survivorsSelector = EliteSelector(2),
     offspringSelector = RouletteWheelSelector(),

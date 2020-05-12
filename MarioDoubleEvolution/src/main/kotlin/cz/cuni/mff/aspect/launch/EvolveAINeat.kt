@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
@@ -10,7 +10,6 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.level.original.Stage1Level1Split
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
 private val PATH_TO_LATEST_AI = "data/latest_neat_ai.ai"
@@ -22,21 +21,23 @@ fun main() {
 }
 
 private fun evolve() {
-    val networkSettings = NetworkSettings(5, 7, 0, 3)
-    val controllerEvolution: ControllerEvolution =
+    val networkSettings = NetworkSettings(5, 5, 0, 2)
+    val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,
-            denseInput = false,
-            generationsCount = 50,
+            denseInput = true,
+            generationsCount = 500,
             populationSize = 100,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
-            evaluateOnLevelsCount = 4,
-            chartLabel = "NEAT Evolution S4L1"
+            evaluateOnLevelsCount = TrainingLevelsSet.size,
+            chartLabel = "NEAT Evolution",
+            displayChart = true
         )
-    val levelGenerator = LevelGenerators.StaticGenerator(Stage4Level1Split.levels)
+    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator))
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
+    controllerEvolution.chart.store("data/latest_neat.svg")
 
     val marioSimulator = GameSimulator()
 

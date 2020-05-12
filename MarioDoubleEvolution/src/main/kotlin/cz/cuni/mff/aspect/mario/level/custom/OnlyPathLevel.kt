@@ -12,4 +12,7 @@ object OnlyPathLevel : MarioLevel {
     }
 
     override val entities: Array<IntArray> = emptyArray()
+
+    override fun toString(): String = "OnlyPathLevel"
+
 }

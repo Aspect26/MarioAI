@@ -14,6 +14,8 @@ object Stage4Level1 : MarioLevel {
     private const val THIRD_LEVEL = 5
     private const val LEVEL_WIDTH = 230
 
+    override fun toString(): String = "Stage4Level1"
+
     override val tiles: Array<ByteArray>
     override val entities: Array<IntArray>
 
