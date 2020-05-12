@@ -9,7 +9,11 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.utils.DeepCopy
 import java.io.*
 
-
+/**
+ * Wrapper atop neural network evolved by NEAT algorithm.
+ *
+ * @constructor constructs the network wrapper using given [networkSettings] and the evolved individual [genome].
+ */
 class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome) : ControllerArtificialNetwork, Serializable {
 
     override fun chooseAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
@@ -48,6 +52,7 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
             .useDenseInput(this.networkSettings.denseInput)
+            .oneHotOnEnemies(this.networkSettings.oneHotOnEnemies)
 
         return networkBuilder.buildFloat()
     }

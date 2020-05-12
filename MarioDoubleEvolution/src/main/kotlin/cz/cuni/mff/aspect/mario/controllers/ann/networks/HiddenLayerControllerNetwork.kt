@@ -93,6 +93,7 @@ class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : Contr
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
             .useDenseInput(this.networkSettings.denseInput)
+            .oneHotOnEnemies(this.networkSettings.oneHotOnEnemies)
 
         return networkInputBuilder.buildDouble()
     }

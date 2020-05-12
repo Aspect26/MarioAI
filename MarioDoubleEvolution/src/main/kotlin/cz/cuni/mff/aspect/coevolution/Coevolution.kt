@@ -13,12 +13,25 @@ import cz.cuni.mff.aspect.utils.SlidingWindow
 import java.util.concurrent.TimeUnit
 
 /**
- *
+ * Implementation of coevolution of AI and level generators algorithm.
  */
 class Coevolution {
 
-    fun evolve(controllerEvolution: ControllerEvolution, generatorEvolution: LevelGeneratorEvolution,
-               initialController: MarioController, initialLevelGenerator: LevelGenerator,
+    /**
+     * Starts the coevolution.
+     *
+     * @param controllerEvolution the evolution algorithm for controller
+     * @param generatorEvolution the evolution algorithm for level generator
+     * @param initialController initial controller, which is being evolved by the algorithm
+     * @param initialLevelGenerator initial level generator used in the first generation of the coevolution
+     * @param generations number of coevolution generations
+     * @param repeatGeneratorsCount number of level generators, on which the controller evolution should evaluate the controllers
+     * @param storagePath path, where the results of the coevolution are to be stored
+     */
+    fun evolve(controllerEvolution: ControllerEvolution,
+               generatorEvolution: LevelGeneratorEvolution,
+               initialController: MarioController,
+               initialLevelGenerator: LevelGenerator,
                generations: Int = DEFAULT_GENERATIONS_NUMBER,
                repeatGeneratorsCount: Int = DEFAULT_REPEAT_GENERATORS_COUNT,
                storagePath: String
