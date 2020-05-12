@@ -18,7 +18,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/3_increased-levels-on-lg-evaluation/neuro_pc"
+private val RESULT_FILES_PATH = "data/coev/1_10-sl-window/neuro_pc"
 
 fun main() {
 //    coevolve()
