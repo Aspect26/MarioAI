@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.mario.controllers.ann.networks
 import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
+import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 
 
 data class NetworkInputBuilder(
@@ -26,7 +27,7 @@ data class NetworkInputBuilder(
     fun receptiveFieldSize(rows: Int, columns: Int) = apply { this.receptiveFieldRows = rows; this.receptiveFieldColumns = columns }
     fun receptiveFieldOffset(rows: Int, columns: Int) = apply { this.receptiveFieldOffsetRows = rows; this.receptiveFieldOffsetColumns = columns }
     fun addMarioInTilePosition() = apply { this.addMarioInTilePosition = false }
-    fun useDenserInput() = apply { this.denseInput = true }
+    fun useDenseInput(useIt: Boolean) = apply { this.denseInput = useIt }
     fun legacy() = apply { this.legacy = true }
 
     fun buildDouble(): DoubleArray =
@@ -150,6 +151,9 @@ data class NetworkInputBuilder(
     companion object {
         private fun receptiveFieldSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean): Int =
             receptiveFieldRows * receptiveFieldColumns * if (denseInput) 4 else 1
+
+        fun inputSize(networkSettings: NetworkSettings, marioInTilePosition: Boolean): Int =
+            inputSize(networkSettings.receptiveFieldSizeRow, networkSettings.receptiveFieldSizeColumn, networkSettings.denseInput, marioInTilePosition)
 
         fun inputSize(receptiveFieldRows: Int, receptiveFieldColumns: Int, denseInput: Boolean, addMarioInTilePosition: Boolean): Int =
             receptiveFieldSize(receptiveFieldRows, receptiveFieldColumns, denseInput) * 2 + if (addMarioInTilePosition) 2 else 0

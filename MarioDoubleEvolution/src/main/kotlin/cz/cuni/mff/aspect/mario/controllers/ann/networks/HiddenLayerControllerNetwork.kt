@@ -4,6 +4,7 @@ import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
+import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import org.deeplearning4j.nn.api.OptimizationAlgorithm
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration
@@ -27,34 +28,22 @@ import java.io.Serializable
  *
  * @see cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder
  */
-class HiddenLayerControllerNetwork(val receptiveFieldSizeRow: Int = 3,
-                                   val receptiveFieldSizeColumn: Int = 3,
-                                   val receptiveFieldRowOffset: Int = 0,
-                                   val receptiveFieldColumnOffset: Int = 1,
-                                   val hiddenLayerSize: Int = 7
-) : ControllerArtificialNetwork,
-    Serializable {
+class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : ControllerArtificialNetwork, Serializable {
 
     var legacy: Boolean = false
-    var denseInput: Boolean = false
     private val network: MultiLayerNetwork = this.createNetwork()
 
     override fun compareTo(other: ControllerArtificialNetwork): Int {
         TODO("not implemented")
     }
 
-    override val weightsCount: Int get() = this.inputLayerSize * this.hiddenLayerSize + this.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
-    private val biasSize: Int get() = this.hiddenLayerSize + OUTPUT_LAYER_SIZE
-    private val inputLayerSize: Int get() = NetworkInputBuilder.inputSize(this.receptiveFieldSizeRow, this.receptiveFieldSizeColumn, this.denseInput, false)
+    override val weightsCount: Int get() = this.inputLayerSize * this.networkSettings.hiddenLayerSize +
+            this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE + biasSize
+    private val biasSize: Int get() = this.networkSettings.hiddenLayerSize + OUTPUT_LAYER_SIZE
+    private val inputLayerSize: Int get() = NetworkInputBuilder.inputSize(this.networkSettings, false)
 
     override fun newInstance(): ControllerArtificialNetwork =
-        HiddenLayerControllerNetwork(
-            this.receptiveFieldSizeRow,
-            this.receptiveFieldSizeColumn,
-            this.receptiveFieldRowOffset,
-            this.receptiveFieldColumnOffset,
-            this.hiddenLayerSize
-        )
+        HiddenLayerControllerNetwork(this.networkSettings.copy())
 
     override fun chooseAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         val input = this.createInput(tiles, entities, mario)
@@ -86,8 +75,8 @@ class HiddenLayerControllerNetwork(val receptiveFieldSizeRow: Int = 3,
         val multiLayerConf: MultiLayerConfiguration = NeuralNetConfiguration.Builder()
             .seed(123).learningRate(0.1).iterations(1).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).updater(Nesterovs(0.9)).biasInit(1.0)
             .list()
-            .layer(0, DenseLayer.Builder().nIn(this.inputLayerSize).nOut(this.hiddenLayerSize).weightInit(WeightInit.XAVIER).activation(Activation.RELU).build())
-            .layer(1, OutputLayer.Builder().nIn(this.hiddenLayerSize).nOut(OUTPUT_LAYER_SIZE).weightInit(WeightInit.XAVIER).activation(Activation.SIGMOID).build())
+            .layer(0, DenseLayer.Builder().nIn(this.inputLayerSize).nOut(this.networkSettings.hiddenLayerSize).weightInit(WeightInit.XAVIER).activation(Activation.RELU).build())
+            .layer(1, OutputLayer.Builder().nIn(this.networkSettings.hiddenLayerSize).nOut(OUTPUT_LAYER_SIZE).weightInit(WeightInit.XAVIER).activation(Activation.SIGMOID).build())
             .pretrain(false).backprop(false)
             .build()
 
@@ -102,15 +91,12 @@ class HiddenLayerControllerNetwork(val receptiveFieldSizeRow: Int = 3,
             .tiles(tiles)
             .entities(entities)
             .mario(mario)
-            .receptiveFieldSize(this.receptiveFieldSizeRow, this.receptiveFieldSizeColumn)
-            .receptiveFieldOffset(this.receptiveFieldRowOffset, this.receptiveFieldColumnOffset)
+            .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
+            .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
+            .useDenseInput(this.networkSettings.denseInput)
 
         if (this.legacy) {
             networkInputBuilder.legacy()
-        }
-
-        if (this.denseInput) {
-            networkInputBuilder.useDenserInput()
         }
 
         return networkInputBuilder.buildDouble()

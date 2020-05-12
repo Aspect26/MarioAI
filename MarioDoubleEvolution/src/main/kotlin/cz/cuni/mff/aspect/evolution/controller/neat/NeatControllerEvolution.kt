@@ -56,7 +56,7 @@ class NeatControllerEvolution(
         val pool = Pool(this.populationSize)
         pool.initializePool(genomes)
 
-        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings, controller.network.denseInput)
+        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings, controller.network.networkSettings.denseInput)
     }
 
     private fun doEvolution(

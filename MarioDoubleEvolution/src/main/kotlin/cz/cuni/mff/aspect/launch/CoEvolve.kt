@@ -12,6 +12,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
+import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -51,13 +52,13 @@ fun coevolve() {
 
     val initialLevelGenerator = PCLevelGenerator.createSimplest()
 
-    val initialController = SimpleANNController(HiddenLayerControllerNetwork(
+    val initialController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
         receptiveFieldSizeRow = 5,
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
         hiddenLayerSize = 7
-    ))
+    )))
 
     val coevolver = Coevolution()
 
@@ -76,13 +77,13 @@ fun coevolve() {
 fun playLatestCo() {
     val simulator = GameSimulator()
 
-    var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(
+    var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
         receptiveFieldSizeRow = 5,
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
         hiddenLayerSize = 7
-    ))
+    )))
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 

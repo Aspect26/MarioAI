@@ -29,10 +29,6 @@ internal class ControllerEvolutionEnvironment(
             val neatNetwork = NeatAgentNetwork(this.networkSettings, genome)
             val controller = SimpleANNController(neatNetwork)
 
-            if (this.denseInput) {
-                controller.setDenseInput()
-            }
-
             val marioSimulator = GameSimulator()
             val levels = Array(this.evaluateOnLevelsCount) {
                 this.levelGenerators[it % this.levelGenerators.size].generate()

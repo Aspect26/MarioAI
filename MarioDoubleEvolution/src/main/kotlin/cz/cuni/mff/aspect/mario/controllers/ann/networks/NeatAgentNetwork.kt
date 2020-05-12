@@ -12,8 +12,6 @@ import java.io.*
 
 class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome) : ControllerArtificialNetwork, Serializable {
 
-    var denseInput: Boolean = false
-
     override fun chooseAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {
         val input: FloatArray = this.createInput(tiles, entities, mario)
         val output: FloatArray = this.genome.evaluateNetwork(input)
@@ -40,8 +38,7 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
         TODO("not implemented")
     }
 
-    override val weightsCount: Int get() =
-        inputLayerSize(this.networkSettings, this.denseInput) * this.networkSettings.hiddenLayerSize + this.networkSettings.hiddenLayerSize * OUTPUT_LAYER_SIZE
+    override val weightsCount: Int get() = throw UnsupportedOperationException("Calling weights counts is not supported for NEAT network")
 
     private fun createInput(tiles: Tiles, entities: Entities, mario: MarioEntity): FloatArray {
         val networkBuilder = NetworkInputBuilder()
@@ -50,9 +47,7 @@ class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome)
             .mario(mario)
             .receptiveFieldSize(this.networkSettings.receptiveFieldSizeRow, this.networkSettings.receptiveFieldSizeColumn)
             .receptiveFieldOffset(this.networkSettings.receptiveFieldRowOffset, this.networkSettings.receptiveFieldColumnOffset)
-
-        if (this.denseInput)
-            networkBuilder.useDenserInput()
+            .useDenseInput(this.networkSettings.denseInput)
 
         return networkBuilder.buildFloat()
     }
