@@ -10,6 +10,10 @@ import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
+/**
+ * Launches multiple evolutions of Probabilistic Multipass level generator using settings specified by instances of
+ * [PMPEvolutionLauncher] class.
+ */
 fun main() {
 //    doManyGrammarEvolution()
     doManyPMPEvolution()

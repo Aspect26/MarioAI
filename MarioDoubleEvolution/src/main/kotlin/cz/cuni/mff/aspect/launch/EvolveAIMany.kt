@@ -11,7 +11,10 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
 
-
+/**
+ * Launches multiple Neuroevolutions or NEAT evolutions of AI. Evolution properties are set by instances of
+ * [NeuroEvolutionLauncher] and [NeatEvolutionLauncher] classes.
+ */
 fun main() {
 //    doManyNeuroEvolution()
     doManyNEATEvolution()

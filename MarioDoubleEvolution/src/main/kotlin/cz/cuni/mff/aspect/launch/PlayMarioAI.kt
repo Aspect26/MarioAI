@@ -13,14 +13,14 @@ import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
-
+/** Launches Super Mario simulator using specified AI player and level generator. */
 fun main() {
     aiPlayLevel()
 //    neatAiPlayLevel()
 }
 
 
-fun aiPlayLevel() {
+private fun aiPlayLevel() {
 //    val agent = Agents.NeuroEvolution.Stage4Level1Solver
     val agent = MarioAgent(ObjectStorage.load("data/coev/6_all_fitness_lg/neuro_pc/ai_20.ai") as MarioController)
     val levelGenerator = PCLevelGenerator()
@@ -35,7 +35,7 @@ fun aiPlayLevel() {
 }
 
 
-fun neatAiPlayLevel() {
+private fun neatAiPlayLevel() {
 //    val agent = MarioAgent(controller)
     val agent = Agents.NEAT.Stage4Level1Solver
 

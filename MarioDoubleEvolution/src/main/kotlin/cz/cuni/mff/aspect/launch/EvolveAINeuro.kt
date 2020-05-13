@@ -17,18 +17,20 @@ import io.jenetics.GaussianMutator
 
 private val PATH_TO_LATEST_AI = "data/latest_neuro_ai.ai"
 
+/** Launches Neuroevolution algorithm to evolve AI using specified settings. */
 fun main() {
-    evolveAI()
+//    evolveAI()
 //    continueEvolveAI()
-//    playLatestAI()
+    playLatestAI()
 }
 
 
 fun evolveAI() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
-            NetworkSettings(5, 5, 0, 2, 5),
-            50,
+            NetworkSettings(5, 5, 0, 2, 5,
+                denseInput = false, oneHotOnEnemies = true),
+            100,
             50,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
@@ -52,7 +54,7 @@ fun evolveAI() {
 }
 
 
-fun continueEvolveAI() {
+private fun continueEvolveAI() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
             null,
@@ -81,12 +83,12 @@ fun continueEvolveAI() {
 }
 
 
-fun playLatestAI() {
+private fun playLatestAI() {
     val controller = ObjectStorage.load(PATH_TO_LATEST_AI) as MarioController
-    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
+    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
     val marioSimulator = GameSimulator()
 
-    Array(5) { levelGenerator.generate() }.forEach {
+    Array(25) { levelGenerator.generate() }.forEach {
         marioSimulator.playMario(controller, it, true)
     }
 }

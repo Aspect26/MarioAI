@@ -14,6 +14,7 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
 
 private val PATH_TO_LATEST_AI = "data/latest_neat_ai.ai"
 
+/** Launches NEAT algorithm to evolve AI using specified settings. */
 fun main() {
     evolve()
 //    continueEvolution()
@@ -21,7 +22,8 @@ fun main() {
 }
 
 private fun evolve() {
-    val networkSettings = NetworkSettings(5, 5, 0, 2, denseInput = false)
+    val networkSettings = NetworkSettings(5, 5, 0, 2,
+        denseInput = false, oneHotOnEnemies = true)
     val controllerEvolution =
         NeatControllerEvolution(
             networkSettings,

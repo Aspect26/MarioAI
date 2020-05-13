@@ -11,13 +11,13 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 import kotlin.system.exitProcess
 
-
+/** Launches Super Mario game using specified level generator and keyboard controlled agent. */
 fun main() {
     keyboardPlay()
 }
 
 
-fun keyboardPlay() {
+private fun keyboardPlay() {
     val levelGenerator = PMPLevelGenerator()
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 

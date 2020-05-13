@@ -8,7 +8,9 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
-
+/** Launches grammar evolution of levels. */
+@Deprecated("Grammar evolution of levels is no longer maintained",
+    replaceWith = ReplaceWith("Some other launcher"))
 fun main() {
      grammarEvolution()
 }

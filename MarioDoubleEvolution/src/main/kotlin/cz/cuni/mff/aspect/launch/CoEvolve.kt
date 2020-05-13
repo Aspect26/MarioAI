@@ -20,6 +20,7 @@ import io.jenetics.GaussianMutator
 
 private val RESULT_FILES_PATH = "data/coev/1_10-sl-window/neuro_pc"
 
+/** Launches a coevolution or plays mario using AIs and level generators from the latest coevolution. */
 fun main() {
 //    coevolve()
     playLatestCo()

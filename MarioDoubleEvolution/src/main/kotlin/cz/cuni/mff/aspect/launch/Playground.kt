@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.launch
 import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 
+/** Launcher used for development needs. */
 fun main() {
 
     val chart1 = EvolutionLineChart(label="AI Evolution")

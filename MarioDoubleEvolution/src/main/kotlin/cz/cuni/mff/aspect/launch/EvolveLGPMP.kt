@@ -13,6 +13,10 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
 const val FILE_PATH_LATEST_PMP = "data/latest_pmp_lg.lg"
 
+/**
+ * Launches evolution of Probabilistic Multipass level generator / plays latest evolved generator / plays Super Mario
+ * using default settings of Probabilistic Multipass level generator.
+ */
 fun main() {
     evolvePMP()
 //    playLatestPMP()
@@ -20,7 +24,7 @@ fun main() {
 //    createDefaultPMP()
 }
 
-fun evolvePMP() {
+private fun evolvePMP() {
 
     val agentFactory = { Agents.NEAT.Stage4Level1Solver }
 
@@ -44,7 +48,7 @@ fun evolvePMP() {
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-fun playLatestPMP() {
+private fun playLatestPMP() {
     val levelGenerator = ObjectStorage.load(FILE_PATH_LATEST_PMP) as PMPLevelGenerator
     val gameSimulator = GameSimulator()
 
@@ -60,7 +64,7 @@ fun playLatestPMP() {
     }
 }
 
-fun evaluateLatestPMP() {
+private fun evaluateLatestPMP() {
     val levelGenerator = ObjectStorage.load(FILE_PATH_LATEST_PMP) as PMPLevelGenerator
     val evaluator = DifficultyEvaluator()
 
@@ -75,7 +79,7 @@ fun evaluateLatestPMP() {
     }
 }
 
-fun createDefaultPMP() {
+private fun createDefaultPMP() {
     val defaultLevel = PMPLevelGenerator().generate()
     val postProcessed = LevelPostProcessor.postProcess(defaultLevel)
     LevelVisualiser().display(postProcessed)

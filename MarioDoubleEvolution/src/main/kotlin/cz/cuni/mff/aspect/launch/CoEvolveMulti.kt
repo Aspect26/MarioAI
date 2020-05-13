@@ -23,6 +23,10 @@ import io.jenetics.GaussianMutator
 
 private const val generations = 20
 
+/**
+ * Launches multiple coevolutions in series. The settings of the evolutions are specified by [NeuroEvolution],
+ * [NEATEvolution], [PCEvolution] and [PMPEvolution] objects.
+ */
 fun main() {
     coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 5)
 //    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
@@ -62,7 +66,9 @@ private object NeuroEvolution : ControllerEvolutionSettings {
                     receptiveFieldSizeColumn = 5,
                     receptiveFieldRowOffset = 0,
                     receptiveFieldColumnOffset = 2,
-                    hiddenLayerSize = 7
+                    hiddenLayerSize = 5,
+                    denseInput = false,
+                    oneHotOnEnemies = true
                 ))
             )
 }

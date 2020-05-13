@@ -1,4 +1,4 @@
-    package cz.cuni.mff.aspect.launch
+package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
@@ -13,13 +13,17 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
 
+/**
+ * Launches evolution of Probabilistic Chunks level generator / plays latest evolved generator / plays Super Mario
+ * using default settings of Probabilistic Chunks level generator.
+ */
 fun main() {
     evolvePC()
 //    playLatestPC()
 //    createDefaultPC()
 }
 
-fun evolvePC() {
+private fun evolvePC() {
 //    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController) }
     val agentFactory = { Agents.RuleBased.goingRight }
 
@@ -45,7 +49,7 @@ fun evolvePC() {
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-fun playLatestPC() {
+private fun playLatestPC() {
     val levelGenerator: PCLevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as PCLevelGenerator
     val simulator = GameSimulator(15000)
 
@@ -60,7 +64,7 @@ fun playLatestPC() {
     }
 }
 
-fun createDefaultPC() {
+private fun createDefaultPC() {
     val levelGenerator = PCLevelGenerator()
     val gameSimulator = GameSimulator(500000000)
 
