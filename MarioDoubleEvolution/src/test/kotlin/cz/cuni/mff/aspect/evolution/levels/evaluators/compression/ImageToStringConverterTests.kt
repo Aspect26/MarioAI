@@ -1,4 +1,5 @@
-import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression
+package cz.cuni.mff.aspect.evolution.levels.evaluators.compression
+
 import org.apache.commons.lang3.StringUtils
 import org.junit.Assert
 import org.junit.Test
@@ -15,7 +16,10 @@ class ImageToStringConverterTests {
         val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
         image.setRGB(0, 0, imageSize, imageSize, IntArray(imageSize * imageSize) { Color.WHITE.rgb }, 0, 0)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = StringUtils.repeat(1.toChar(), 9)
 
@@ -34,7 +38,10 @@ class ImageToStringConverterTests {
         val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_RGB)
         image.setRGB(0, 0, imageSize, imageSize, IntArray(imageSize * imageSize) { Color.WHITE.rgb }, 0, 0)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = StringUtils.repeat(1.toChar(), 9)
 
@@ -54,7 +61,10 @@ class ImageToStringConverterTests {
         image.setRGB(0, 0, imageSize, imageSize, IntArray(imageSize * imageSize) { Color.WHITE.rgb }, 0, 0)
         image.setRGB(0, 0, Color.BLACK.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 2, 2, 2, 2, 2, 2, 2, 2).map { it.toChar() }.joinToString("")
 
@@ -73,7 +83,10 @@ class ImageToStringConverterTests {
         image.setRGB(0, 0, imageSize, imageSize, IntArray(imageSize * imageSize) { Color.WHITE.rgb }, 0, 0)
         image.setRGB(8, 0, Color.BLACK.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 1, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
@@ -93,7 +106,10 @@ class ImageToStringConverterTests {
         image.setRGB(7, 0, Color.BLACK.rgb)
         image.setRGB(4, 3, Color.BLACK.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 2, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
@@ -113,7 +129,10 @@ class ImageToStringConverterTests {
         image.setRGB(7, 0, Color.BLACK.rgb)
         image.setRGB(4, 4, Color.BLACK.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 3, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
@@ -136,7 +155,10 @@ class ImageToStringConverterTests {
 
         image.setRGB(3, 0, Color.BLACK.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 2, 3, 3, 3, 3, 3, 3, 3).map { it.toChar() }.joinToString("")
 
@@ -158,7 +180,10 @@ class ImageToStringConverterTests {
 
         image.setRGB(3, 3, Color.RED.rgb)
 
-        val imageToStringConverter = ImageHuffmanCompression.ImageToStringConverter(gridSize)
+        val imageToStringConverter =
+            ImageHuffmanCompression.ImageToStringConverter(
+                gridSize
+            )
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 1, 2, 3, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 

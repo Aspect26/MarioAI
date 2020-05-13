@@ -1,9 +1,9 @@
-import cz.cuni.mff.aspect.utils.DeepCopy
+package cz.cuni.mff.aspect.utils
+
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Assert
 import org.junit.Test
 import java.io.Serializable
-
 
 class DeepCopyTests {
 

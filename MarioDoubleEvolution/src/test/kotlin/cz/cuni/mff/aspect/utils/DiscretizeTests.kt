@@ -1,7 +1,5 @@
-package math
+package cz.cuni.mff.aspect.utils
 
-import cz.cuni.mff.aspect.utils.discretize
-import cz.cuni.mff.aspect.utils.min
 import org.apache.commons.math3.exception.OutOfRangeException
 import org.junit.Assert
 import org.junit.Test
