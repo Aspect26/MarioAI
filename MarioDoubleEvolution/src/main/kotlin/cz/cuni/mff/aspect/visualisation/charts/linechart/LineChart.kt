@@ -10,14 +10,13 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import java.io.File
 import javax.swing.JFrame
 
 /**
  * A wrapper of `xcharts` library's line chart which specifies the overall chart style and is able to display the chart
  * using Java's `swing` GUI library, store the chart as an SVG and update the chart's data in realtime.
  */
-class LineChart(internal val label: String = "Line chart", internal val xLabel: String = "X", internal val yLabel: String = "Y") {
+class LineChart(private val label: String = "Line chart", private val xLabel: String = "X", private val yLabel: String = "Y") {
 
     private val chart: XYChartWithStops = XYChartWithStops(XYChartBuilder()
         .width(1920)
@@ -31,8 +30,8 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
     private val xchartSeries: MutableList<Series> = mutableListOf()
 
     private var windowShown = false
-    internal var stops: List<Double> = mutableListOf()
-    internal var series: List<DataSeries> = mutableListOf()
+    private var stops: List<Double> = mutableListOf()
+    private var series: List<DataSeries> = mutableListOf()
 
     init {
         chart.styler.apply {
@@ -83,7 +82,7 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
     }
 
     fun save(path: String) {
-        LineChartDataFile.storeData(path, LineChartData(label, xLabel, yLabel, stops, series))
+        LineChartDataFile.storeData("$path.dat", LineChartData(label, xLabel, yLabel, stops, series))
         this.storeChart(path)
     }
 
@@ -115,9 +114,11 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
         VectorGraphicsEncoder.saveVectorGraphic(this.chart, filePath, VectorGraphicsEncoder.VectorGraphicsFormat.SVG)
 
     companion object {
-        fun loadFromFile(filePath: String): LineChart = with(LineChartDataFile.loadData(filePath)) {
-            LineChart(label, xLabel, yLabel).apply {
-                updateChart(series, stops)
+        fun loadFromFile(filePath: String): LineChart {
+            val data = LineChartDataFile.loadData(filePath)
+
+            return LineChart(data.label, data.xLabel, data.yLabel).apply {
+                updateChart(data.series, data.stops)
             }
         }
     }

@@ -41,7 +41,7 @@ internal object LineChartDataFile {
         val label = rawData[0]
         val xLabel = rawData[1]
         val yLabel = rawData[2]
-        val stops: List<Double> = rawData[3].split(",").map { it.toDouble() }
+        val stops: List<Double> = if (rawData[3].isNotBlank()) rawData[3].split(",").map { it.toDouble() } else listOf()
         val series: MutableList<DataSeries> = mutableListOf()
 
         for (lineIndex in 4 until rawData.size step 3) {

@@ -26,12 +26,30 @@ class LineChartDataFileTests {
 
     @Test
     fun `test load`() {
-        val data = LineChartDataFile.loadData("./src/test/resources/linechartdata.txt")
+        val data = LineChartDataFile.loadData("./src/test/resources/line_chart_data.txt")
 
         assertEquals("Middle earth chart", data.label)
         assertEquals("Age", data.xLabel)
         assertEquals("Deaths", data.yLabel)
         assertEquals(listOf(1.0, 2.0, 3.0), data.stops)
+        assertEquals("There are two data series", 2, data.series.size)
+        assertEquals("series1", data.series[0].label)
+        assertEquals("series2", data.series[1].label)
+        assertEquals("There are two datapoints in the series 1", 2, data.series[0].data.size)
+        assertEquals(1.0, data.series[0].data[0].first, 0.00000001)
+        assertEquals(2.0, data.series[0].data[0].second, 0.00000001)
+        assertEquals(3.0, data.series[0].data[1].first, 0.00000001)
+        assertEquals(0.5, data.series[0].data[1].second, 0.00000001)
+    }
+
+    @Test
+    fun `test load without stops`() {
+        val data = LineChartDataFile.loadData("./src/test/resources/line_chart_data_without_stops.txt")
+
+        assertEquals("Middle earth chart", data.label)
+        assertEquals("Age", data.xLabel)
+        assertEquals("Deaths", data.yLabel)
+        assertEquals("There are no stops", 0, data.stops.size)
         assertEquals("There are two data series", 2, data.series.size)
         assertEquals("series1", data.series[0].label)
         assertEquals("series2", data.series[1].label)
