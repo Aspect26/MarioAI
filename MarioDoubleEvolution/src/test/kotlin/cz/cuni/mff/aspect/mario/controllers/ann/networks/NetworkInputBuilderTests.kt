@@ -1,3 +1,5 @@
+package cz.cuni.mff.aspect.mario.controllers.ann.networks
+
 import ch.idsia.agents.controllers.modules.Entities
 import ch.idsia.agents.controllers.modules.Tiles
 import ch.idsia.benchmark.mario.engine.generalization.Entity
@@ -5,7 +7,6 @@ import ch.idsia.benchmark.mario.engine.generalization.EntityType
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import ch.idsia.benchmark.mario.engine.generalization.Tile
 import ch.idsia.benchmark.mario.engine.sprites.Sprite
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

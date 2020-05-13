@@ -1,0 +1,10 @@
+Middle earth chart
+Age
+Deaths
+
+series1
+123
+1.0:2.0 3.0:0.5
+series2
+123456
+5.0:2.0 3.0:0.5

@@ -19,9 +19,9 @@ private val PATH_TO_LATEST_AI = "data/latest_neuro_ai.ai"
 
 /** Launches Neuroevolution algorithm to evolve AI using specified settings. */
 fun main() {
-//    evolveAI()
+    evolveAI()
 //    continueEvolveAI()
-    playLatestAI()
+//    playLatestAI()
 }
 
 
@@ -34,13 +34,13 @@ fun evolveAI() {
             50,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
-            evaluateOnLevelsCount = TrainingLevelsSet.size,
+            evaluateOnLevelsCount = Stage4Level1Split.levels.size,
             chartLabel = "NeuroEvolution",
             alterers = arrayOf(GaussianMutator(0.55)),
             alwaysReevaluate = false
         )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
-    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
+    val levelGenerator = LevelGenerators.StaticGenerator(Stage4Level1Split.levels)
     val resultController = controllerEvolution.evolve(listOf(levelGenerator))
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
     controllerEvolution.chart.store("data/latest.svg")

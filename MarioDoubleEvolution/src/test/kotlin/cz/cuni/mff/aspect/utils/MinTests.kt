@@ -1,6 +1,5 @@
-package math
+package cz.cuni.mff.aspect.utils
 
-import cz.cuni.mff.aspect.utils.min
 import org.junit.Assert
 import org.junit.Test
 

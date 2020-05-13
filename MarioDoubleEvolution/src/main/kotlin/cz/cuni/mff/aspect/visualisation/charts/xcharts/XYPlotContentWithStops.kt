@@ -8,6 +8,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.geom.Rectangle2D
 
+/** Reimplementation of `xcharts` [PlotContent_XY] to add support for vertical stops in the plot content. */
 class XYPlotContentWithStops(chart: Chart<XYStyler, XYSeries>) : PlotContent_XY<XYStyler, XYSeries>(chart) {
 
     var stops = listOf<Double>()

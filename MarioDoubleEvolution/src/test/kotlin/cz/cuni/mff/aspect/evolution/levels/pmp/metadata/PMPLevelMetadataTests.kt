@@ -1,6 +1,5 @@
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatform
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatformType
-import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
+package cz.cuni.mff.aspect.evolution.levels.pmp.metadata
+
 import org.junit.Test
 import org.junit.Assert
 

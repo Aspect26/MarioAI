@@ -1,4 +1,5 @@
-import cz.cuni.mff.aspect.utils.SlidingWindow
+package cz.cuni.mff.aspect.utils
+
 import org.junit.Assert
 import org.junit.Test
 

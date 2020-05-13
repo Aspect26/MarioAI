@@ -1,15 +1,26 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
+import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart
 import java.awt.Color
 
+/**
+ * Implementation of a line chart for coevolution. It gets two [EvolutionLineChart]'s in constructor parameters and
+ * constructs one coevolution chart containing fitnesses from both charts and second coevolution chart containing
+ * objective values from both charts.
+ */
 class CoevolutionLineChart(
     private val firstChart: EvolutionLineChart,
     private val secondChart: EvolutionLineChart,
     label: String = "Coevolution"
 ) {
 
-    private val fitnessLineChart = LineChart(label, "Generations", "Fitness")
-    private val objectiveLineChart = LineChart(label, "Generations", "Objective")
+    private val fitnessLineChart =
+        LineChart(label, "Generations", "Fitness")
+    private val objectiveLineChart = LineChart(
+        label,
+        "Generations",
+        "Objective"
+    )
 
     init {
         updateChartData()
