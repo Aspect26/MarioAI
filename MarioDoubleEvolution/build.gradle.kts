@@ -28,6 +28,7 @@ dependencies {
     implementation(files("$projectDir/lib/HuffmanCoding.jar"))
 
     testImplementation(group = "junit", name = "junit", version = "4.12")
+    testImplementation(group = "io.mockk", name = "mockk", version="1.10.0")
 }
 
 tasks.withType<Test> {

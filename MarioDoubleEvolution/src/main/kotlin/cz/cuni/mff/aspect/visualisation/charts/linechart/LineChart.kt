@@ -83,9 +83,8 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
     }
 
     fun save(path: String) {
-        this.createDirectories(path)
-        this.storeChart(path)
         LineChartDataFile.storeData(path, LineChartData(label, xLabel, yLabel, stops, series))
+        this.storeChart(path)
     }
 
     val isShown get() = this.windowShown
@@ -109,14 +108,6 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
         this.chartUIPanel.let {
             it.revalidate()
             it.repaint()
-        }
-    }
-
-    private fun createDirectories(filePath: String) {
-        if (filePath.contains("/")) {
-            val directoryPath = filePath.replaceAfterLast("/", "")
-            val directory = File(directoryPath)
-            if (!directory.exists()) directory.mkdirs()
         }
     }
 

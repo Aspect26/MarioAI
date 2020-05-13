@@ -1,12 +1,14 @@
 package cz.cuni.mff.aspect.visualisation.charts.linechart
 
+import cz.cuni.mff.aspect.storage.LocalStorage
+import cz.cuni.mff.aspect.storage.LocalTextFileStorage
 import cz.cuni.mff.aspect.visualisation.charts.DataSeries
 import java.awt.Color
-import java.io.File
 
 /** Stores and loads [LineChart] data to/from a given file. */
-// TODO: unit test me
 internal object LineChartDataFile {
+
+    internal val storage: LocalStorage get() = LocalTextFileStorage
 
     fun storeData(filePath: String, lineChartData: LineChartData) {
         val contentBuilder = StringBuilder()
@@ -31,22 +33,18 @@ internal object LineChartDataFile {
             }
         }
 
-        File(filePath).writeText(contentBuilder.toString())
+        this.storage.storeData(filePath, contentBuilder.toString())
     }
 
     fun loadData(filePath: String): LineChartData {
-        val file = File(filePath)
-        if (!file.exists() || file.isDirectory)
-            throw IllegalArgumentException("Can't load line chart data from '$filePath' because the file either does not exist or is a directory.")
-
-        val rawData = file.readLines()
+        val rawData = this.storage.loadData(filePath).split(System.lineSeparator())
         val label = rawData[0]
         val xLabel = rawData[1]
         val yLabel = rawData[2]
-        val stops: List<Double> = rawData[0].split(",").map { it.toDouble() }
+        val stops: List<Double> = rawData[3].split(",").map { it.toDouble() }
         val series: MutableList<DataSeries> = mutableListOf()
 
-        for (lineIndex in 3 until rawData.size step 3) {
+        for (lineIndex in 4 until rawData.size step 3) {
             val seriesLabel = rawData[lineIndex]
             val seriesColor = Color(rawData[lineIndex + 1].toInt())
             val seriesData: MutableList<Pair<Double, Double>> = rawData[lineIndex + 2]
