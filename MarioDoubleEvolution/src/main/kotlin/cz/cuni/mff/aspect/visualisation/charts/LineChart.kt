@@ -12,7 +12,10 @@ import java.awt.event.WindowEvent
 import java.io.File
 import javax.swing.JFrame
 
-
+/**
+ * A wrapper of `xcharts` library's line chart which specifies the overall chart style and is able to display the chart
+ * using Java's `swing` GUI library, store the chart as an SVG and update the chart's data in realtime.
+ */
 class LineChart(label: String = "Line chart", xLabel: String = "X", yLabel: String = "Y") {
 
     private val chart: XYChartWithStops =

@@ -4,6 +4,7 @@ import org.knowm.xchart.XYChart
 import org.knowm.xchart.XYChartBuilder
 import org.knowm.xchart.internal.chartpart.XYPlotWithStops
 
+/** Reimplementation of `xcharts` [XYChart] to add support for vertical stops in the chart. */
 class XYChartWithStops(chartBuilder: XYChartBuilder?) : XYChart(chartBuilder) {
 
     init {

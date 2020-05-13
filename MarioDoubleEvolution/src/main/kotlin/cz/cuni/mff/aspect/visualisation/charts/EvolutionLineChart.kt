@@ -2,6 +2,11 @@ package cz.cuni.mff.aspect.visualisation.charts
 
 import java.awt.Color
 
+/**
+ * Improves [LineChart] specifically for evolutionary algorithm purposes, providing API for adding best/average fitness
+ * and best/average objective values as a new generation, or specify these values for a specific generation. It is also
+ * able to display multiple stops (vertical black lines) at given generation numbers.
+ */
 class EvolutionLineChart(val label: String = "Evolution", private val hideNegative: Boolean = false) {
 
     private val _stops = mutableListOf<Double>()
