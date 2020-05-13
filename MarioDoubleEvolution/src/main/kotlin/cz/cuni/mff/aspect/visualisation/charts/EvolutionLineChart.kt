@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.visualisation.charts
 
+import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart
 import java.awt.Color
 
 /**
@@ -10,7 +11,11 @@ import java.awt.Color
 class EvolutionLineChart(val label: String = "Evolution", private val hideNegative: Boolean = false) {
 
     private val _stops = mutableListOf<Double>()
-    private val lineChart = LineChart(label, "Generations", "Fitness/Objective")
+    private val lineChart = LineChart(
+        label,
+        "Generations",
+        "Fitness/Objective"
+    )
 
     private val bestFitnessSeries = DataSeries("Best fitness", Color(255, 0, 0), mutableListOf())
     private val averageFitnessSeries = DataSeries("Average fitness", Color(255, 113, 96), mutableListOf())
