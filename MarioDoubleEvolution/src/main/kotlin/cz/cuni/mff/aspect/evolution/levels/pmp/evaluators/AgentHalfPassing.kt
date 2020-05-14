@@ -16,8 +16,11 @@ class AgentHalfPassing : PMPLevelEvaluator<Float> {
         val wonCount = gameStatistics.sumBy { if (it.levelFinished) 1 else 0 }
         val lostCount = gameStatistics.size - wonCount
 
-        val wonLostDifference = abs(wonCount - lostCount) * 1000
-        return wonLostDifference.toFloat()
+        val maxDifference = gameStatistics.size
+        val wonLostDifference = abs(wonCount - lostCount)
+        val reversedWonLostDifference = maxDifference - wonLostDifference
+
+        return reversedWonLostDifference * 1000f
     }
 
     override val optimize: Optimize get() = Optimize.MINIMUM

@@ -17,10 +17,10 @@ class AgentHalfPassing : PCLevelEvaluator<Float> {
         val lostCount = gameStatistics.size - wonCount
 
         val maxDifference = gameStatistics.size
-        val wonLostDifference = abs(wonCount - lostCount) * 1000
+        val wonLostDifference = abs(wonCount - lostCount)
         val reversedWonLostDifference = maxDifference - wonLostDifference
 
-        return reversedWonLostDifference.toFloat()
+        return reversedWonLostDifference * 1000f
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM
