@@ -26,7 +26,7 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
         .yAxisTitle(yLabel)
     )
 
-    private val chartUIPanel: XChartPanel<XYChart>
+    private lateinit var chartUIPanel: XChartPanel<XYChart>
     private val xchartSeries: MutableList<Series> = mutableListOf()
 
     private var windowShown = false
@@ -41,13 +41,12 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
             isLegendVisible = true
             markerSize = 16
         }
-
-        chartUIPanel = XChartPanel(chart)
     }
 
     fun renderChart() {
         this.windowShown = true
         javax.swing.SwingUtilities.invokeLater {
+            this.chartUIPanel = XChartPanel(chart)
             val frame = JFrame("Chart")
             frame.layout = BorderLayout()
 

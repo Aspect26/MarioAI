@@ -21,7 +21,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
-private const val generations = 20
+private const val generations = 25
 
 /**
  * Launches multiple coevolutions in series. The settings of the evolutions are specified by [NeuroEvolution],
