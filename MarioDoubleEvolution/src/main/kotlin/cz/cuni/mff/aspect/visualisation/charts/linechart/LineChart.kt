@@ -103,9 +103,11 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
     }
 
     private fun repaint() {
-        this.chartUIPanel.let {
-            it.revalidate()
-            it.repaint()
+        if (this::chartUIPanel.isInitialized) {
+            this.chartUIPanel.let {
+                it.revalidate()
+                it.repaint()
+            }
         }
     }
 
