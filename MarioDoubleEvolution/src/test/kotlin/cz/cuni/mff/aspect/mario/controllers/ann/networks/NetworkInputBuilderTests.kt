@@ -7,8 +7,8 @@ import ch.idsia.benchmark.mario.engine.generalization.EntityType
 import ch.idsia.benchmark.mario.engine.generalization.MarioEntity
 import ch.idsia.benchmark.mario.engine.generalization.Tile
 import ch.idsia.benchmark.mario.engine.sprites.Sprite
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class NetworkInputBuilderTests {
 
@@ -172,7 +172,7 @@ class NetworkInputBuilderTests {
         ).flatten()
 
         for (index in expectedEntitiesInput.indices) {
-            assertEquals("Error in one-hot encoding number ${index / 7}, on index ${index % 7}.",  expectedEntitiesInput[index], input[index])
+            assertEquals(expectedEntitiesInput[index], input[index], "Error in one-hot encoding number ${index / 7}, on index ${index % 7}.")
         }
     }
 
@@ -256,7 +256,7 @@ class NetworkInputBuilderTests {
 
         for (index in (0 until receptiveFieldGridSize)) {
             // The entities grid comes first in the input
-            assertEquals("Created input is not as expected at index $input", flatExpected[index].code, input[index + receptiveFieldGridSize])
+            assertEquals(flatExpected[index].code, input[index + receptiveFieldGridSize], "Created input is not as expected at index $input")
         }
     }
 
@@ -265,7 +265,7 @@ class NetworkInputBuilderTests {
         val receptiveFieldGridSize = flatExpected.size
 
         for (index in (0 until receptiveFieldGridSize)) {
-            assertEquals("Created input is not as expected at index $input", flatExpected[index].type.code, input[index])
+            assertEquals(flatExpected[index].type.code, input[index], "Created input is not as expected at index $input")
         }
     }
 

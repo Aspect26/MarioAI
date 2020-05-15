@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class CircularIteratorTests {
 
@@ -11,7 +11,7 @@ class CircularIteratorTests {
         val circularIterator = CircularIterator(testArray)
         val firstReceivedValue = circularIterator.next()
 
-        assertEquals("The first next() call should return first value in the underlying array", 1, firstReceivedValue)
+        assertEquals(1, firstReceivedValue, "The first next() call should return first value in the underlying array")
     }
 
     @Test
@@ -25,7 +25,7 @@ class CircularIteratorTests {
         circularIterator.next()
         val fifthReceivedValue = circularIterator.next()
 
-        assertEquals("5th next() calls should return 5th value", 5, fifthReceivedValue)
+        assertEquals(5, fifthReceivedValue, "5th next() calls should return 5th value")
     }
 
     @Test
@@ -37,9 +37,9 @@ class CircularIteratorTests {
         val secondReceivedValue = circularIterator.next()
         val thirdReceivedValue = circularIterator.next()
 
-        assertEquals("1st next() calls should return 1st value", 1, firstReceivedValue)
-        assertEquals("2nd next() calls should return 2nd value", 2, secondReceivedValue)
-        assertEquals("3rd next() calls should return 3rd value", 3, thirdReceivedValue)
+        assertEquals(1, firstReceivedValue, "1st next() calls should return 1st value")
+        assertEquals(2, secondReceivedValue, "2nd next() calls should return 2nd value")
+        assertEquals(3, thirdReceivedValue, "3rd next() calls should return 3rd value")
     }
 
     @Test
@@ -52,7 +52,7 @@ class CircularIteratorTests {
         circularIterator.next()
         val fourthReceivedValue = circularIterator.next()
 
-        assertEquals("Next returned wrong value", 1, fourthReceivedValue)
+        assertEquals(1, fourthReceivedValue, "Next returned wrong value")
     }
 
     @Test
@@ -65,7 +65,7 @@ class CircularIteratorTests {
 
         val twentiethReceivedValue = circularIterator.next()
 
-        assertEquals("Next returned wrong value", 2, twentiethReceivedValue)
+        assertEquals(2, twentiethReceivedValue, "Next returned wrong value")
     }
 
     @Test
@@ -73,7 +73,7 @@ class CircularIteratorTests {
         val testArray = arrayOf(1, 2, 3, 4, 5, 6)
         val circularIterator = CircularIterator(testArray)
 
-        assertEquals("Wrong wrap count", 0, circularIterator.wrapsCount)
+        assertEquals(0, circularIterator.wrapsCount, "Wrong wrap count")
     }
 
     @Test
@@ -84,7 +84,7 @@ class CircularIteratorTests {
         for (x in 1..4)
             circularIterator.next()
 
-        assertEquals("Wrong wrap count", 0, circularIterator.wrapsCount)
+        assertEquals(0, circularIterator.wrapsCount, "Wrong wrap count")
     }
 
     @Test
@@ -95,7 +95,7 @@ class CircularIteratorTests {
         for (x in 1..20)
             circularIterator.next()
 
-        assertEquals("Next returned wrong value", 6, circularIterator.wrapsCount)
+        assertEquals(6, circularIterator.wrapsCount, "Next returned wrong value")
     }
 
     @Test
@@ -106,7 +106,7 @@ class CircularIteratorTests {
         for (x in 1..21)
             circularIterator.next()
 
-        assertEquals("Next returned wrong value", 6, circularIterator.wrapsCount)
+        assertEquals(6, circularIterator.wrapsCount, "Next returned wrong value")
     }
 
     @Test
@@ -117,6 +117,6 @@ class CircularIteratorTests {
         for (x in 1..22)
             circularIterator.next()
 
-        assertEquals("Next returned wrong value", 7, circularIterator.wrapsCount)
+        assertEquals(7, circularIterator.wrapsCount, "Next returned wrong value")
     }
 }

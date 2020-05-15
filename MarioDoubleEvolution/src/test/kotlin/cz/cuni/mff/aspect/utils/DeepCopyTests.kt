@@ -1,8 +1,9 @@
 package cz.cuni.mff.aspect.utils
 
 import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert
-import org.junit.Test
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.io.Serializable
 
 class DeepCopyTests {
@@ -17,7 +18,7 @@ class DeepCopyTests {
 
         val copiedPrimitive = DeepCopy.copy(intPrimitive)
 
-        Assert.assertEquals("The copied primitive should have the same value as original", intPrimitive, copiedPrimitive)
+        assertEquals(intPrimitive, copiedPrimitive, "The copied primitive should have the same value as original")
     }
 
     @Test
@@ -26,9 +27,9 @@ class DeepCopyTests {
 
         val copiedObj = DeepCopy.copy(originalObj)
 
-        Assert.assertThat("The copied object should be instance of 'ShallowClass'", copiedObj, instanceOf(ShallowClass::class.java))
-        Assert.assertEquals("The 'intValue' should be the same in original and copy", originalObj.intValue, copiedObj.intValue)
-        Assert.assertEquals("The 'stringValue' should be the same in original and copy", originalObj.stringValue, copiedObj.stringValue)
+        assertThat("The copied object should be instance of 'ShallowClass'", copiedObj, instanceOf(ShallowClass::class.java))
+        assertEquals(originalObj.intValue, copiedObj.intValue, "The 'intValue' should be the same in original and copy")
+        assertEquals(originalObj.stringValue, copiedObj.stringValue, "The 'stringValue' should be the same in original and copy")
     }
 
     @Test
@@ -37,11 +38,11 @@ class DeepCopyTests {
 
         val copiedObj = DeepCopy.copy(originalObj)
 
-        Assert.assertThat("The copied object should be instance of 'DeepClass'", copiedObj, instanceOf(DeepClass::class.java))
-        Assert.assertNotEquals("The copied deep object should be different instance than the original's", originalObj.deep,  copiedObj.deep)
-        Assert.assertEquals("The 'intValue' should be the same in original and copy", originalObj.intValue, copiedObj.intValue)
-        Assert.assertEquals("The 'intValue' of he deep object should be the same in original and copy", originalObj.deep.intValue, copiedObj.deep.intValue)
-        Assert.assertEquals("The 'stringValue' of he deep object should be the same in original and copy", originalObj.deep.stringValue, copiedObj.deep.stringValue)
+        assertThat("The copied object should be instance of 'DeepClass'", copiedObj, instanceOf(DeepClass::class.java))
+        assertNotEquals(originalObj.deep,  copiedObj.deep, "The copied deep object should be different instance than the original's")
+        assertEquals(originalObj.intValue, copiedObj.intValue, "The 'intValue' should be the same in original and copy")
+        assertEquals(originalObj.deep.intValue, copiedObj.deep.intValue, "The 'intValue' of he deep object should be the same in original and copy")
+        assertEquals(originalObj.deep.stringValue, copiedObj.deep.stringValue, "The 'stringValue' of he deep object should be the same in original and copy")
     }
 
 }

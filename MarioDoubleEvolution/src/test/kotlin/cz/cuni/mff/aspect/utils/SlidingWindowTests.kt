@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.utils
 
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class SlidingWindowTests {
 
@@ -14,7 +14,7 @@ class SlidingWindowTests {
         }
 
         val itemsInHistory = history.getAll().size
-        Assert.assertEquals("The amount of items in the history should be at its limit", limit, itemsInHistory)
+        assertEquals(limit, itemsInHistory, "The amount of items in the history should be at its limit")
     }
 
     @Test
@@ -26,7 +26,7 @@ class SlidingWindowTests {
         val resultItems = history.getAll()
 
         itemsToInsert.reversed().forEachIndexed { index, item ->
-            Assert.assertEquals("The item at index $index is incorrect", item, resultItems[index])
+            assertEquals(item, resultItems[index], "The item at index $index is incorrect")
         }
     }
 
@@ -39,9 +39,9 @@ class SlidingWindowTests {
         itemsToInsert.forEach { history.push(it) }
         val resultItems = history.getAll()
 
-        Assert.assertEquals("The amount of items in the history should be at its limit", limit, resultItems.size)
+        assertEquals(limit, resultItems.size, "The amount of items in the history should be at its limit")
         itemsToInsert.reversed().subList(0, limit).forEachIndexed { index, item ->
-            Assert.assertEquals("The item at index $index is incorrect", item, resultItems[index])
+            assertEquals(item, resultItems[index], "The item at index $index is incorrect")
         }
     }
 }

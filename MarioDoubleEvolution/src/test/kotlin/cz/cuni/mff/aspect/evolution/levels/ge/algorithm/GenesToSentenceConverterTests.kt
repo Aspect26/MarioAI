@@ -1,11 +1,11 @@
 package cz.cuni.mff.aspect.evolution.levels.ge.algorithm
 
-import org.junit.Assert.assertArrayEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import org.junit.Ignore
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 
-@Ignore
+@Disabled
 class GenesToSentenceConverterTests {
 
     @Test
@@ -66,7 +66,7 @@ class GenesToSentenceConverterTests {
         val converter = getConverterForTestGrammar()
         val result = converter.convertUnsigned(genes)
 
-        assertArrayEquals("Wrong conversion", expectedResult, result)
+        assertArrayEquals(expectedResult, result, "Wrong conversion")
     }
 
     private fun getConverterForTestGrammar() =

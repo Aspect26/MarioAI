@@ -1,8 +1,9 @@
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    kotlin("jvm") version "1.3.71"
+    kotlin("jvm") version "1.3.72"
     id("org.jetbrains.dokka") version "0.10.1"
 }
 
@@ -27,13 +28,16 @@ dependencies {
     implementation(group = "org.knowm.xchart", name = "xchart", version = "3.6.3")
     implementation(files("$projectDir/lib/HuffmanCoding.jar"))
 
-    testImplementation(group = "junit", name = "junit", version = "4.12")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.6.2")
+    testImplementation(group = "org.hamcrest", name = "hamcrest-library", version = "2.2")
     testImplementation(group = "io.mockk", name = "mockk", version="1.10.0")
 }
 
 tasks.withType<Test> {
+    useJUnitPlatform()
+
     testLogging {
-        events("PASSED", "FAILED", "SKIPPED")
+        events("passed", "skipped", "failed")
     }
 
     this.testLogging {
@@ -60,8 +64,6 @@ val jar by tasks.getting(Jar::class) {
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
 
-val compileKotlin by tasks.getting(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class) {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
