@@ -22,16 +22,17 @@ import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
 private const val generations = 25
+private const val repeatGeneratorsCount = 5
 
 /**
  * Launches multiple coevolutions in series. The settings of the evolutions are specified by [NeuroEvolution],
  * [NEATEvolution], [PCEvolution] and [PMPEvolution] objects.
  */
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, 5)
-//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations)
-//    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations)
-//    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations)
+//    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
+//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
+//    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 }
 
 private interface ControllerEvolutionSettings {
