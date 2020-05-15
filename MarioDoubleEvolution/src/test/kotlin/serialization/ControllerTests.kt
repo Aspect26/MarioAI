@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.storage.ObjectStorage
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class ControllerTests {
 
@@ -25,6 +25,7 @@ class ControllerTests {
     }
 
     private fun assertControllerIsPlayable(dirPath: String, simulator: GameSimulator, level: MarioLevel) {
+        // TODO: we assert here that no exception is thrown
         val currentController = ObjectStorage.load("../data/coev/$dirPath/neuro_pc/ai_${15}.ai") as MarioController
         simulator.playMario(currentController, level, false)
     }

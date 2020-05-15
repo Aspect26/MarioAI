@@ -1,8 +1,8 @@
 package cz.cuni.mff.aspect.evolution.levels.evaluators.compression
 
 import org.apache.commons.lang3.StringUtils
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.awt.Color
 import java.awt.image.BufferedImage
 
@@ -23,10 +23,10 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = StringUtils.repeat(1.toChar(), 9)
 
-        Assert.assertEquals(
-            "Expected string with ones only because all grid squares are the same",
+        assertEquals(
             expectedResult,
-            resultString
+            resultString,
+            "Expected string with ones only because all grid squares are the same"
         )
     }
 
@@ -45,10 +45,10 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = StringUtils.repeat(1.toChar(), 9)
 
-        Assert.assertEquals(
-            "Expected string with ones only because all grid squares are the same",
+        assertEquals(
             expectedResult,
-            resultString
+            resultString,
+            "Expected string with ones only because all grid squares are the same"
         )
     }
 
@@ -68,7 +68,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 2, 2, 2, 2, 2, 2, 2, 2).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
@@ -90,7 +90,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 1, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
@@ -113,7 +113,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 2, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
@@ -136,7 +136,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 2, 1, 3, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
@@ -162,7 +162,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 2, 3, 3, 3, 3, 3, 3, 3).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
@@ -187,7 +187,7 @@ class ImageToStringConverterTests {
         val resultString = imageToStringConverter.imageToString(image)
         val expectedResult: String = arrayOf(1, 1, 1, 2, 3, 1, 1, 1, 1).map { it.toChar() }.joinToString("")
 
-        Assert.assertEquals(
+        assertEquals(
             expectedResult,
             resultString
         )
