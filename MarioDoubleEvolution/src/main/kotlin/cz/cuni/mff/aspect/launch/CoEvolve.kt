@@ -18,7 +18,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/07_enemies_one_hot/neuro_pc"
+private val RESULT_FILES_PATH = "data/coev/08_dense_input/neuro_pc"
 
 /** Launches a coevolution or plays mario using AIs and level generators from the latest coevolution. */
 fun main() {
@@ -88,7 +88,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 20) {
+    for (i in 1 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController

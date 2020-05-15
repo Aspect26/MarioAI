@@ -74,14 +74,16 @@ private object NeuroEvolution : ControllerEvolutionSettings {
 }
 
 private object NEATEvolution : ControllerEvolutionSettings {
-    private val networkSettings = NetworkSettings(7, 7, 0, 2)
+    private val networkSettings = NetworkSettings(5, 5, 0, 2,
+        denseInput = false,
+        oneHotOnEnemies = false)
     private val inputsCount = NeatAgentNetwork.inputLayerSize(networkSettings)
 
     override val evolution: ControllerEvolution
         get() = NeatControllerEvolution(
             networkSettings,
-            populationSize = 50,
-            generationsCount = 35,
+            populationSize = 100,
+            generationsCount = 150,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             evaluateOnLevelsCount = 25,

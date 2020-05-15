@@ -32,7 +32,7 @@ class All : PCLevelEvaluator<Float> {
             LinearityEvaluator().evaluateOne(levels[it], levelsChunkMetadata[it], gameStatistics[it])
         }.average().toFloat()
 
-        return reversedWonLostDifference.toFloat() * (1 + compressionFactor + linearityFactor)
+        return reversedWonLostDifference.toFloat() * (1 + compressionFactor + linearityFactor) * 1000
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

@@ -117,7 +117,10 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
     companion object {
         fun loadFromFile(filePath: String): LineChart {
             val data = LineChartDataFile.loadData(filePath)
+            return loadFromData(data)
+        }
 
+        fun loadFromData(data: LineChartData): LineChart {
             return LineChart(data.label, data.xLabel, data.yLabel).apply {
                 updateChart(data.series, data.stops)
             }

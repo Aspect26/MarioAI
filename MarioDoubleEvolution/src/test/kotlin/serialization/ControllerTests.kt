@@ -20,6 +20,8 @@ class ControllerTests {
         assertControllerIsPlayable("4_lg_with_huffman", simulator, anyLevel)
         assertControllerIsPlayable("5_chart_update", simulator, anyLevel)
         assertControllerIsPlayable("6_all_fitness_lg", simulator, anyLevel)
+        assertControllerIsPlayable("7_enemies_one_hot", simulator, anyLevel)
+        assertControllerIsPlayable("8_dense_input", simulator, anyLevel)
     }
 
     private fun assertControllerIsPlayable(dirPath: String, simulator: GameSimulator, level: MarioLevel) {
