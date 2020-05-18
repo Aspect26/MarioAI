@@ -42,7 +42,7 @@ Contains implementations of custom genotype for `Jenetics` library.
 Contains implementations of evaluators for level generators.
 
 
-# Package cz.cuni.mff.aspect.evolution.levels.compression
+# Package cz.cuni.mff.aspect.evolution.levels.evaluators.compression
 Contains implementations of evaluators using image compressibility metric. 
 
 
