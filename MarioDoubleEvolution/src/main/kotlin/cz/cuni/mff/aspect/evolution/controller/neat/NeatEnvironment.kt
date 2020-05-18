@@ -10,6 +10,11 @@ import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import kotlin.math.max
 
+/**
+ * Implementation of [Environment], required for usage of NEAT algorithm from library [com.evo.NEAT], for evolution of
+ * Super Mario contollers using this algorithm. It is used to evaluate fitness of each individual of a population, and
+ * store/compute some statistics, e.g. last population's fitnesses or last population's average fitness.
+ */
 internal class ControllerEvolutionEnvironment(
     private val levelGenerators: List<LevelGenerator>,
     private val networkSettings: NetworkSettings,

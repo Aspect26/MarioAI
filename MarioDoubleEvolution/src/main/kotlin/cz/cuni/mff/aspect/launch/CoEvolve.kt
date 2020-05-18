@@ -18,7 +18,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/08_dense_input/neuro_pc"
+private val RESULT_FILES_PATH = "data/coev/9_neat/neat_pc"
 
 /** Launches a coevolution or plays mario using AIs and level generators from the latest coevolution. */
 fun main() {

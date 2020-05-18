@@ -17,8 +17,32 @@ import io.jenetics.util.DoubleRange
 import io.jenetics.util.Factory
 
 
-/**
- * Implementation of an evolution of ANN agent controller.
+/** Implementation of a Super Mario controller evolution using simple neuroevolution algorithm, which evolves only
+ * weights on a given non-changing ANN. The implementation is highly customizable in terms of multiple properties
+ * of the evolution, which can be specified via primary constructor.
+ *
+ * @param controllerNetworkSettings specifies network settings.
+ * @param generationsCount number specifying how many generations the evolution should run for.
+ * @param populationSize size of a population.
+ * @param evaluateOnLevelsCount number of levels on which each individual should be evaluated. If the individuals are
+ * evaluated on multiple level generators, this number is evenly split amongst them. If that it not possible, some
+ * generators will generate one level less.
+ * @param fitnessFunction specifies fitness function.
+ * @param objectiveFunction specifies objective function.
+ * @param parallel specifies, whether the evolution should run on multiple CPU cores.
+ * @param alterers specifies alterers (mutators) for the evolution.
+ * @param survivorsSelector specifies selector for the survivors in the evolution.
+ * @param offspringSelector specifies selector for the offsprings in the evolution.
+ * @param weightsRange specifies range for the weights.
+ * @param alwaysReevaluate specifies, whether the individuals should be reevaluated in each generation during the
+ * evolution, or only when they are created. This is useful when the fitness computation is randomized somehow.
+ * @param displayChart specifies, whether a real-time chart, which displays fitness values and objective values,
+ * should be displayed.
+ * @param chartLabel label of the chart.
+ * @see NetworkSettings
+ * @see MarioGameplayEvaluator
+ * @see Alterer
+ * @see Selector
  */
 class NeuroControllerEvolution(
     private var controllerNetworkSettings: NetworkSettings? = null,

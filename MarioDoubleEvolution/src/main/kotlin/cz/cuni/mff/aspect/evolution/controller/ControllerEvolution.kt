@@ -5,24 +5,16 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 
 
-/**
- * Interface representing controller evolution.
- */
+/** Interface representing controller evolution. */
 interface ControllerEvolution {
 
-    /**
-     * Get line chart of the evolution
-     */
+    /** Chart of the evolution. */
     val chart: EvolutionLineChart
 
-    /**
-     * Evolves a mario agent controller, being provided with level generator.
-     */
+    /** Evolves a mario agent controller, which will be evaluated using level generators given. */
     fun evolve(levelGenerators: List<LevelGenerator>): MarioController
 
-    /**
-     * Continue evolution of already evolved controller.
-     */
+    /** Continues evolution of already evolved controller, using given level generators for its evaluation. */
     fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController
 
 }

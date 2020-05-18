@@ -8,29 +8,26 @@ typealias MarioGameplayEvaluator<F> = (gameStatistics: Array<GameStatistics>) ->
 
 
 // TODO: refactor me (add evaluators to class)
+/** Contains implementations of multiple fitness functions for Mario Controllers. */
 object MarioGameplayEvaluators {
 
-    /*
-    fun obstaclesOvercome(statistics: Array<GameStatistics>, levelMetadata: Array<MarioLevelMetadata>): Float {
-        for (i in statistics.indices) {
-            val marioDistanceTile: Int = statistics[i].finalMarioDistance.toInt() / 16
-            val currentLevelMetadata = levelMetadata[i]
-            val holesOvercome = currentLevelMetadata.holes.filterIndexed { columnIndex, holeLength -> columnIndex < marioDistanceTile && holeLength > 0 }.size
-            val
-        }
-        return 0f
-    }
-     */
-
+    /** Computes sum of distances, which the agent was able to get to in given levels. */
     fun distanceOnly(statistics: Array<GameStatistics>): Float {
         return statistics.sumByFloat { it.finalMarioDistance }
     }
 
+    /**
+     * Computes sum of distances, which the agent was able to get to in given levels, and awards bonus for each
+     * solved level.
+     */
     fun distanceAndVictories(statistics: Array<GameStatistics>): Float {
         return statistics.sumByFloat { it.finalMarioDistance + if (it.levelFinished) 500f else 0f }
     }
 
-
+    /**
+     * Computes sum of distances, which the agent was able to get to in given levels, and punishes the agent for
+     * each action if has done.
+     */
     fun distanceLeastActions(statistics: Array<GameStatistics>): Float {
         val sumFinalDistances: Float = statistics.sumByFloat { it.finalMarioDistance }
         val sumJumps = statistics.sumBy { it.jumps }
@@ -40,6 +37,7 @@ object MarioGameplayEvaluators {
         return sumFinalDistances - sumJumps * 20 - sumSpecials * 20 + levelsFinished * 200.0f
     }
 
+    /** Computes how many victories the agent has achieved on given levels, multiplied by 1000. */
     fun victoriesOnly(statistics: Array<GameStatistics>): Float {
         return statistics.sumByFloat { if (it.levelFinished) 1.0f else 0.0f } * 1000
     }

@@ -84,7 +84,7 @@ private object NEATEvolution : ControllerEvolutionSettings {
         get() = NeatControllerEvolution(
             networkSettings,
             populationSize = 100,
-            generationsCount = 150,
+            generationsCount = 75,
             fitnessFunction = MarioGameplayEvaluators::distanceOnly,
             objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
             evaluateOnLevelsCount = 25,

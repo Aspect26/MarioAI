@@ -14,10 +14,27 @@ import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import java.lang.IllegalArgumentException
 
-
+/** Implementation of a Super Mario controller evolution using NEAT algorithm. The implementation is highly customizable
+ * in terms of multiple properties of the evolution, which can be specified via primary constructor.
+ *
+ * @param networkSettings specifies network settings, however, not all the settings can be applied using NEAT. The only
+ * property which is not used in this implementation is [NetworkSettings.hiddenLayerSize].
+ * @param generationsCount number specifying how many generations the evolution should run for.
+ * @param populationSize size of a population.
+ * @param evaluateOnLevelsCount number of levels on which each individual should be evaluated. If the individuals are
+ * evaluated on multiple level generators, this number is evenly split amongst them. If that it not possible, some
+ * generators will generate one level less.
+ * @param fitnessFunction specifies fitness function.
+ * @param objectiveFunction specifies objective function.
+ * @param displayChart specifies, whether a real-time chart, which displays fitness values and objective values,
+ * should be displayed.
+ * @param chartLabel label of the chart.
+ * @see NetworkSettings
+ * @see MarioGameplayEvaluator
+ */
 class NeatControllerEvolution(
     private val networkSettings: NetworkSettings,
-    private var generationsCount: Int = 200,
+    private val generationsCount: Int = 200,
     private val populationSize: Int = 150,
     private val evaluateOnLevelsCount: Int = 25,
     private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,

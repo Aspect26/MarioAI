@@ -10,6 +10,18 @@ Contains implementation of multiple AI Controllers
 Contains implementation of all evolutions. These evolutions include AI evolution using NeuroEvolution and NEAT algorithms, level generator evolutions using SGA and level evolution using grammar evolution.
 
 
+# Package cz.cuni.mff.aspect.evolution.controller
+Contains implementation of evolution algorithms of controller. It contains [ControllerEvolution] interface, which all controller evolutions should implement, and two implementations of it: [NEATControllerEvolution] and [NeuroControllerEvolution].  
+
+
+# Package cz.cuni.mff.aspect.evolution.controller.neat
+Contains implementation of NEAT evolution of a Super Mario controller. It uses [com.evo.NEAT] library for the actual NEAT algorithm.
+
+
+# Package cz.cuni.mff.aspect.evolution.controller.neuroevolution
+Contains implementation of a simple NeuroEvolution (evolving only weights of a static ANN) of a Super Mario controller. It uses `Jenetics` library for the actual evolution algorithm. 
+
+
 # Package cz.cuni.mff.aspect.launch
 Contains multiple entry point of the project.
 
