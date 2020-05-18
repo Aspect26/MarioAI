@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import io.jenetics.Optimize
 
+/** Probabilistic Multipass level generator evaluator returning compression by [SmallPNGCompression] compression. */
 class PNGCompressionEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float {

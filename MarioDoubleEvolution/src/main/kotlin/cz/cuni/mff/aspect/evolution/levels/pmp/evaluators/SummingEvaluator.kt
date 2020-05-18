@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.sumByFloat
 
+/** Abstract Probabilistic Multipass levels evaluator, which sums evaluation values computed on each generated level. */
 abstract class SummingEvaluator : PMPLevelEvaluator<Float> {
 
     override fun invoke(

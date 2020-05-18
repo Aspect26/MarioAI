@@ -6,6 +6,10 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.discretize
 import io.jenetics.Optimize
 
+/**
+ * Probabilistic Multipass level generator evaluator returning sum of distance reached and difficulty, linearity
+ * and compression metrics discretized to 4 values.
+ */
 class DistanceLinearityDifficultyCompressionDiscretizedEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float {

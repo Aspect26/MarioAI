@@ -1,8 +1,11 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
+package cz.cuni.mff.aspect.evolution.levels.pc.chunks
 
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 
-
+/**
+ * Super Mario level chunk representing a hole in the ground of given length.
+ * @param holeLength length of the hole. Two additional columns of path are generated on each side of the hole.
+ */
 data class HoleChunk(private val holeLength: Int): MarioLevelChunk("hole") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
@@ -17,7 +20,10 @@ data class HoleChunk(private val holeLength: Int): MarioLevelChunk("hole") {
 
 }
 
-
+/**
+ * Super Mario level chunk representing a flat path of given length.
+ * @param length length of the path.
+ */
 data class PathChunk(override val length: Int): MarioLevelChunk("path") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
@@ -27,7 +33,11 @@ data class PathChunk(override val length: Int): MarioLevelChunk("path") {
 
 }
 
-
+/**
+ * Super Mario level chunk representing a single platform, 4 tiles above floor level.
+ * @param platformLength length of the platform. One additional column of path is generated on each side of the hole.
+ * @param platformType type of the platform, see [cz.cuni.mff.aspect.mario.Tiles] for supported values.
+ */
 data class SinglePlatformChunk(private val platformLength: Int, private val platformType: Byte): MarioLevelChunk("single-path") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
@@ -42,7 +52,11 @@ data class SinglePlatformChunk(private val platformLength: Int, private val plat
 
 }
 
-
+/**
+ * Super Mario chunk representing a pipe of a given height. The chunk consists of 4 columns, the side ones being a path
+ * and the inner ones being the pipe.
+ * @param pipeHeight height of the pipe.
+ */
 data class PipeChunk(private val pipeHeight: Int): MarioLevelChunk("pipe") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
@@ -58,12 +72,16 @@ data class PipeChunk(private val pipeHeight: Int): MarioLevelChunk("pipe") {
 
 }
 
-
-data class BulletBillChunk(private val billSize: Int): MarioLevelChunk("bullet-bill") {
+/**
+ * Super Mario chunk representing a bullet bill of a given height. The chunk consists of 3 columns, the side ones being
+ * a path and the inner one being the bullet bill.
+ * @param billHeight height of the buller bill.
+ */
+data class BulletBillChunk(private val billHeight: Int): MarioLevelChunk("bullet-bill") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
         when (column) {
-            1 -> ColumnHelpers.getBlasterBulletBillColumn(level, billSize)
+            1 -> ColumnHelpers.getBlasterBulletBillColumn(level, billHeight)
             else -> ColumnHelpers.getPathColumn(level)
         }
 
@@ -73,7 +91,10 @@ data class BulletBillChunk(private val billSize: Int): MarioLevelChunk("bullet-b
 
 }
 
-
+/**
+ * Super Mario level chunk representing stairs built from stone blocks of a given length.
+ * @param stairsLength length of the stairs. One additional path column is added to the each side of the stairs.
+ */
 data class StairChunk(private val stairsLength: Int): MarioLevelChunk("stairs") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
@@ -88,7 +109,14 @@ data class StairChunk(private val stairsLength: Int): MarioLevelChunk("stairs") 
 
 }
 
-
+/**
+ * Super Mario level chunk representing a double platform. The chunk is made of floor, first platform 4 tiles higher, and
+ * second platform 4 other files higher.
+ * @param platformLength length of the platform. The second platform is always two tiles shorter (one on each side). The
+ * chunk also contains one additional path column on each side of the platform.
+ * @param firstPlatformType type of the first platform, see [cz.cuni.mff.aspect.mario.Tiles] for supported values.
+ * @param secondPlatformType type of the second platform, see [cz.cuni.mff.aspect.mario.Tiles] for supported values.
+ */
 data class DoublePlatformChunk(private val platformLength: Int, private val firstPlatformType: Byte, private val secondPlatformType: Byte): MarioLevelChunk("double-path") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =

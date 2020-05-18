@@ -17,7 +17,8 @@ import io.jenetics.util.DoubleRange
 import io.jenetics.util.Factory
 
 
-/** Implementation of a Super Mario controller evolution using simple neuroevolution algorithm, which evolves only
+/**
+ * Implementation of a Super Mario controller evolution using simple neuroevolution algorithm, which evolves only
  * weights on a given non-changing ANN. The implementation is highly customizable in terms of multiple properties
  * of the evolution, which can be specified via primary constructor.
  *

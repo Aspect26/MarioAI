@@ -1,11 +1,12 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
+package cz.cuni.mff.aspect.evolution.levels.pc.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 import kotlin.math.abs
 
+/** Probabilistic Chunks level generator evaluator returning difference of won/lost count. */
 class AgentHalfPassing : PCLevelEvaluator<Float> {
 
     override fun invoke(

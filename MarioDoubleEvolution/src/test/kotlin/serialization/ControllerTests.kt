@@ -1,6 +1,6 @@
 package serialization
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel

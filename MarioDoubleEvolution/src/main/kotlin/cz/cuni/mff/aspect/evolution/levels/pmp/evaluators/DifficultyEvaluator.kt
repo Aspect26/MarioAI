@@ -7,6 +7,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 
+/** Probabilistic Multipass level generator evaluator returning difficulty of levels using [DifficultyEvaluator]. */
 class DifficultyEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float =

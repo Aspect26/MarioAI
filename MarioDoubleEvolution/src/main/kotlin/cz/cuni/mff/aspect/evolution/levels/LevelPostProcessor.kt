@@ -5,6 +5,10 @@ import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
 
+/**
+ * Post processor of Super Mario levels. It polishes given levels by setting correct grass tiles (so that grass is at
+ * the edges of walls. Optionally, it adds multiple environment sprites.
+ */
 object LevelPostProcessor {
 
     private val random: Random = Random()

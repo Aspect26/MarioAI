@@ -6,6 +6,7 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 import kotlin.math.abs
 
+/** Probabilistic Multipass level generator evaluator returning difference of won/lost count. */
 class AgentHalfPassing : PMPLevelEvaluator<Float> {
 
     override fun invoke(

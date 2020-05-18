@@ -9,7 +9,22 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
 import kotlin.math.min
 
-
+/**
+ * Implementation of Probabilistic Multipass level generator algorithm. It generates Super Mario levels in multiple stages:
+ * 1. generate terrain
+ * 2. generate pipes
+ * 3. generate bullet bills
+ * 4. generate stone stairs
+ * 5. generate box platforms
+ * 6. generate entities
+ *
+ * In each stage, the level is traversed from left to right, and in each tile it is decided (based on a spawn
+ * probability of current stage) whether an obstacle/entityof current stage is generated. The spawn probabilities can be
+ * specified.
+ *
+ * @param probabilities specifies the spawn probabilities.
+ * @param length specifies the length of generated levels in tiles.
+ */
 class PMPLevelGenerator(
     private val probabilities: DoubleArray = DoubleArray(PROBABILITIES_COUNT) {
         when (it) {

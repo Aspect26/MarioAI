@@ -5,6 +5,14 @@ import org.apache.commons.lang3.StringUtils
 import java.awt.image.BufferedImage
 import java.lang.StringBuilder
 
+/**
+ * Compression of an image using adjusted Huffman compression.
+ *
+ * The image is split into 2x2 pixels wide grid, and each tile gets its own character. The same tiles will get the same
+ * characters. The image is then converted to a String by going through the tiles from left to right, from top to bottom
+ * and taking each tile's character. This string is then compressed using original Huffman algorithm. This way, the more
+ * tiles in the image are different, the higher the resulting compression size will be.
+ */
 class ImageHuffmanCompression(private val gridSize: Int) : ImageCompression {
 
     override fun getSize(image: BufferedImage): Int {
@@ -16,6 +24,7 @@ class ImageHuffmanCompression(private val gridSize: Int) : ImageCompression {
         return huffman.compressedSize
     }
 
+    /** Implementation of a conversion of a image to the string as described in [ImageHuffmanCompression]. */
     class ImageToStringConverter(private val gridSize: Int) {
 
         fun imageToString(image: BufferedImage): String {

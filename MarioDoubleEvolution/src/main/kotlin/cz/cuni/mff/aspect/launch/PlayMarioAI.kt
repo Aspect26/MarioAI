@@ -1,15 +1,11 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
-import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
-import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.LevelStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 

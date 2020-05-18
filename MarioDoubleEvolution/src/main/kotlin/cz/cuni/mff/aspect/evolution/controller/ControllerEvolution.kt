@@ -8,7 +8,10 @@ import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 /** Interface representing controller evolution. */
 interface ControllerEvolution {
 
-    /** Chart of the evolution. */
+    /**
+     * Chart of the evolution.
+     * @see EvolutionLineChart for more information about the chart.
+     */
     val chart: EvolutionLineChart
 
     /** Evolves a mario agent controller, which will be evaluated using level generators given. */

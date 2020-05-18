@@ -14,7 +14,8 @@ import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 import java.lang.IllegalArgumentException
 
-/** Implementation of a Super Mario controller evolution using NEAT algorithm. The implementation is highly customizable
+/**
+ * Implementation of a Super Mario controller evolution using NEAT algorithm. The implementation is highly customizable
  * in terms of multiple properties of the evolution, which can be specified via primary constructor.
  *
  * @param networkSettings specifies network settings, however, not all the settings can be applied using NEAT. The only

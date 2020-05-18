@@ -7,6 +7,10 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 import kotlin.math.abs
 
+/**
+ * Probabilistic Multipass level generator evaluator returning linearity metric. It is computed as an average height
+ * change in the level.
+ */
 class LinearityEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float =

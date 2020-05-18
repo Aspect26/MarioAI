@@ -4,19 +4,16 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
 
 
-/**
- * Interface representing evolution of mario levels. The evolution can return multiple levels.
- */
+/** Interface representing evolution of mario levels. The evolution can return multiple levels. */
 interface LevelGeneratorEvolution {
 
     /**
-     * Get line chart of the evolution
+     * An evolution chart of the current evolution.
+     * @see EvolutionLineChart for more information about the chart.
      */
     val chart: EvolutionLineChart
 
-    /**
-     * Evolved a level generator using agents from the given agent factory
-     */
+    /** Evolves a level generator using agents from the given agent factory. */
     fun evolve(agentFactory: () -> IAgent): LevelGenerator
 
 }

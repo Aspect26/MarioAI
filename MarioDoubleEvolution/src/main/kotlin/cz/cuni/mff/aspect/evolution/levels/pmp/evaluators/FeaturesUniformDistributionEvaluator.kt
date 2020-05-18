@@ -7,6 +7,10 @@ import io.jenetics.Optimize
 import kotlin.math.abs
 import kotlin.math.pow
 
+/**
+ * Probabilistic Multipass level generator evaluator returns how much uniformly are features of Super Mario level
+ * distributed in the generated levels.
+ */
 class FeaturesUniformDistributionEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: PMPLevelMetadata, gameStatistics: GameStatistics): Float {

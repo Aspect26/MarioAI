@@ -18,7 +18,8 @@ import io.jenetics.Mutator
 import io.jenetics.SinglePointCrossover
 import io.jenetics.util.IntRange
 
-
+/** Deprecated evolution of a single Super Mario level using Grammar Evolution algorithm. */
+@Deprecated("No longer maintained, do not use this.")
 class GrammarLevelEvolution(private val levelsCount: Int = 1,
                             private val populationSize: Int = POPULATION_SIZE,
                             private val generationsCount: Long = GENERATIONS_COUNT

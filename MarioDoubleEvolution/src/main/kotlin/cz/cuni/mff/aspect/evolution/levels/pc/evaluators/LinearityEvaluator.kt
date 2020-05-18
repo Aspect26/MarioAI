@@ -1,13 +1,16 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
+package cz.cuni.mff.aspect.evolution.levels.pc.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 import kotlin.math.abs
 
-
+/**
+ * Probabilistic Chunks level generator evaluator returning linearity metric. It is computed as an average height change
+ * in the level.
+ */
 class LinearityEvaluator : SummingEvaluator() {
 
     override fun evaluateOne(level: MarioLevel, levelMetadata: ChunksLevelMetadata, gameStatistics: GameStatistics): Float {

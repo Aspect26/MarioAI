@@ -1,15 +1,26 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks
+package cz.cuni.mff.aspect.evolution.levels.pc
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.chunks.*
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunkWithHeight
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.chunks.*
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunkWithHeight
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.util.*
 
-
+/**
+ * Implementation of Probabilistic Chunks level generators. It generates levels using list of chunks, and a Markov Chain
+ * representing probabilities of transitions between chunks. Each chunk can be then generated on a different floor level.
+ * This floor level change probability can be also specified. Enemies are generated using their own probabilities of spawning
+ * on a tile.
+ *
+ * @param probabilities Markov Chain probabilities. First part of the list contains initial vector probabilities, the
+ * second contains flattened transition probabilities matrix and the third some additional probabilities (e.g. height
+ * change between chunks probability, spawn goomba probability, spawn koopa probability, etc.).
+ * @param chunksInLevelCount specifies how many chunks should be generated in the levels. This does not set exact length
+ * of the levels, since some chunks may be larger or shorter than others.
+ */
 class PCLevelGenerator(
     private val probabilities: List<Double> = List(DEFAULT_CHUNKS_COUNT + DEFAULT_CHUNKS_COUNT * DEFAULT_CHUNKS_COUNT + ENEMY_TYPES_COUNT + 1) {
         when (it) {

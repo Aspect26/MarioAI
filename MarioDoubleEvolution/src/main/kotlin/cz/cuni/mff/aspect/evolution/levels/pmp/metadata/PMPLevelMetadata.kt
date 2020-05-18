@@ -6,7 +6,7 @@ import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
-
+/** Level metadata as generaetd by [cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator]. */
 data class PMPLevelMetadata (
     val levelHeight: Int,
     val groundHeight: IntArray,
@@ -19,6 +19,7 @@ data class PMPLevelMetadata (
 
     val levelLength: Int get() = this.groundHeight.size
 
+    /** Creates a Super Mario level by using metadata represented by this entity. */
     fun createLevel(): MarioLevel {
         val entities: Array<IntArray> = this.createEntities()
         val tiles: Array<ByteArray> = this.createGround()
@@ -38,6 +39,7 @@ data class PMPLevelMetadata (
     val boxPlatformsCount: Int get() = this.boxPlatforms.filter { it.length > 0}.size
     val stoneColumnsCount: Int get() = this.stoneColumns.filter { it > 0}.size
 
+    /** Computes whether there is a hole on the given column in the level represented by this metadata. */
     fun isHoleAt(checkingColumn: Int): Boolean {
         for (currentColumn in this.holes.indices) {
             val holeLength = this.holes[currentColumn]
@@ -47,6 +49,7 @@ data class PMPLevelMetadata (
         return false
     }
 
+    /** Computes length of a ray until obstacle from given position in the level represented by this metadata. */
     fun horizontalRayUntilObstacle(fromColumn: Int, fromRow: Int): Int {
         var currentLength = 0
 
@@ -58,6 +61,7 @@ data class PMPLevelMetadata (
         return currentLength
     }
 
+    /** Computes whether there is an obstacle on the given column and row in the level represented by this metadata. */
     fun isObstacleAt(checkingColumn: Int, row: Int): Boolean {
         return this.groundHeight[checkingColumn] >= row
                 || this.groundHeight[checkingColumn] + this.pipes[checkingColumn] >= row

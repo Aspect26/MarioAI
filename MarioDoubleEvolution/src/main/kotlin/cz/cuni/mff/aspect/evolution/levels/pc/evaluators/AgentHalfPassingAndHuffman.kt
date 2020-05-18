@@ -1,6 +1,6 @@
-package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
+package cz.cuni.mff.aspect.evolution.levels.pc.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
+import cz.cuni.mff.aspect.evolution.levels.pc.metadata.ChunksLevelMetadata
 import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -8,8 +8,8 @@ import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import io.jenetics.Optimize
 import kotlin.math.abs
 
-// TODO: better name...
-class All : PCLevelEvaluator<Float> {
+/** Probabilistic Chunks level generator evaluator returning difference of won/lost count and compressibility metric. */
+class AgentHalfPassingAndHuffman : PCLevelEvaluator<Float> {
 
     override fun invoke(
         levels: List<MarioLevel>,
@@ -23,16 +23,12 @@ class All : PCLevelEvaluator<Float> {
         val wonLostDifference = abs(wonCount - lostCount)
         val reversedWonLostDifference = maxDifference - wonLostDifference
 
-        val compressionFactor = List(levels.size) {
+        val compressionSize = List(levels.size) {
             val image = LevelToImageConverter.createMinified(levels[it], noAlpha=true)
             ImageHuffmanCompression(2).getSize(image)
-        }.sum() / 125180f
+        }.sum()
 
-        val linearityFactor = List(levels.size) {
-            LinearityEvaluator().evaluateOne(levels[it], levelsChunkMetadata[it], gameStatistics[it])
-        }.average().toFloat()
-
-        return reversedWonLostDifference.toFloat() * (1 + compressionFactor + linearityFactor) * 1000
+        return (reversedWonLostDifference.toFloat() * compressionSize) / 10f
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

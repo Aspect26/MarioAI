@@ -6,6 +6,10 @@ import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.flatten
 
+/**
+ * Evaluator evaluating difficulty of a level. Each monster and each obstacle in the level is assigned a difficulty value,
+ * and then all of these are summed. The sum is then result of the evaluation.
+ */
 class DifficultyEvaluator : LevelEvaluator<Float> {
 
     override fun invoke(level: MarioLevel, gameStatistic: GameStatistics): Float {

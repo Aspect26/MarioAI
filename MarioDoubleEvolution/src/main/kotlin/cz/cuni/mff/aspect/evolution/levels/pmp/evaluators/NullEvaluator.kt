@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import io.jenetics.Optimize
 
+/** Probabilistic Multipass level generator evaluator returning always 0. */
 class NullEvaluator : PMPLevelEvaluator<Float> {
 
     override fun invoke(
