@@ -8,9 +8,7 @@ import java.lang.String.format
 
 import java.util.Random
 
-/**
- * Updated [io.jenetics.GaussianMutator] with added possibility to define standard deviation.
- */
+/** Updated [io.jenetics.GaussianMutator] with added an option to define standard deviation. */
 class UpdatedGaussianMutator<G : NumericGene<*, G>, C : Comparable<C>> @JvmOverloads constructor(
     private val standardDeviation: Double,
     probability: Double = Alterer.DEFAULT_ALTER_PROBABILITY

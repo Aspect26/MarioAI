@@ -5,7 +5,10 @@ import io.jenetics.DoubleGene
 import io.jenetics.Genotype
 import io.jenetics.util.Factory
 
-
+/**
+ * Genotype factory for genotypes representing a Markov Chain, with an option to add additional probabilities to the end
+ * of the individual.
+ */
 class MarkovChainGenotypeFactory(private val statesCount: Int, private val additionalProbabilitiesCount: Int) :
     Factory<Genotype<DoubleGene>> {
 

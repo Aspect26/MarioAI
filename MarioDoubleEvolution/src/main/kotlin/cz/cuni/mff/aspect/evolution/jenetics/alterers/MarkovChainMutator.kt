@@ -6,6 +6,14 @@ import io.jenetics.util.RandomRegistry
 import io.jenetics.util.Seq
 import java.util.*
 
+/**
+ * Implementation of a custom Markov Chain mutator. It does 2 mutations in the Markov Chain: swap 2 probabilities in one
+ * random variable of the MC; change a random probability in a random random variable, adjusting the other probabilities
+ * in that random variable so it is still valid after the operation.
+ *
+ * Additionally, it supports having more probabilities, than those specified in the Markov Chain, which will be mutated
+ * randomly (change randomly their values).
+ */
 class MarkovChainMutator(
     private val statesCount: Int,
     private val changeInRandomVariableProbability: Double,

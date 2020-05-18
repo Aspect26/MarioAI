@@ -22,6 +22,22 @@ Contains implementation of NEAT evolution of a Super Mario controller. It uses [
 Contains implementation of a simple NeuroEvolution (evolving only weights of a static ANN) of a Super Mario controller. It uses `Jenetics` library for the actual evolution algorithm. 
 
 
+# Package cz.cuni.mff.aspect.evolution.jenetics
+Contains implementations extending `Jenetics` library functionality, including custom alterers, evaluators and genotypes.
+ 
+ 
+# Package cz.cuni.mff.aspect.evolution.jenetics.alterers
+Contains implementations of custom alterers for `Jenetics` library.
+
+
+# Package cz.cuni.mff.aspect.evolution.jenetics.evaluators
+Contains implementations of custom evaluators for `Jenetics` library.
+
+
+# Package cz.cuni.mff.aspect.evolution.jenetics.genotype
+Contains implementations of custom genotype for `Jenetics` library.
+
+
 # Package cz.cuni.mff.aspect.launch
 Contains multiple entry point of the project.
 
