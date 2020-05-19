@@ -30,8 +30,8 @@ private const val repeatGeneratorsCount = 5
  */
 fun main() {
 //    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
-//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
-    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
+    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+//    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 }
 
@@ -125,11 +125,12 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
     override val evolution: LevelGeneratorEvolution
         get() = PMPLevelGeneratorEvolution(
             populationSize = 50,
-            generationsCount = 5,
-            evaluateOnLevelsCount = 5,
-            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
+            generationsCount = 15,
+            evaluateOnLevelsCount = 36,
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(),
             objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
             displayChart = false,
+            levelLength = 300,
             chartLabel = "PMP Level Generator"
         )
 
