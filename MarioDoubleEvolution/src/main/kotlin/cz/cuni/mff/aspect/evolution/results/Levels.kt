@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.results
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.storage.LevelStorage
 
+/** Contains evolved Super Mario levels. */
 object Levels {
 
     object GrammarEvolution {

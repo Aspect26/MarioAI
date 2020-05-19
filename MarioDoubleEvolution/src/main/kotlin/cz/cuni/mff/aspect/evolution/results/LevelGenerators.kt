@@ -4,8 +4,10 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
+/** Contains some evolved level generators. */
 object LevelGenerators {
 
+    /** Some evolved Probabilistic Chunks level generators. */
     object PCGenerator {
 
         val difficulty = ObjectStorage.load("data/level-generators/pc_difficulty.lg") as LevelGenerator
@@ -20,6 +22,7 @@ object LevelGenerators {
 
     }
 
+    /** Some evolved Probabilistic Multipass level generators. */
     object PMPGenerator {
 
         val difficulty = ObjectStorage.load("data/level-generators/pmp_difficulty.lg") as LevelGenerator
@@ -34,6 +37,7 @@ object LevelGenerators {
 
     }
 
+    /** Generator returning levels from given list. */
     class StaticGenerator(private val levels: Array<MarioLevel>) : LevelGenerator {
 
         private var currentLevel = 0

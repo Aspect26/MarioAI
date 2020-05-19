@@ -9,6 +9,23 @@ import io.jenetics.internal.util.Concurrency
 import io.jenetics.util.Factory
 import java.util.concurrent.ForkJoinPool
 
+/**
+ * Wrapper for evolution based on Jenetics library which plots evolution data in a chart. It is highly configurable
+ * via primary constructor's parameters.
+ *
+ * @param populationSize population size.
+ * @param generationsCount number of generations after which the evolution is stopped.
+ * @param fitnessOptimization specifies, whether fitness values should be minimized or maximized.
+ * @param objectiveOptimization specifies, whether objective values should be minimized or maximized.
+ * @param alterers evolution alterers.
+ * @param survivorsSelector evolution survivors selector.
+ * @param offspringSelector evolution offsprings selector.
+ * @param displayChart specifies, whether the evolution chart should be displayed.
+ * @param chart the evolution chart.
+ * @param parallel specifies, whether the evaluations of individuals should be run on multiple CPU cores.
+ * @param alwaysReevaluate specifies, whether the individuals should be reevaluated in each generation during the
+ * evolution, or only when they are created. This is useful when the fitness computation is randomized somehow.
+ */
 abstract class ChartedJeneticsEvolution<T>(
     protected val populationSize: Int,
     protected val generationsCount: Int,

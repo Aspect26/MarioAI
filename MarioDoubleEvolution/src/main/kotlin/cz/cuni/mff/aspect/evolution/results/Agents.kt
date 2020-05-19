@@ -8,8 +8,10 @@ import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
+/** Contains some evolved agents. */
 object Agents {
 
+    /** Ruled based agents. */
     object RuleBased {
 
         // Sanity checks agents
@@ -26,6 +28,7 @@ object Agents {
 
     }
 
+    /** Agents evolved by simple neuroevolution. */
     object NeuroEvolution {
 
         val Stage4Level1Solver: IAgent
@@ -42,6 +45,7 @@ object Agents {
 
     }
 
+    /** Agents evolved by NEAT. */
     object NEAT {
         val Stage4Level1Solver: IAgent
             get() {
