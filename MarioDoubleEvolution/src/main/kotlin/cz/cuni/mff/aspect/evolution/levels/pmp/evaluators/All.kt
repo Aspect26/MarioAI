@@ -31,7 +31,7 @@ class All : PMPLevelEvaluator<Float> {
         val compressionFactor = List(levels.size) {
             val image = LevelToImageConverter.createMinified(levels[it], noAlpha=true)
             SmallPNGCompression.getSize(image)
-        }.sum() / (levels.size * 1000f)
+        }.sum() / 155073f
 
         val linearityFactor = List(levels.size) {
             LinearityEvaluator().evaluateOne(levels[it], metadata[it], gameStatistics[it])

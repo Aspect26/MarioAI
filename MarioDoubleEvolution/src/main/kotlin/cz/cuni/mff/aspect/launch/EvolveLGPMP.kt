@@ -33,7 +33,7 @@ private fun evolvePMP() {
     val levelEvolution = PMPLevelGeneratorEvolution(
         generationsCount = 20,
         populationSize = 50,
-        fitnessFunction = PNGCompressionEvaluator(),
+        fitnessFunction = HuffmanCompressionEvaluator(),
         objectiveFunction = NullEvaluator(),
         evaluateOnLevelsCount = 36,
         levelLength = 300
