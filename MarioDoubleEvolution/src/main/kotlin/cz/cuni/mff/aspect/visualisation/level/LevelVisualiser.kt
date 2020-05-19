@@ -9,19 +9,43 @@ import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JScrollPane
 
+/** Displays and stores images of Super Mario levels. */
 class LevelVisualiser {
 
+    /**
+     * Displays and stores Super Mario level on given location.
+     *
+     * @param level level, whose image is to be created.
+     * @param fileName location, where the image should be stored.
+     * @param minified specifies, whether the image should be minified.
+     * @see LevelToImageConverter.createMinified for image minification details.
+     */
     fun displayAndStore(level: MarioLevel, fileName: String, minified: Boolean = false) {
         val image = this.createImage(level, minified)
         this.storeImage(image, fileName)
         this.displayImage(image)
     }
 
+    /**
+     * Displays Super Mario level.
+     *
+     * @param level level, whose image is to be created.
+     * @param minified specifies, whether the image should be minified.
+     * @see LevelToImageConverter.createMinified for image minification details.
+     */
     fun display(level: MarioLevel, minified: Boolean = false) {
         val image = this.createImage(level, minified)
         this.displayImage(image)
     }
 
+    /**
+     * Stores Super Mario level on given location.
+     *
+     * @param level level, whose image is to be created.
+     * @param fileName location, where the image should be stored.
+     * @param minified specifies, whether the image should be minified.
+     * @see LevelToImageConverter.createMinified for image minification details.
+     */
     fun store(level: MarioLevel, fileName: String, minified: Boolean = false) {
         val image = this.createImage(level, minified)
         this.storeImage(image, fileName)

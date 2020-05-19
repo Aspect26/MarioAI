@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-
+/** Creates images from given Super Mario levels. */
 object LevelToImageConverter {
 
     private const val SPRITES_SIZE = 16
@@ -17,6 +17,12 @@ object LevelToImageConverter {
     private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
     private val backgroundSheet: BufferedImage = ImageIO.read(File("resources/bgsheet.png"))
 
+    /**
+     * Creates image from Super Mario level using Super Mario Infinite's tile sheets.
+     *
+     * @param level the level's whose image is to be created.
+     * @param noAlpha specifies, whether the resulting image should contain alpha channel.
+     */
     fun create(level: MarioLevel, noAlpha: Boolean = false): BufferedImage {
         val width = level.tiles.size * this.SPRITES_SIZE
         val height = level.tiles[0].size * this.SPRITES_SIZE
@@ -72,6 +78,13 @@ object LevelToImageConverter {
         return image
     }
 
+    /**
+     * Creates minified image from given Super Mario level, where each tile is represented by one pixel.
+     * Each tile uses its own color from custom color palette.
+     *
+     * @param level the level's whose image is to be created.
+     * @param noAlpha specifies, whether the resulting image should contain alpha channel.
+     */
     fun createMinified(level: MarioLevel, noAlpha: Boolean = false): BufferedImage {
         val width = level.tiles.size
         val height = level.tiles[0].size
