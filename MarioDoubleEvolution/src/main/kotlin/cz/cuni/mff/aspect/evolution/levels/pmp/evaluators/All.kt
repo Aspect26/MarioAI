@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.SmallPNGCompression
+import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
@@ -30,7 +30,7 @@ class All : PMPLevelEvaluator<Float> {
         // TODO: konstanta vycucana z prsta
         val compressionFactor = List(levels.size) {
             val image = LevelToImageConverter.createMinified(levels[it], noAlpha=true)
-            SmallPNGCompression.getSize(image)
+            ImageHuffmanCompression(2).getSize(image)
         }.sum() / 155073f
 
         val linearityFactor = List(levels.size) {
