@@ -4,7 +4,6 @@ import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator
 import cz.cuni.mff.aspect.evolution.jenetics.genotype.MarkovChainGenotypeFactory
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
-import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.chunks.metadata.ChunksLevelMetadata
@@ -41,7 +40,7 @@ class PCLevelGeneratorEvolution(
     private val chunksCount: Int = DEFAULT_CHUNKS_COUNT,
     chartLabel: String = DEFAULT_CHART_LABEL,
     displayChart: Boolean = true
-) : ChartedJeneticsEvolution<LevelGenerator>(
+) : ChartedJeneticsEvolution<PCLevelGenerator>(
     populationSize,
     generationsCount,
     fitnessOptimization = fitnessFunction.optimize,
@@ -55,7 +54,7 @@ class PCLevelGeneratorEvolution(
 
     private lateinit var agentFactory: () -> IAgent
 
-    override fun evolve(agentFactory: () -> IAgent): LevelGenerator {
+    override fun evolve(agentFactory: () -> IAgent): PCLevelGenerator {
         this.agentFactory = agentFactory
         return this.evolve()
     }
@@ -63,12 +62,11 @@ class PCLevelGeneratorEvolution(
     override fun createInitialGenotype(): Factory<Genotype<DoubleGene>> =
         MarkovChainGenotypeFactory(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, PCLevelGenerator.ENEMY_TYPES_COUNT + 1)
 
-    override fun entityFromIndividual(genotype: Genotype<DoubleGene>): LevelGenerator =
+    override fun entityFromIndividual(genotype: Genotype<DoubleGene>): PCLevelGenerator =
         PCLevelGenerator(genotype.getDoubleValues().toList(), this.chunksCount)
 
     override fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float> {
-        val genes = genotype.getDoubleValues()
-        val levelGenerator = PCLevelGenerator(genes.toList(), this.chunksCount)
+        val levelGenerator = this.entityFromIndividual(genotype)
 
         val levels: MutableList<MarioLevel> = mutableListOf()
         val metadata: MutableList<ChunksLevelMetadata> = mutableListOf()
