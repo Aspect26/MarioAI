@@ -10,6 +10,7 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.utils.SlidingWindow
+import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
 import java.util.concurrent.TimeUnit
 
 /**
@@ -59,17 +60,28 @@ class Coevolution {
             ObjectStorage.store("$storagePath/lg_${generation + 1}.lg", latestGenerator)
 
             generatorsHistory.push(latestGenerator)
+            storeCharts(controllerEvolution, generatorEvolution, storagePath)
         }
 
         return CoevolutionResult(currentController, latestGenerator)
     }
 
-    private fun timeString(currentTimeMillis: Long): String {
-        return String.format("%02d min, %02d sec",
+    private fun storeCharts(controllerEvolution: ControllerEvolution, levelGeneratorEvolution: LevelGeneratorEvolution, storagePath: String) {
+        val controllerChart = controllerEvolution.chart
+        val levelGeneratorChart = levelGeneratorEvolution.chart
+        val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
+
+        controllerChart.store("$storagePath/ai.svg")
+        levelGeneratorChart.store("$storagePath/lg.svg")
+
+        coevolutionChart.storeChart("$storagePath/coev.svg")
+    }
+
+    private fun timeString(currentTimeMillis: Long): String =
+        String.format("%02d min, %02d sec",
             TimeUnit.MILLISECONDS.toMinutes(currentTimeMillis),
             TimeUnit.MILLISECONDS.toSeconds(currentTimeMillis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentTimeMillis))
         )
-    }
 
     companion object {
         private const val DEFAULT_GENERATIONS_NUMBER: Int = 10
