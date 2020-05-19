@@ -50,19 +50,19 @@ Contains implementations of evaluators using image compressibility metric.
 Contains implementation of deprecated evolution of levels for Super Mario using Grammar Evolution.
 
 
-# Package cz.cuni.mff.aspect.evolution.levels.pc
+# Package cz.cuni.mff.aspect.evolution.levels.chunks
 Contains implementation of Probabilistic Chunks level generator evolution.
 
 
-# Package cz.cuni.mff.aspect.evolution.levels.pc.chunks
+# Package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
 Contains implementations of multiple chunks used in Probabilistic Chunks level generator. Each chunk type is implemented as a `data class`, so that we get copying for free. 
 
 
-# Package cz.cuni.mff.aspect.evolution.levels.pc.evaluators
+# Package cz.cuni.mff.aspect.evolution.levels.chunks.evaluators
 Contains implementations of multiple evaluators for Probabilistic Chunks level generator.
 
 
-# Package cz.cuni.mff.aspect.evolution.levels.pc.metadata
+# Package cz.cuni.mff.aspect.evolution.levels.chunks.metadata
 Contains implementation of metadata for Probabilistic Chunks level generators.
 
 

@@ -6,10 +6,10 @@ import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pc.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.pc.evaluators.AgentHalfPassing
-import cz.cuni.mff.aspect.evolution.levels.pc.evaluators.All
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -88,7 +88,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 25) {
+    for (i in 10 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController
