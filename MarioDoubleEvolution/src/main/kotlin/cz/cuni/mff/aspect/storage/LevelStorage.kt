@@ -4,7 +4,7 @@ import cz.cuni.mff.aspect.mario.level.DirectMarioLevel
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.io.Serializable
 
-
+/** Storage for Super Mario levels. Provides methods to store and load levels. */
 object LevelStorage {
 
     private val storage: ObjectStorage = ObjectStorage
@@ -19,6 +19,7 @@ object LevelStorage {
         return DirectMarioLevel(levelRepresentation.tiles, levelRepresentation.enemies)
     }
 
+    /** Minimalistic representation of a level which contains all data required to reconstruct given level. */
     data class LevelRepresentation(val tiles: Array<ByteArray>, val enemies: Array<IntArray>): Serializable {
 
         override fun equals(other: Any?): Boolean {

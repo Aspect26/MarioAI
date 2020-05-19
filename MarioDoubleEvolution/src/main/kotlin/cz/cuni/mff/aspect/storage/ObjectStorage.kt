@@ -2,7 +2,11 @@ package cz.cuni.mff.aspect.storage
 
 import java.io.*
 
-
+/**
+ * Generic storage for all kinds of Serializable Java objects.
+ *
+ * For storing and loading the objects the storage uses Java's [ObjectInputStream] and [ObjectOutputStream].
+ */
 object ObjectStorage {
 
     fun store(filePath: String, data: Serializable) {
