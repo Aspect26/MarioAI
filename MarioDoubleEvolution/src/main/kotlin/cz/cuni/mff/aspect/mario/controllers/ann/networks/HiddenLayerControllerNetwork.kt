@@ -20,13 +20,14 @@ import java.io.Serializable
 
 
 /**
- * Neural network controlling [cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController].
+ * Implementation of a [ControllerArtificialNetwork] representing an artificial neural network with one hidden layer.
  *
  * The network contains one hidden dense layer of a configurable size. The input size is also configurable, in a way that
  * the size of mario's receptive field can be specified. The output layer is always 4 neurons, each one representing
  * one of Mario's actions (go left, go right, jump and shoot).
  *
- * @see cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder
+ * @see cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder for more info about how the network's
+ * input is created.
  */
 class HiddenLayerControllerNetwork(val networkSettings: NetworkSettings) : ControllerArtificialNetwork, Serializable {
 

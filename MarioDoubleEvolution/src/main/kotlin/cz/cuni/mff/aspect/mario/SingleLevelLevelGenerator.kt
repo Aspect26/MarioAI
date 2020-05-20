@@ -5,7 +5,13 @@ import ch.idsia.benchmark.mario.engine.level.SpriteTemplate
 import ch.idsia.benchmark.mario.engine.sprites.Sprite
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
-
+/**
+ * Level generator for Super Mario Infinite simulator which take our implementation of Super Mario level ([MarioLevel])
+ * and converts it to Super Mario Infinite simulator's level implementation [Level].
+ *
+ * Super Mario Infinite requires level generator, which supplies levels to the simulator. This implementation takes as
+ * a primary constructor parameter [MarioLevel] which it always supplies to the simulator.
+ */
 class SingleLevelLevelGenerator(private val level: MarioLevel) : ch.idsia.benchmark.mario.engine.level.LevelGenerator {
 
     override fun createLevel(): Level {

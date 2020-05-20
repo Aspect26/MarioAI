@@ -7,6 +7,7 @@ import ch.idsia.benchmark.mario.engine.input.MarioInput
 import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 
+/** Base class for all mario agents. It uses [MarioController] for action selection. */
 class MarioAgent(val controller: MarioController) : MarioHijackAIBase(), IAgent {
 
     var lastActions: List<MarioAction> = emptyList()

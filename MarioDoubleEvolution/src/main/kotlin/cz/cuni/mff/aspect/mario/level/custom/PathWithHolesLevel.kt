@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.mario.level.custom
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
+/** Super Mario level containing only holes at specific locations. */
 object PathWithHolesLevel : MarioLevel {
 
     private const val LENGTH = 50

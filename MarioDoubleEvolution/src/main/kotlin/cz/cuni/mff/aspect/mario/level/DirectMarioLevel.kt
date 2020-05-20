@@ -2,6 +2,10 @@ package cz.cuni.mff.aspect.mario.level
 
 import cz.cuni.mff.aspect.mario.Tiles
 
+/**
+ * Direct [MarioLevel] implementation. It receives both tiles and entities in the primary constructor
+ * and uses these objects to implement the [MarioLevel] interface.
+ */
 class DirectMarioLevel(
     override val tiles: Array<ByteArray>,
     override val entities: Array<IntArray>,

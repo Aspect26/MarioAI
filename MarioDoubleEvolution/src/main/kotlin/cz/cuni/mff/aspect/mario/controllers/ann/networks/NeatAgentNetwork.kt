@@ -13,6 +13,7 @@ import java.io.*
  * Wrapper atop neural network evolved by NEAT algorithm.
  *
  * @constructor constructs the network wrapper using given [networkSettings] and the evolved individual [genome].
+ * @see Genome for more information about NEAT individuals.
  */
 class NeatAgentNetwork(val networkSettings: NetworkSettings, val genome: Genome) : ControllerArtificialNetwork, Serializable {
 

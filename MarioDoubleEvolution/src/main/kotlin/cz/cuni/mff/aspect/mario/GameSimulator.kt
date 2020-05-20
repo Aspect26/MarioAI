@@ -10,6 +10,12 @@ import cz.cuni.mff.aspect.mario.controllers.MarioAction
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
+/**
+ * Wrapper atop Super Mario Infinite's simulator.
+ *
+ * It uses an implementation of [MarioAgent] or [MarioController] as an agent playing Super Mario Infinite. It also uses
+ * [MarioLevel] entities specifying which levels the agent should play.
+ */
 class GameSimulator(private val maxTicks: Int = DEFAULT_MAX_TICKS) {
 
     private val environment = MarioEnvironment(null)

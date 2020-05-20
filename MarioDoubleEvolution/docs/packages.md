@@ -110,7 +110,35 @@ To play Super Mario, use on of these:
 
 
 # Package cz.cuni.mff.aspect.mario
-Contains implementation of usage of Super Mario simulator from [here](https://code.google.com/archive/p/marioai/).
+Contains wrapper atop of Super Mario Infinite simulator from [here](https://code.google.com/archive/p/marioai/).
+
+
+# Package cz.cuni.mff.aspect.mario.controllers
+Contains basic implementations of Super Mario player controllers.
+
+
+# Package cz.cuni.mff.aspect.mario.controllers.ann
+Contains implementation of controller which uses artificial neural network for actions selection.
+
+
+# Package cz.cuni.mff.aspect.mario.controllers.ann.networks
+Contains implementations of multiple artificial neural networks used in agent controllers.
+ 
+ 
+# Package cz.cuni.mff.aspect.mario.level
+Contains implementation of Super Mario level representation.
+
+
+# Package cz.cuni.mff.aspect.mario.level.custom
+Contains implementations of a few custom Super Mario levels.
+
+
+# Package cz.cuni.mff.aspect.mario.level.original
+Contains implementations of a few levels from original Super Mario Bros game.
+
+
+# Package cz.cuni.mff.aspect.mario.level.splitting
+Contains implementation of splitting Super Mario levels into multiple parts.
  
  
 # Package cz.cuni.mff.aspect.storage

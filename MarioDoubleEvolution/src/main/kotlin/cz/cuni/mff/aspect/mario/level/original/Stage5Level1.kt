@@ -5,7 +5,7 @@ import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 
-
+/** Implementation of original Super Mario Bros game's Level 1 from Stage 5. */
 object Stage5Level1 : MarioLevel {
 
     private const val BOTTOM_LEVEL = 15

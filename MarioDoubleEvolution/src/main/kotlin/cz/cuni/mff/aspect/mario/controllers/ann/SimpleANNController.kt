@@ -10,9 +10,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 
 
-/**
- * A very simple controller which uses simple ANN to control mario agent.
- */
+/** A simple controller which uses an artificial neural [network] to choose actions to play. */
 class SimpleANNController(val network: ControllerArtificialNetwork) : MarioController {
 
     override fun playAction(tiles: Tiles, entities: Entities, mario: MarioEntity): List<MarioAction> {

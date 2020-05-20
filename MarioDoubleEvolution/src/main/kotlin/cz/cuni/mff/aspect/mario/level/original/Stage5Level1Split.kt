@@ -4,6 +4,7 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.mario.level.splitting.LevelSplit
 import cz.cuni.mff.aspect.mario.level.splitting.LevelSplitter
 
+/** Implementation of original Super Mario Bros game's Level 1 from Stage 5 split into multiple parts. */
 object Stage5Level1Split {
 
     val levels: Array<MarioLevel>
