@@ -139,25 +139,29 @@ object LevelToImageConverter {
             else -> Color(0, 0, 0)
         }
 
-    private fun getEntityColor(entity: Int, x: Int, y: Int): Int =
-        when (entity) {
-            Entities.Goomba.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 2 * 32 + y)
-            Entities.Koopa.GREEN -> this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+    private fun getEntityColor(entity: Int, x: Int, y: Int): Int {
+        val xReversed = 31 - x
+//        val xReversed = x
+
+        return when (entity) {
+            Entities.Goomba.NORMAL -> this.enemySheet.getRGB(0 * 32 + xReversed, 2 * 32 + y)
+            Entities.Koopa.GREEN -> this.enemySheet.getRGB(0 * 32 + xReversed, 1 * 32 + y)
             Entities.Koopa.GREEN_WINGED -> {
-                val koopaPixel = this.enemySheet.getRGB(0 * 32 + x, 1 * 32 + y)
+                val koopaPixel = this.enemySheet.getRGB(0 * 32 + xReversed, 1 * 32 + y)
                 if (this.isTransparent(koopaPixel))
-                    this.enemySheet.getRGB(0 * 32 + x, 4 * 32 + y + 16)
+                    this.enemySheet.getRGB(0 * 32 + xReversed, 4 * 32 + y + 16)
                 else
                     koopaPixel
             }
-            Entities.Koopa.RED -> this.enemySheet.getRGB(0 * 32 + x, 0 * 32 + y)
-            Entities.Spiky.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 3 * 32 + y)
-            Entities.Flower.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 6 * 32 + y)
-            Entities.BulletBill.NORMAL -> this.enemySheet.getRGB(0 * 32 + x, 5 * 32 + y)
+            Entities.Koopa.RED -> this.enemySheet.getRGB(0 * 32 + xReversed, 0 * 32 + y)
+            Entities.Spiky.NORMAL -> this.enemySheet.getRGB(0 * 32 + xReversed, 3 * 32 + y)
+            Entities.Flower.NORMAL -> this.enemySheet.getRGB(0 * 32 + xReversed, 6 * 32 + y)
+            Entities.BulletBill.NORMAL -> this.enemySheet.getRGB(0 * 32 + xReversed, 5 * 32 + y)
             Entities.PrincessPeach.NORMAL -> Color(225, 122, 157).rgb
 
             else -> Color.BLACK.rgb
         }
+    }
 
     private fun getEntityColor(entity: Int): Color =
         when (entity) {

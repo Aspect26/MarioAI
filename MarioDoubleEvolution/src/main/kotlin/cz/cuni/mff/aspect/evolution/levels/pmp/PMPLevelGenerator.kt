@@ -69,6 +69,11 @@ class PMPLevelGenerator(
         return levelMetadata.createLevel()
     }
 
+    fun generate(seed: Long): MarioLevel {
+        random.setSeed(seed)
+        return this.generate()
+    }
+
     val lastMetadata: PMPLevelMetadata get() = this._lastMetadata
 
     private fun createInitialLevel(): PMPLevelMetadata {
