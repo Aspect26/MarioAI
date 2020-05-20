@@ -27,9 +27,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="RUNTIME">
-      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.71">
+      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.72">
         <CLASSES>
-          <root url="file://$USER_HOME$/Cannot resolve external dependency org.jetbrains.kotlin:kotlin-stdlib:1.3.71 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
+          <root url="file://$USER_HOME$/Cannot resolve external dependency org.jetbrains.kotlin:kotlin-stdlib:1.3.72 because no repositories are defined.&#10;Required by:&#10;    project : &gt; project :MarioDoubleEvolution" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
