@@ -6,6 +6,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatformType
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.utils.lastIndexOf
 import java.util.*
 import kotlin.math.min
 
@@ -170,6 +171,7 @@ class PMPLevelGenerator(
             val canBeStairs = !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isHoleAt(column - 1)
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+                    && levelMetadata.stoneColumns.lastIndexOf { it != 0 } < column - 10
 
             if (shouldBeStairs && canBeStairs) {
                 this.addStairs(levelMetadata, column)
@@ -184,6 +186,8 @@ class PMPLevelGenerator(
             val canBeBoxes = levelMetadata.pipes[column] == 0
                     && levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.bulletBills[column] == 0
+                    && levelMetadata.boxPlatforms.mapIndexed { columnIndex, platform -> if (platform.length == 0) -1 else columnIndex + platform.length }.max()!! < (column - 5)
+
             val shouldBeBoxes = this.random.nextFloat() < this.probabilities[PI_START_BOXES]
             val shouldBeDoubleBoxes = this.random.nextFloat() < this.probabilities[PI_DOUBLE_BOXES]
 
@@ -244,7 +248,7 @@ class PMPLevelGenerator(
         val firstPlatform = this.addBoxPlatformAt(levelMetadata, column, firstPlatformLevel) ?: return
 
         val secondPlatformLevel = levelMetadata.groundHeight[column] + 8
-        this.addBoxPlatformAt(levelMetadata, column, secondPlatformLevel, firstPlatform.length - 2)
+        this.addBoxPlatformAt(levelMetadata, column + 1, secondPlatformLevel, firstPlatform.length - 2)
     }
 
     private fun addBoxPlatformAt(levelMetadata: PMPLevelMetadata, column: Int, platformLevel: Int, maxLength: Int? = null): BoxPlatform? {

@@ -59,3 +59,15 @@ fun Array<out IntArray>.flatten(): List<Int> {
     }
     return result
 }
+
+/** Returns last index of element, which fulfills the given predicate or -1 if no such element is found. */
+// TODO: unit test me
+fun IntArray.lastIndexOf(predicate: (Int) -> Boolean): Int {
+    for (index in indices.reversed()) {
+        if (predicate(this[index])) {
+            return index
+        }
+    }
+
+    return -1
+}

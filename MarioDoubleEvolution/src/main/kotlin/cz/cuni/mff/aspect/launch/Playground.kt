@@ -11,6 +11,6 @@ import kotlin.random.Random
 
 /** Launcher used for development purposes. */
 fun main() {
-    val randomLevel = PMPLevelGenerator().generate(12)
+    val randomLevel = PMPLevelGenerator().generate()
     LevelVisualiser().display(LevelPostProcessor.postProcess(randomLevel, true))
 }
