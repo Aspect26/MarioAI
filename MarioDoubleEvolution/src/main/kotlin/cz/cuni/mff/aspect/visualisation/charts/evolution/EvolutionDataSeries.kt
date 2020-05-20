@@ -1,4 +1,6 @@
-package cz.cuni.mff.aspect.visualisation.charts
+package cz.cuni.mff.aspect.visualisation.charts.evolution
+
+import cz.cuni.mff.aspect.visualisation.charts.DataSeries
 
 /** Represents collection of data series for an [EvolutionLineChart]. */
 data class EvolutionDataSeries(

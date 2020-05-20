@@ -16,7 +16,7 @@ import javax.swing.JFrame
  * A wrapper of `xcharts` library's line chart which specifies the overall chart style and is able to display the chart
  * using Java's `swing` GUI library, store the chart as an SVG and update the chart's data in realtime.
  */
-class LineChart(private val label: String = "Line chart", private val xLabel: String = "X", private val yLabel: String = "Y") {
+class LineChart(internal val label: String = "Line chart", internal val xLabel: String = "X", internal val yLabel: String = "Y") {
 
     private val chart: XYChartWithStops = XYChartWithStops(XYChartBuilder()
         .width(1920)
@@ -30,8 +30,11 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
     private val xchartSeries: MutableList<Series> = mutableListOf()
 
     private var windowShown = false
-    private var stops: List<Double> = mutableListOf()
-    private var series: List<DataSeries> = mutableListOf()
+    private var _stops: List<Double> = mutableListOf()
+    private var _series: List<DataSeries> = mutableListOf()
+
+    internal val stops: List<Double> get() = this._stops
+    internal val series: List<DataSeries> get() = this._series
 
     init {
         chart.styler.apply {
@@ -74,14 +77,14 @@ class LineChart(private val label: String = "Line chart", private val xLabel: St
         }
 
         this.chart.setStops(stops)
-        this.stops = stops
-        this.series = series
+        this._stops = stops
+        this._series = series
 
         this.repaint()
     }
 
     fun save(path: String) {
-        LineChartDataFile.storeData("$path.dat", LineChartData(label, xLabel, yLabel, stops, series))
+        LineChartDataFile.storeData("$path.dat", LineChartData(label, xLabel, yLabel, _stops, _series))
         this.storeChart(path)
     }
 

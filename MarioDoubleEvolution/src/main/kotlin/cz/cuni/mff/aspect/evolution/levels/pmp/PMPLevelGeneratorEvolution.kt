@@ -10,7 +10,7 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.getDoubleValues
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.jenetics.*
 
 /**
@@ -47,7 +47,10 @@ class PMPLevelGeneratorEvolution(
     survivorsSelector = EliteSelector(2),
     offspringSelector = RouletteWheelSelector(),
     displayChart = displayChart,
-    chart = EvolutionLineChart(chartLabel, hideNegative = false)
+    chart = EvolutionLineChart(
+        chartLabel,
+        hideNegative = false
+    )
 ), LevelGeneratorEvolution {
 
     private lateinit var agentFactory: () -> IAgent

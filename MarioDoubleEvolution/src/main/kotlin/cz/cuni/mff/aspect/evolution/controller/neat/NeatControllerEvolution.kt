@@ -11,7 +11,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.utils.DeepCopy
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import java.lang.IllegalArgumentException
 
 /**
@@ -45,7 +45,11 @@ class NeatControllerEvolution(
 ) : ControllerEvolution {
     private lateinit var topGenome: Genome
 
-    override val chart: EvolutionLineChart = EvolutionLineChart(chartLabel, hideNegative = true)
+    override val chart: EvolutionLineChart =
+        EvolutionLineChart(
+            chartLabel,
+            hideNegative = true
+        )
 
     override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
         val networkInputSize = NeatAgentNetwork.inputLayerSize(this.networkSettings)

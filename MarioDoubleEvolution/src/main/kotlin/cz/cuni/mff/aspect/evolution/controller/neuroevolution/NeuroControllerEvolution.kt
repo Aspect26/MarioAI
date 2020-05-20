@@ -11,7 +11,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.utils.getDoubleValues
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.util.DoubleRange
 import io.jenetics.util.Factory
@@ -69,7 +69,10 @@ class NeuroControllerEvolution(
     survivorsSelector = survivorsSelector,
     offspringSelector = offspringSelector,
     displayChart = displayChart,
-    chart = EvolutionLineChart(chartLabel, hideNegative = false),
+    chart = EvolutionLineChart(
+        chartLabel,
+        hideNegative = false
+    ),
     parallel = parallel,
     alwaysReevaluate = alwaysReevaluate
 ), ControllerEvolution {
