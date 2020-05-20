@@ -1,5 +1,6 @@
-package cz.cuni.mff.aspect.visualisation.charts
+package cz.cuni.mff.aspect.visualisation.charts.evolution
 
+import cz.cuni.mff.aspect.visualisation.charts.DataSeries
 import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart
 import java.awt.Color
 
@@ -73,10 +74,26 @@ class CoevolutionLineChart(
 
     private fun createEmptyDataSeries(evolutionLabel: String, fitnessColor: Color, objectiveColor: Color): EvolutionDataSeries =
         EvolutionDataSeries(
-            DataSeries("$evolutionLabel - best fitness", fitnessColor, mutableListOf()),
-            DataSeries("$evolutionLabel - average fitness", fitnessColor.brighter(), mutableListOf()),
-            DataSeries("$evolutionLabel - best objective value", objectiveColor, mutableListOf()),
-            DataSeries("$evolutionLabel - average objective value", objectiveColor.brighter(), mutableListOf())
+            DataSeries(
+                "$evolutionLabel - best fitness",
+                fitnessColor,
+                mutableListOf()
+            ),
+            DataSeries(
+                "$evolutionLabel - average fitness",
+                fitnessColor.brighter(),
+                mutableListOf()
+            ),
+            DataSeries(
+                "$evolutionLabel - best objective value",
+                objectiveColor,
+                mutableListOf()
+            ),
+            DataSeries(
+                "$evolutionLabel - average objective value",
+                objectiveColor.brighter(),
+                mutableListOf()
+            )
         )
 
     /**
@@ -88,10 +105,34 @@ class CoevolutionLineChart(
             val toIndex = currentStop.toInt()
 
             EvolutionDataSeries(
-                DataSeries(data = this.copySeriesData(chart.dataSeries.bestFitness.data, fromIndex, toIndex)),
-                DataSeries(data = this.copySeriesData(chart.dataSeries.averageFitness.data, fromIndex, toIndex)),
-                DataSeries(data = this.copySeriesData(chart.dataSeries.bestObjective.data, fromIndex, toIndex)),
-                DataSeries(data = this.copySeriesData(chart.dataSeries.averageObjective.data, fromIndex, toIndex))
+                DataSeries(
+                    data = this.copySeriesData(
+                        chart.dataSeries.bestFitness.data,
+                        fromIndex,
+                        toIndex
+                    )
+                ),
+                DataSeries(
+                    data = this.copySeriesData(
+                        chart.dataSeries.averageFitness.data,
+                        fromIndex,
+                        toIndex
+                    )
+                ),
+                DataSeries(
+                    data = this.copySeriesData(
+                        chart.dataSeries.bestObjective.data,
+                        fromIndex,
+                        toIndex
+                    )
+                ),
+                DataSeries(
+                    data = this.copySeriesData(
+                        chart.dataSeries.averageObjective.data,
+                        fromIndex,
+                        toIndex
+                    )
+                )
             )
         }
 

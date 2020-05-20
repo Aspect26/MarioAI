@@ -8,7 +8,7 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.utils.SlidingWindow
-import cz.cuni.mff.aspect.visualisation.charts.CoevolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
 import java.util.concurrent.TimeUnit
 
 /**
@@ -67,7 +67,12 @@ class Coevolution {
     private fun storeCharts(controllerEvolution: ControllerEvolution, levelGeneratorEvolution: LevelGeneratorEvolution, storagePath: String) {
         val controllerChart = controllerEvolution.chart
         val levelGeneratorChart = levelGeneratorEvolution.chart
-        val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
+        val coevolutionChart =
+            CoevolutionLineChart(
+                controllerChart,
+                levelGeneratorChart,
+                "Coevolution"
+            )
 
         controllerChart.store("$storagePath/ai.svg")
         levelGeneratorChart.store("$storagePath/lg.svg")

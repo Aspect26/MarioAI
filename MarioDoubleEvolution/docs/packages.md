@@ -157,6 +157,10 @@ Contains multiple visualisation used in the project. These visualisations are ev
 Contains implementations of chart visualisations of evolution and coevolution.
 
 
+# Package cz.cuni.mff.aspect.visualisation.charts.evolution
+Contains implementations of charts specified for displaying data from evolutionary algorithms.
+
+
 # Package cz.cuni.mff.aspect.visualisation.charts.linechart
 Contains implementation of line chart atop `xcharts` library
 

@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.evolution
 
 import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
 import io.jenetics.engine.EvolutionResult

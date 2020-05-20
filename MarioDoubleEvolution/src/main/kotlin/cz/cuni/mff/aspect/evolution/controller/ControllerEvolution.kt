@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.evolution.controller
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 
 
 /** Interface representing controller evolution. */

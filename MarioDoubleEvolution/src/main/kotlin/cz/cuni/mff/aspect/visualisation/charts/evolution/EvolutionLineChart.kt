@@ -1,5 +1,6 @@
-package cz.cuni.mff.aspect.visualisation.charts
+package cz.cuni.mff.aspect.visualisation.charts.evolution
 
+import cz.cuni.mff.aspect.visualisation.charts.DataSeries
 import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart
 import java.awt.Color
 
@@ -17,17 +18,34 @@ class EvolutionLineChart(val label: String = "Evolution", private val hideNegati
         "Fitness/Objective"
     )
 
-    private val bestFitnessSeries = DataSeries("Best fitness", Color(255, 0, 0), mutableListOf())
-    private val averageFitnessSeries = DataSeries("Average fitness", Color(255, 113, 96), mutableListOf())
-    private val bestObjectiveSeries = DataSeries("Best objective value", Color(0, 0, 255), mutableListOf())
-    private val averageObjectiveSeries = DataSeries("Average objective value", Color(78, 147, 255), mutableListOf())
-
-    private val _dataSeries: EvolutionDataSeries = EvolutionDataSeries(
-        bestFitnessSeries,
-        averageFitnessSeries,
-        bestObjectiveSeries,
-        averageObjectiveSeries
+    private val bestFitnessSeries = DataSeries(
+        "Best fitness",
+        Color(255, 0, 0),
+        mutableListOf()
     )
+    private val averageFitnessSeries = DataSeries(
+        "Average fitness",
+        Color(255, 113, 96),
+        mutableListOf()
+    )
+    private val bestObjectiveSeries = DataSeries(
+        "Best objective value",
+        Color(0, 0, 255),
+        mutableListOf()
+    )
+    private val averageObjectiveSeries = DataSeries(
+        "Average objective value",
+        Color(78, 147, 255),
+        mutableListOf()
+    )
+
+    private val _dataSeries: EvolutionDataSeries =
+        EvolutionDataSeries(
+            bestFitnessSeries,
+            averageFitnessSeries,
+            bestObjectiveSeries,
+            averageObjectiveSeries
+        )
 
     private val currentGeneration get() = this.bestFitnessSeries.data.map { it.first }.max()?.toInt() ?: 0
 

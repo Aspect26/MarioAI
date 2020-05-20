@@ -1,7 +1,7 @@
 package cz.cuni.mff.aspect.evolution.levels
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.aspect.visualisation.charts.EvolutionLineChart
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 
 
 /** Interface representing evolution of mario levels. The evolution can return multiple levels. */
