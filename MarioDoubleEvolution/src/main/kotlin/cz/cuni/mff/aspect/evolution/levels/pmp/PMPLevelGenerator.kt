@@ -244,7 +244,7 @@ class PMPLevelGenerator(
         val firstPlatform = this.addBoxPlatformAt(levelMetadata, column, firstPlatformLevel) ?: return
 
         val secondPlatformLevel = levelMetadata.groundHeight[column] + 8
-        this.addBoxPlatformAt(levelMetadata, column, secondPlatformLevel, firstPlatform.length - 2)
+        this.addBoxPlatformAt(levelMetadata, column + 1, secondPlatformLevel, firstPlatform.length - 2)
     }
 
     private fun addBoxPlatformAt(levelMetadata: PMPLevelMetadata, column: Int, platformLevel: Int, maxLength: Int? = null): BoxPlatform? {
