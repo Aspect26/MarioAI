@@ -134,7 +134,7 @@ class NeuroControllerEvolution(
         val levels = Array(this.evaluateOnLevelsCount) {
             this.levelGenerators[it % this.levelGenerators.size].generate()
         }
-        val marioSimulator = GameSimulator(1000)
+        val marioSimulator = GameSimulator(1500)
         val statistics = marioSimulator.playMario(controller, levels, false)
 
         return Pair(fitnessFunction(statistics), objectiveFunction(statistics))

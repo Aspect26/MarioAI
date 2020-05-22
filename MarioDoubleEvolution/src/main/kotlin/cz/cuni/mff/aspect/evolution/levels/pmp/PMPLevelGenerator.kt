@@ -171,7 +171,7 @@ class PMPLevelGenerator(
             val canBeStairs = !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isHoleAt(column - 1)
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
-                    && levelMetadata.stoneColumns.lastIndexOf { it != 0 } < column - 10
+                    && levelMetadata.stoneColumns.lastIndexOf { it != 0 } < column - 30
 
             if (shouldBeStairs && canBeStairs) {
                 this.addStairs(levelMetadata, column)
@@ -186,7 +186,7 @@ class PMPLevelGenerator(
             val canBeBoxes = levelMetadata.pipes[column] == 0
                     && levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.bulletBills[column] == 0
-                    && levelMetadata.boxPlatforms.mapIndexed { columnIndex, platform -> if (platform.length == 0) -1 else columnIndex + platform.length }.max()!! < (column - 5)
+                    && levelMetadata.boxPlatforms.mapIndexed { columnIndex, platform -> if (platform.length == 0) -1 else columnIndex + platform.length }.max()!! < (column - 15)
 
             val shouldBeBoxes = this.random.nextFloat() < this.probabilities[PI_START_BOXES]
             val shouldBeDoubleBoxes = this.random.nextFloat() < this.probabilities[PI_DOUBLE_BOXES]

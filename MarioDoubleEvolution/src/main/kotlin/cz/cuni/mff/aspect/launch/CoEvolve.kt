@@ -18,7 +18,7 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
-private val RESULT_FILES_PATH = "data/coev/9_neat/neat_pc"
+private val RESULT_FILES_PATH = "data/coev/10_pmp/neuro_pmp"
 
 /** Launches a coevolution or plays mario using AIs and level generators from the latest coevolution. */
 fun main() {
@@ -76,7 +76,7 @@ fun coevolve() {
 }
 
 fun playLatestCo() {
-    val simulator = GameSimulator()
+    val simulator = GameSimulator(1300)
 
     var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
         receptiveFieldSizeRow = 5,
@@ -88,7 +88,7 @@ fun playLatestCo() {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 10 .. 25) {
+    for (i in 22 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$RESULT_FILES_PATH/ai_$i.ai") as MarioController

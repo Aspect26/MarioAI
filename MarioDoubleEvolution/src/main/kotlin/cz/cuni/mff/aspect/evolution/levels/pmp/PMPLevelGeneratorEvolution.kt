@@ -78,7 +78,7 @@ class PMPLevelGeneratorEvolution(
             val level = levelGenerator.generate()
             val levelMetadata = levelGenerator.lastMetadata
 
-            val marioSimulator = GameSimulator(2500)
+            val marioSimulator = GameSimulator(2000)
             val currentGameStatistics = marioSimulator.playMario(agent, level, false)
 
             levels.add(level)
