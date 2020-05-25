@@ -12,7 +12,6 @@ import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 
-// TODO: test also neat+pmp
 /** Launcher used for development purposes. */
 fun main() {
 //    startCoev()

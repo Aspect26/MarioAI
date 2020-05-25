@@ -53,7 +53,7 @@ class Coevolution {
         updatedCoevolutionSettings.controllerEvolution.chart = aiChart
         updatedCoevolutionSettings.generatorEvolution.chart = lgChart
 
-        return this.evolve(updatedCoevolutionSettings, lastFinishedGenerationNumber - 1)
+        return this.evolve(updatedCoevolutionSettings, lastFinishedGenerationNumber)
     }
 
     private fun evolve(coevolutionSettings: CoevolutionSettings, startGenerationIndex: Int = 0): CoevolutionResult {

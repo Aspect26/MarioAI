@@ -3,11 +3,10 @@ package cz.cuni.mff.aspect.evolution.controller
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
-import java.io.Serializable
 
 
 /** Interface representing controller evolution. */
-interface ControllerEvolution : Serializable {
+interface ControllerEvolution {
 
     /**
      * Chart of the evolution.
