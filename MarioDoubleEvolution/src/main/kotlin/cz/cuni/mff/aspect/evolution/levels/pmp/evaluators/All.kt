@@ -1,31 +1,28 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 
+import cz.cuni.mff.aspect.evolution.levels.evaluators.WinRatio
 import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import io.jenetics.Optimize
-import kotlin.math.abs
 
 /**
- * Probabilistic Multipass level generator evaluator returning difference of won/lost count, compressibility metric
+ * Probabilistic Multipass level generator evaluator returning win ratio metric, compressibility metric
  * and linearity metric.
  */
 // TODO: better name...
-class All : PMPLevelEvaluator<Float> {
+class All(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
+
+    private val winRatioEvaluator: WinRatio = WinRatio(expectedWinRatio, 1f)
 
     override fun invoke(
         levels: List<MarioLevel>,
         metadata: List<PMPLevelMetadata>,
         gameStatistics: List<GameStatistics>
     ): Float {
-        val wonCount = gameStatistics.sumBy { if (it.levelFinished) 1 else 0 }
-        val lostCount = gameStatistics.size - wonCount
-
-        val maxDifference = gameStatistics.size
-        val wonLostDifference = abs(wonCount - lostCount)
-        val reversedWonLostDifference = maxDifference - wonLostDifference
+        val winRatioFactor = this.winRatioEvaluator(levels, gameStatistics)
 
         // TODO: konstanta vycucana z prsta
         val compressionFactor = List(levels.size) {
@@ -37,7 +34,7 @@ class All : PMPLevelEvaluator<Float> {
             LinearityEvaluator().evaluateOne(levels[it], metadata[it], gameStatistics[it])
         }.average().toFloat()
 
-        return reversedWonLostDifference.toFloat() * (1 + compressionFactor + linearityFactor) * 1000
+        return winRatioFactor * (1 + compressionFactor + linearityFactor) * 30000
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

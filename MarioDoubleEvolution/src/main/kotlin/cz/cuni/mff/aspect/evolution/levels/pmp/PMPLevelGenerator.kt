@@ -217,6 +217,7 @@ class PMPLevelGenerator(
 
             val canBeEntity = !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isObstacleAt(column, levelMetadata.groundHeight[column] + 1)
+                    && levelMetadata.entities.toList().subList(column - 10, column - 1).sumBy { if (it == 0) 0 else 1 } < 5
 
             levelMetadata.entities[column] = if (canBeEntity) entity else Entities.NOTHING
         }

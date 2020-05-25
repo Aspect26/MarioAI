@@ -126,9 +126,9 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
         get() = PMPLevelGeneratorEvolution(
             populationSize = 50,
             generationsCount = 15,
-            evaluateOnLevelsCount = 36,
-            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(),
-            objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
+            evaluateOnLevelsCount = 40,
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.75f),
+            objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatio(0.75f, 50000f),
             displayChart = false,
             levelLength = 300,
             chartLabel = "PMP Level Generator"
