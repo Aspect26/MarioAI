@@ -2,7 +2,7 @@ package cz.cuni.mff.aspect.evolution.controller.neat
 
 import com.evo.NEAT.Environment
 import com.evo.NEAT.Genome
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -18,8 +18,8 @@ import kotlin.math.max
 internal class ControllerEvolutionEnvironment(
     private val levelGenerators: List<LevelGenerator>,
     private val networkSettings: NetworkSettings,
-    private val fitnessFunction: MarioGameplayEvaluator<Float>,
-    private val objectiveFunction: MarioGameplayEvaluator<Float>,
+    private val fitnessFunction: MarioGameplayEvaluator,
+    private val objectiveFunction: MarioGameplayEvaluator,
     private val evaluateOnLevelsCount: Int
 ) : Environment {
     private lateinit var lastEvaluationFitnesses: FloatArray

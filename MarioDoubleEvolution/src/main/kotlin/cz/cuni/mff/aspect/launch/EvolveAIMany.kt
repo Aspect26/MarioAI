@@ -1,7 +1,9 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceWithLeastActionsEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
@@ -27,14 +29,15 @@ private fun doManyNEATEvolution() {
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness = MarioGameplayEvaluators::distanceLeastActions
+    val fitness =
+        DistanceWithLeastActionsEvaluator()
     val receptiveFieldSize = Pair(5, 5)
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
             levelGenerators = levelGenerators,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = receptiveFieldSize,
@@ -46,7 +49,7 @@ private fun doManyNEATEvolution() {
         NeatEvolutionLauncher(
             levelGenerators = levelGenerators,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = receptiveFieldSize,
@@ -58,7 +61,7 @@ private fun doManyNEATEvolution() {
         NeatEvolutionLauncher(
             levelGenerators = levelGenerators,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = receptiveFieldSize,
@@ -70,7 +73,7 @@ private fun doManyNEATEvolution() {
         NeatEvolutionLauncher(
             levelGenerators = levelGenerators,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
             receptiveFieldSize = receptiveFieldSize,
@@ -93,7 +96,7 @@ private fun doManyNeuroEvolution() {
 
     val generationsCount = 50
     val populationSize = 50
-    val fitness = MarioGameplayEvaluators::distanceOnly
+    val fitness = DistanceOnlyEvaluator()
     val mutators = arrayOf<Alterer<DoubleGene, Float>>(GaussianMutator(0.45))
     val hiddenLayerSize = 5
     val offspringsSelector = TournamentSelector<DoubleGene, Float>(2)
@@ -104,7 +107,7 @@ private fun doManyNeuroEvolution() {
             networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
             offspringSelector = offspringsSelector,
@@ -120,7 +123,7 @@ private fun doManyNeuroEvolution() {
             networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
             offspringSelector = offspringsSelector,
@@ -136,7 +139,7 @@ private fun doManyNeuroEvolution() {
             networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
             offspringSelector = offspringsSelector,
@@ -152,7 +155,7 @@ private fun doManyNeuroEvolution() {
             networkSettings = networkSettings,
             levelGenerator = levelGenerator,
             fitnessFunction = fitness,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            objectiveFunction = VictoriesOnlyEvaluator(),
             mutators = mutators,
             survivorsSelector = EliteSelector(2),
             offspringSelector = offspringsSelector,
@@ -181,8 +184,8 @@ private class NeuroEvolutionLauncher(
     private val generationsCount: Int,
     private val populationSize: Int,
     private val label: String,
-    private val fitnessFunction: MarioGameplayEvaluator<Float>,
-    private val objectiveFunction: MarioGameplayEvaluator<Float>,
+    private val fitnessFunction: MarioGameplayEvaluator,
+    private val objectiveFunction: MarioGameplayEvaluator,
     private val mutators: Array<Alterer<DoubleGene, Float>>,
     private val survivorsSelector: Selector<DoubleGene, Float>,
     private val offspringSelector: Selector<DoubleGene, Float>,
@@ -220,8 +223,8 @@ class NeatEvolutionLauncher(
     private val receptiveFieldSize: Pair<Int, Int>,
     private val receptiveFieldOffset: Pair<Int, Int>,
     private val label: String,
-    private val fitnessFunction: MarioGameplayEvaluator<Float>,
-    private val objectiveFunction: MarioGameplayEvaluator<Float>,
+    private val fitnessFunction: MarioGameplayEvaluator,
+    private val objectiveFunction: MarioGameplayEvaluator,
     private val dataLocation: String,
     private val denseInput: Boolean
 ) : EvolutionLauncher {

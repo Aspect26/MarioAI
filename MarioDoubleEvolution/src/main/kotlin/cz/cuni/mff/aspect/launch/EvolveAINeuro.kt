@@ -1,8 +1,9 @@
 package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
@@ -32,8 +33,8 @@ fun evolveAI() {
                 denseInput = false, oneHotOnEnemies = true),
             100,
             50,
-            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            fitnessFunction = DistanceOnlyEvaluator(),
+            objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = Stage4Level1Split.levels.size,
             chartLabel = "NeuroEvolution",
             alterers = arrayOf(GaussianMutator(0.55)),
@@ -60,8 +61,8 @@ private fun continueEvolveAI() {
             null,
             20,
             50,
-            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            fitnessFunction = DistanceOnlyEvaluator(),
+            objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = 10,
             chartLabel = "NeuroEvolution Update half",
             alterers = arrayOf(GaussianMutator(0.55)),

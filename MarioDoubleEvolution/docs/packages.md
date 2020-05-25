@@ -10,6 +10,10 @@ Contains implementation of multiple AI Controllers
 Contains implementation of all evolutions. These evolutions include AI evolution using NeuroEvolution and NEAT algorithms, level generator evolutions using SGA and level evolution using grammar evolution.
 
 
+# Package cz.cuni.mff.aspect.evolution.evaluators
+Contains multiple evaluators of an agent's gameplay of Super Mario levels.
+
+
 # Package cz.cuni.mff.aspect.evolution.controller
 Contains implementation of evolution algorithms of controller. It contains [ControllerEvolution] interface, which all controller evolutions should implement, and two implementations of it: [NEATControllerEvolution] and [NeuroControllerEvolution].  
 

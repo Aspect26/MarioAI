@@ -35,7 +35,7 @@ abstract class ChartedJeneticsEvolution<T>(
     protected val survivorsSelector: Selector<DoubleGene, Float>,
     protected val offspringSelector: Selector<DoubleGene, Float>,
     private val displayChart: Boolean,
-    val chart: EvolutionLineChart,
+    var chart: EvolutionLineChart,
     private val parallel: Boolean = true,
     private val alwaysReevaluate: Boolean = true
 ) {
