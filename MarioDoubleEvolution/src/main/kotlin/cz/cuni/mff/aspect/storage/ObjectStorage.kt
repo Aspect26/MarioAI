@@ -20,17 +20,18 @@ object ObjectStorage {
         oos.flush()
     }
 
-    fun load(filePath: String): Any {
+    fun exists(filePath: String): Boolean {
+        val file = File(filePath)
+        return file.exists()
+    }
+
+    fun<T: Serializable> load(filePath: String): T {
         val file = File(filePath)
         val fis = FileInputStream(file)
         val ois = ObjectInputStream(fis)
 
-        var result: Any = Object()
-        ois.use {
-            result = it.readObject()
-        }
-
-        return result
+        @Suppress("UNCHECKED_CAST")
+        return ois.readObject() as T
     }
 
 }

@@ -155,7 +155,7 @@ private fun coevolve(
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
     val coevolver = Coevolution()
 
-    coevolver.evolve(
+    coevolver.startEvolution(
         controllerEvolution,
         levelGeneratorEvolution,
         controllerEvolutionSettings.initialController,
