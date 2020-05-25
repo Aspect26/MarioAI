@@ -1,5 +1,5 @@
 language: java
-install: gradle wrapper --gradle-version 6.3
+install: gradle wrapper --gradle-version 6.4.1
 jdk:
   - openjdk12
 script:

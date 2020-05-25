@@ -1,8 +1,10 @@
 MARIO_SIMULATOR_PROJECT = "MarioAI4J"
 MARIO_COEVOLUTION_PROJECT = "MarioDoubleEvolution"
 
+GRADLE_VERSION = "6.4.1"
+
 get-gradle-wrapper:
-	gradle wrapper --gradle-version 6.3
+	gradle wrapper --gradle-version $(GRADLE_VERSION)
 
 jar: get-gradle-wrapper
 	./gradlew $(MARIO_SIMULATOR_PROJECT):jar
@@ -22,5 +24,5 @@ changes-neat:
 	git difftool c69ab ./MarioDoubleEvolution/src/main/java/com/evo/NEAT
 
 documentation:
-	./gradlew ${MARIO_COEVOLUTION_PROJECT}:dokka
+	./gradlew $(MARIO_COEVOLUTION_PROJECT):dokka
 
