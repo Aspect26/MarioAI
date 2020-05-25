@@ -50,14 +50,13 @@ class GrammarEvolution private constructor(private val grammar: Grammar,
             .alterers(this.alterers[0], *this.alterers.slice(1 until this.alterers.size).toTypedArray())
             .survivorsSelector(EliteSelector(10))
             .offspringSelector(RouletteWheelSelector())
-            .mapping { evolutionResult ->
-                println("[GE] new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()})")
-                evolutionResult
-            }
             .build()
 
     private fun evolveBest(evolutionEngine: Engine<ByteGene, Float>, generationsCount: Long): EvolutionResult<ByteGene, Float> =
         evolutionEngine.stream()
+            .peek { evolutionResult ->
+                println("[GE] new gen: ${evolutionResult.generation()} (best fitness: ${evolutionResult.bestFitness()})")
+            }
             .limit(generationsCount)
             .collect(EvolutionResult.toBestEvolutionResult<ByteGene, Float>())
 
