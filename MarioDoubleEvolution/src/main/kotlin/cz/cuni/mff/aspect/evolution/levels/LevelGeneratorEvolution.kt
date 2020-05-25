@@ -11,7 +11,7 @@ interface LevelGeneratorEvolution {
      * An evolution chart of the current evolution.
      * @see EvolutionLineChart for more information about the chart.
      */
-    val chart: EvolutionLineChart
+    var chart: EvolutionLineChart
 
     /** Evolves a level generator using agents from the given agent factory. */
     fun evolve(agentFactory: () -> IAgent): LevelGenerator

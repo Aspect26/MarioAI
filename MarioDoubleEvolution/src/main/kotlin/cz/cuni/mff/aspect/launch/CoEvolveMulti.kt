@@ -2,7 +2,10 @@ package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
 import cz.cuni.mff.aspect.coevolution.Coevolution
+import cz.cuni.mff.aspect.coevolution.CoevolutionSettings
 import cz.cuni.mff.aspect.evolution.controller.*
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
@@ -37,6 +40,9 @@ fun main() {
     coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+
+//    continueCoevolution("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+    
 //    playCoevolution("data/coev/9_neat/neat_pc")
 }
 
@@ -56,8 +62,8 @@ private object NeuroEvolution : ControllerEvolutionSettings {
                 null,
                 populationSize = 50,
                 generationsCount = 35,
-                fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-                objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+                fitnessFunction = DistanceOnlyEvaluator(),
+                objectiveFunction = VictoriesOnlyEvaluator(),
                 evaluateOnLevelsCount = 25,
                 alterers = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
@@ -90,8 +96,8 @@ private object NEATEvolution : ControllerEvolutionSettings {
             networkSettings,
             populationSize = 100,
             generationsCount = 75,
-            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            fitnessFunction = DistanceOnlyEvaluator(),
+            objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = 25,
             displayChart = false,
             chartLabel = "Agent NeuroEvolution"
@@ -153,9 +159,7 @@ private fun coevolve(
 ) {
     val controllerEvolution = controllerEvolutionSettings.evolution
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
-    val coevolver = Coevolution()
-
-    coevolver.evolve(
+    val coevolutionSettings = CoevolutionSettings(
         controllerEvolution,
         levelGeneratorEvolution,
         controllerEvolutionSettings.initialController,
@@ -164,6 +168,47 @@ private fun coevolve(
         repeatGeneratorsCount,
         storagePath
     )
+
+    val coevolver = Coevolution()
+
+    coevolver.startEvolution(coevolutionSettings)
+
+    val controllerChart = controllerEvolution.chart
+    val levelGeneratorChart = levelGeneratorEvolution.chart
+    val coevolutionChart = CoevolutionLineChart(
+        controllerChart,
+        levelGeneratorChart,
+        "Coevolution"
+    )
+
+    controllerChart.store("$storagePath/ai.svg")
+    levelGeneratorChart.store("$storagePath/lg.svg")
+
+    coevolutionChart.storeChart("$storagePath/coev.svg")
+}
+
+private fun continueCoevolution(
+    storagePath: String,
+    controllerEvolutionSettings: ControllerEvolutionSettings,
+    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
+    generations: Int,
+    repeatGeneratorsCount: Int
+) {
+    val controllerEvolution = controllerEvolutionSettings.evolution
+    val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
+    val coevolutionSettings = CoevolutionSettings(
+        controllerEvolution,
+        levelGeneratorEvolution,
+        controllerEvolutionSettings.initialController,
+        levelGeneratorEvolutionSettings.initialLevelGenerator,
+        generations,
+        repeatGeneratorsCount,
+        storagePath
+    )
+
+    val coevolver = Coevolution()
+
+    coevolver.startEvolution(coevolutionSettings)
 
     val controllerChart = controllerEvolution.chart
     val levelGeneratorChart = levelGeneratorEvolution.chart

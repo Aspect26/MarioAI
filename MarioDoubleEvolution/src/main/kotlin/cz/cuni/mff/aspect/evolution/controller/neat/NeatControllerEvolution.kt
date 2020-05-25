@@ -2,9 +2,10 @@ package cz.cuni.mff.aspect.evolution.controller.neat
 
 import com.evo.NEAT.Genome
 import com.evo.NEAT.Pool
-import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.*
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -38,14 +39,14 @@ class NeatControllerEvolution(
     private val generationsCount: Int = 200,
     private val populationSize: Int = 150,
     private val evaluateOnLevelsCount: Int = 25,
-    private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
-    private val objectiveFunction: MarioGameplayEvaluator<Float>  = MarioGameplayEvaluators::victoriesOnly,
+    private val fitnessFunction: MarioGameplayEvaluator = DistanceOnlyEvaluator(),
+    private val objectiveFunction: MarioGameplayEvaluator = VictoriesOnlyEvaluator(),
     private val displayChart: Boolean = true,
     chartLabel: String = "NEAT Evolution"
 ) : ControllerEvolution {
     private lateinit var topGenome: Genome
 
-    override val chart: EvolutionLineChart =
+    override var chart: EvolutionLineChart =
         EvolutionLineChart(
             chartLabel,
             hideNegative = true

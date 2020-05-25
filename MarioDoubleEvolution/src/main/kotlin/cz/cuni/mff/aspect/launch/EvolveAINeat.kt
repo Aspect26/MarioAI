@@ -1,7 +1,8 @@
 package cz.cuni.mff.aspect.launch
 
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
@@ -29,8 +30,8 @@ private fun evolve() {
             networkSettings,
             generationsCount = 500,
             populationSize = 100,
-            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            fitnessFunction = DistanceOnlyEvaluator(),
+            objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = TrainingLevelsSet.size,
             chartLabel = "NEAT Evolution",
             displayChart = true
@@ -55,8 +56,8 @@ private fun continueEvolution() {
             networkSettings,
             generationsCount = 50,
             populationSize = 100,
-            fitnessFunction = MarioGameplayEvaluators::distanceOnly,
-            objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
+            fitnessFunction = DistanceOnlyEvaluator(),
+            objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = 10,
             chartLabel = "NEAT Evolution continuation"
         )
