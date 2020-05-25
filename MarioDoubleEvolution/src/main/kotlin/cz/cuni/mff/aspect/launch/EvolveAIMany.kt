@@ -29,8 +29,7 @@ private fun doManyNEATEvolution() {
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness =
-        DistanceWithLeastActionsEvaluator()
+    val fitness = DistanceWithLeastActionsEvaluator()
     val receptiveFieldSize = Pair(5, 5)
 
     val evolutions = arrayOf(

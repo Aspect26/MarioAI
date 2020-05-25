@@ -40,6 +40,9 @@ fun main() {
     coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+
+//    continueCoevolution("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+    
 //    playCoevolution("data/coev/9_neat/neat_pc")
 }
 
@@ -148,6 +151,43 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
 }
 
 private fun coevolve(
+    storagePath: String,
+    controllerEvolutionSettings: ControllerEvolutionSettings,
+    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
+    generations: Int,
+    repeatGeneratorsCount: Int
+) {
+    val controllerEvolution = controllerEvolutionSettings.evolution
+    val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
+    val coevolutionSettings = CoevolutionSettings(
+        controllerEvolution,
+        levelGeneratorEvolution,
+        controllerEvolutionSettings.initialController,
+        levelGeneratorEvolutionSettings.initialLevelGenerator,
+        generations,
+        repeatGeneratorsCount,
+        storagePath
+    )
+
+    val coevolver = Coevolution()
+
+    coevolver.startEvolution(coevolutionSettings)
+
+    val controllerChart = controllerEvolution.chart
+    val levelGeneratorChart = levelGeneratorEvolution.chart
+    val coevolutionChart = CoevolutionLineChart(
+        controllerChart,
+        levelGeneratorChart,
+        "Coevolution"
+    )
+
+    controllerChart.store("$storagePath/ai.svg")
+    levelGeneratorChart.store("$storagePath/lg.svg")
+
+    coevolutionChart.storeChart("$storagePath/coev.svg")
+}
+
+private fun continueCoevolution(
     storagePath: String,
     controllerEvolutionSettings: ControllerEvolutionSettings,
     levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
