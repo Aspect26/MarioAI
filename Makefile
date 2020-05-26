@@ -25,4 +25,3 @@ changes-neat:
 
 documentation:
 	./gradlew $(MARIO_COEVOLUTION_PROJECT):dokka
-

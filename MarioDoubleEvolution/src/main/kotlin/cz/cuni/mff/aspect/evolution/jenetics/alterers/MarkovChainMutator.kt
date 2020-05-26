@@ -84,8 +84,6 @@ class MarkovChainMutator(
 
                 genes[randomVariableIndex * this.statesCount + firstIndex] = secondIndexValue
                 genes[randomVariableIndex * this.statesCount + secondIndex] = firstIndexValue
-
-                break
             }
         }
 
