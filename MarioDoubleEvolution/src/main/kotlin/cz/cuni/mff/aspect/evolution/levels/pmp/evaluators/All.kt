@@ -1,6 +1,6 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp.evaluators
 
-import cz.cuni.mff.aspect.evolution.levels.evaluators.WinRatio
+import cz.cuni.mff.aspect.evolution.levels.evaluators.WinRatioEvaluator
 import cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.GameStatistics
@@ -15,7 +15,7 @@ import io.jenetics.Optimize
 // TODO: better name...
 class All(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
 
-    private val winRatioEvaluator: WinRatio = WinRatio(expectedWinRatio, 1f)
+    private val winRatioEvaluator: WinRatioEvaluator = WinRatioEvaluator(expectedWinRatio, 1f)
 
     override fun invoke(
         levels: List<MarioLevel>,

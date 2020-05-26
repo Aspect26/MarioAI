@@ -14,7 +14,7 @@ import kotlin.math.max
  * @param expectedWinRatio the expected win ratio (e.g. 0.5 for 50% wins and 50% loses).
  * @param scale the resulting value is multiplied by scale.
  */
-class WinRatio(private val expectedWinRatio: Float = 0.75f, private val scale: Float = 50000f) : LevelsEvaluator<Float> {
+class WinRatioEvaluator(private val expectedWinRatio: Float = 0.75f, private val scale: Float = 50000f) : LevelsEvaluator<Float> {
 
     override fun invoke(
         levels: List<MarioLevel>,

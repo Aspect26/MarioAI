@@ -6,11 +6,11 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class WinRatioTests {
+class WinRatioEvaluatorTests {
 
     @Test
     fun `test exactly what expected`() {
-        val evaluator = WinRatio(0.5f, 1f)
+        val evaluator = WinRatioEvaluator(0.5f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(5)
 
         val result = evaluator(levels, gameStatistics)
@@ -20,7 +20,7 @@ class WinRatioTests {
 
     @Test
     fun `test exactly what expected 2`() {
-        val evaluator = WinRatio(0.8f, 1f)
+        val evaluator = WinRatioEvaluator(0.8f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(8)
 
         val result = evaluator(levels, gameStatistics)
@@ -30,7 +30,7 @@ class WinRatioTests {
 
     @Test
     fun `test low difference`() {
-        val evaluator = WinRatio(0.8f, 1f)
+        val evaluator = WinRatioEvaluator(0.8f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(7)
 
         val result = evaluator(levels, gameStatistics)
@@ -42,7 +42,7 @@ class WinRatioTests {
 
     @Test
     fun `test high difference`() {
-        val evaluator = WinRatio(0.8f, 1f)
+        val evaluator = WinRatioEvaluator(0.8f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(1)
 
         val result = evaluator(levels, gameStatistics)
@@ -54,7 +54,7 @@ class WinRatioTests {
 
     @Test
     fun `test minimum value`() {
-        val evaluator = WinRatio(0.3f, 1f)
+        val evaluator = WinRatioEvaluator(0.3f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(10)
 
         val result = evaluator(levels, gameStatistics)
@@ -64,7 +64,7 @@ class WinRatioTests {
 
     @Test
     fun `test minimum value 2`() {
-        val evaluator = WinRatio(0.7f, 1f)
+        val evaluator = WinRatioEvaluator(0.7f, 1f)
         val (levels, gameStatistics) = this.givenWonLevelsOf10(0)
 
         val result = evaluator(levels, gameStatistics)

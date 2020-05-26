@@ -102,7 +102,7 @@ class NeuroControllerEvolution(
         return this.evolve()
     }
 
-    override fun createInitialGenotype(): Factory<Genotype<DoubleGene>> {
+    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> {
         return if (this.initialAgentNetwork == null) {
             Genotype.of(DoubleChromosome.of(this.weightsRange, this.createControllerNetwork().weightsCount))
         } else {

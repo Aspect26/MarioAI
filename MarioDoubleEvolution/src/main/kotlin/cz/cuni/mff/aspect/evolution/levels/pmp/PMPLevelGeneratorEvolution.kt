@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.evolution.levels.pmp
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
+import cz.cuni.mff.aspect.evolution.jenetics.genotype.ZeroInitializingDoubleGenotypeFactory
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
@@ -12,6 +13,8 @@ import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.utils.getDoubleValues
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.jenetics.*
+import io.jenetics.util.DoubleRange
+import io.jenetics.util.Factory
 
 /**
  * Implementation of a Super Mario level generator evolution of [PMPLevelGenerator]. The implementation is highly
@@ -34,6 +37,7 @@ class PMPLevelGeneratorEvolution(
     generationsCount: Int,
     private val fitnessFunction: PMPLevelEvaluator<Float>,
     private val objectiveFunction: PMPLevelEvaluator<Float>,
+    alterers: Array<Alterer<DoubleGene, Float>> = arrayOf(UpdatedGaussianMutator(0.2, 0.1)),
     private val evaluateOnLevelsCount: Int = DEFAULT_EVALUATE_ON_LEVELS_COUNT,
     private val levelLength: Int = DEFAULT_LEVEL_LENGTH,
     chartLabel: String = DEFAULT_CHART_LABEL,
@@ -43,7 +47,7 @@ class PMPLevelGeneratorEvolution(
     generationsCount,
     fitnessOptimization = fitnessFunction.optimize,
     objectiveOptimization = objectiveFunction.optimize,
-    alterers = arrayOf(UpdatedGaussianMutator(0.5, 0.6)),
+    alterers = alterers,
     survivorsSelector = EliteSelector(2),
     offspringSelector = RouletteWheelSelector(),
     displayChart = displayChart,
@@ -60,8 +64,8 @@ class PMPLevelGeneratorEvolution(
         return this.evolve()
     }
 
-    override fun createInitialGenotype(): Genotype<DoubleGene> =
-        Genotype.of(DoubleChromosome.of(List<DoubleGene>(PMPLevelGenerator.PROBABILITIES_COUNT) { DoubleGene.of(0.0, 0.0, 1.0) }))
+    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> =
+        ZeroInitializingDoubleGenotypeFactory(PMPLevelGenerator.PROBABILITIES_COUNT, DoubleRange.of(0.0, 1.0))
 
     override fun entityFromIndividual(genotype: Genotype<DoubleGene>): PMPLevelGenerator =
         PMPLevelGenerator(genotype.getDoubleValues(), this.levelLength)

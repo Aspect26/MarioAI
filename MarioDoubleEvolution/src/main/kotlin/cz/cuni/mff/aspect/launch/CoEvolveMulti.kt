@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.coevolution.Coevolution
 import cz.cuni.mff.aspect.evolution.controller.*
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
@@ -13,6 +14,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
@@ -50,7 +52,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 null,
                 populationSize = 50,
-                generationsCount = 35,
+                generationsCount = 3,
                 fitnessFunction = MarioGameplayEvaluators::distanceOnly,
                 objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
                 evaluateOnLevelsCount = 25,
@@ -125,11 +127,12 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
     override val evolution: LevelGeneratorEvolution
         get() = PMPLevelGeneratorEvolution(
             populationSize = 50,
-            generationsCount = 15,
-            evaluateOnLevelsCount = 40,
+            generationsCount = 35,
+            evaluateOnLevelsCount = 30,
             fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.75f),
-            objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatio(0.75f, 50000f),
-            displayChart = false,
+            objectiveFunction = WinRatioEvaluator(0.75f, 50000f),
+            alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
+            displayChart = true,
             levelLength = 300,
             chartLabel = "PMP Level Generator"
         )
