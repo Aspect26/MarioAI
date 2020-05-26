@@ -8,6 +8,7 @@ import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvo
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
@@ -15,11 +16,13 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
+import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
+import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
 import io.jenetics.GaussianMutator
 
@@ -28,13 +31,15 @@ private const val repeatGeneratorsCount = 5
 
 /**
  * Launches multiple coevolutions in series. The settings of the evolutions are specified by [NeuroEvolution],
- * [NEATEvolution], [PCEvolution] and [PMPEvolution] objects.
+ * [NEATEvolution], [PCEvolution] and [PMPEvolution] objects. It is also able to showcase the result of the coevolution
+ * by playing one level from each coevolution step.
  */
 fun main() {
 //    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
     coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+//    playCoevolution("data/coev/9_neat/neat_pc")
 }
 
 private interface ControllerEvolutionSettings {
@@ -175,4 +180,38 @@ private fun coevolve(
     levelGeneratorChart.store("$storagePath/lg.svg")
 
     coevolutionChart.storeChart("$storagePath/coev.svg")
+}
+
+private fun playCoevolution(dataPath: String) {
+    val simulator = GameSimulator()
+
+    var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
+        receptiveFieldSizeRow = 5,
+        receptiveFieldSizeColumn = 5,
+        receptiveFieldRowOffset = 0,
+        receptiveFieldColumnOffset = 2,
+        hiddenLayerSize = 7
+    )))
+    var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
+//    simulator.playMario(currentController, currentGenerator.generate())
+
+    for (i in 10 .. 25) {
+        println("Generation: $i")
+
+        currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+//        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
+        simulator.playMario(currentController, LevelPostProcessor.postProcess(currentGenerator.generate(), false))
+
+        currentGenerator = ObjectStorage.load("$dataPath/lg_$i.lg") as LevelGenerator
+//        repeat(5) { LevelVisualiser().display(currentGenerator.generate()) }
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+//        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
+        simulator.playMario(currentController, LevelPostProcessor.postProcess(currentGenerator.generate(), false))
+    }
+
 }
