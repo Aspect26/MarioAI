@@ -52,7 +52,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 null,
                 populationSize = 50,
-                generationsCount = 3,
+                generationsCount = 35,
                 fitnessFunction = MarioGameplayEvaluators::distanceOnly,
                 objectiveFunction = MarioGameplayEvaluators::victoriesOnly,
                 evaluateOnLevelsCount = 25,
