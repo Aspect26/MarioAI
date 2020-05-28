@@ -39,7 +39,7 @@ fun main() {
     coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
-//    playCoevolution("data/coev/9_neat/neat_pc")
+//    playCoevolution("data/coev/13_pmp4/neuro_pmp")
 }
 
 private interface ControllerEvolutionSettings {
@@ -134,8 +134,8 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
             populationSize = 50,
             generationsCount = 35,
             evaluateOnLevelsCount = 30,
-            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.75f),
-            objectiveFunction = WinRatioEvaluator(0.75f, 50000f),
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.5f),
+            objectiveFunction = WinRatioEvaluator(0.5f, 50000f),
             alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
             displayChart = true,
             levelLength = 300,
@@ -195,7 +195,7 @@ private fun playCoevolution(dataPath: String) {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 10 .. 25) {
+    for (i in 20 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController
