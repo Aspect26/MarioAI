@@ -39,47 +39,27 @@ class CoevolutionStorageTests {
     fun `test store and load controller doesn't crash`() {
         val generation = 5
 
-        CoevolutionStorage.storeController(mockSettings, generation, mockController)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
         CoevolutionStorage.loadController(mockSettings, generation)
     }
 
     @Test
     fun `test store and load level generator doesn't crash`() {
-        val generation = 5
+        val generation = 7
 
-        CoevolutionStorage.storeLevelGenerator(mockSettings, generation, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
         CoevolutionStorage.loadLevelGenerator(mockSettings, generation)
     }
 
     @Test
     fun `test correct last stored generation number is computed`() {
-        CoevolutionStorage.storeController(mockSettings, 1, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 1, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 2, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 2, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 3, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 3, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator)
 
         val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
 
         assertEquals(3, actualResult, "There were 3 fully finished generations of coevolution stored.")
-    }
-
-    @Test
-    fun `test correct last stored generation number is computed when last lg evolution result is missing`() {
-        CoevolutionStorage.storeController(mockSettings, 1, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 1, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 2, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 2, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 3, mockController)
-
-        val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
-
-        assertEquals(2, actualResult, "There were 2 fully finished generations of coevolution stored.")
     }
 
 }
