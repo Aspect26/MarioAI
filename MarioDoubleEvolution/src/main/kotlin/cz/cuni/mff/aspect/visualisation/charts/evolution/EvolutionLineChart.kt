@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.visualisation.charts.evolution
 
 import cz.cuni.mff.aspect.visualisation.charts.DataSeries
 import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart
+import cz.cuni.mff.aspect.visualisation.charts.linechart.LineChartDataFile
 import java.awt.Color
 
 /**
@@ -9,9 +10,8 @@ import java.awt.Color
  * and best/average objective values as a new generation, or specify these values for a specific generation. It is also
  * able to display multiple stops (vertical black lines) at given generation numbers.
  */
-class EvolutionLineChart(val label: String = "Evolution", private val hideNegative: Boolean = false) {
+class EvolutionLineChart(val label: String = "Evolution", private val hideNegative: Boolean = false, private val _stops: MutableList<Double> = mutableListOf()) {
 
-    private val _stops = mutableListOf<Double>()
     private val lineChart = LineChart(
         label,
         "Generations",
@@ -80,5 +80,24 @@ class EvolutionLineChart(val label: String = "Evolution", private val hideNegati
 
     private fun createDataPoint(generation: Int, value: Double): Pair<Double, Double> =
         Pair(generation.toDouble(), if (hideNegative) value.coerceAtLeast(0.0) else value)
+
+    companion object {
+        fun loadFromFile(filePath: String): EvolutionLineChart {
+            val data = LineChartDataFile.loadData(filePath)
+            val evolutionLineChart = EvolutionLineChart(data.label, _stops = data.stops.toMutableList())
+
+            val seriesLength = data.series[0].data.size
+            for (generation in 1 .. seriesLength) {
+                evolutionLineChart.nextGeneration(
+                    data.series[0].data.first { (x, _) -> x.toInt() == generation }.second,
+                    data.series[1].data.first { (x, _) -> x.toInt() == generation }.second,
+                    data.series[2].data.first { (x, _) -> x.toInt() == generation }.second,
+                    data.series[3].data.first { (x, _) -> x.toInt() == generation }.second
+                )
+            }
+
+            return evolutionLineChart
+        }
+    }
 
 }

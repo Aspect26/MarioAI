@@ -2,8 +2,9 @@ package cz.cuni.mff.aspect.evolution.controller.neuroevolution
 
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluator
-import cz.cuni.mff.aspect.evolution.controller.MarioGameplayEvaluators
+import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
+import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -49,8 +50,8 @@ class NeuroControllerEvolution(
     private var controllerNetworkSettings: NetworkSettings? = null,
     generationsCount: Int = DEFAULT_GENERATIONS_COUNT,
     populationSize: Int = DEFAULT_POPULATION_SIZE,
-    private val fitnessFunction: MarioGameplayEvaluator<Float> = MarioGameplayEvaluators::distanceOnly,
-    private val objectiveFunction: MarioGameplayEvaluator<Float>  = MarioGameplayEvaluators::victoriesOnly,
+    private val fitnessFunction: MarioGameplayEvaluator = DistanceOnlyEvaluator(),
+    private val objectiveFunction: MarioGameplayEvaluator = VictoriesOnlyEvaluator(),
     parallel: Boolean = true,
     alterers: Array<Alterer<DoubleGene, Float>> = arrayOf(Mutator(0.05)),
     survivorsSelector: Selector<DoubleGene, Float> = EliteSelector(2),

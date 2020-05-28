@@ -41,7 +41,7 @@ fun Genotype<ByteGene>.getByteValues(): ByteArray {
     val array = ByteArray(geneSequence.size())
     var i = geneSequence.size()
     while (--i >= 0) {
-        array[i] = geneSequence[i].allele
+        array[i] = geneSequence[i].allele()
     }
 
     return array

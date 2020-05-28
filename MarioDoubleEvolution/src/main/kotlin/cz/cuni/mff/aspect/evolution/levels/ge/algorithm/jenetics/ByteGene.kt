@@ -10,8 +10,12 @@ import java.util.*
 
 class ByteGene(private val value: Byte) : NumericGene<Byte, ByteGene> {
 
-    override fun getMin(): Byte {
+    override fun min(): Byte {
         return Byte.MIN_VALUE
+    }
+
+    override fun max(): Byte {
+        return Byte.MAX_VALUE
     }
 
     override fun newInstance(number: Number?): ByteGene {
@@ -22,11 +26,7 @@ class ByteGene(private val value: Byte) : NumericGene<Byte, ByteGene> {
         return ByteGene(randomByte())
     }
 
-    override fun getMax(): Byte {
-        return Byte.MAX_VALUE
-    }
-
-    override fun getAllele(): Byte {
+    override fun allele(): Byte {
         return this.value
     }
 

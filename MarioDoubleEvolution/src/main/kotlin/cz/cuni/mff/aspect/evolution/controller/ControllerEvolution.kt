@@ -12,7 +12,7 @@ interface ControllerEvolution {
      * Chart of the evolution.
      * @see EvolutionLineChart for more information about the chart.
      */
-    val chart: EvolutionLineChart
+    var chart: EvolutionLineChart
 
     /** Evolves a mario agent controller, which will be evaluated using level generators given. */
     fun evolve(levelGenerators: List<LevelGenerator>): MarioController

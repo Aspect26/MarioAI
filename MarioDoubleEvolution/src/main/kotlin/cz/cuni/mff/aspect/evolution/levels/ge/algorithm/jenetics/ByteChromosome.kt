@@ -14,10 +14,6 @@ class ByteChromosome(@Transient private val genes: ISeq<ByteGene>, private val l
         return this.genes.length()
     }
 
-    override fun toSeq(): ISeq<ByteGene> {
-        return this.genes
-    }
-
     override fun newInstance(genes: ISeq<ByteGene>): Chromosome<ByteGene> {
         return ByteChromosome(genes, lengthRange)
     }
@@ -26,7 +22,7 @@ class ByteChromosome(@Transient private val genes: ISeq<ByteGene>, private val l
         return of(lengthRange)
     }
 
-    override fun getGene(index: Int): ByteGene {
+    override fun get(index: Int): ByteGene {
         return this.genes.get(index)
     }
 
