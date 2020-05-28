@@ -103,7 +103,7 @@ class NeuroControllerEvolution(
         return this.evolve()
     }
 
-    override fun createInitialGenotype(): Factory<Genotype<DoubleGene>> {
+    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> {
         return if (this.initialAgentNetwork == null) {
             Genotype.of(DoubleChromosome.of(this.weightsRange, this.createControllerNetwork().weightsCount))
         } else {
@@ -135,7 +135,7 @@ class NeuroControllerEvolution(
         val levels = Array(this.evaluateOnLevelsCount) {
             this.levelGenerators[it % this.levelGenerators.size].generate()
         }
-        val marioSimulator = GameSimulator(1000)
+        val marioSimulator = GameSimulator(1500)
         val statistics = marioSimulator.playMario(controller, levels, false)
 
         return Pair(fitnessFunction(statistics), objectiveFunction(statistics))

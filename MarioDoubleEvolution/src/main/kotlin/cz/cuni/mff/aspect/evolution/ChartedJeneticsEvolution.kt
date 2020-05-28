@@ -44,7 +44,7 @@ abstract class ChartedJeneticsEvolution<T>(
 
     fun evolve(): T {
         this.evaluator = this.createNewEvaluator()
-        val initialGenotype = this.createInitialGenotype()
+        val initialGenotype = this.createGenotypeFactory()
         val evolutionEngine = this.createEvolutionEngine(initialGenotype)
         val resultIndividual = this.doEvolution(evolutionEngine)
         val resultGenotype = resultIndividual.genotype()
@@ -57,14 +57,14 @@ abstract class ChartedJeneticsEvolution<T>(
         return MarioJeneticsEvaluator(this::computeFitnessAndObjective,this.alwaysReevaluate, executor)
     }
 
-    protected abstract fun createInitialGenotype(): Factory<Genotype<DoubleGene>>
+    protected abstract fun createGenotypeFactory(): Factory<Genotype<DoubleGene>>
 
     protected abstract fun entityFromIndividual(genotype: Genotype<DoubleGene>): T
 
     protected abstract fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float>
 
-    private fun createEvolutionEngine(initialGenotype: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> =
-        Engine.Builder(this.evaluator, initialGenotype)
+    private fun createEvolutionEngine(initialGenotypeFactory: Factory<Genotype<DoubleGene>>): Engine<DoubleGene, Float> =
+        Engine.Builder(this.evaluator, initialGenotypeFactory)
             .optimize(this.fitnessOptimization)
             .populationSize(this.populationSize)
             .alterers(this.alterers[0], *this.alterers.slice(1 until this.alterers.size).toTypedArray())

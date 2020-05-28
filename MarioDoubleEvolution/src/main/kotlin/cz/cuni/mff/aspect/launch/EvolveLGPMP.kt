@@ -1,7 +1,8 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
-import cz.cuni.mff.aspect.controllers.GoingRightAndJumpingController
+import cz.cuni.mff.aspect.controllers.GoingRightController
+import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
@@ -28,15 +29,18 @@ fun main() {
 
 private fun evolvePMP() {
 
-    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
+    val agentFactory = { MarioAgent(GoingRightController()) }
 
     val levelEvolution = PMPLevelGeneratorEvolution(
-        generationsCount = 20,
         populationSize = 50,
-        fitnessFunction = HuffmanCompressionEvaluator(),
-        objectiveFunction = NullEvaluator(),
-        evaluateOnLevelsCount = 36,
-        levelLength = 300
+        generationsCount = 35,
+        evaluateOnLevelsCount = 30,
+        fitnessFunction = All(0.75f),
+        objectiveFunction = WinRatioEvaluator(0.75f, 50000f),
+        alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
+        displayChart = true,
+        levelLength = 300,
+        chartLabel = "PMP Level Generator"
     )
 
     val levelGenerator = levelEvolution.evolve(agentFactory)

@@ -62,7 +62,7 @@ class PCLevelGeneratorEvolution(
         return this.evolve()
     }
 
-    override fun createInitialGenotype(): Factory<Genotype<DoubleGene>> =
+    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> =
         MarkovChainGenotypeFactory(PCLevelGenerator.DEFAULT_CHUNKS_COUNT, PCLevelGenerator.ENEMY_TYPES_COUNT + 1)
 
     override fun entityFromIndividual(genotype: Genotype<DoubleGene>): PCLevelGenerator =

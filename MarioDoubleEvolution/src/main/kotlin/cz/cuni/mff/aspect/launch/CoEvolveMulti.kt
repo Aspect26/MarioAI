@@ -8,6 +8,7 @@ import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
@@ -17,6 +18,7 @@ import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
@@ -42,7 +44,7 @@ fun main() {
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
 //    continueCoevolution("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
-    
+
 //    playCoevolution("data/coev/9_neat/neat_pc")
 }
 
@@ -136,11 +138,12 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
     override val evolution: LevelGeneratorEvolution
         get() = PMPLevelGeneratorEvolution(
             populationSize = 50,
-            generationsCount = 15,
-            evaluateOnLevelsCount = 36,
-            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(),
-            objectiveFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.AgentHalfPassing(),
-            displayChart = false,
+            generationsCount = 35,
+            evaluateOnLevelsCount = 30,
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.5f),
+            objectiveFunction = WinRatioEvaluator(0.5f, 50000f),
+            alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
+            displayChart = true,
             levelLength = 300,
             chartLabel = "PMP Level Generator"
         )
@@ -237,7 +240,7 @@ private fun playCoevolution(dataPath: String) {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 10 .. 25) {
+    for (i in 20 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController

@@ -6,6 +6,7 @@ import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.BoxPlatformType
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.Entities
 import cz.cuni.mff.aspect.mario.level.MarioLevel
+import cz.cuni.mff.aspect.utils.lastIndexOf
 import java.util.*
 import kotlin.math.min
 
@@ -31,7 +32,7 @@ class PMPLevelGenerator(
             PI_CHANGE_HEIGHT -> 0.1
             PI_CREATE_HOLE -> 0.05
 
-            PI_ENEMY_GOOMBA -> 0.03
+            PI_ENEMY_GOOMBA -> 1.0
             PI_ENEMY_KOOPA_GREEN -> 0.03
             PI_ENEMY_KOOPA_GREEN_WINGED -> 0.01
             PI_ENEMY_KOOPA_RED -> 0.03
@@ -170,6 +171,7 @@ class PMPLevelGenerator(
             val canBeStairs = !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isHoleAt(column - 1)
                     && levelMetadata.groundHeight[column] == levelMetadata.groundHeight[column - 1]
+                    && levelMetadata.stoneColumns.lastIndexOf { it != 0 } < column - 30
 
             if (shouldBeStairs && canBeStairs) {
                 this.addStairs(levelMetadata, column)
@@ -184,6 +186,8 @@ class PMPLevelGenerator(
             val canBeBoxes = levelMetadata.pipes[column] == 0
                     && levelMetadata.pipes[column - 1] == 0
                     && levelMetadata.bulletBills[column] == 0
+                    && levelMetadata.boxPlatforms.mapIndexed { columnIndex, platform -> if (platform.length == 0) -1 else columnIndex + platform.length }.max()!! < (column - 15)
+
             val shouldBeBoxes = this.random.nextFloat() < this.probabilities[PI_START_BOXES]
             val shouldBeDoubleBoxes = this.random.nextFloat() < this.probabilities[PI_DOUBLE_BOXES]
 
@@ -213,6 +217,8 @@ class PMPLevelGenerator(
 
             val canBeEntity = !levelMetadata.isHoleAt(column)
                     && !levelMetadata.isObstacleAt(column, levelMetadata.groundHeight[column] + 1)
+                    && levelMetadata.entities.toList().subList(column - 10, column - 1).sumBy { if (it == 0) 0 else 1 } < 5
+                    && levelMetadata.entities.toList().subList(column - 6, column - 1).sumBy { if (it == 0) 0 else 1 } < 3
 
             levelMetadata.entities[column] = if (canBeEntity) entity else Entities.NOTHING
         }
