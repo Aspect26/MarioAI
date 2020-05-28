@@ -36,19 +36,19 @@ class Coevolution {
      * @param coevolutionSettings coevolution settings with which the coevolution was started.
      */
     fun continueCoevolution(coevolutionSettings: CoevolutionSettings): CoevolutionResult {
-        val lastFinishedGenerationNumber = this.getLastFinishedGenerationNumber(coevolutionSettings.storagePath)
+        val lastFinishedGenerationNumber = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(coevolutionSettings)
         println("Restarting coevolution from generation: $lastFinishedGenerationNumber")
 
         if (lastFinishedGenerationNumber == 0)
             return this.evolve(coevolutionSettings, 0)
 
         val updatedCoevolutionSettings = coevolutionSettings.copy(
-            initialController = ObjectStorage.load("${coevolutionSettings.storagePath}/ai_$lastFinishedGenerationNumber.ai"),
-            initialLevelGenerator = ObjectStorage.load("${coevolutionSettings.storagePath}/lg_$lastFinishedGenerationNumber.lg")
+            initialController = CoevolutionStorage.loadController(coevolutionSettings, lastFinishedGenerationNumber),
+            initialLevelGenerator = CoevolutionStorage.loadLevelGenerator(coevolutionSettings, lastFinishedGenerationNumber)
         )
 
-        val aiChart = EvolutionLineChart.loadFromFile("${coevolutionSettings.storagePath}/ai.svg.dat")
-        val lgChart = EvolutionLineChart.loadFromFile("${coevolutionSettings.storagePath}/lg.svg.dat")
+        val aiChart = CoevolutionStorage.loadControllerChart(coevolutionSettings)
+        val lgChart = CoevolutionStorage.loadLevelGeneratorsChart(coevolutionSettings)
 
         updatedCoevolutionSettings.controllerEvolution.chart = aiChart
         updatedCoevolutionSettings.generatorEvolution.chart = lgChart
@@ -62,8 +62,8 @@ class Coevolution {
         var latestGenerator: LevelGenerator = coevolutionSettings.initialLevelGenerator
 
         val startTime = System.currentTimeMillis()
-        for (generation in (startGenerationIndex until coevolutionSettings.generations)) {
-            println(" -- COEVOLUTION GENERATION ${generation + 1} -- ")
+        for (generationIndex in (startGenerationIndex until coevolutionSettings.generations)) {
+            println(" -- COEVOLUTION GENERATION ${generationIndex + 1} -- ")
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
             currentController = coevolutionSettings.controllerEvolution.continueEvolution(
@@ -75,47 +75,14 @@ class Coevolution {
             val agentFactory = { MarioAgent(DeepCopy.copy(currentController)) }
             latestGenerator = coevolutionSettings.generatorEvolution.evolve(agentFactory)
 
-            ObjectStorage.store("${coevolutionSettings.storagePath}/ai_${generation + 1}.ai", currentController)
-            ObjectStorage.store("${coevolutionSettings.storagePath}/lg_${generation + 1}.lg", latestGenerator)
+            CoevolutionStorage.storeController(coevolutionSettings, generationIndex + 1, currentController)
+            CoevolutionStorage.storeLevelGenerator(coevolutionSettings, generationIndex + 1, latestGenerator)
 
             generatorsHistory.push(latestGenerator)
-            storeCharts(coevolutionSettings.controllerEvolution, coevolutionSettings.generatorEvolution, coevolutionSettings.storagePath)
+            CoevolutionStorage.storeCharts(coevolutionSettings)
         }
 
         return CoevolutionResult(currentController, latestGenerator)
-    }
-
-    private fun storeCharts(controllerEvolution: ControllerEvolution, levelGeneratorEvolution: LevelGeneratorEvolution, storagePath: String) {
-        val controllerChart = controllerEvolution.chart
-        val levelGeneratorChart = levelGeneratorEvolution.chart
-        val coevolutionChart =
-            CoevolutionLineChart(
-                controllerChart,
-                levelGeneratorChart,
-                "Coevolution"
-            )
-
-        controllerChart.store("$storagePath/ai.svg")
-        levelGeneratorChart.store("$storagePath/lg.svg")
-
-        coevolutionChart.storeChart("$storagePath/coev.svg")
-    }
-
-    private fun getLastFinishedGenerationNumber(storagePath: String): Int {
-        val storageDirectory = File(storagePath)
-        if (!storageDirectory.exists()) throw IllegalArgumentException("Can't restore the given coevolution, because directory $storagePath does not exist")
-        if (!storageDirectory.isDirectory) throw IllegalArgumentException("Can't restore the given coevolution, because file $storagePath is not a directory")
-
-        val filesInDirectory = storageDirectory.listFiles() ?: throw IllegalArgumentException("Can't restore the given coevolution, because directory $storagePath is empty")
-
-        val lgFilePattern = Pattern.compile("lg_([0-9]+)\\.lg")
-
-        return filesInDirectory
-            .filter { it.isFile }
-            .map { it.name }
-            .filter { lgFilePattern.matcher(it).matches() }
-            .map { val matcher = lgFilePattern.matcher(it); matcher.matches(); matcher.group(1).toInt() }
-            .max() ?: 0
     }
 
     private fun createGeneratorsHistory(coevolutionSettings: CoevolutionSettings, alreadyCreatedGeneratorsCount: Int): SlidingWindow<LevelGenerator> {
