@@ -43,7 +43,7 @@ private fun evolvePMP() {
         chartLabel = "PMP Level Generator"
     )
 
-    val levelGenerator = levelEvolution.evolve(agentFactory)
+    val levelGenerator = levelEvolution.evolve(agentFactory).bestLevelGenerator
     ObjectStorage.store(FILE_PATH_LATEST_PMP, levelGenerator)
 
     val level = levelGenerator.generate()

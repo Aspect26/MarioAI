@@ -1,10 +1,8 @@
 package cz.cuni.mff.aspect.evolution.levels.pmp
 
-import ch.idsia.agents.IAgent
-import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.jenetics.genotype.ZeroInitializingDoubleGenotypeFactory
-import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.JeneticsLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.metadata.PMPLevelMetadata
 import cz.cuni.mff.aspect.mario.GameSimulator
@@ -42,7 +40,7 @@ class PMPLevelGeneratorEvolution(
     private val levelLength: Int = DEFAULT_LEVEL_LENGTH,
     chartLabel: String = DEFAULT_CHART_LABEL,
     displayChart: Boolean = true
-) : ChartedJeneticsEvolution<PMPLevelGenerator>(
+) : JeneticsLevelGeneratorEvolution<PMPLevelGenerator>(
     populationSize,
     generationsCount,
     fitnessOptimization = fitnessFunction.optimize,
@@ -51,24 +49,17 @@ class PMPLevelGeneratorEvolution(
     survivorsSelector = EliteSelector(2),
     offspringSelector = RouletteWheelSelector(),
     displayChart = displayChart,
-    chart = EvolutionLineChart(
-        chartLabel,
-        hideNegative = false
-    )
-), LevelGeneratorEvolution {
-
-    private lateinit var agentFactory: () -> IAgent
-
-    override fun evolve(agentFactory: () -> IAgent): PMPLevelGenerator {
-        this.agentFactory = agentFactory
-        return this.evolve()
-    }
+    chartLabel = chartLabel
+) {
 
     override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> =
         ZeroInitializingDoubleGenotypeFactory(PMPLevelGenerator.PROBABILITIES_COUNT, DoubleRange.of(0.0, 1.0))
 
     override fun entityFromIndividual(genotype: Genotype<DoubleGene>): PMPLevelGenerator =
         PMPLevelGenerator(genotype.getDoubleValues(), this.levelLength)
+
+    override fun entityToIndividual(levelGenerator: PMPLevelGenerator): Genotype<DoubleGene> =
+        Genotype.of(DoubleChromosome.of(levelGenerator.data.map { DoubleGene.of(it, 0.0, 1.0) }))
 
     override fun computeFitnessAndObjective(genotype: Genotype<DoubleGene>): Pair<Float, Float> {
         val levelGenerator = this.entityFromIndividual(genotype)

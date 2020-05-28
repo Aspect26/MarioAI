@@ -45,7 +45,7 @@ private val coevolutionSettings = CoevolutionSettings(
 )
 
 private fun startCoev() {
-    val coevolution = Coevolution()
+    val coevolution = Coevolution<PCLevelGenerator>()
     coevolution.startEvolution(coevolutionSettings)
 }
 
@@ -58,6 +58,6 @@ private fun recreateChart() {
 }
 
 private fun continueCoev() {
-    val coevolution = Coevolution()
+    val coevolution = Coevolution<PCLevelGenerator>()
     coevolution.continueCoevolution(coevolutionSettings)
 }

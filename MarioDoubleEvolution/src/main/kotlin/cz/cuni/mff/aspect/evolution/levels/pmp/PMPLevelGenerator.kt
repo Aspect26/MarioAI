@@ -76,6 +76,7 @@ class PMPLevelGenerator(
     }
 
     val lastMetadata: PMPLevelMetadata get() = this._lastMetadata
+    val data: DoubleArray get() = this.probabilities
 
     private fun createInitialLevel(): PMPLevelMetadata {
         val groundHeight = IntArray(this.length) { STARTING_HEIGHT }

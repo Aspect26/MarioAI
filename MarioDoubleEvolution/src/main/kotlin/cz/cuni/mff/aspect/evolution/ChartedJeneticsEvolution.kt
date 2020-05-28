@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.evolution
 
 import cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator
+import cz.cuni.mff.aspect.evolution.jenetics.genotype.StaticGenotypeFactory
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.jenetics.*
 import io.jenetics.engine.Engine
@@ -42,14 +43,23 @@ abstract class ChartedJeneticsEvolution<T>(
 
     lateinit var evaluator: MarioJeneticsEvaluator<DoubleGene, Float>
 
-    fun evolve(): T {
+    fun evolve(): JeneticsEvolutionResult<T> {
+        val initialGenotypeFactory = this.createGenotypeFactory()
+        return this.doEvolution(initialGenotypeFactory)
+    }
+
+    fun continueEvolution(initialPopulation: List<Genotype<DoubleGene>>): JeneticsEvolutionResult<T> {
+        val initialGenotypeFactory = StaticGenotypeFactory(initialPopulation)
+        return this.doEvolution(initialGenotypeFactory)
+    }
+
+    private fun doEvolution(genotypeFactory: Factory<Genotype<DoubleGene>>): JeneticsEvolutionResult<T> {
         this.evaluator = this.createNewEvaluator()
-        val initialGenotype = this.createGenotypeFactory()
-        val evolutionEngine = this.createEvolutionEngine(initialGenotype)
+        val evolutionEngine = this.createEvolutionEngine(genotypeFactory)
         val resultIndividual = this.doEvolution(evolutionEngine)
         val resultGenotype = resultIndividual.genotype()
 
-        return entityFromIndividual(resultGenotype)
+        return JeneticsEvolutionResult(entityFromIndividual(resultGenotype), this.evaluator.lastGeneration)
     }
 
     private fun createNewEvaluator(): MarioJeneticsEvaluator<DoubleGene, Float> {

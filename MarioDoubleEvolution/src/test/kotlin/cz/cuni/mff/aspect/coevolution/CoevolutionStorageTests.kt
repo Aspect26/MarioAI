@@ -12,10 +12,13 @@ import java.io.File
 
 class CoevolutionStorageTests {
 
+    // TODO: test also last population
+
     private val mockController = mockk<MarioController>()
     private val mockGenerator = mockk<LevelGenerator>()
-    private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution>()
+    private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution<LevelGenerator>>()
     private val mockControllerEvolution = mockk<ControllerEvolution>()
+    private val mockLastGeneratorsPopulation = mockk<List<LevelGenerator>>()
 
     private val mockSettings = CoevolutionSettings(
         controllerEvolution = mockControllerEvolution,
@@ -39,7 +42,7 @@ class CoevolutionStorageTests {
     fun `test store and load controller doesn't crash`() {
         val generation = 5
 
-        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator, mockLastGeneratorsPopulation)
         CoevolutionStorage.loadController(mockSettings, generation)
     }
 
@@ -47,15 +50,15 @@ class CoevolutionStorageTests {
     fun `test store and load level generator doesn't crash`() {
         val generation = 7
 
-        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator, mockLastGeneratorsPopulation)
         CoevolutionStorage.loadLevelGenerator(mockSettings, generation)
     }
 
     @Test
     fun `test correct last stored generation number is computed`() {
-        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator)
-        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator)
-        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator, mockLastGeneratorsPopulation)
+        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator, mockLastGeneratorsPopulation)
+        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator, mockLastGeneratorsPopulation)
 
         val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
 

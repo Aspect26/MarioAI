@@ -1,7 +1,9 @@
 package cz.cuni.mff.aspect.coevolution
 
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorSerializer
 import cz.cuni.mff.aspect.mario.controllers.MarioController
+import cz.cuni.mff.aspect.storage.LocalTextFileStorage
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
@@ -18,11 +20,21 @@ object CoevolutionStorage {
      * @param coevolutionGeneration the generation of coevolution.
      * @param controller the resulting controller.
      */
-    fun storeState(settings: CoevolutionSettings, coevolutionGeneration: Int, controller: MarioController, levelGenerator: LevelGenerator) {
+    fun <T: LevelGenerator> storeState(
+        settings: CoevolutionSettings<T>,
+        coevolutionGeneration: Int,
+        controller: MarioController,
+        levelGenerator: LevelGenerator,
+        lastLevelGeneratorsPopulation: List<LevelGenerator>
+    ) {
         ObjectStorage.store("${settings.storagePath}/ai_${coevolutionGeneration}.ai", controller)
         ObjectStorage.store("${settings.storagePath}/lg_${coevolutionGeneration}.lg", levelGenerator)
+        LocalTextFileStorage.storeData("${settings.storagePath}/lg_last_population.dat",
+            lastLevelGeneratorsPopulation.joinToString { LevelGeneratorSerializer.serialize(it) + System.lineSeparator() })
         this.storeCharts(settings)
     }
+
+    // TODO: maybe also introduce load state instead of multiple of these load functions
 
     /**
      * Loads result controller from a given coevolution generation. If the generation is not specified, it loads
@@ -31,7 +43,7 @@ object CoevolutionStorage {
      * @param settings coevolution settings used to run the coevolution.
      * @param coevolutionGeneration coevolution generation from which the controller should be loaded.
      */
-    fun loadController(settings: CoevolutionSettings, coevolutionGeneration: Int = settings.generations): MarioController =
+    fun <T: LevelGenerator> loadController(settings: CoevolutionSettings<T>, coevolutionGeneration: Int = settings.generations): MarioController =
         ObjectStorage.load("${settings.storagePath}/ai_$coevolutionGeneration.ai")
 
     /**
@@ -41,15 +53,25 @@ object CoevolutionStorage {
      * @param settings coevolution settings used to run the coevolution.
      * @param coevolutionGeneration coevolution generation from which the level generator should be loaded.
      */
-    fun loadLevelGenerator(settings: CoevolutionSettings, coevolutionGeneration: Int = settings.generations): LevelGenerator =
+    fun <T: LevelGenerator> loadLevelGenerator(settings: CoevolutionSettings<T>, coevolutionGeneration: Int = settings.generations): LevelGenerator =
         ObjectStorage.load("${settings.storagePath}/lg_$coevolutionGeneration.lg")
+
+    /**
+     * Loads last poopulation of level generators evolution.
+     *
+     * @param settings coevolution settings used to run the coevolution.
+     */
+    fun <T: LevelGenerator> loadLastLevelGeneratorsPopulation(settings: CoevolutionSettings<T>): List<T> {
+        val rawData = LocalTextFileStorage.loadData("${settings.storagePath}/lg_last_population.dat")
+        return rawData.lines().map { LevelGeneratorSerializer.deserialize<T>(it) }
+    }
 
     /**
      * Loads evolution line chart of controller from given coevolution.
      *
      * @param settings coevolution settings used to run the coevolution.
      */
-    fun loadControllerChart(settings: CoevolutionSettings): EvolutionLineChart =
+    fun <T: LevelGenerator> loadControllerChart(settings: CoevolutionSettings<T>): EvolutionLineChart =
         EvolutionLineChart.loadFromFile("${settings.storagePath}/ai.svg.dat")
 
     /**
@@ -57,7 +79,7 @@ object CoevolutionStorage {
      *
      * @param settings coevolution settings used to run the coevolution.
      */
-    fun loadLevelGeneratorsChart(settings: CoevolutionSettings): EvolutionLineChart =
+    fun <T: LevelGenerator> loadLevelGeneratorsChart(settings: CoevolutionSettings<T>): EvolutionLineChart =
         EvolutionLineChart.loadFromFile("${settings.storagePath}/lg.svg.dat")
 
 
@@ -66,7 +88,7 @@ object CoevolutionStorage {
      *
      * @param settings coevolution settings used to run the coevolution.
      */
-    fun getLastStoredCoevolutionGenerationNumber(settings: CoevolutionSettings): Int {
+    fun <T: LevelGenerator> getLastStoredCoevolutionGenerationNumber(settings: CoevolutionSettings<T>): Int {
         val storagePath = settings.storagePath
         val storageDirectory = File(storagePath)
         if (!storageDirectory.exists()) throw IllegalArgumentException("Can't restore the given coevolution, because directory $storagePath does not exist")
@@ -84,7 +106,7 @@ object CoevolutionStorage {
             .max() ?: 0
     }
 
-    private fun storeCharts(settings: CoevolutionSettings) {
+    private fun <T: LevelGenerator> storeCharts(settings: CoevolutionSettings<T>) {
         val controllerChart = settings.controllerEvolution.chart
         val levelGeneratorChart = settings.generatorEvolution.chart
         val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
