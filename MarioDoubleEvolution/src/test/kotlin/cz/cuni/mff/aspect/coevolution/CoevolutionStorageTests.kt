@@ -4,9 +4,12 @@ import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.MarioController
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
+import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -16,6 +19,13 @@ class CoevolutionStorageTests {
     private val mockGenerator = mockk<LevelGenerator>()
     private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution>()
     private val mockControllerEvolution = mockk<ControllerEvolution>()
+    private val mockEvolutionChart = EvolutionLineChart()
+
+    @BeforeEach
+    fun beforeEach() {
+        every { mockControllerEvolution.chart } returns mockEvolutionChart
+        every { mockLevelGeneratorEvolution.chart } returns mockEvolutionChart
+    }
 
     private val mockSettings = CoevolutionSettings(
         controllerEvolution = mockControllerEvolution,
