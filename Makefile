@@ -1,3 +1,6 @@
+include .env.make
+export
+
 MARIO_SIMULATOR_PROJECT = "MarioAI4J"
 MARIO_COEVOLUTION_PROJECT = "MarioDoubleEvolution"
 
