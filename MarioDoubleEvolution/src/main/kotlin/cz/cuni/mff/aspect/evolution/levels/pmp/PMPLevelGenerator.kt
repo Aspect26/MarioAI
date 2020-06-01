@@ -56,6 +56,9 @@ class PMPLevelGenerator(
     private val random = Random()
     private lateinit var _lastMetadata: PMPLevelMetadata
 
+    fun equalsGenerator(other: PMPLevelGenerator): Boolean =
+        other.length == this.length && other.probabilities.contentEquals(this.probabilities)
+
     override fun generate(): MarioLevel {
         val levelMetadata = this.createInitialLevel()
 
@@ -76,6 +79,7 @@ class PMPLevelGenerator(
     }
 
     val lastMetadata: PMPLevelMetadata get() = this._lastMetadata
+    val data: DoubleArray get() = this.probabilities
 
     private fun createInitialLevel(): PMPLevelMetadata {
         val groundHeight = IntArray(this.length) { STARTING_HEIGHT }
@@ -309,6 +313,7 @@ class PMPLevelGenerator(
     }
 
     companion object {
+        private val serialVersionUID = 6193608689969572463L
         const val SAFE_ZONE_LENGTH = 10
         private const val LEVEL_HEIGHT = 15
         private const val STARTING_HEIGHT = 5

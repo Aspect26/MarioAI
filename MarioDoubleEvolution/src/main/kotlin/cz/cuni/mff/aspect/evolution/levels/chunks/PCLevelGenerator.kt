@@ -57,6 +57,7 @@ class PCLevelGenerator(
     }
 
     val lastChunksMetadata: ChunksLevelMetadata get() = this._lastChunksMetadata
+    val data: List<Double> get() = this.probabilities
 
     private fun generate(chunks: Array<MarioLevelChunk>, startingProbabilities: List<Double>, transitionProbabilities: List<Double>,
                          chunksInLevelCount: Int, startChunk: MarioLevelChunk, endChunk: MarioLevelChunk, entityProbabilities: List<Double>,
@@ -114,7 +115,7 @@ class PCLevelGenerator(
         chunksWithHeight.add(ChunkWithHeight(chunks[currentChunkIndex].copySelf(), currentLevel))
 
         // inner chunks
-        for (chunkNumber in 1 until chunksInLevelCount) {
+        for (chunkNumber in 2 until chunksInLevelCount - 1) {
             if (this.random.nextDouble() < heightChangeProbability)
                 currentLevel = (currentLevel + this.nextHeightChange).coerceIn(5, 14)
 
@@ -185,6 +186,7 @@ class PCLevelGenerator(
     }
 
     companion object {
+        private val serialVersionUID = -2723181636782557502L
         private val defaultChunks = arrayOf(
             PathChunk(3), PathChunk(4), PathChunk(5), PathChunk(6),
             HoleChunk(2), HoleChunk(3), HoleChunk(4),

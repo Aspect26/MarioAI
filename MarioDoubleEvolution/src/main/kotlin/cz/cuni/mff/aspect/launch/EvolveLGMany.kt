@@ -123,13 +123,13 @@ class PMPEvolutionLauncher(
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
             fitnessFunction = this.fitnessFunction,
-            objectiveFunction = this.fitnessFunction,
+            objectiveFunction = this.objectiveFunction,
             evaluateOnLevelsCount = this.evaluateOnLevelsCount,
             chartLabel = this.label
         )
 
         val levelGenerator = levelEvolution.evolve(this.agentFactory)
-        var levels = Array(this.resultLevelsCount) { levelGenerator.generate() }
+        var levels = Array(this.resultLevelsCount) { levelGenerator.bestLevelGenerator.generate() }
 
         if (this.postProcess)
             levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()

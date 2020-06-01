@@ -36,7 +36,7 @@ private fun evolvePC() {
         displayChart = true
     )
 
-    val levelGenerator = levelGeneratorEvolution.evolve(agentFactory)
+    val levelGenerator = levelGeneratorEvolution.evolve(agentFactory).bestLevelGenerator
     ObjectStorage.store("data/latest_pc_lg.lg", levelGenerator)
 
     val level = levelGenerator.generate()

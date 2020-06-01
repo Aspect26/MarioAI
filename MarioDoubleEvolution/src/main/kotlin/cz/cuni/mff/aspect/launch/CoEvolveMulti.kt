@@ -53,9 +53,9 @@ private interface ControllerEvolutionSettings {
     val initialController: MarioController
 }
 
-private interface LevelGeneratorEvolutionSettings {
-    val evolution: LevelGeneratorEvolution
-    val initialLevelGenerator: LevelGenerator
+private interface LevelGeneratorEvolutionSettings<T: LevelGenerator> {
+    val evolution: LevelGeneratorEvolution<T>
+    val initialLevelGenerator: T
 }
 
 private object NeuroEvolution : ControllerEvolutionSettings {
@@ -115,8 +115,8 @@ private object NEATEvolution : ControllerEvolutionSettings {
 
 }
 
-private object PCEvolution : LevelGeneratorEvolutionSettings {
-    override val evolution: LevelGeneratorEvolution
+private object PCEvolution : LevelGeneratorEvolutionSettings<PCLevelGenerator> {
+    override val evolution: LevelGeneratorEvolution<PCLevelGenerator>
         get() =
             PCLevelGeneratorEvolution(
                 populationSize = 50,
@@ -129,13 +129,13 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
                 chartLabel = "PC Level Generator"
             )
 
-    override val initialLevelGenerator: LevelGenerator
+    override val initialLevelGenerator: PCLevelGenerator
         get() = PCLevelGenerator.createSimplest()
 
 }
 
-private object PMPEvolution : LevelGeneratorEvolutionSettings {
-    override val evolution: LevelGeneratorEvolution
+private object PMPEvolution : LevelGeneratorEvolutionSettings<PMPLevelGenerator> {
+    override val evolution: LevelGeneratorEvolution<PMPLevelGenerator>
         get() = PMPLevelGeneratorEvolution(
             populationSize = 50,
             generationsCount = 35,
@@ -148,15 +148,15 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings {
             chartLabel = "PMP Level Generator"
         )
 
-    override val initialLevelGenerator: LevelGenerator
+    override val initialLevelGenerator: PMPLevelGenerator
         get() = PMPLevelGenerator.createSimplest()
 
 }
 
-private fun coevolve(
+private fun<T: LevelGenerator> coevolve(
     storagePath: String,
     controllerEvolutionSettings: ControllerEvolutionSettings,
-    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
+    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings<T>,
     generations: Int,
     repeatGeneratorsCount: Int
 ) {
@@ -172,7 +172,7 @@ private fun coevolve(
         storagePath
     )
 
-    val coevolver = Coevolution()
+    val coevolver = Coevolution<T>()
 
     coevolver.startEvolution(coevolutionSettings)
 
@@ -190,10 +190,10 @@ private fun coevolve(
     coevolutionChart.storeChart("$storagePath/coev.svg")
 }
 
-private fun continueCoevolution(
+private fun <T: LevelGenerator> continueCoevolution(
     storagePath: String,
     controllerEvolutionSettings: ControllerEvolutionSettings,
-    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings,
+    levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings<T>,
     generations: Int,
     repeatGeneratorsCount: Int
 ) {
@@ -209,7 +209,7 @@ private fun continueCoevolution(
         storagePath
     )
 
-    val coevolver = Coevolution()
+    val coevolver = Coevolution<T>()
 
     coevolver.startEvolution(coevolutionSettings)
 

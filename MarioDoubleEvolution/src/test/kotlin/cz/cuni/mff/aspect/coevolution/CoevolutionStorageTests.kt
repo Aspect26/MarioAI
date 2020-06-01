@@ -3,6 +3,7 @@ package cz.cuni.mff.aspect.coevolution
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.mockk.every
@@ -12,13 +13,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.random.Random
 
 class CoevolutionStorageTests {
 
     private val mockController = mockk<MarioController>()
     private val mockGenerator = mockk<LevelGenerator>()
-    private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution>()
+    private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution<LevelGenerator>>()
     private val mockControllerEvolution = mockk<ControllerEvolution>()
+    private val mockLastGeneratorsPopulation = List(10) {
+        PMPLevelGenerator(DoubleArray(PMPLevelGenerator.PROBABILITIES_COUNT) { 0.1 }, 50)
+    }
     private val mockEvolutionChart = EvolutionLineChart()
 
     @BeforeEach
@@ -46,30 +51,48 @@ class CoevolutionStorageTests {
     }
 
     @Test
-    fun `test store and load controller doesn't crash`() {
+    fun `test store and load doesn't crash`() {
         val generation = 5
 
-        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
-        CoevolutionStorage.loadController(mockSettings, generation)
-    }
-
-    @Test
-    fun `test store and load level generator doesn't crash`() {
-        val generation = 7
-
-        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
-        CoevolutionStorage.loadLevelGenerator(mockSettings, generation)
+        (1..generation).forEach { CoevolutionStorage.storeState(mockSettings, it, mockController, mockGenerator, mockLastGeneratorsPopulation) }
+        CoevolutionStorage.loadState(mockSettings)
     }
 
     @Test
     fun `test correct last stored generation number is computed`() {
-        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator)
-        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator)
-        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator, mockLastGeneratorsPopulation)
+        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator, mockLastGeneratorsPopulation)
+        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator, mockLastGeneratorsPopulation)
 
-        val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
+        val loadedState = CoevolutionStorage.loadState(mockSettings)
 
-        assertEquals(3, actualResult, "There were 3 fully finished generations of coevolution stored.")
+        assertEquals(3, loadedState.lastFinishedGeneration, "There were 3 fully finished generations of coevolution stored.")
+    }
+
+    @Test
+    fun `test correct last generators population is stored and loaded`() {
+        val random = Random(26270)
+        val populationSize = 10
+
+        val generatorsProbabilities = List(populationSize) { DoubleArray(PMPLevelGenerator.PROBABILITIES_COUNT) { random.nextDouble() } }
+        val actualGeneratorsPopulation = List(10) { PMPLevelGenerator(generatorsProbabilities[it], 50) }
+
+        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator, actualGeneratorsPopulation)
+        val loadedState = CoevolutionStorage.loadState(mockSettings)
+
+        val loadedGeneratorsPopulation = loadedState.latestGeneratorsPopulation
+
+        (0 until populationSize).forEach {
+            val loadedGenerator = loadedGeneratorsPopulation[it]
+            if (loadedGenerator !is PMPLevelGenerator) {
+                throw AssertionError("Loaded generator is not of PMPLevelGenerator type")
+            }
+            assertGeneratorsEqual(actualGeneratorsPopulation[it], loadedGenerator, "The generators population does not equal")
+        }
+    }
+
+    private fun assertGeneratorsEqual(expectedGenerator: PMPLevelGenerator, actualGenerator: PMPLevelGenerator, message: String) {
+        if (!expectedGenerator.equalsGenerator(actualGenerator)) throw AssertionError(message)
     }
 
 }

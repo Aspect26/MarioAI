@@ -86,6 +86,9 @@ class EvolutionLineChart(val label: String = "Evolution", private val hideNegati
             val data = LineChartDataFile.loadData(filePath)
             val evolutionLineChart = EvolutionLineChart(data.label, _stops = data.stops.toMutableList())
 
+            if (data.series.isEmpty())
+                return evolutionLineChart
+
             val seriesLength = data.series[0].data.size
             for (generation in 1 .. seriesLength) {
                 evolutionLineChart.nextGeneration(

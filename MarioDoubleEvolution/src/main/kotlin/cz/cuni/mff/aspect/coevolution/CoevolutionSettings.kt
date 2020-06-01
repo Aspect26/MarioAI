@@ -15,10 +15,12 @@ import cz.cuni.mff.aspect.mario.controllers.MarioController
  * @param generations number of coevolution generations.
  * @param repeatGeneratorsCount number of level generators, on which the controller evolution should evaluate the controllers.
  * @param storagePath path, where the results of the coevolution are to be stored.
+ *
+ * @param T level generator type.
  */
-data class CoevolutionSettings(
+data class CoevolutionSettings<T: LevelGenerator>(
     val controllerEvolution: ControllerEvolution,
-    val generatorEvolution: LevelGeneratorEvolution,
+    val generatorEvolution: LevelGeneratorEvolution<T>,
     val initialController: MarioController,
     val initialLevelGenerator: LevelGenerator,
     val generations: Int,

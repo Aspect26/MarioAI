@@ -84,7 +84,7 @@ class NeuroControllerEvolution(
 
     override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
         this.levelGenerators = levelGenerators
-        return this.evolve()
+        return this.evolve().bestIndividual
     }
 
     override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
@@ -100,7 +100,7 @@ class NeuroControllerEvolution(
         this.levelGenerators = levelGenerators
         this.controllerNetworkSettings = controller.network.networkSettings.copy()
 
-        return this.evolve()
+        return this.evolve().bestIndividual
     }
 
     override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> {

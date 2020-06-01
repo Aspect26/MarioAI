@@ -24,12 +24,14 @@ class MarioJeneticsEvaluator<G : Gene<*, G>, C : Comparable<C>>(
 
     private var _lastGenerationObjectives: List<C> = listOf()
     private var _lastGenerationFitnesses: List<C> = listOf()
+    private var _lastGeneration: List<Genotype<G>> = listOf()
 
     private val objectiveValues: MutableMap<Int, C> = mutableMapOf()
     private val fitnessValues: MutableMap<Int, C> = mutableMapOf()
 
     val lastGenerationObjectives: List<C> get() = this._lastGenerationObjectives
     val lastGenerationFitnesses: List<C> get() = this._lastGenerationFitnesses
+    val lastGeneration: List<Genotype<G>> get() = this._lastGeneration
 
     /**
      * Evaluate implementation, possibly reevaluating all individuals in a population.
@@ -37,7 +39,7 @@ class MarioJeneticsEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     override fun eval(population: Seq<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         // Evaluation happens twice per evolution step in jenetics
         // But we should do the "always evaluation" only once, since it would be wasteful otherwise
-        val newPopulation = when {
+        val newPopulation: ISeq<Phenotype<G, C>> = when {
             isEverybodyEvaluated(population) -> {
                 population.asISeq()
             }
@@ -58,6 +60,7 @@ class MarioJeneticsEvaluator<G : Gene<*, G>, C : Comparable<C>>(
 
         this._lastGenerationObjectives = newPopulation.map { this.objectiveValues[it.hashCode()]!! }.asList()
         this._lastGenerationFitnesses = newPopulation.map { this.fitnessValues[it.hashCode()]!! }.asList()
+        this._lastGeneration = newPopulation.asList().map { it.genotype() }.toList()
 
         return newPopulation
     }
