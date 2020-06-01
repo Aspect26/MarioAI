@@ -14,12 +14,12 @@ import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.AgentHalfPassing
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
 import cz.cuni.mff.aspect.mario.GameSimulator
+import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
@@ -45,7 +45,7 @@ fun main() {
 
 //    continueCoevolution("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-//    playCoevolution("data/coev/9_neat/neat_pc")
+//    playCoevolution("data/coev/14_pc_preserve_lgs")
 }
 
 private interface ControllerEvolutionSettings {
@@ -122,8 +122,8 @@ private object PCEvolution : LevelGeneratorEvolutionSettings {
                 populationSize = 50,
                 generationsCount = 15,
                 evaluateOnLevelsCount = 36,
-                fitnessFunction = All(),
-                objectiveFunction = AgentHalfPassing(),
+                fitnessFunction = All(0.75f),
+                objectiveFunction = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.75f, 50000f),
                 chunksCount = 55,
                 displayChart = false,
                 chartLabel = "PC Level Generator"
@@ -240,7 +240,7 @@ private fun playCoevolution(dataPath: String) {
     var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 20 .. 25) {
+    for (i in 1 .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController
@@ -251,6 +251,7 @@ private fun playCoevolution(dataPath: String) {
         simulator.playMario(currentController, LevelPostProcessor.postProcess(currentGenerator.generate(), false))
 
         currentGenerator = ObjectStorage.load("$dataPath/lg_$i.lg") as LevelGenerator
+        evalLg(currentGenerator, currentController)
 //        repeat(5) { LevelVisualiser().display(currentGenerator.generate()) }
 //        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
 //        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
@@ -259,4 +260,10 @@ private fun playCoevolution(dataPath: String) {
         simulator.playMario(currentController, LevelPostProcessor.postProcess(currentGenerator.generate(), false))
     }
 
+}
+
+private fun evalLg(levelGenerator: LevelGenerator, controller: MarioController) {
+    val simulator = GameSimulator()
+    val wins = (0 until 100).map { if (simulator.playMario(MarioAgent(controller), levelGenerator.generate(), false).levelFinished) 1 else 0 }.sum()
+    println("LG eval -> $wins/100")
 }
