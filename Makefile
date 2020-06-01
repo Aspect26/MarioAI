@@ -1,4 +1,4 @@
-include .env.make
+-include .env.make
 export
 
 MARIO_SIMULATOR_PROJECT = "MarioAI4J"
