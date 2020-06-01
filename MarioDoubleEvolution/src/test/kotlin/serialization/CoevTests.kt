@@ -27,6 +27,11 @@ class CoevTests {
         assertControllerIsPlayable("7_enemies_one_hot/neuro_pc", simulator, anyLevel)
         assertControllerIsPlayable("8_dense_input/neuro_pc", simulator, anyLevel)
         assertControllerIsPlayable("9_neat/neat_pc", simulator, anyLevel)
+        assertControllerIsPlayable("10_pmp/neuro_pmp", simulator, anyLevel)
+        assertControllerIsPlayable("11_pmp2/neuro_pmp", simulator, anyLevel)
+        assertControllerIsPlayable("12_pmp3/neuro_pmp", simulator, anyLevel)
+        assertControllerIsPlayable("13_pmp4/neuro_pmp", simulator, anyLevel)
+        assertControllerIsPlayable("14_pc_preserve_lgs/neuro_pc", simulator, anyLevel)
     }
 
     @Test
@@ -43,6 +48,11 @@ class CoevTests {
         assertLevelGeneratorIsPlayable("7_enemies_one_hot/neuro_pc", simulator, anyAgent)
         assertLevelGeneratorIsPlayable("8_dense_input/neuro_pc", simulator, anyAgent)
         assertLevelGeneratorIsPlayable("9_neat/neat_pc", simulator, anyAgent)
+        assertLevelGeneratorIsPlayable("10_pmp/neuro_pmp", simulator, anyAgent)
+        assertLevelGeneratorIsPlayable("11_pmp2/neuro_pmp", simulator, anyAgent)
+        assertLevelGeneratorIsPlayable("12_pmp3/neuro_pmp", simulator, anyAgent)
+        assertLevelGeneratorIsPlayable("13_pmp4/neuro_pmp", simulator, anyAgent)
+        assertLevelGeneratorIsPlayable("14_pc_preserve_lgs/neuro_pc", simulator, anyAgent)
     }
 
     private fun assertControllerIsPlayable(dirPath: String, simulator: GameSimulator, level: MarioLevel) {

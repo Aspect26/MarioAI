@@ -186,6 +186,7 @@ class PCLevelGenerator(
     }
 
     companion object {
+        private val serialVersionUID = -2723181636782557502L
         private val defaultChunks = arrayOf(
             PathChunk(3), PathChunk(4), PathChunk(5), PathChunk(6),
             HoleChunk(2), HoleChunk(3), HoleChunk(4),

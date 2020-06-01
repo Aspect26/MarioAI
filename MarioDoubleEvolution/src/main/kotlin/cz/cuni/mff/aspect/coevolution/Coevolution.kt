@@ -32,25 +32,20 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
      * @param coevolutionSettings coevolution settings with which the coevolution was started.
      */
     fun continueCoevolution(coevolutionSettings: CoevolutionSettings<LevelGeneratorType>): CoevolutionResult {
-        val lastFinishedGenerationNumber = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(coevolutionSettings)
-        println("Restarting coevolution from generation: $lastFinishedGenerationNumber")
-
-        if (lastFinishedGenerationNumber == 0)
-            return this.evolve(coevolutionSettings, 0)
+        val coevolutionState = CoevolutionStorage.loadState(coevolutionSettings)
+        println("Restarting coevolution from generation: ${coevolutionState.lastFinishedGeneration}")
 
         val updatedCoevolutionSettings = coevolutionSettings.copy(
-            initialController = CoevolutionStorage.loadController(coevolutionSettings, lastFinishedGenerationNumber),
-            initialLevelGenerator = CoevolutionStorage.loadLevelGenerator(coevolutionSettings, lastFinishedGenerationNumber)
+            initialController = coevolutionState.latestController,
+            initialLevelGenerator = coevolutionState.latestGenerator
         )
 
-        val aiChart = CoevolutionStorage.loadControllerChart(coevolutionSettings)
-        val lgChart = CoevolutionStorage.loadLevelGeneratorsChart(coevolutionSettings)
-        val lgLastPopulation = CoevolutionStorage.loadLastLevelGeneratorsPopulation(coevolutionSettings)
+        val generatorsLastPopulation = coevolutionState.latestGeneratorsPopulation
 
-        updatedCoevolutionSettings.controllerEvolution.chart = aiChart
-        updatedCoevolutionSettings.generatorEvolution.chart = lgChart
+        updatedCoevolutionSettings.controllerEvolution.chart = coevolutionState.controllerEvolutionChart
+        updatedCoevolutionSettings.generatorEvolution.chart = coevolutionState.generatorEvolutionChart
 
-        return this.evolve(updatedCoevolutionSettings, lastFinishedGenerationNumber, lgLastPopulation)
+        return this.evolve(updatedCoevolutionSettings, coevolutionState.lastFinishedGeneration, generatorsLastPopulation)
     }
 
     private fun evolve(
