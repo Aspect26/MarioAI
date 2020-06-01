@@ -1,18 +1,12 @@
 package cz.cuni.mff.aspect.coevolution
 
-import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
-import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.utils.DeepCopy
 import cz.cuni.mff.aspect.utils.SlidingWindow
-import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
-import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
-import java.io.File
 import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
 
 /**
  * Implementation of coevolution of AI and level generators algorithm.
@@ -75,11 +69,8 @@ class Coevolution {
             val agentFactory = { MarioAgent(DeepCopy.copy(currentController)) }
             latestGenerator = coevolutionSettings.generatorEvolution.evolve(agentFactory)
 
-            CoevolutionStorage.storeController(coevolutionSettings, generationIndex + 1, currentController)
-            CoevolutionStorage.storeLevelGenerator(coevolutionSettings, generationIndex + 1, latestGenerator)
-
             generatorsHistory.push(latestGenerator)
-            CoevolutionStorage.storeCharts(coevolutionSettings)
+            CoevolutionStorage.storeState(coevolutionSettings, generationIndex + 1, currentController, latestGenerator)
         }
 
         return CoevolutionResult(currentController, latestGenerator)

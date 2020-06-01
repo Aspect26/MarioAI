@@ -4,9 +4,12 @@ import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.mario.controllers.MarioController
+import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
+import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -16,6 +19,13 @@ class CoevolutionStorageTests {
     private val mockGenerator = mockk<LevelGenerator>()
     private val mockLevelGeneratorEvolution = mockk<LevelGeneratorEvolution>()
     private val mockControllerEvolution = mockk<ControllerEvolution>()
+    private val mockEvolutionChart = EvolutionLineChart()
+
+    @BeforeEach
+    fun beforeEach() {
+        every { mockControllerEvolution.chart } returns mockEvolutionChart
+        every { mockLevelGeneratorEvolution.chart } returns mockEvolutionChart
+    }
 
     private val mockSettings = CoevolutionSettings(
         controllerEvolution = mockControllerEvolution,
@@ -39,47 +49,27 @@ class CoevolutionStorageTests {
     fun `test store and load controller doesn't crash`() {
         val generation = 5
 
-        CoevolutionStorage.storeController(mockSettings, generation, mockController)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
         CoevolutionStorage.loadController(mockSettings, generation)
     }
 
     @Test
     fun `test store and load level generator doesn't crash`() {
-        val generation = 5
+        val generation = 7
 
-        CoevolutionStorage.storeLevelGenerator(mockSettings, generation, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, generation, mockController, mockGenerator)
         CoevolutionStorage.loadLevelGenerator(mockSettings, generation)
     }
 
     @Test
     fun `test correct last stored generation number is computed`() {
-        CoevolutionStorage.storeController(mockSettings, 1, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 1, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 2, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 2, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 3, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 3, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 1, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 2, mockController, mockGenerator)
+        CoevolutionStorage.storeState(mockSettings, 3, mockController, mockGenerator)
 
         val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
 
         assertEquals(3, actualResult, "There were 3 fully finished generations of coevolution stored.")
-    }
-
-    @Test
-    fun `test correct last stored generation number is computed when last lg evolution result is missing`() {
-        CoevolutionStorage.storeController(mockSettings, 1, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 1, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 2, mockController)
-        CoevolutionStorage.storeLevelGenerator(mockSettings, 2, mockGenerator)
-
-        CoevolutionStorage.storeController(mockSettings, 3, mockController)
-
-        val actualResult = CoevolutionStorage.getLastStoredCoevolutionGenerationNumber(mockSettings)
-
-        assertEquals(2, actualResult, "There were 2 fully finished generations of coevolution stored.")
     }
 
 }

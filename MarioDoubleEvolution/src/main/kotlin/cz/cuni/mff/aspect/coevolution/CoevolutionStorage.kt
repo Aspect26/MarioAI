@@ -12,14 +12,17 @@ import java.util.regex.Pattern
 object CoevolutionStorage {
 
     /**
-     * Stores given controller which is a result of a coevolution after given generation.
+     * Stores coevolution state after given generation.
      *
      * @param settings coevolution settings used to run the coevolution.
      * @param coevolutionGeneration the generation of coevolution.
      * @param controller the resulting controller.
      */
-    fun storeController(settings: CoevolutionSettings, coevolutionGeneration: Int, controller: MarioController) =
+    fun storeState(settings: CoevolutionSettings, coevolutionGeneration: Int, controller: MarioController, levelGenerator: LevelGenerator) {
         ObjectStorage.store("${settings.storagePath}/ai_${coevolutionGeneration}.ai", controller)
+        ObjectStorage.store("${settings.storagePath}/lg_${coevolutionGeneration}.lg", levelGenerator)
+        this.storeCharts(settings)
+    }
 
     /**
      * Loads result controller from a given coevolution generation. If the generation is not specified, it loads
@@ -32,16 +35,6 @@ object CoevolutionStorage {
         ObjectStorage.load("${settings.storagePath}/ai_$coevolutionGeneration.ai")
 
     /**
-     * Stores given level generator which is a result of a coevolution after given generation.
-     *
-     * @param settings coevolution settings used to run the coevolution.
-     * @param coevolutionGeneration the generation of coevolution.
-     * @param levelGenerator the resulting level generator.
-     */
-    fun storeLevelGenerator(settings: CoevolutionSettings, coevolutionGeneration: Int, levelGenerator: LevelGenerator) =
-        ObjectStorage.store("${settings.storagePath}/lg_${coevolutionGeneration}.lg", levelGenerator)
-
-    /**
      * Loads result level generator from a given coevolution generation. If the generation is not specified, it loads
      * controller from the last generation.
      *
@@ -52,29 +45,12 @@ object CoevolutionStorage {
         ObjectStorage.load("${settings.storagePath}/lg_$coevolutionGeneration.lg")
 
     /**
-     * Stores all coevolution charts, which are controller evolution chart, level generators evolution chart and
-     * combined coevolution chart.
-     *
-     * @param settings coevolution settings used to run the coevolution.
-     */
-    fun storeCharts(settings: CoevolutionSettings) {
-        val controllerChart = settings.controllerEvolution.chart
-        val levelGeneratorChart = settings.generatorEvolution.chart
-        val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
-
-        controllerChart.store("${settings.storagePath}/ai.svg")
-        levelGeneratorChart.store("${settings.storagePath}/lg.svg")
-        coevolutionChart.storeChart("${settings.storagePath}/coev.svg")
-    }
-
-    /**
      * Loads evolution line chart of controller from given coevolution.
      *
      * @param settings coevolution settings used to run the coevolution.
      */
     fun loadControllerChart(settings: CoevolutionSettings): EvolutionLineChart =
         EvolutionLineChart.loadFromFile("${settings.storagePath}/ai.svg.dat")
-
 
     /**
      * Loads evolution line chart of level generators from given coevolution.
@@ -83,6 +59,7 @@ object CoevolutionStorage {
      */
     fun loadLevelGeneratorsChart(settings: CoevolutionSettings): EvolutionLineChart =
         EvolutionLineChart.loadFromFile("${settings.storagePath}/lg.svg.dat")
+
 
     /**
      * Gets number of last finished generation of given coevolution.
@@ -105,6 +82,16 @@ object CoevolutionStorage {
             .filter { lgFilePattern.matcher(it).matches() }
             .map { val matcher = lgFilePattern.matcher(it); matcher.matches(); matcher.group(1).toInt() }
             .max() ?: 0
+    }
+
+    private fun storeCharts(settings: CoevolutionSettings) {
+        val controllerChart = settings.controllerEvolution.chart
+        val levelGeneratorChart = settings.generatorEvolution.chart
+        val coevolutionChart = CoevolutionLineChart(controllerChart, levelGeneratorChart, "Coevolution")
+
+        controllerChart.store("${settings.storagePath}/ai.svg")
+        levelGeneratorChart.store("${settings.storagePath}/lg.svg")
+        coevolutionChart.storeChart("${settings.storagePath}/coev.svg")
     }
 
 }
