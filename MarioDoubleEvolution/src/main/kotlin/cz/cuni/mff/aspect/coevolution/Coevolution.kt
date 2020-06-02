@@ -45,13 +45,14 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
         updatedCoevolutionSettings.controllerEvolution.chart = coevolutionState.controllerEvolutionChart
         updatedCoevolutionSettings.generatorEvolution.chart = coevolutionState.generatorEvolutionChart
 
-        return this.evolve(updatedCoevolutionSettings, coevolutionState.lastFinishedGeneration, generatorsLastPopulation)
+        return this.evolve(updatedCoevolutionSettings, coevolutionState.lastFinishedGeneration, generatorsLastPopulation, coevolutionState.coevolutionTimer)
     }
 
     private fun evolve(
         coevolutionSettings: CoevolutionSettings<LevelGeneratorType>,
         startGenerationIndex: Int = 0,
-        initialGeneratorPopulation: List<LevelGeneratorType> = listOf()
+        initialGeneratorPopulation: List<LevelGeneratorType> = listOf(),
+        coevolutionTimer: CoevolutionTimer = CoevolutionTimer()
     ): CoevolutionResult {
         var latestController: MarioController = coevolutionSettings.initialController
         var latestGenerator: LevelGenerator = coevolutionSettings.initialLevelGenerator
@@ -64,20 +65,24 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
             println(" -- COEVOLUTION GENERATION ${generationIndex + 1} -- ")
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
+            coevolutionTimer.startControllerEvolution()
             latestController = coevolutionSettings.controllerEvolution.continueEvolution(latestController, generatorsHistory.getAll())
+            coevolutionTimer.stopControllerEvolution()
 
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")
             val agentFactory = { MarioAgent(DeepCopy.copy(latestController)) }
+            coevolutionTimer.startGeneratorsEvolution()
             val lgEvolutionResult = if (startGenerationIndex == 0)
                 coevolutionSettings.generatorEvolution.evolve(agentFactory)
             else
                 coevolutionSettings.generatorEvolution.continueEvolution(agentFactory, latestGeneratorPopulation)
+            coevolutionTimer.stopGeneratorsEvolution()
             latestGenerator = lgEvolutionResult.bestLevelGenerator
             latestGeneratorPopulation = lgEvolutionResult.lastPopulation
 
             generatorsHistory.push(latestGenerator)
             CoevolutionStorage.storeState(coevolutionSettings, generationIndex + 1, latestController,
-                latestGenerator, latestGeneratorPopulation)
+                latestGenerator, latestGeneratorPopulation, coevolutionTimer)
         }
 
         return CoevolutionResult(latestController, latestGenerator)

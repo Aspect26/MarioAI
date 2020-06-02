@@ -15,5 +15,6 @@ data class CoevolutionState<LevelGeneratorType: LevelGenerator>(
     val latestGenerator: LevelGenerator,
     val latestGeneratorsPopulation: List<LevelGeneratorType>,
     val controllerEvolutionChart: EvolutionLineChart,
-    val generatorEvolutionChart: EvolutionLineChart
+    val generatorEvolutionChart: EvolutionLineChart,
+    val coevolutionTimer: CoevolutionTimer
 )
