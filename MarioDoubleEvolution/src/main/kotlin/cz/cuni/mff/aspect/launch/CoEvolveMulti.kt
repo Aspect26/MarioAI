@@ -38,14 +38,14 @@ private const val repeatGeneratorsCount = 5
  * by playing one level from each coevolution step.
  */
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
-//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+//    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
+    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-//    continueCoevolution("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+//    continueCoevolution("result/test", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-//    playCoevolution("data/coev/14_pc_preserve_lgs")
+//    playCoevolution("data/coev/14_pc_preserve_lgs/neuro_pc")
 }
 
 private interface ControllerEvolutionSettings {
@@ -143,7 +143,7 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings<PMPLevelGenerator>
             fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.5f),
             objectiveFunction = WinRatioEvaluator(0.5f, 50000f),
             alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
-            displayChart = true,
+            displayChart = false,
             levelLength = 300,
             chartLabel = "PMP Level Generator"
         )
@@ -209,9 +209,9 @@ private fun <T: LevelGenerator> continueCoevolution(
         storagePath
     )
 
-    val coevolver = Coevolution<T>()
+    val coevolution = Coevolution<T>()
 
-    coevolver.startEvolution(coevolutionSettings)
+    coevolution.continueCoevolution(coevolutionSettings)
 
     val controllerChart = controllerEvolution.chart
     val levelGeneratorChart = levelGeneratorEvolution.chart
