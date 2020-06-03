@@ -85,6 +85,11 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
                 latestGenerator, latestGeneratorPopulation, coevolutionTimer)
         }
 
+        println(" -- COEVOLUTION FINISHED --")
+        println("Total coevolution time: ${timeString(coevolutionTimer.totalControllerEvolutionTime + coevolutionTimer.totalGeneratorsEvolutionTime)}")
+        println("Total controller evolution time: ${timeString(coevolutionTimer.totalControllerEvolutionTime)}")
+        println("Total generators evolution time: ${timeString(coevolutionTimer.totalGeneratorsEvolutionTime)}")
+
         return CoevolutionResult(latestController, latestGenerator)
     }
 
