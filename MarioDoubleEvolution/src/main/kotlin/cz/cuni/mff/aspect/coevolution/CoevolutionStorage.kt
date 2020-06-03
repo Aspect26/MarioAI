@@ -25,13 +25,15 @@ object CoevolutionStorage {
         coevolutionGeneration: Int,
         controller: MarioController,
         levelGenerator: LevelGenerator,
-        lastLevelGeneratorsPopulation: List<LevelGenerator>
+        lastLevelGeneratorsPopulation: List<LevelGenerator>,
+        coevolutionTimer: CoevolutionTimer
     ) {
         ObjectStorage.store("${settings.storagePath}/ai_${coevolutionGeneration}.ai", controller)
         ObjectStorage.store("${settings.storagePath}/lg_${coevolutionGeneration}.lg", levelGenerator)
         LocalTextFileStorage.storeData("${settings.storagePath}/lg_last_population.dat",
             lastLevelGeneratorsPopulation.joinToString(System.lineSeparator()) { LevelGeneratorSerializer.serialize(it) })
         this.storeCharts(settings)
+        coevolutionTimer.store("${settings.storagePath}/timers.dat")
     }
 
     fun <T: LevelGenerator> loadState(settings: CoevolutionSettings<T>): CoevolutionState<T> {
@@ -47,8 +49,9 @@ object CoevolutionStorage {
         val levelGenerator = ObjectStorage.load<LevelGenerator>("${settings.storagePath}/lg_$lastFinishedGeneration.lg")
         val controllerEvolutionChart = EvolutionLineChart.loadFromFile("${settings.storagePath}/ai.svg.dat")
         val generatorEvolutionChart = EvolutionLineChart.loadFromFile("${settings.storagePath}/lg.svg.dat")
+        val coevolutionTimer = CoevolutionTimer.loadFromFile("${settings.storagePath}/timers.dat")
 
-        return CoevolutionState(lastFinishedGeneration, controller, levelGenerator, lastGeneratorsPopulation, controllerEvolutionChart, generatorEvolutionChart)
+        return CoevolutionState(lastFinishedGeneration, controller, levelGenerator, lastGeneratorsPopulation, controllerEvolutionChart, generatorEvolutionChart, coevolutionTimer)
     }
 
     /**
