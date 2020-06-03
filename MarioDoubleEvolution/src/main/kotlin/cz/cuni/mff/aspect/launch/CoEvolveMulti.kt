@@ -59,14 +59,24 @@ private interface LevelGeneratorEvolutionSettings<T: LevelGenerator> {
 }
 
 private object NeuroEvolution : ControllerEvolutionSettings {
+    private val networkSettings = NetworkSettings(
+        receptiveFieldSizeRow = 3,
+        receptiveFieldSizeColumn = 3,
+        receptiveFieldRowOffset = 0,
+        receptiveFieldColumnOffset = 2,
+        hiddenLayerSize = 5,
+        denseInput = true,
+        oneHotOnEnemies = false
+    )
+
     override val evolution
             get() = NeuroControllerEvolution(
-                null,
-                populationSize = 50,
-                generationsCount = 35,
+                networkSettings,
+                populationSize = 5,
+                generationsCount = 5,
                 fitnessFunction = DistanceOnlyEvaluator(),
                 objectiveFunction = VictoriesOnlyEvaluator(),
-                evaluateOnLevelsCount = 25,
+                evaluateOnLevelsCount = 3,
                 alterers = arrayOf(GaussianMutator(0.55)),
                 parallel = true,
                 displayChart = false,
@@ -74,17 +84,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             )
 
     override val initialController
-            get() = SimpleANNController(
-                HiddenLayerControllerNetwork(NetworkSettings(
-                    receptiveFieldSizeRow = 5,
-                    receptiveFieldSizeColumn = 5,
-                    receptiveFieldRowOffset = 0,
-                    receptiveFieldColumnOffset = 2,
-                    hiddenLayerSize = 7,
-                    denseInput = true,
-                    oneHotOnEnemies = false
-                ))
-            )
+            get() = SimpleANNController(HiddenLayerControllerNetwork(networkSettings))
 }
 
 private object NEATEvolution : ControllerEvolutionSettings {
@@ -137,9 +137,9 @@ private object PCEvolution : LevelGeneratorEvolutionSettings<PCLevelGenerator> {
 private object PMPEvolution : LevelGeneratorEvolutionSettings<PMPLevelGenerator> {
     override val evolution: LevelGeneratorEvolution<PMPLevelGenerator>
         get() = PMPLevelGeneratorEvolution(
-            populationSize = 50,
-            generationsCount = 35,
-            evaluateOnLevelsCount = 30,
+            populationSize = 5,
+            generationsCount = 5,
+            evaluateOnLevelsCount = 5,
             fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.5f),
             objectiveFunction = WinRatioEvaluator(0.5f, 50000f),
             alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),

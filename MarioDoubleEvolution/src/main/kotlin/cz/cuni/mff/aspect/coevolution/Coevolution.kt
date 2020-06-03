@@ -41,21 +41,24 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
         )
 
         val generatorsLastPopulation = coevolutionState.latestGeneratorsPopulation
+        val controllerLastPopulation = coevolutionState.latestControllersPopulation
 
         updatedCoevolutionSettings.controllerEvolution.chart = coevolutionState.controllerEvolutionChart
         updatedCoevolutionSettings.generatorEvolution.chart = coevolutionState.generatorEvolutionChart
 
-        return this.evolve(updatedCoevolutionSettings, coevolutionState.lastFinishedGeneration, generatorsLastPopulation, coevolutionState.coevolutionTimer)
+        return this.evolve(updatedCoevolutionSettings, coevolutionState.lastFinishedGeneration, controllerLastPopulation, generatorsLastPopulation, coevolutionState.coevolutionTimer)
     }
 
     private fun evolve(
         coevolutionSettings: CoevolutionSettings<LevelGeneratorType>,
         startGenerationIndex: Int = 0,
+        initialControllerPopulation: List<MarioController> = listOf(),
         initialGeneratorPopulation: List<LevelGeneratorType> = listOf(),
         coevolutionTimer: CoevolutionTimer = CoevolutionTimer()
     ): CoevolutionResult {
         var latestController: MarioController = coevolutionSettings.initialController
         var latestGenerator: LevelGenerator = coevolutionSettings.initialLevelGenerator
+        var latestControllerPopulation: List<MarioController> = initialControllerPopulation
         var latestGeneratorPopulation: List<LevelGeneratorType> = initialGeneratorPopulation
 
         val generatorsHistory: SlidingWindow<LevelGenerator> = this.createGeneratorsHistory(coevolutionSettings, startGenerationIndex)
@@ -64,22 +67,30 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
         for (generationIndex in (startGenerationIndex until coevolutionSettings.generations)) {
             println(" -- COEVOLUTION GENERATION ${generationIndex + 1} -- ")
 
+            // controller evolution
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) controller evo")
             coevolutionTimer.startControllerEvolution()
-            latestController = coevolutionSettings.controllerEvolution.continueEvolution(latestController, generatorsHistory.getAll())
+            val controllerEvolutionResult = if (generationIndex == 0)
+                coevolutionSettings.controllerEvolution.evolve(generatorsHistory.getAll())
+            else
+                coevolutionSettings.controllerEvolution.continueEvolution(generatorsHistory.getAll(), latestControllerPopulation)
             coevolutionTimer.stopControllerEvolution()
+            latestController = controllerEvolutionResult.bestController
+            latestControllerPopulation = controllerEvolutionResult.lastPopulation
 
+            // generators evolution
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")
             val agentFactory = { MarioAgent(DeepCopy.copy(latestController)) }
             coevolutionTimer.startGeneratorsEvolution()
-            val lgEvolutionResult = if (generationIndex == 0)
+            val generatorEvolutionResult = if (generationIndex == 0)
                 coevolutionSettings.generatorEvolution.evolve(agentFactory)
             else
                 coevolutionSettings.generatorEvolution.continueEvolution(agentFactory, latestGeneratorPopulation)
             coevolutionTimer.stopGeneratorsEvolution()
-            latestGenerator = lgEvolutionResult.bestLevelGenerator
-            latestGeneratorPopulation = lgEvolutionResult.lastPopulation
+            latestGenerator = generatorEvolutionResult.bestLevelGenerator
+            latestGeneratorPopulation = generatorEvolutionResult.lastPopulation
 
+            // update results
             generatorsHistory.push(latestGenerator)
             CoevolutionStorage.storeState(coevolutionSettings, generationIndex + 1, latestController,
                 latestGenerator, latestGeneratorPopulation, coevolutionTimer)

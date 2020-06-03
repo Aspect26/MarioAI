@@ -37,7 +37,7 @@ private fun evolve() {
             displayChart = true
         )
     val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
-    val resultController = controllerEvolution.evolve(listOf(levelGenerator))
+    val resultController = controllerEvolution.evolve(listOf(levelGenerator)).bestController
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
     controllerEvolution.chart.store("data/latest_neat.svg")
 
@@ -62,9 +62,9 @@ private fun continueEvolution() {
             chartLabel = "NEAT Evolution continuation"
         )
     val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
-    val initialController = (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller
+    val initialPopulation = List(100) { (Agents.NEAT.Stage4Level1Solver as MarioAgent).controller }
 
-    val resultController = controllerEvolution.continueEvolution(initialController, listOf(levelGenerator))
+    val resultController = controllerEvolution.continueEvolution(listOf(levelGenerator), initialPopulation).bestController
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
     val marioSimulator = GameSimulator()

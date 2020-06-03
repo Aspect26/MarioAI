@@ -9,7 +9,6 @@ import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
