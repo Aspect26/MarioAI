@@ -72,7 +72,7 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
             println("(${this.timeString(System.currentTimeMillis() - startTime)}) level generator evo")
             val agentFactory = { MarioAgent(DeepCopy.copy(latestController)) }
             coevolutionTimer.startGeneratorsEvolution()
-            val lgEvolutionResult = if (startGenerationIndex == 0)
+            val lgEvolutionResult = if (generationIndex == 0)
                 coevolutionSettings.generatorEvolution.evolve(agentFactory)
             else
                 coevolutionSettings.generatorEvolution.continueEvolution(agentFactory, latestGeneratorPopulation)
