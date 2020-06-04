@@ -6,7 +6,9 @@ import io.jenetics.util.RandomRegistry
 import io.jenetics.util.Seq
 import io.mockk.every
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import junit.framework.AssertionFailedError
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -130,5 +132,15 @@ class MarkovChainMutatorTests {
         if (!someValueDiffers) {
             throw AssertionFailedError("The arrays are equal!\n\n$message")
         }
+    }
+
+    companion object {
+
+        @AfterAll
+        @JvmStatic
+        fun afterAll() {
+            unmockkAll()
+        }
+
     }
 }
