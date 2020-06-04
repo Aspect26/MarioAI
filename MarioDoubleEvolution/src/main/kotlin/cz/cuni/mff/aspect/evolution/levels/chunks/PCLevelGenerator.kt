@@ -156,10 +156,6 @@ class PCLevelGenerator(
             entities[column][firstEmpty - 1] = entity
         }
 
-        val princessColumn = tiles.size - 3
-        val firstEmpty = tiles[princessColumn].size - tiles[princessColumn].reversedArray().indexOfFirst { it == Tiles.NOTHING }
-        entities[princessColumn][firstEmpty - 1] = Entities.PrincessPeach.NORMAL
-
         return entities
     }
 

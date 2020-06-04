@@ -32,7 +32,7 @@ class PMPLevelGenerator(
             PI_CHANGE_HEIGHT -> 0.1
             PI_CREATE_HOLE -> 0.05
 
-            PI_ENEMY_GOOMBA -> 1.0
+            PI_ENEMY_GOOMBA -> 0.03
             PI_ENEMY_KOOPA_GREEN -> 0.03
             PI_ENEMY_KOOPA_GREEN_WINGED -> 0.01
             PI_ENEMY_KOOPA_RED -> 0.03
