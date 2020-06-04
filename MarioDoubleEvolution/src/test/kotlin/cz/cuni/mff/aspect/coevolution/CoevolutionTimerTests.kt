@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import org.joda.time.DateTime
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,7 +15,6 @@ class CoevolutionTimerTests {
 
     @BeforeEach
     fun beforeEach() {
-        unmockkAll()
         mockkStatic(DateTime::class)
 
         val tmpFile = File(".tests")
@@ -118,5 +118,15 @@ class CoevolutionTimerTests {
         timer.startGeneratorsEvolution()
         every { DateTime.now() } returns DateTime(endTime)
         timer.stopGeneratorsEvolution()
+    }
+
+    companion object {
+
+        @AfterAll
+        @JvmStatic
+        fun afterAll() {
+            unmockkAll()
+        }
+
     }
 }
