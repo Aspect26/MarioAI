@@ -12,6 +12,8 @@ import cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.unmockkAll
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -37,16 +39,6 @@ class CoevolutionStorageTests {
     }
     private val mockEvolutionChart = EvolutionLineChart()
 
-    @BeforeEach
-    fun beforeEach() {
-        mockkObject(CoevolutionTimer)
-
-        every { mockControllerEvolution.chart } returns mockEvolutionChart
-        every { mockLevelGeneratorEvolution.chart } returns mockEvolutionChart
-        every { mockCoevolutionTimer.store(any()) } returns Unit
-        every { CoevolutionTimer.loadFromFile(any()) } returns mockCoevolutionTimer
-    }
-
     private val mockSettings = CoevolutionSettings(
         controllerEvolution = mockControllerEvolution,
         generatorEvolution = mockLevelGeneratorEvolution,
@@ -56,6 +48,16 @@ class CoevolutionStorageTests {
         repeatGeneratorsCount = 5,
         storagePath = ".tests/tmp/coev-storage"
     )
+
+    @BeforeEach
+    fun beforeEach() {
+        mockkObject(CoevolutionTimer)
+
+        every { mockControllerEvolution.chart } returns mockEvolutionChart
+        every { mockLevelGeneratorEvolution.chart } returns mockEvolutionChart
+        every { mockCoevolutionTimer.store(any()) } returns Unit
+        every { CoevolutionTimer.loadFromFile(any()) } returns mockCoevolutionTimer
+    }
 
     @AfterEach
     fun afterEach() {
@@ -149,6 +151,16 @@ class CoevolutionStorageTests {
     private fun assertNetworksEqual(actual: HiddenLayerControllerNetwork, expected: HiddenLayerControllerNetwork, message: String) {
         assertEquals(actual.networkSettings, expected.networkSettings, "$message\nNetwork settings are not equal")
         assertEquals(actual.getNetworkWeights().toList(), expected.getNetworkWeights().toList(), "$message\nNetwork weights are not equal")
+    }
+
+    companion object {
+
+        @AfterAll
+        @JvmStatic
+        fun afterAll() {
+            unmockkAll()
+        }
+
     }
 
 }

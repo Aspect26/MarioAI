@@ -7,8 +7,10 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNe
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.unmockkAll
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.*
@@ -76,6 +78,16 @@ class ControllerSerializerTests {
             assertEquals(originalGenome.evaluateNetwork(randomInput).toList(), deserializedGenome.evaluateNetwork(randomInput).toList(),
                 "The original and deserialized genomes should return the same value on same inputs")
         }
+    }
+
+    companion object {
+
+        @AfterAll
+        @JvmStatic
+        fun afterAll() {
+            unmockkAll()
+        }
+
     }
 
 }
