@@ -39,13 +39,13 @@ private const val repeatGeneratorsCount = 5
  */
 fun main() {
 //    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
-    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
 //    continueCoevolution("result/test", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-//    playCoevolution("data/coev/14_pc_preserve_lgs/neuro_pc")
+    playCoevolution("data/coev/15_pmp_last/neuro_pmp")
 }
 
 private interface ControllerEvolutionSettings {
@@ -228,7 +228,7 @@ private fun <T: LevelGenerator> continueCoevolution(
 }
 
 private fun playCoevolution(dataPath: String) {
-    val simulator = GameSimulator()
+    val simulator = GameSimulator(1700)
 
     var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
         receptiveFieldSizeRow = 5,
@@ -263,7 +263,7 @@ private fun playCoevolution(dataPath: String) {
 }
 
 private fun evalLg(levelGenerator: LevelGenerator, controller: MarioController) {
-    val simulator = GameSimulator()
+    val simulator = GameSimulator(2500)
     val wins = (0 until 100).map { if (simulator.playMario(MarioAgent(controller), levelGenerator.generate(), false).levelFinished) 1 else 0 }.sum()
     println("LG eval -> $wins/100")
 }
