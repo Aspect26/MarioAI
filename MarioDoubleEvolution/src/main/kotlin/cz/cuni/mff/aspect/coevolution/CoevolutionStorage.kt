@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.coevolution
 
+import cz.cuni.mff.aspect.evolution.controller.ControllerSerializer
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorSerializer
 import cz.cuni.mff.aspect.mario.controllers.MarioController
@@ -25,6 +26,7 @@ object CoevolutionStorage {
         coevolutionGeneration: Int,
         controller: MarioController,
         levelGenerator: LevelGenerator,
+        lastControllerPopulation: List<MarioController>,
         lastLevelGeneratorsPopulation: List<LevelGenerator>,
         coevolutionTimer: CoevolutionTimer
     ) {
@@ -32,7 +34,8 @@ object CoevolutionStorage {
         ObjectStorage.store("${settings.storagePath}/lg_${coevolutionGeneration}.lg", levelGenerator)
         LocalTextFileStorage.storeData("${settings.storagePath}/lg_last_population.dat",
             lastLevelGeneratorsPopulation.joinToString(System.lineSeparator()) { LevelGeneratorSerializer.serialize(it) })
-        // TODO: store controllers last population
+        LocalTextFileStorage.storeData("${settings.storagePath}/ai_last_population.dat",
+            lastControllerPopulation.joinToString(System.lineSeparator()) { ControllerSerializer.serialize(it) })
         this.storeCharts(settings)
         coevolutionTimer.store("${settings.storagePath}/timers.dat")
     }
@@ -47,7 +50,7 @@ object CoevolutionStorage {
         val lastGeneratorsPopulation = rawLastGeneratorPopulationData.lines().map { LevelGeneratorSerializer.deserialize<T>(it) }
 
         val rawLastControllerPopulationData = LocalTextFileStorage.loadData("${settings.storagePath}/ai_last_population.dat")
-        // TODO: do the load
+        val lastControllersPopulation = rawLastControllerPopulationData.lines().map { ControllerSerializer.deserialize(it) }
 
         val controller = ObjectStorage.load<MarioController>("${settings.storagePath}/ai_$lastFinishedGeneration.ai")
         val levelGenerator = ObjectStorage.load<LevelGenerator>("${settings.storagePath}/lg_$lastFinishedGeneration.lg")
@@ -55,8 +58,8 @@ object CoevolutionStorage {
         val generatorEvolutionChart = EvolutionLineChart.loadFromFile("${settings.storagePath}/lg.svg.dat")
         val coevolutionTimer = CoevolutionTimer.loadFromFile("${settings.storagePath}/timers.dat")
 
-        return CoevolutionState(lastFinishedGeneration, controller, levelGenerator, listOf(), lastGeneratorsPopulation,
-            controllerEvolutionChart, generatorEvolutionChart, coevolutionTimer)
+        return CoevolutionState(lastFinishedGeneration, controller, levelGenerator, lastControllersPopulation,
+            lastGeneratorsPopulation, controllerEvolutionChart, generatorEvolutionChart, coevolutionTimer)
     }
 
     /**

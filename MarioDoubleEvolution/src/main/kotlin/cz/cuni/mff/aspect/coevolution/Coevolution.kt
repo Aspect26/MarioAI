@@ -93,7 +93,7 @@ class Coevolution<LevelGeneratorType: LevelGenerator>  {
             // update results
             generatorsHistory.push(latestGenerator)
             CoevolutionStorage.storeState(coevolutionSettings, generationIndex + 1, latestController,
-                latestGenerator, latestGeneratorPopulation, coevolutionTimer)
+                latestGenerator, latestControllerPopulation, latestGeneratorPopulation, coevolutionTimer)
         }
 
         println(" -- COEVOLUTION FINISHED --")
