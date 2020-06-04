@@ -20,9 +20,6 @@ class CoevolutionTimer {
 
     /** The total time spent on generators evolution. */
     val totalGeneratorsEvolutionTime: Long get() {
-        print(this.generatorsEvolutionRuns.map { it.endTime.millis - it.startTime.millis }.sum())
-        print(if (this.lastGeneratorsEvolutionStart != null) (DateTime.now().millis - this.lastGeneratorsEvolutionStart!!.millis) else 0L)
-
         return this.generatorsEvolutionRuns.map { it.endTime.millis - it.startTime.millis }.sum() +
                 if (this.lastGeneratorsEvolutionStart != null) (DateTime.now().millis - this.lastGeneratorsEvolutionStart!!.millis) else 0L
     }

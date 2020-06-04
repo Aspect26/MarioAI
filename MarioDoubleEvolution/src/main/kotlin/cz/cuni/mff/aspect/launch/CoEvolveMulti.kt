@@ -59,9 +59,19 @@ private interface LevelGeneratorEvolutionSettings<T: LevelGenerator> {
 }
 
 private object NeuroEvolution : ControllerEvolutionSettings {
+    private val networkSettings = NetworkSettings(
+        receptiveFieldSizeRow = 5,
+        receptiveFieldSizeColumn = 5,
+        receptiveFieldRowOffset = 0,
+        receptiveFieldColumnOffset = 2,
+        hiddenLayerSize = 7,
+        denseInput = true,
+        oneHotOnEnemies = false
+    )
+
     override val evolution
             get() = NeuroControllerEvolution(
-                null,
+                networkSettings,
                 populationSize = 50,
                 generationsCount = 35,
                 fitnessFunction = DistanceOnlyEvaluator(),
@@ -74,17 +84,7 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             )
 
     override val initialController
-            get() = SimpleANNController(
-                HiddenLayerControllerNetwork(NetworkSettings(
-                    receptiveFieldSizeRow = 5,
-                    receptiveFieldSizeColumn = 5,
-                    receptiveFieldRowOffset = 0,
-                    receptiveFieldColumnOffset = 2,
-                    hiddenLayerSize = 7,
-                    denseInput = true,
-                    oneHotOnEnemies = false
-                ))
-            )
+            get() = SimpleANNController(HiddenLayerControllerNetwork(networkSettings))
 }
 
 private object NEATEvolution : ControllerEvolutionSettings {

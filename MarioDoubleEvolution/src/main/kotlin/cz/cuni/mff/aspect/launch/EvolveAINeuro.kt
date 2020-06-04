@@ -42,7 +42,7 @@ fun evolveAI() {
         )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
     val levelGenerator = LevelGenerators.StaticGenerator(Stage4Level1Split.levels)
-    val resultController = controllerEvolution.evolve(listOf(levelGenerator))
+    val resultController = controllerEvolution.evolve(listOf(levelGenerator)).bestController
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
     controllerEvolution.chart.store("data/latest.svg")
 
@@ -58,7 +58,8 @@ fun evolveAI() {
 private fun continueEvolveAI() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
-            null,
+            NetworkSettings(5, 5, 0, 2, 5,
+                denseInput = false, oneHotOnEnemies = true),
             20,
             50,
             fitnessFunction = DistanceOnlyEvaluator(),
@@ -70,9 +71,9 @@ private fun continueEvolveAI() {
         )
 //    val levelGenerator = LevelGenerators.PCGenerator.halfSolvingNE
     val levelGenerator = ObjectStorage.load("data/coev/second_lg.lg") as LevelGenerator
-    val initialController = (Agents.NeuroEvolution.Stage4Level1Solver as MarioAgent).controller
+    val initialPopulation = List(50) { (Agents.NeuroEvolution.Stage4Level1Solver as MarioAgent).controller }
 
-    val resultController = controllerEvolution.continueEvolution(initialController, listOf(levelGenerator))
+    val resultController = controllerEvolution.continueEvolution(listOf(levelGenerator), initialPopulation).bestController
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
 
     val marioSimulator = GameSimulator()

@@ -13,6 +13,7 @@ data class CoevolutionState<LevelGeneratorType: LevelGenerator>(
     val lastFinishedGeneration: Int,
     val latestController: MarioController,
     val latestGenerator: LevelGenerator,
+    val latestControllersPopulation: List<MarioController>,
     val latestGeneratorsPopulation: List<LevelGeneratorType>,
     val controllerEvolutionChart: EvolutionLineChart,
     val generatorEvolutionChart: EvolutionLineChart,

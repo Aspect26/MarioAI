@@ -1,7 +1,9 @@
 package cz.cuni.mff.aspect.evolution.controller.neuroevolution
 
 import cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution
+import cz.cuni.mff.aspect.evolution.JeneticsEvolutionResult
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
+import cz.cuni.mff.aspect.evolution.controller.ControllerEvolutionResult
 import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
@@ -47,7 +49,7 @@ import io.jenetics.util.Factory
  * @see Selector
  */
 class NeuroControllerEvolution(
-    private var controllerNetworkSettings: NetworkSettings? = null,
+    private val controllerNetworkSettings: NetworkSettings,
     generationsCount: Int = DEFAULT_GENERATIONS_COUNT,
     populationSize: Int = DEFAULT_POPULATION_SIZE,
     private val fitnessFunction: MarioGameplayEvaluator = DistanceOnlyEvaluator(),
@@ -80,44 +82,22 @@ class NeuroControllerEvolution(
 
     private lateinit var levelGenerators: List<LevelGenerator>
 
-    private var initialAgentNetwork: HiddenLayerControllerNetwork? = null
-
-    override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
+    override fun evolve(levelGenerators: List<LevelGenerator>): ControllerEvolutionResult {
         this.levelGenerators = levelGenerators
-        return this.evolve().bestIndividual
+        val evolutionResult = this.evolve()
+
+        return this.createControllerEvolutionResult(evolutionResult)
     }
 
-    override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
-        if (controller !is SimpleANNController) throw IllegalArgumentException(
-            "This implementation of controller evolution supports only `${SimpleANNController}` instances to continue evolution"
-        )
-
-        if (controller.network !is HiddenLayerControllerNetwork) throw IllegalArgumentException(
-            "This implementation of controller evolution supports only `${SimpleANNController}` with `${HiddenLayerControllerNetwork}` as its network"
-        )
-
-        this.initialAgentNetwork = controller.network
+    override fun continueEvolution(levelGenerators: List<LevelGenerator>, initialPopulation: List<MarioController>): ControllerEvolutionResult {
         this.levelGenerators = levelGenerators
-        this.controllerNetworkSettings = controller.network.networkSettings.copy()
+        val evolutionResult = this.continueEvolution(initialPopulation.map(this::entityToIndividual))
 
-        return this.evolve().bestIndividual
+        return this.createControllerEvolutionResult(evolutionResult)
     }
 
-    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> {
-        return if (this.initialAgentNetwork == null) {
-            Genotype.of(DoubleChromosome.of(this.weightsRange, this.createControllerNetwork().weightsCount))
-        } else {
-            val initialNetworkWeights = this.initialAgentNetwork!!.getNetworkWeights()
-            val minValue = initialNetworkWeights.min()!!
-            val maxValue = initialNetworkWeights.max()!!
-
-            Factory {
-                Genotype.of(DoubleChromosome.of(*Array<DoubleGene>(initialNetworkWeights.size) {
-                    DoubleGene.of(initialNetworkWeights[it], DoubleRange.of(minValue, maxValue))
-                }))
-            }
-        }
-    }
+    override fun createGenotypeFactory(): Factory<Genotype<DoubleGene>> =
+        Genotype.of(DoubleChromosome.of(this.weightsRange, this.createControllerNetwork().weightsCount))
 
     override fun entityFromIndividual(genotype: Genotype<DoubleGene>): MarioController {
         val controllerNetwork = this.createControllerNetwork()
@@ -141,9 +121,26 @@ class NeuroControllerEvolution(
         return Pair(fitnessFunction(statistics), objectiveFunction(statistics))
     }
 
-    private fun createControllerNetwork(): HiddenLayerControllerNetwork {
-        if (this.controllerNetworkSettings == null) throw UnsupportedOperationException("Controller network settings not specified")
-        return HiddenLayerControllerNetwork(this.controllerNetworkSettings!!)
+    private fun entityToIndividual(controller: MarioController): Genotype<DoubleGene> {
+        if (controller !is SimpleANNController) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `${SimpleANNController}` instances to continue evolution"
+        )
+
+        if (controller.network !is HiddenLayerControllerNetwork) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `${SimpleANNController}` with `${HiddenLayerControllerNetwork}` as its network"
+        )
+
+        return Genotype.of(DoubleChromosome.of(controller.network.getNetworkWeights().map { DoubleGene.of(it, weightsRange.min(), weightsRange.max())}))
+    }
+
+    private fun createControllerNetwork(): HiddenLayerControllerNetwork =
+        HiddenLayerControllerNetwork(this.controllerNetworkSettings)
+
+    private fun createControllerEvolutionResult(evolutionResult: JeneticsEvolutionResult<MarioController>): ControllerEvolutionResult {
+        return ControllerEvolutionResult(
+            evolutionResult.bestIndividual,
+            evolutionResult.lastGenerationPopulation.map(this::entityFromIndividual)
+        )
     }
 
     companion object {

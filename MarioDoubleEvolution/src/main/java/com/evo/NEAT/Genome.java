@@ -89,6 +89,14 @@ public class Genome implements Comparable, Serializable {
 
     }
 
+    private Genome(float fitness, float adjustedFitness, float points, int inputsCount, int outputsCount, ArrayList<ConnectionGene> connections) {
+        this.fitness = fitness;
+        this.adjustedFitness = adjustedFitness;
+        this.points = points;
+        this.inputsCount = inputsCount;
+        this.outputsCount = outputsCount;
+        this.connectionGeneList = connections;
+    }
 
     public float getFitness() {
         return fitness;
@@ -480,6 +488,39 @@ public class Genome implements Comparable, Serializable {
 
         }
 
+    }
+
+    public String serialize() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(fitness).append(";");
+        builder.append(adjustedFitness).append(";");
+        builder.append(points).append(";");
+        builder.append(inputsCount).append(";");
+        builder.append(outputsCount).append(";");
+
+        for (ConnectionGene conn: connectionGeneList) {
+            builder.append(conn.serialize()).append(";");
+        }
+
+        return builder.toString();
+    }
+
+    public static Genome deserialize(final String data) {
+        String[] dataParts = data.split(";");
+        float fitness = Float.parseFloat(dataParts[0]);
+        float adjustedFitness = Float.parseFloat(dataParts[1]);
+        float points = Float.parseFloat(dataParts[2]);
+        int inputsCount = Integer.parseInt(dataParts[3]);
+        int outputsCount = Integer.parseInt(dataParts[4]);
+
+        ArrayList<ConnectionGene> connections = new ArrayList<>();
+        for (int i = 5; i < dataParts.length; ++i) {
+            ConnectionGene connection = ConnectionGene.deserialize(dataParts[i]);
+            connections.add(connection);
+        }
+
+        return new Genome(fitness, adjustedFitness, points, inputsCount, outputsCount, connections);
     }
 
 }
