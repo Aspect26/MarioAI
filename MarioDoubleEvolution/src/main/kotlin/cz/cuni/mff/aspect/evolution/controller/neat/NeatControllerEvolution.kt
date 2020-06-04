@@ -52,42 +52,31 @@ class NeatControllerEvolution(
             hideNegative = true
         )
 
-    override fun evolve(levelGenerators: List<LevelGenerator>): MarioController {
+    override fun evolve(levelGenerators: List<LevelGenerator>): ControllerEvolutionResult {
         val networkInputSize = NeatAgentNetwork.inputLayerSize(this.networkSettings)
         val networkOutputSize = NeatAgentNetwork.OUTPUT_LAYER_SIZE
 
         val pool = Pool(this.populationSize)
         pool.initializePool(networkInputSize, networkOutputSize)
 
-        return this.doEvolution(levelGenerators, pool, this.networkSettings)
+        return this.doEvolution(levelGenerators, pool)
     }
 
-    override fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController {
-        if (controller !is SimpleANNController) throw IllegalArgumentException(
-            "This implementation of controller evolution supports only `$SimpleANNController` instances to continue evolution"
-        )
-        if (controller.network !is NeatAgentNetwork) throw IllegalArgumentException(
-            "This implementation of controller evolution supports only `$SimpleANNController` with `$NeatAgentNetwork` as its network"
-        )
-
-        val controllerGenome = controller.network.genome
-
-        val genomes: ArrayList<Genome> = ArrayList(this.populationSize)
-        repeat((0 until this.populationSize).count()) { genomes.add(DeepCopy.copy(controllerGenome)) }
+    override fun continueEvolution(levelGenerators: List<LevelGenerator>, initialPopulation: List<MarioController>): ControllerEvolutionResult {
+        val genomes = initialPopulation.map(this::controllerToGenome)
 
         val pool = Pool(this.populationSize)
         pool.initializePool(genomes)
 
-        return this.doEvolution(levelGenerators, pool, controller.network.networkSettings)
+        return this.doEvolution(levelGenerators, pool)
     }
 
     private fun doEvolution(
         levelGenerators: List<LevelGenerator>,
-        genotypePool: Pool,
-        networkSettings: NetworkSettings
-    ): MarioController {
+        genotypePool: Pool
+    ): ControllerEvolutionResult {
         val environment = ControllerEvolutionEnvironment(
-            levelGenerators, networkSettings, this.fitnessFunction, this.objectiveFunction, this.evaluateOnLevelsCount
+            levelGenerators, this.networkSettings, this.fitnessFunction, this.objectiveFunction, this.evaluateOnLevelsCount
         )
 
         if (this.displayChart && !this.chart.isShown) this.chart.show()
@@ -111,9 +100,22 @@ class NeatControllerEvolution(
         }
 
         this.topGenome = genotypePool.topGenome
-        val network = NeatAgentNetwork(networkSettings, this.topGenome)
+        val network = NeatAgentNetwork(this.networkSettings, this.topGenome)
 
-        return SimpleANNController(network)
+        return ControllerEvolutionResult(SimpleANNController(network), genotypePool.lastPopulation.map {
+            SimpleANNController(NeatAgentNetwork(this.networkSettings, this.topGenome))
+        })
+    }
+
+    private fun controllerToGenome(controller: MarioController): Genome {
+        if (controller !is SimpleANNController) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `$SimpleANNController` instances to continue evolution"
+        )
+        if (controller.network !is NeatAgentNetwork) throw IllegalArgumentException(
+            "This implementation of controller evolution supports only `$SimpleANNController` with `$NeatAgentNetwork` as its network"
+        )
+
+        return DeepCopy.copy(controller.network.genome)
     }
 
 }

@@ -211,7 +211,7 @@ private class NeuroEvolutionLauncher(
 
         val resultController = controllerEvolution.evolve(listOf(levelGenerator))
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
-        ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
+        ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController.bestController)
     }
 }
 
@@ -248,7 +248,7 @@ class NeatEvolutionLauncher(
 
         val resultController = controllerEvolution.evolve(levelGenerators)
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
-        ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController)
+        ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController.bestController)
     }
 
 }

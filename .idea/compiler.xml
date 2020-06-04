@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2048" />
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel target="11">
       <module name="mario-coevolution.main" target="1.8" />
       <module name="mario-coevolution.test" target="1.8" />
       <module name="mario.mario-coevolution.main" target="1.8" />

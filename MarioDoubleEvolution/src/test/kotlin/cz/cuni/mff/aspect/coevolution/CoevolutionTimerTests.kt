@@ -2,6 +2,7 @@ package cz.cuni.mff.aspect.coevolution
 
 import io.mockk.every
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import org.joda.time.DateTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -13,6 +14,7 @@ class CoevolutionTimerTests {
 
     @BeforeEach
     fun beforeEach() {
+        unmockkAll()
         mockkStatic(DateTime::class)
 
         val tmpFile = File(".tests")

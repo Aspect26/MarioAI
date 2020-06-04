@@ -15,9 +15,9 @@ interface ControllerEvolution {
     var chart: EvolutionLineChart
 
     /** Evolves a mario agent controller, which will be evaluated using level generators given. */
-    fun evolve(levelGenerators: List<LevelGenerator>): MarioController
+    fun evolve(levelGenerators: List<LevelGenerator>): ControllerEvolutionResult
 
-    /** Continues evolution of already evolved controller, using given level generators for its evaluation. */
-    fun continueEvolution(controller: MarioController, levelGenerators: List<LevelGenerator>): MarioController
+    /** Continues evolution of already evolved controller, using given initial population. */
+    fun continueEvolution(levelGenerators: List<LevelGenerator>, initialPopulation: List<MarioController>): ControllerEvolutionResult
 
 }

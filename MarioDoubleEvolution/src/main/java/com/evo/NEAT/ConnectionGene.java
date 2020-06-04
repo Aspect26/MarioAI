@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class ConnectionGene implements Serializable {
 
+    private static final long serialVersionUID = -1802318495007892635L;
+
     private int into,out, innovation;
     private float weight;
     private boolean enabled;
@@ -71,5 +73,20 @@ public class ConnectionGene implements Serializable {
                 ", enabled=" + enabled +
                 '}';*/
         return into+","+out+","+weight+","+enabled;
+    }
+
+    public String serialize() {
+        return into+"+"+out+"+"+weight+"+"+enabled+"+"+innovation;
+    }
+
+    public static ConnectionGene deserialize(final String value) {
+        String[] dataParts = value.split("\\+");
+        int into = Integer.parseInt(dataParts[0]);
+        int out = Integer.parseInt(dataParts[1]);
+        float weight = Float.parseFloat(dataParts[2]);
+        boolean enabled = Boolean.parseBoolean(dataParts[3]);
+        int innovation = Integer.parseInt(dataParts[4]);
+
+        return new ConnectionGene(into, out, innovation, weight, enabled);
     }
 }
