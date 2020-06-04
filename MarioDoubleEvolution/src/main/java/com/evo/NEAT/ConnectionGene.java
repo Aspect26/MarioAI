@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class ConnectionGene implements Serializable {
 
+    private static final long serialVersionUID = -1802318495007892635L;
+
     private int into,out, innovation;
     private float weight;
     private boolean enabled;
