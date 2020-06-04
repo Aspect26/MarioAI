@@ -15,7 +15,7 @@ fun main() {
 
 
 private fun keyboardPlay() {
-    val levelGenerator = PMPLevelGenerator(length = 300)
+    val levelGenerator = PCLevelGenerator(chunksInLevelCount = 5)
 //    val levelGenerator = PCLevelGenerator(chunksInLevelCount = 55)
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 
@@ -23,7 +23,7 @@ private fun keyboardPlay() {
 
     for (level in levels) {
 //        val agent = Agents.NEAT.Stage4Level1Solver
-        LevelVisualiser().display(level)
+//        LevelVisualiser().display(level)
         val agent = CheaterKeyboardAgent()
         marioSimulator.playMario(agent, level, true)
     }
