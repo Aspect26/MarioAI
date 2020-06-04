@@ -38,14 +38,14 @@ private const val repeatGeneratorsCount = 5
  * by playing one level from each coevolution step.
  */
 fun main() {
-//    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
+    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
 //    continueCoevolution("result/test", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-    playCoevolution("data/coev/15_pmp_last/neuro_pmp")
+//    playCoevolution("data/coev/15_pmp_last/neuro_pmp")
 }
 
 private interface ControllerEvolutionSettings {
@@ -122,8 +122,8 @@ private object PCEvolution : LevelGeneratorEvolutionSettings<PCLevelGenerator> {
                 populationSize = 50,
                 generationsCount = 15,
                 evaluateOnLevelsCount = 36,
-                fitnessFunction = All(0.75f),
-                objectiveFunction = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.75f, 50000f),
+                fitnessFunction = All(0.5f),
+                objectiveFunction = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.5f, 50000f),
                 chunksCount = 55,
                 displayChart = false,
                 chartLabel = "PC Level Generator"
