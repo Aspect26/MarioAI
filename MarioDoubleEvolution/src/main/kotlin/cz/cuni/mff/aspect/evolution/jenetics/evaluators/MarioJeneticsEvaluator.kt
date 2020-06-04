@@ -39,9 +39,6 @@ class MarioJeneticsEvaluator<G : Gene<*, G>, C : Comparable<C>>(
     override fun eval(population: Seq<Phenotype<G, C>>): ISeq<Phenotype<G, C>> {
         // Evaluation happens twice per evolution step in jenetics
         // But we should do the "always evaluation" only once, since it would be wasteful otherwise
-        val print = population.first().genotype().geneCount() != 13
-        if (print) population.forEach { println(it.genotype().asIterable().toList().joinToString(",")) }
-        if (print) println("---------------------")
 
         val newPopulation: ISeq<Phenotype<G, C>> = when {
             isEverybodyEvaluated(population) -> {
