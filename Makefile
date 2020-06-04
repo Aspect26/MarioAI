@@ -4,7 +4,7 @@ export
 MARIO_SIMULATOR_PROJECT = "MarioAI4J"
 MARIO_COEVOLUTION_PROJECT = "MarioDoubleEvolution"
 
-GRADLE_VERSION = "6.4.1"
+GRADLE_VERSION = "6.5"
 
 get-gradle-wrapper:
 	gradle wrapper --gradle-version $(GRADLE_VERSION)
