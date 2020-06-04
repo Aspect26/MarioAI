@@ -8,6 +8,7 @@ import com.evo.NEAT.com.evo.NEAT.config.NEAT_Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Pool {
 
@@ -27,8 +28,7 @@ public class Pool {
         return species;
     }
 
-    // NOTE: added by Julius Flimmel
-    public void initializePool(ArrayList<Genome> genomes) {
+    public void initializePool(List<Genome> genomes) {
         if (genomes.size() != this.populationSize) {
             throw new IllegalArgumentException("The genmoes size must be the same as population size");
         }
@@ -144,6 +144,19 @@ public class Pool {
 
         return allGenome.get(0);
     }
+
+    public List<Genome> getLastPopulation() {
+        ArrayList<Genome> allGenome = new ArrayList<>();
+
+        for(Species s: species){
+            for(Genome g: s.getGenomes()){
+                allGenome.add(g);
+            }
+        }
+
+        return allGenome;
+    }
+
     // all species must have the totalAdjustedFitness calculated
     public float calculateGlobalAdjustedFitness() {
         float total = 0;
