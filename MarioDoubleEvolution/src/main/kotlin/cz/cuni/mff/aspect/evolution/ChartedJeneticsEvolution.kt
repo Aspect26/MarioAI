@@ -63,7 +63,7 @@ abstract class ChartedJeneticsEvolution<T>(
     }
 
     private fun createNewEvaluator(): MarioJeneticsEvaluator<DoubleGene, Float> {
-        val executor = if (this.parallel) ForkJoinPool.commonPool() else Concurrency.SERIAL_EXECUTOR
+        val executor = if (this.parallel) Concurrency.withCommonPool() else Concurrency.SERIAL_EXECUTOR
         return MarioJeneticsEvaluator(this::computeFitnessAndObjective,this.alwaysReevaluate, executor)
     }
 

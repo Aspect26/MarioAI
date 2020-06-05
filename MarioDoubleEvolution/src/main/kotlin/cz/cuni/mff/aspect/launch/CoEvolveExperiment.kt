@@ -39,7 +39,7 @@ private const val repeatGeneratorsCount = 5
  */
 fun main() {
     println("STARTING EXPERIMENTS!")
-    
+
     coevolve("result/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)

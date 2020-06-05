@@ -7,7 +7,6 @@ import cz.cuni.mff.aspect.mario.GameStatistics
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import cz.cuni.mff.aspect.visualisation.level.LevelToImageConverter
 import io.jenetics.Optimize
-import kotlin.math.abs
 
 /**
  * Probabilistic Chunks level generator evaluator returning difference of won/lost count, compressibility metric

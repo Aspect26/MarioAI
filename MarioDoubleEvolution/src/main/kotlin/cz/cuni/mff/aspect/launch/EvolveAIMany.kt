@@ -6,7 +6,9 @@ import cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.storage.ObjectStorage
@@ -18,8 +20,8 @@ import io.jenetics.util.DoubleRange
  * [NeuroEvolutionLauncher] and [NeatEvolutionLauncher] classes.
  */
 fun main() {
-//    doManyNeuroEvolution()
-    doManyNEATEvolution()
+    doManyNeuroEvolution()
+//    doManyNEATEvolution()
 }
 
 
@@ -31,6 +33,7 @@ private fun doManyNEATEvolution() {
     val populationSize = 100
     val fitness = DistanceWithLeastActionsEvaluator()
     val receptiveFieldSize = Pair(5, 5)
+    val evaluateOnLevelsCount = 7
 
     val evolutions = arrayOf(
         NeatEvolutionLauncher(
@@ -39,6 +42,7 @@ private fun doManyNEATEvolution() {
             objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 1",
@@ -51,6 +55,7 @@ private fun doManyNEATEvolution() {
             objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 2",
@@ -63,6 +68,7 @@ private fun doManyNEATEvolution() {
             objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 3",
@@ -75,6 +81,7 @@ private fun doManyNEATEvolution() {
             objectiveFunction = VictoriesOnlyEvaluator(),
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             receptiveFieldSize = receptiveFieldSize,
             receptiveFieldOffset = Pair(0, 2),
             label = "NEAT evolution, experiment 4",
@@ -90,16 +97,18 @@ private fun doManyNEATEvolution() {
 
 
 private fun doManyNeuroEvolution() {
-    val levelGenerator = LevelGenerators.PCGenerator.all
-    val evaluationName = "Newest"
+    val levelGenerator = PCLevelGenerator()
+    val evaluationName = "With dense input"
 
     val generationsCount = 50
     val populationSize = 50
     val fitness = DistanceOnlyEvaluator()
-    val mutators = arrayOf<Alterer<DoubleGene, Float>>(GaussianMutator(0.45))
+    val mutators = arrayOf<Alterer<DoubleGene, Float>>(UpdatedGaussianMutator(1.0, 0.45))
     val hiddenLayerSize = 5
     val offspringsSelector = TournamentSelector<DoubleGene, Float>(2)
-    val networkSettings = NetworkSettings(5, 5, 0, 2, hiddenLayerSize)
+    val networkSettings = NetworkSettings(5, 5, 0, 2,
+        hiddenLayerSize, denseInput = true)
+    val evaluateOnLevelsCount = 7
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
@@ -112,6 +121,7 @@ private fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 1",
             runParallel = true,
@@ -128,6 +138,7 @@ private fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 2",
             runParallel = true,
@@ -144,6 +155,7 @@ private fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 3",
             runParallel = true,
@@ -160,6 +172,7 @@ private fun doManyNeuroEvolution() {
             offspringSelector = offspringsSelector,
             generationsCount = generationsCount,
             populationSize = populationSize,
+            evaluateOnLevelsCount = evaluateOnLevelsCount,
             weightsRange = DoubleRange.of(-2.0, 2.0),
             label = "NeuroEvolution, experiment 4",
             runParallel = true,
@@ -188,6 +201,7 @@ private class NeuroEvolutionLauncher(
     private val mutators: Array<Alterer<DoubleGene, Float>>,
     private val survivorsSelector: Selector<DoubleGene, Float>,
     private val offspringSelector: Selector<DoubleGene, Float>,
+    private val evaluateOnLevelsCount: Int,
     private val weightsRange: DoubleRange,
     private val runParallel: Boolean,
     private val dataLocation: String
@@ -206,7 +220,8 @@ private class NeuroEvolutionLauncher(
                 survivorsSelector = survivorsSelector,
                 offspringSelector = offspringSelector,
                 weightsRange = weightsRange,
-                parallel = runParallel
+                parallel = runParallel,
+                evaluateOnLevelsCount = evaluateOnLevelsCount
             )
 
         val resultController = controllerEvolution.evolve(listOf(levelGenerator))
@@ -224,6 +239,7 @@ class NeatEvolutionLauncher(
     private val label: String,
     private val fitnessFunction: MarioGameplayEvaluator,
     private val objectiveFunction: MarioGameplayEvaluator,
+    private val evaluateOnLevelsCount: Int,
     private val dataLocation: String,
     private val denseInput: Boolean
 ) : EvolutionLauncher {
@@ -243,7 +259,8 @@ class NeatEvolutionLauncher(
                 populationSize = populationSize,
                 fitnessFunction = fitnessFunction,
                 objectiveFunction = objectiveFunction,
-                chartLabel = label
+                chartLabel = label,
+                evaluateOnLevelsCount = evaluateOnLevelsCount
             )
 
         val resultController = controllerEvolution.evolve(levelGenerators)
