@@ -5,7 +5,6 @@ import cz.cuni.mff.aspect.mario.Tiles
 import cz.cuni.mff.aspect.mario.level.MarioLevel
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.io.File
 import javax.imageio.ImageIO
 
 /** Creates images from given Super Mario levels. */
@@ -13,9 +12,9 @@ object LevelToImageConverter {
 
     private const val SPRITES_SIZE = 16
 
-    private val tileSheet: BufferedImage = ImageIO.read(File("resources/mapsheet.png"))
-    private val enemySheet: BufferedImage = ImageIO.read(File("resources/enemysheet.png"))
-    private val backgroundSheet: BufferedImage = ImageIO.read(File("resources/bgsheet.png"))
+    private val tileSheet: BufferedImage = ImageIO.read(javaClass.classLoader.getResource("mapsheet.png"))
+    private val enemySheet: BufferedImage = ImageIO.read(javaClass.classLoader.getResource("enemysheet.png"))
+    private val backgroundSheet: BufferedImage = ImageIO.read(javaClass.classLoader.getResource("bgsheet.png"))
 
     /**
      * Creates image from Super Mario level using Super Mario Infinite's tile sheets.

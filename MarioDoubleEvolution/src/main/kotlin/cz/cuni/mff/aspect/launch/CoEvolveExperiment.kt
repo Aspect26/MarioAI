@@ -53,7 +53,7 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
         hiddenLayerSize = 7,
-        denseInput = true,
+        denseInput = false,
         oneHotOnEnemies = false
     )
 
