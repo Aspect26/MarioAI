@@ -6,6 +6,7 @@ plugins {
     `java-library`
     kotlin("jvm") version "1.3.72"
     id("org.jetbrains.dokka") version "0.10.1"
+    application
 }
 
 repositories {
@@ -40,14 +41,12 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed")
         exceptionFormat = TestExceptionFormat.FULL
+        showStandardStreams = true
     }
 
-    this.testLogging {
-        this.showStandardStreams = true
-    }
 }
 
-val dokka by tasks.getting(DokkaTask::class) {
+tasks.withType<DokkaTask> {
     outputFormat = "html"
     outputDirectory = "$buildDir/dokka"
 
@@ -58,12 +57,22 @@ val dokka by tasks.getting(DokkaTask::class) {
     }
 }
 
-val jar by tasks.getting(Jar::class) {
+tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "cz.cuni.mff.aspect.launch.CoEvolveMultiKt"
+        attributes["Main-Class"] = "cz.cuni.mff.aspect.launch.PlayMarioKeyboardKt"
     }
 
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+tasks.register<JavaExec>("runCoevolution") {
+    main = "cz.cuni.mff.aspect.launch.CoEvolveMultiKt"
+    classpath = sourceSets.main.get().runtimeClasspath
+}
+
+tasks.register<JavaExec>("runExperiment") {
+    main = "cz.cuni.mff.aspect.launch.CoEvolveExperimentKt"
+    classpath = sourceSets.main.get().runtimeClasspath
 }
 
 tasks.withType<KotlinCompile>().configureEach {

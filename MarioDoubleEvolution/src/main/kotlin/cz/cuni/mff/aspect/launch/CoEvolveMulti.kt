@@ -48,12 +48,12 @@ fun main() {
 //    playCoevolution("data/coev/15_pmp_last/neuro_pmp")
 }
 
-private interface ControllerEvolutionSettings {
+interface ControllerEvolutionSettings {
     val evolution: ControllerEvolution
     val initialController: MarioController
 }
 
-private interface LevelGeneratorEvolutionSettings<T: LevelGenerator> {
+interface LevelGeneratorEvolutionSettings<T: LevelGenerator> {
     val evolution: LevelGeneratorEvolution<T>
     val initialLevelGenerator: T
 }
@@ -153,7 +153,7 @@ private object PMPEvolution : LevelGeneratorEvolutionSettings<PMPLevelGenerator>
 
 }
 
-private fun<T: LevelGenerator> coevolve(
+fun<T: LevelGenerator> coevolve(
     storagePath: String,
     controllerEvolutionSettings: ControllerEvolutionSettings,
     levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings<T>,

@@ -9,16 +9,23 @@ GRADLE_VERSION = "6.5"
 get-gradle-wrapper:
 	gradle wrapper --gradle-version $(GRADLE_VERSION)
 
-jar: get-gradle-wrapper
+build-simulator: get-gradle-wrapper
 	./gradlew $(MARIO_SIMULATOR_PROJECT):jar
+
+jar: build-simulator
 	./gradlew $(MARIO_COEVOLUTION_PROJECT):jar
 
 test: get-gradle-wrapper
 	./gradlew $(MARIO_COEVOLUTION_PROJECT):test
 
-run-coev: jar
-	# TODO: make custom gradle command to build coevolution jar
-	java -jar ./MarioDoubleEvolution/build/libs/MarioDoubleEvolution.jar 
+run-coev: build-simulator
+	./gradlew $(MARIO_COEVOLUTION_PROJECT):runCoevolution
+
+run-experiment: build-simulator
+	./gradlew $(MARIO_COEVOLUTION_PROJECT):runExperiment
+
+documentation:
+	./gradlew $(MARIO_COEVOLUTION_PROJECT):dokka
 
 changes-simulator:
 	git difftool 5ab3f ./MarioAI4J/
@@ -26,5 +33,3 @@ changes-simulator:
 changes-neat:
 	git difftool c69ab ./MarioDoubleEvolution/src/main/java/com/evo/NEAT
 
-documentation:
-	./gradlew $(MARIO_COEVOLUTION_PROJECT):dokka
