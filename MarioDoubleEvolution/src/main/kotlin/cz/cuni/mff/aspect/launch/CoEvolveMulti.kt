@@ -45,7 +45,7 @@ fun main() {
 
 //    continueCoevolution("result/test", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
-//    playCoevolution("data/coev/15_pmp_last/neuro_pmp")
+//    playCoevolution("data/coev/17_pmp_last/neuro_pmp")
 }
 
 interface ControllerEvolutionSettings {
@@ -64,8 +64,8 @@ private object NeuroEvolution : ControllerEvolutionSettings {
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
-        hiddenLayerSize = 7,
-        denseInput = true,
+        hiddenLayerSize = 5,
+        denseInput = false,
         oneHotOnEnemies = false
     )
 
@@ -73,13 +73,14 @@ private object NeuroEvolution : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 networkSettings,
                 populationSize = 50,
-                generationsCount = 35,
+                generationsCount = 45,
                 fitnessFunction = DistanceOnlyEvaluator(),
                 objectiveFunction = VictoriesOnlyEvaluator(),
                 evaluateOnLevelsCount = 25,
-                alterers = arrayOf(GaussianMutator(0.55)),
+                alterers = arrayOf(UpdatedGaussianMutator(1.0, 0.05)),
                 parallel = true,
                 displayChart = false,
+                alwaysReevaluate = true,
                 chartLabel = "Agent NeuroEvolution"
             )
 
@@ -244,6 +245,7 @@ private fun playCoevolution(dataPath: String) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController
+        eval(currentGenerator, currentController, "AI ")
 //        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
 //        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
 //        println("AI update - ${MarioGameplayEvaluators.victoriesOnly(Array(10) { simulator.playMario(currentController, currentGenerator.generate(), false) }) / 1000}")
@@ -251,7 +253,7 @@ private fun playCoevolution(dataPath: String) {
         simulator.playMario(currentController, LevelPostProcessor.postProcess(currentGenerator.generate(), false))
 
         currentGenerator = ObjectStorage.load("$dataPath/lg_$i.lg") as LevelGenerator
-        evalLg(currentGenerator, currentController)
+        eval(currentGenerator, currentController, "LG ")
 //        repeat(5) { LevelVisualiser().display(currentGenerator.generate()) }
 //        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
 //        println("Generator update; LG evaluation - ${AgentHalfPassing()(currentGenerator as PCLevelGenerator, {MarioAgent(currentController)}, 100) / 1000}")
@@ -262,8 +264,8 @@ private fun playCoevolution(dataPath: String) {
 
 }
 
-private fun evalLg(levelGenerator: LevelGenerator, controller: MarioController) {
+private fun eval(levelGenerator: LevelGenerator, controller: MarioController, text: String) {
     val simulator = GameSimulator(2500)
     val wins = (0 until 100).map { if (simulator.playMario(MarioAgent(controller), levelGenerator.generate(), false).levelFinished) 1 else 0 }.sum()
-    println("LG eval -> $wins/100")
+    println("$text eval -> $wins/100")
 }

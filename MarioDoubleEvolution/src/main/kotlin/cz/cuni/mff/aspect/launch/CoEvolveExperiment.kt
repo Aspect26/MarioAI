@@ -39,9 +39,10 @@ private const val repeatGeneratorsCount = 5
  */
 fun main() {
     println("STARTING EXPERIMENTS!")
+    val experimentNumber = 1
 
-    coevolve("result/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
-//    coevolve("result/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
+    coevolve("result/$experimentNumber/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
+    coevolve("result/$experimentNumber/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 }
@@ -52,7 +53,7 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
-        hiddenLayerSize = 7,
+        hiddenLayerSize = 5,
         denseInput = false,
         oneHotOnEnemies = false
     )
@@ -61,11 +62,11 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
             get() = NeuroControllerEvolution(
                 networkSettings,
                 populationSize = 50,
-                generationsCount = 35,
+                generationsCount = 50,
                 fitnessFunction = DistanceOnlyEvaluator(),
                 objectiveFunction = VictoriesOnlyEvaluator(),
                 evaluateOnLevelsCount = 25,
-                alterers = arrayOf(GaussianMutator(0.55)),
+                alterers = arrayOf(UpdatedGaussianMutator(1.0, 0.05)),
                 parallel = true,
                 displayChart = false,
                 chartLabel = "Agent NeuroEvolution"

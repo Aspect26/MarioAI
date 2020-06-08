@@ -5,6 +5,7 @@ import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
+import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
 import cz.cuni.mff.aspect.evolution.results.LevelGenerators
@@ -30,21 +31,21 @@ fun evolveAI() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
             NetworkSettings(5, 5, 0, 2, 5,
-                denseInput = false, oneHotOnEnemies = true),
+                denseInput = true, oneHotOnEnemies = false),
             100,
-            50,
+            100,
             fitnessFunction = DistanceOnlyEvaluator(),
             objectiveFunction = VictoriesOnlyEvaluator(),
-            evaluateOnLevelsCount = Stage4Level1Split.levels.size,
+            evaluateOnLevelsCount = 10,
             chartLabel = "NeuroEvolution",
-            alterers = arrayOf(GaussianMutator(0.55)),
-            alwaysReevaluate = false
+            alterers = arrayOf(UpdatedGaussianMutator(1.0, 0.05)),
+            alwaysReevaluate = true
         )
 //    val levelGenerator = PCLevelGenerator.createSimplest()
-    val levelGenerator = LevelGenerators.StaticGenerator(Stage4Level1Split.levels)
+    val levelGenerator = ObjectStorage.load<LevelGenerator>("data/coev/17_pmp_last/neuro_pmp/lg_${6}.lg")
     val resultController = controllerEvolution.evolve(listOf(levelGenerator)).bestController
     ObjectStorage.store(PATH_TO_LATEST_AI, resultController)
-    controllerEvolution.chart.store("data/latest.svg")
+    controllerEvolution.chart.store("data/latest-3.svg")
 
     val marioSimulator = GameSimulator()
 
@@ -87,10 +88,13 @@ private fun continueEvolveAI() {
 
 private fun playLatestAI() {
     val controller = ObjectStorage.load(PATH_TO_LATEST_AI) as MarioController
-    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
-    val marioSimulator = GameSimulator()
+//    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
+    val levelGenerator = ObjectStorage.load<LevelGenerator>("data/coev/17_pmp_last/neuro_pmp/lg_${6}.lg")
+    val marioSimulator = GameSimulator(2500)
 
-    Array(25) { levelGenerator.generate() }.forEach {
-        marioSimulator.playMario(controller, it, true)
-    }
+    val solved = Array(100) { levelGenerator.generate() }.map {
+        marioSimulator.playMario(controller, it, false)
+    }.sumBy { if (it.levelFinished) 1 else 0 }
+
+    println(solved)
 }
