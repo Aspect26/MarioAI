@@ -59,7 +59,7 @@ tasks.withType<DokkaTask> {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "cz.cuni.mff.aspect.launch.PlayMarioKeyboardKt"
+        attributes["Main-Class"] = "cz.cuni.mff.aspect.launch.CoEvolveExperimentKt"
     }
 
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })

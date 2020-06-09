@@ -1,33 +1,24 @@
 package cz.cuni.mff.aspect.launch
 
 import com.evo.NEAT.Genome
-import cz.cuni.mff.aspect.coevolution.Coevolution
-import cz.cuni.mff.aspect.coevolution.CoevolutionSettings
-import cz.cuni.mff.aspect.evolution.controller.*
+import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
-import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
-import cz.cuni.mff.aspect.mario.GameSimulator
-import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
-import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
-import cz.cuni.mff.aspect.storage.ObjectStorage
-import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
-import io.jenetics.GaussianMutator
+import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 
 private const val generations = 25
 private const val repeatGeneratorsCount = 5
@@ -37,12 +28,12 @@ private const val repeatGeneratorsCount = 5
  * [NEATEvolution], [PCEvolution] and [PMPEvolution] objects. It is also able to showcase the result of the coevolution
  * by playing one level from each coevolution step.
  */
-fun main() {
-    println("STARTING EXPERIMENTS!")
-    val experimentNumber = 1
+fun main(args: Array<String>) {
+    val experimentName = if (args.isNotEmpty()) args[0] else ""
+    println("STARTING EXPERIMENTS $experimentName")
 
-    coevolve("result/$experimentNumber/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
-    coevolve("result/$experimentNumber/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
+    coevolve("result/$experimentName/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
+    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 }
