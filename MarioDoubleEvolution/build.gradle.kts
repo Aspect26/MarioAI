@@ -75,6 +75,12 @@ tasks.register<JavaExec>("runExperiment") {
     classpath = sourceSets.main.get().runtimeClasspath
 }
 
+val launchClass: String by project
+tasks.register<JavaExec>("runLauncher") {
+    main = launchClass
+    classpath = sourceSets.main.get().runtimeClasspath
+}
+
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
