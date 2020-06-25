@@ -34,7 +34,7 @@ class All(expectedWinRatio: Float = 0.5f) : PCLevelEvaluator<Float> {
             LinearityEvaluator().evaluateOne(levels[it], levelsChunkMetadata[it], gameStatistics[it])
         }.average().toFloat()
 
-        return winRatioFactor * (1 + compressionFactor + linearityFactor) * 30000
+        return winRatioFactor * (1 + compressionFactor + linearityFactor)
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

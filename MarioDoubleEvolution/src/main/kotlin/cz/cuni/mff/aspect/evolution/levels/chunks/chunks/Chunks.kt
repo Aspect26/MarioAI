@@ -3,10 +3,10 @@ package cz.cuni.mff.aspect.evolution.levels.chunks.chunks
 import cz.cuni.mff.aspect.evolution.levels.ge.grammar.ColumnHelpers
 
 /**
- * Super Mario level chunk representing a hole in the ground of given length.
- * @param holeLength length of the hole. Two additional columns of path are generated on each side of the hole.
+ * Super Mario level chunk representing a gap between platforms of given length.
+ * @param holeLength length of the gap. Two additional columns of path are generated on each side of the hole.
  */
-data class HoleChunk(private val holeLength: Int): MarioLevelChunk("hole") {
+data class GapChunk(private val holeLength: Int): MarioLevelChunk("gap") {
 
     override fun generateColumn(column: Int, level: Int): ByteArray =
         when (column) {

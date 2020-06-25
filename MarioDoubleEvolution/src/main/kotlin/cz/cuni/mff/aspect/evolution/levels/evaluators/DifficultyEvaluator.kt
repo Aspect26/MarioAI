@@ -27,13 +27,13 @@ class DifficultyEvaluator : LevelEvaluator<Float> {
             }
         }
 
-        var currentHoleLength = 0
-        var holesDifficulty = 0f
+        var currentGapLength = 0
+        var gapsDifficulty = 0f
         for (tilesColumn in level.tiles) {
             if (tilesColumn[tilesColumn.size - 1] == Tiles.NOTHING) {
-                currentHoleLength++
-            } else if (currentHoleLength > 0) {
-                holesDifficulty += when (currentHoleLength) {
+                currentGapLength++
+            } else if (currentGapLength > 0) {
+                gapsDifficulty += when (currentGapLength) {
                     0 -> 0.0f
                     1 -> 0.5f
                     2 -> 1.5f
@@ -41,7 +41,7 @@ class DifficultyEvaluator : LevelEvaluator<Float> {
                     4 -> 2.5f
                     else -> 3.0f
                 }
-                currentHoleLength = 0
+                currentGapLength = 0
             }
         }
 
@@ -64,7 +64,7 @@ class DifficultyEvaluator : LevelEvaluator<Float> {
 
 //        println("enemies: $enemiesDifficulty | holes: $holesDifficulty | bills: $billsDifficulty | platforms: $platformsDifficulty | TOTAL: ${enemiesDifficulty + holesDifficulty + billsDifficulty - platformsDifficulty}")
 
-        return (enemiesDifficulty + holesDifficulty + billsDifficulty - platformsDifficulty).coerceAtLeast(0f)
+        return (enemiesDifficulty + gapsDifficulty + billsDifficulty - platformsDifficulty).coerceAtLeast(0f)
     }
 
 }

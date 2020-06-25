@@ -30,7 +30,7 @@ class PMPLevelGenerator(
     private val probabilities: DoubleArray = DoubleArray(PROBABILITIES_COUNT) {
         when (it) {
             PI_CHANGE_HEIGHT -> 0.1
-            PI_CREATE_HOLE -> 0.05
+            PI_CREATE_GAP -> 0.05
 
             PI_ENEMY_GOOMBA -> 0.03
             PI_ENEMY_KOOPA_GREEN -> 0.03
@@ -105,11 +105,11 @@ class PMPLevelGenerator(
     private fun groundPass(levelMetadata: PMPLevelMetadata) {
         var currentHeight = levelMetadata.groundHeight[0]
         var lastChangeAtColumn = 0
-        var lastHoleEndColumn = 0
-        val changeOptions = intArrayOf(PI_CHANGE_HEIGHT, PI_CREATE_HOLE)
+        var lastLengthEndColumn = 0
+        val changeOptions = intArrayOf(PI_CHANGE_HEIGHT, PI_CREATE_GAP)
 
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength) {
-            if (column - lastHoleEndColumn <= 1 || column - lastChangeAtColumn <= 1 || column >= levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
+            if (column - lastLengthEndColumn <= 1 || column - lastChangeAtColumn <= 1 || column >= levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
                 levelMetadata.groundHeight[column] = currentHeight
                 continue
             }
@@ -125,10 +125,10 @@ class PMPLevelGenerator(
                         newHeight
                     }
                 }
-                PI_CREATE_HOLE -> {
-                    val holeLength = this.randomInt(2, 4)
-                    lastHoleEndColumn = column + holeLength
-                    levelMetadata.holes[column] = holeLength
+                PI_CREATE_GAP -> {
+                    val gapLength = this.randomInt(2, 4)
+                    lastLengthEndColumn = column + gapLength
+                    levelMetadata.gaps[column] = gapLength
                 }
             }
 
@@ -277,7 +277,7 @@ class PMPLevelGenerator(
     }
 
     private fun nearestHoleOrEnd(levelMetadata: PMPLevelMetadata, fromColumn: Int): Int {
-        for (index in fromColumn until levelMetadata.holes.size) if (levelMetadata.holes[index] > 0) return index
+        for (index in fromColumn until levelMetadata.gaps.size) if (levelMetadata.gaps[index] > 0) return index
         return levelMetadata.levelLength
     }
 
@@ -319,7 +319,7 @@ class PMPLevelGenerator(
         private const val STARTING_HEIGHT = 5
 
         private const val PI_CHANGE_HEIGHT = 0
-        private const val PI_CREATE_HOLE = 1
+        private const val PI_CREATE_GAP = 1
         private const val PI_ENEMY_GOOMBA = 2
         private const val PI_ENEMY_KOOPA_GREEN = 3
         private const val PI_ENEMY_KOOPA_GREEN_WINGED = 4

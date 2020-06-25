@@ -34,7 +34,7 @@ class All(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
             LinearityEvaluator().evaluateOne(levels[it], metadata[it], gameStatistics[it])
         }.average().toFloat()
 
-        return winRatioFactor * (1 + compressionFactor + linearityFactor) * 30000
+        return winRatioFactor * (1 + compressionFactor + linearityFactor)
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM

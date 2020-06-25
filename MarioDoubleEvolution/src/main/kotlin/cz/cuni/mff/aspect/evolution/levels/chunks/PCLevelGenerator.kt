@@ -185,7 +185,7 @@ class PCLevelGenerator(
         private val serialVersionUID = -2723181636782557502L
         private val defaultChunks = arrayOf(
             PathChunk(3), PathChunk(4), PathChunk(5), PathChunk(6),
-            HoleChunk(2), HoleChunk(3), HoleChunk(4),
+            GapChunk(2), GapChunk(3), GapChunk(4),
             SinglePlatformChunk(1, Tiles.BRICK), SinglePlatformChunk(3, Tiles.BRICK), SinglePlatformChunk(5, Tiles.BRICK),
             SinglePlatformChunk(1, Tiles.QM_WITH_COIN), SinglePlatformChunk(3, Tiles.QM_WITH_COIN), SinglePlatformChunk(5, Tiles.QM_WITH_COIN),
             PipeChunk(2), PipeChunk(3), PipeChunk(4),

@@ -11,7 +11,7 @@ data class PMPLevelMetadata (
     val levelHeight: Int,
     val groundHeight: IntArray,
     val entities: IntArray,
-    val holes: IntArray,
+    val gaps: IntArray,
     val pipes: IntArray,
     val bulletBills: IntArray,
     val boxPlatforms: Array<BoxPlatform>,
@@ -33,7 +33,7 @@ data class PMPLevelMetadata (
     }
 
     val enemiesCount: Int get() = this.entities.filter { it != Entities.NOTHING }.size
-    val holesCount: Int get() = this.holes.filter { it > 0}.size
+    val holesCount: Int get() = this.gaps.filter { it > 0}.size
     val pipesCount: Int get() = this.pipes.filter { it > 0}.size
     val billsCount: Int get() = this.bulletBills.filter { it > 0}.size
     val boxPlatformsCount: Int get() = this.boxPlatforms.filter { it.length > 0}.size
@@ -41,8 +41,8 @@ data class PMPLevelMetadata (
 
     /** Computes whether there is a hole on the given column in the level represented by this metadata. */
     fun isHoleAt(checkingColumn: Int): Boolean {
-        for (currentColumn in this.holes.indices) {
-            val holeLength = this.holes[currentColumn]
+        for (currentColumn in this.gaps.indices) {
+            val holeLength = this.gaps[currentColumn]
             if (holeLength > 0 && checkingColumn in currentColumn until currentColumn + holeLength) return true
         }
 
@@ -89,10 +89,10 @@ data class PMPLevelMetadata (
     }
 
     private fun insertHoles(tiles: Array<ByteArray>) {
-        for (column in this.holes.indices) {
-            val holeLength = this.holes[column]
-            if (holeLength > 0) {
-                this.insertHole(tiles, column, holeLength)
+        for (column in this.gaps.indices) {
+            val gapLength = this.gaps[column]
+            if (gapLength > 0) {
+                this.insertHole(tiles, column, gapLength)
             }
         }
     }
