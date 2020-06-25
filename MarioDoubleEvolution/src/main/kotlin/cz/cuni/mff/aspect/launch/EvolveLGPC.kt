@@ -17,38 +17,39 @@ import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
  * using default settings of Probabilistic Chunks level generator.
  */
 fun main() {
-    evolvePC()
-//    playLatestPC()
-//    createDefaultPC()
+    evolve()
+//    playLatest()
+//    createDefault()
 }
 
-private fun evolvePC() {
+private fun evolve() {
 //    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/first_ai.ai") as MarioController) }
     val agentFactory = { Agents.RuleBased.goingRight }
 
     val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 20,
-        evaluateOnLevelsCount = 5,
-        fitnessFunction = LinearityEvaluator(),
-        objectiveFunction = HuffmanCompressionEvaluator(),
+        generationsCount = 10,
+        evaluateOnLevelsCount = 10,
+        fitnessFunction = All(0.5f),
+        objectiveFunction = WinRatioEvaluator(0.5f, 1f),
         chunksCount = 55,
         displayChart = true
     )
 
     val levelGenerator = levelGeneratorEvolution.evolve(agentFactory).bestLevelGenerator
     ObjectStorage.store("data/latest_pc_lg.lg", levelGenerator)
+    levelGeneratorEvolution.chart.store("latest_pc_5.svg")
 
     val level = levelGenerator.generate()
     val postProcessed = LevelPostProcessor.postProcess(level, true)
-    LevelVisualiser().display(postProcessed)
+    LevelVisualiser().displayAndStore(postProcessed, "img/pc_complexity.png")
 
 //    val agent = CheaterKeyboardAgent()
     val agent = agentFactory()
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-private fun playLatestPC() {
+private fun playLatest() {
     val levelGenerator: PCLevelGenerator = ObjectStorage.load("data/latest_pc_lg.lg") as PCLevelGenerator
     val simulator = GameSimulator(15000)
 
@@ -63,7 +64,7 @@ private fun playLatestPC() {
     }
 }
 
-private fun createDefaultPC() {
+private fun createDefault() {
     val levelGenerator = PCLevelGenerator()
     val gameSimulator = GameSimulator(500000000)
 

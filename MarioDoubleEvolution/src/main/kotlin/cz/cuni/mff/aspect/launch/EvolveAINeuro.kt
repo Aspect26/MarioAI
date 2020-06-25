@@ -2,18 +2,15 @@ package cz.cuni.mff.aspect.launch
 
 import cz.cuni.mff.aspect.evolution.controller.ControllerEvolution
 import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
-import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.controller.evaluators.VictoriesOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.neuroevolution.NeuroControllerEvolution
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGenerator
 import cz.cuni.mff.aspect.evolution.results.Agents
-import cz.cuni.mff.aspect.evolution.results.LevelGenerators
 import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
-import cz.cuni.mff.aspect.mario.level.original.Stage4Level1Split
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import io.jenetics.GaussianMutator
 
@@ -21,13 +18,13 @@ private val PATH_TO_LATEST_AI = "data/latest_neuro_ai.ai"
 
 /** Launches Neuroevolution algorithm to evolve AI using specified settings. */
 fun main() {
-    evolveAI()
-//    continueEvolveAI()
-//    playLatestAI()
+    evolve()
+//    continueEvolution)
+//    playLatest()
 }
 
 
-fun evolveAI() {
+private fun evolve() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
             NetworkSettings(5, 5, 0, 2, 5,
@@ -56,7 +53,7 @@ fun evolveAI() {
 }
 
 
-private fun continueEvolveAI() {
+private fun continueEvolution() {
     val controllerEvolution: ControllerEvolution =
         NeuroControllerEvolution(
             NetworkSettings(5, 5, 0, 2, 5,
@@ -86,7 +83,7 @@ private fun continueEvolveAI() {
 }
 
 
-private fun playLatestAI() {
+private fun playLatest() {
     val controller = ObjectStorage.load(PATH_TO_LATEST_AI) as MarioController
 //    val levelGenerator = LevelGenerators.StaticGenerator(TrainingLevelsSet)
     val levelGenerator = ObjectStorage.load<LevelGenerator>("data/coev/17_pmp_last/neuro_pmp/lg_${6}.lg")

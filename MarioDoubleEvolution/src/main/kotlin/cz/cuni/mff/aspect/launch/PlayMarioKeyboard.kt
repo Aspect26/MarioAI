@@ -15,7 +15,7 @@ fun main() {
 
 
 private fun keyboardPlay() {
-    val levelGenerator = PCLevelGenerator(chunksInLevelCount = 5)
+    val levelGenerator = PMPLevelGenerator()
 //    val levelGenerator = PCLevelGenerator(chunksInLevelCount = 55)
     val levels: Array<MarioLevel> = Array(15) { LevelPostProcessor.postProcess(levelGenerator.generate(), true) }
 

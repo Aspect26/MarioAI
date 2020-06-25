@@ -1,7 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
-import cz.cuni.mff.aspect.controllers.GoingRightController
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
@@ -21,41 +20,43 @@ const val FILE_PATH_LATEST_PMP = "data/latest_pmp_lg.lg"
  * using default settings of Probabilistic Multipass level generator.
  */
 fun main() {
-    evolvePMP()
-//    playLatestPMP()
-//    evaluateLatestPMP()
-//    createDefaultPMP()
+    evolve()
+//    playLatest()
+//    evaluateLatest()
+//    createDefault()
 }
 
-private fun evolvePMP() {
+private fun evolve() {
 
-    val agentFactory = { MarioAgent(GoingRightController()) }
+//    val agentFactory = { MarioAgent(GoingRightController()) }
+    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/16_pc_last/neuro_pc/ai_25.ai")) }
 
-    val levelEvolution = PMPLevelGeneratorEvolution(
+    val levelGeneratorEvolution = PMPLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 35,
-        evaluateOnLevelsCount = 30,
-        fitnessFunction = All(0.75f),
-        objectiveFunction = WinRatioEvaluator(0.75f, 50000f),
-        alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
+        generationsCount = 10,
+        evaluateOnLevelsCount = 10,
+        fitnessFunction = All(0.5f),
+        objectiveFunction = WinRatioEvaluator(0.5f, 1f),
+        alterers = arrayOf(UpdatedGaussianMutator(0.5, 0.3) /*, SinglePointCrossover(0.2)*/),
         displayChart = true,
         levelLength = 300,
         chartLabel = "PMP Level Generator"
     )
 
-    val levelGenerator = levelEvolution.evolve(agentFactory).bestLevelGenerator
+    val levelGenerator = levelGeneratorEvolution.evolve(agentFactory).bestLevelGenerator
     ObjectStorage.store(FILE_PATH_LATEST_PMP, levelGenerator)
+    levelGeneratorEvolution.chart.store("latest_pmp_5.svg")
 
     val level = levelGenerator.generate()
     val postProcessed = LevelPostProcessor.postProcess(level, true)
-    LevelVisualiser().display(postProcessed)
+    LevelVisualiser().displayAndStore(postProcessed, "img/pmp_difficulty.png")
 
 //    val agent = CheaterKeyboardAgent()
     val agent = agentFactory()
     GameSimulator().playMario(agent, postProcessed, true)
 }
 
-private fun playLatestPMP() {
+private fun playLatest() {
     val levelGenerator = ObjectStorage.load(FILE_PATH_LATEST_PMP) as PMPLevelGenerator
     val gameSimulator = GameSimulator()
 
@@ -71,7 +72,7 @@ private fun playLatestPMP() {
     }
 }
 
-private fun evaluateLatestPMP() {
+private fun evaluateLatest() {
     val levelGenerator = ObjectStorage.load(FILE_PATH_LATEST_PMP) as PMPLevelGenerator
     val evaluator = DifficultyEvaluator()
 
@@ -86,7 +87,7 @@ private fun evaluateLatestPMP() {
     }
 }
 
-private fun createDefaultPMP() {
+private fun createDefault() {
     val defaultLevel = PMPLevelGenerator().generate()
     val postProcessed = LevelPostProcessor.postProcess(defaultLevel)
     LevelVisualiser().display(postProcessed)

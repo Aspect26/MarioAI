@@ -27,7 +27,6 @@ import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.storage.ObjectStorage
 import cz.cuni.mff.aspect.visualisation.charts.evolution.CoevolutionLineChart
-import io.jenetics.GaussianMutator
 
 private const val generations = 25
 private const val repeatGeneratorsCount = 5
@@ -42,8 +41,6 @@ fun main() {
 //    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
-
-//    continueCoevolution("result/test", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
 
 //    playCoevolution("data/coev/17_pmp_last/neuro_pmp")
 }
