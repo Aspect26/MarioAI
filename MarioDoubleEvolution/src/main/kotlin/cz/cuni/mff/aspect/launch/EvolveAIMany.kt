@@ -130,8 +130,7 @@ private fun doManyNEATEvolution() {
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness = DistanceWithLeastActionsEvaluator()
-    val receptiveFieldSize = Pair(5, 5)
+    val fitness = DistanceWithLeastActionsEvaluator(5)
     val evaluateOnLevelsCount = 7
     val networkSettings = NetworkSettings(
         5, 5, 0, 2, 0,
