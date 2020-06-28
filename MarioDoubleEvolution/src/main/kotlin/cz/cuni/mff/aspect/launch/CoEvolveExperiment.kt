@@ -19,8 +19,9 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
+import io.jenetics.util.DoubleRange
 
-private const val generations = 25
+private const val generations = 20
 private const val repeatGeneratorsCount = 5
 
 /**
@@ -44,7 +45,7 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
         receptiveFieldSizeColumn = 5,
         receptiveFieldRowOffset = 0,
         receptiveFieldColumnOffset = 2,
-        hiddenLayerSize = 5,
+        hiddenLayerSize = 7,
         denseInput = false,
         oneHotOnEnemies = false
     )
@@ -57,7 +58,8 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
                 fitnessFunction = DistanceOnlyEvaluator(),
                 objectiveFunction = VictoriesOnlyEvaluator(),
                 evaluateOnLevelsCount = 25,
-                alterers = arrayOf(UpdatedGaussianMutator(1.0, 0.05)),
+                alterers = arrayOf(UpdatedGaussianMutator(1.0, 0.65)),
+                weightsRange = DoubleRange.of(-25.0, 25.0),
                 parallel = true,
                 displayChart = false,
                 chartLabel = "Agent NeuroEvolution"
