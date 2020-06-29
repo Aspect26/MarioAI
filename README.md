@@ -2,7 +2,7 @@
 
 # Mario AI and LevelGenerator coevolution
 
-Welcome to my diploma thesis work! Meaningful readme coming soon...
+Welcome to my diploma thesis implementation! Detailed information about the work is written in the thesis.
 
 ## How to start development in IntelliJ IDEA
 
