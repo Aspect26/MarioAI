@@ -206,7 +206,7 @@ class PMPLevelGenerator(
     }
 
     private fun enemiesPass(levelMetadata: PMPLevelMetadata) {
-        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES)
+        val changeOptions = intArrayOf(PI_ENEMY_GOOMBA, PI_ENEMY_KOOPA_GREEN, PI_ENEMY_KOOPA_GREEN_WINGED, PI_ENEMY_KOOPA_RED, PI_ENEMY_SPIKES)
 
         for (column in SAFE_ZONE_LENGTH until levelMetadata.levelLength - SAFE_ZONE_LENGTH) {
             if (levelMetadata.groundHeight[column] == 0) continue
@@ -214,6 +214,7 @@ class PMPLevelGenerator(
             val entity = when (this.selectChangeFrom(changeOptions, this.probabilities)) {
                 PI_ENEMY_GOOMBA -> Entities.Goomba.NORMAL
                 PI_ENEMY_KOOPA_GREEN -> Entities.Koopa.GREEN
+                PI_ENEMY_KOOPA_GREEN_WINGED -> Entities.Koopa.GREEN_WINGED
                 PI_ENEMY_KOOPA_RED -> Entities.Koopa.RED
                 PI_ENEMY_SPIKES -> Entities.Spiky.NORMAL
                 else -> Entities.NOTHING
