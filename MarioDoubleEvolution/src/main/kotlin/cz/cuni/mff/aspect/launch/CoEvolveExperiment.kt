@@ -35,9 +35,9 @@ fun main(args: Array<String>) {
     println("${if (continueExperiment) "CONTINUING" else "STARTING"} EXPERIMENTS $experimentName")
 
 //    coevolve("result/$experimentName/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
-    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
-//    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
-//    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
+//    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
+    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
+    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
 }
 
 private object NeuroEvolutionLarge : ControllerEvolutionSettings {
@@ -85,7 +85,7 @@ private object NEATEvolutionLarge : ControllerEvolutionSettings {
             objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = 25,
             displayChart = false,
-            chartLabel = "Agent NeuroEvolution"
+            chartLabel = "Agent NEAT evolution"
         )
 
     override val initialController: MarioController
