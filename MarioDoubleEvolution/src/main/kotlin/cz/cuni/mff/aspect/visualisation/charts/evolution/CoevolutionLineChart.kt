@@ -99,8 +99,11 @@ class CoevolutionLineChart(
     /**
      * Splits the chart's data series according to chart's stops
      */
-    private fun getChartData(chart: EvolutionLineChart): List<EvolutionDataSeries> =
-        chart.stops.mapIndexed { stopIndex, currentStop ->
+    private fun getChartData(chart: EvolutionLineChart): List<EvolutionDataSeries> {
+        val allStops = chart.stops.toMutableList()
+        allStops.add(chart.dataSeries.averageFitness.data.last().first)
+
+        return allStops.mapIndexed { stopIndex, currentStop ->
             val fromIndex = if (stopIndex == 0) 0 else chart.stops[stopIndex - 1].toInt()
             val toIndex = currentStop.toInt()
 
@@ -135,6 +138,7 @@ class CoevolutionLineChart(
                 )
             )
         }
+    }
 
     private fun copySeriesData(dataSeries: List<Pair<Double, Double>>, fromIndex: Int, toIndex: Int): MutableList<Pair<Double, Double>> =
         dataSeries.subList(fromIndex, toIndex).map { Pair(it.first, it.second) }.toMutableList()
