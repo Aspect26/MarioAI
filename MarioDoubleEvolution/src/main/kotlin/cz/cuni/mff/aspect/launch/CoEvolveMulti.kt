@@ -37,10 +37,10 @@ private const val repeatGeneratorsCount = 5
  * by playing one level from each coevolution step.
  */
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount)
-//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount)
-//    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount)
-//    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount)
+    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount, false)
+//    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount, false)
+//    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount, false)
+//    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount, false)
 
 //    playCoevolution("data/coev/17_pmp_last/neuro_pmp")
 }
@@ -156,7 +156,8 @@ fun<T: LevelGenerator> coevolve(
     controllerEvolutionSettings: ControllerEvolutionSettings,
     levelGeneratorEvolutionSettings: LevelGeneratorEvolutionSettings<T>,
     generations: Int,
-    repeatGeneratorsCount: Int
+    repeatGeneratorsCount: Int,
+    continueExperiment: Boolean
 ) {
     val controllerEvolution = controllerEvolutionSettings.evolution
     val levelGeneratorEvolution = levelGeneratorEvolutionSettings.evolution
@@ -172,7 +173,10 @@ fun<T: LevelGenerator> coevolve(
 
     val coevolver = Coevolution<T>()
 
-    coevolver.startEvolution(coevolutionSettings)
+    if (continueExperiment)
+        coevolver.continueCoevolution(coevolutionSettings)
+    else
+        coevolver.startEvolution(coevolutionSettings)
 
     val controllerChart = controllerEvolution.chart
     val levelGeneratorChart = levelGeneratorEvolution.chart

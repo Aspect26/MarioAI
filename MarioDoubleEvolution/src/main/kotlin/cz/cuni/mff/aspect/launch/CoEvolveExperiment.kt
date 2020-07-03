@@ -31,10 +31,11 @@ private const val repeatGeneratorsCount = 5
  */
 fun main(args: Array<String>) {
     val experimentName = if (args.isNotEmpty()) args[0] else ""
-    println("STARTING EXPERIMENTS $experimentName")
+    val continueExperiment = args.contains("continue")
+    println("${if (continueExperiment) "CONTINUING" else "STARTING"} EXPERIMENTS $experimentName")
 
-    coevolve("result/$experimentName/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
-    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
+//    coevolve("result/$experimentName/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
+    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
 //    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount)
 //    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount)
 }
