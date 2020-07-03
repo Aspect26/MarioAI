@@ -1,5 +1,6 @@
 package cz.cuni.mff.aspect.launch
 
+import cz.cuni.mff.aspect.coevolution.CoevolutionTimer
 import cz.cuni.mff.aspect.evolution.controller.TrainingLevelsSet
 import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceOnlyEvaluator
 import cz.cuni.mff.aspect.evolution.controller.evaluators.DistanceWithLeastActionsEvaluator
@@ -30,7 +31,7 @@ fun main() {
 private fun doManyNeuroEvolution() {
     val levels = TrainingLevelsSet
     val levelGenerator = LevelGenerators.StaticGenerator(levels)
-    val evaluationName = "final-experiments/neuro/50:50:DO:0.65:7:5x5:false:false:100"
+    val evaluationName = "final-experiments/neuro/50:50:DO:0.65:7:5x5:false:false:-25,25"
 
     val generationsCount = 50
     val populationSize = 50
@@ -41,7 +42,7 @@ private fun doManyNeuroEvolution() {
     val networkSettings = NetworkSettings(5, 5, 0, 2,
         hiddenLayerSize, denseInput = false, oneHotOnEnemies = false)
     val evaluateOnLevelsCount = levels.size
-    val weightsRange = DoubleRange.of(-100.0, 100.0)
+    val weightsRange = DoubleRange.of(-25.0, 25.0)
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
@@ -125,15 +126,16 @@ private fun doManyNeuroEvolution() {
 
 
 private fun doManyNEATEvolution() {
-    val levelGenerators = listOf(LevelGenerators.PCGenerator.all)
-    val evaluationName = "final-experiments/neat/500:100:DWP:5x5:false:false"
+    val levels = TrainingLevelsSet
+    val levelGenerators = listOf(LevelGenerators.StaticGenerator(levels))
+    val evaluationName = "final-experiments/neat/500:100:DWP30:7x7:false:false"
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness = DistanceWithLeastActionsEvaluator(5)
-    val evaluateOnLevelsCount = 7
+    val fitness = DistanceWithLeastActionsEvaluator(30)
+    val evaluateOnLevelsCount = levels.size
     val networkSettings = NetworkSettings(
-        5, 5, 0, 2, 0,
+        7, 7, 0, 3, 0,
         false, false
     )
 
@@ -214,6 +216,7 @@ private class NeuroEvolutionLauncher(
 ) : EvolutionLauncher {
 
     override fun run() {
+        val timer = CoevolutionTimer()
         val controllerEvolution =
             NeuroControllerEvolution(
                 networkSettings,
@@ -231,9 +234,13 @@ private class NeuroEvolutionLauncher(
                 alwaysReevaluate = alwaysReevaluate
             )
 
+        timer.startControllerEvolution()
         val resultController = controllerEvolution.evolve(listOf(levelGenerator))
+        timer.stopControllerEvolution()
+
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController.bestController)
+        timer.store("data/experiments/$dataLocation/${label}_time.txt")
     }
 }
 
@@ -250,7 +257,7 @@ class NeatEvolutionLauncher(
 ) : EvolutionLauncher {
 
     override fun run() {
-
+        val timer = CoevolutionTimer()
         val controllerEvolution =
             NeatControllerEvolution(
                 networkSettings = networkSettings,
@@ -262,9 +269,13 @@ class NeatEvolutionLauncher(
                 evaluateOnLevelsCount = evaluateOnLevelsCount
             )
 
+        timer.startControllerEvolution()
         val resultController = controllerEvolution.evolve(levelGenerators)
+        timer.stopControllerEvolution()
+
         controllerEvolution.chart.store("data/experiments/$dataLocation/${label}_chart.svg")
         ObjectStorage.store("data/experiments/$dataLocation/${label}_ai.ai", resultController.bestController)
+        timer.store("data/experiments/$dataLocation/${label}_time.txt")
     }
 
 }

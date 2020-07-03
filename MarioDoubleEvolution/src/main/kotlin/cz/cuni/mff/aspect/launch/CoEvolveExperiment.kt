@@ -70,7 +70,7 @@ private object NeuroEvolutionLarge : ControllerEvolutionSettings {
 }
 
 private object NEATEvolutionLarge : ControllerEvolutionSettings {
-    private val networkSettings = NetworkSettings(5, 5, 0, 2,
+    private val networkSettings = NetworkSettings(7, 7, 0, 3,
         denseInput = false,
         oneHotOnEnemies = false)
     private val inputsCount = NeatAgentNetwork.inputLayerSize(networkSettings)
@@ -79,7 +79,7 @@ private object NEATEvolutionLarge : ControllerEvolutionSettings {
         get() = NeatControllerEvolution(
             networkSettings,
             populationSize = 100,
-            generationsCount = 75,
+            generationsCount = 400,
             fitnessFunction = DistanceOnlyEvaluator(),
             objectiveFunction = VictoriesOnlyEvaluator(),
             evaluateOnLevelsCount = 25,
