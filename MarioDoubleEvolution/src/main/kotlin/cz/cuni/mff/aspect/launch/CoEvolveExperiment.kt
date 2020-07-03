@@ -36,8 +36,8 @@ fun main(args: Array<String>) {
 
 //    coevolve("result/$experimentName/neuro_pc", NeuroEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
 //    coevolve("result/$experimentName/neuro_pmp", NeuroEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
-    coevolve("result/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
-    coevolve("result/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
+    coevolve("result/$experimentName/neat_pc", NEATEvolutionLarge, PCEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
+    coevolve("result/$experimentName/neat_pmp", NEATEvolutionLarge, PMPEvolutionLarge, generations, repeatGeneratorsCount, continueExperiment)
 }
 
 private object NeuroEvolutionLarge : ControllerEvolutionSettings {
