@@ -29,10 +29,6 @@ public class Pool {
     }
 
     public void initializePool(List<Genome> genomes) {
-        if (genomes.size() != this.populationSize) {
-            throw new IllegalArgumentException("The genmoes size must be the same as population size");
-        }
-
         for (int i = 0; i < this.populationSize; i++) {
             addToSpecies(genomes.get(i));
             genomes.add(genomes.get(i));
