@@ -8,6 +8,7 @@ import cz.cuni.mff.aspect.mario.GameSimulator
 import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
 import cz.cuni.mff.aspect.mario.controllers.ann.networks.NeatAgentNetwork
+import java.util.stream.IntStream
 import kotlin.math.max
 
 /**
@@ -29,7 +30,8 @@ internal class ControllerEvolutionEnvironment(
         this.lastEvaluationFitnesses = FloatArray(population.size)
         this.lastEvaluationObjectives = FloatArray(population.size)
 
-        population.forEachIndexed { index, genome ->
+        IntStream.range(0, population.size).parallel().forEach { index ->
+            val genome = population[index]
             val neatNetwork = NeatAgentNetwork(this.networkSettings, genome)
             val controller = SimpleANNController(neatNetwork)
 
