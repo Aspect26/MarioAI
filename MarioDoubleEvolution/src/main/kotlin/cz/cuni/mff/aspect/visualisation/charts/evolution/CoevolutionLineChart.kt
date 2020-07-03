@@ -101,7 +101,8 @@ class CoevolutionLineChart(
      */
     private fun getChartData(chart: EvolutionLineChart): List<EvolutionDataSeries> {
         val allStops = chart.stops.toMutableList()
-        allStops.add(chart.dataSeries.averageFitness.data.last().first)
+        if (chart.dataSeries.averageFitness.data.isNotEmpty())
+            allStops.add(chart.dataSeries.averageFitness.data.last().first)
 
         return allStops.mapIndexed { stopIndex, currentStop ->
             val fromIndex = if (stopIndex == 0) 0 else chart.stops[stopIndex - 1].toInt()
