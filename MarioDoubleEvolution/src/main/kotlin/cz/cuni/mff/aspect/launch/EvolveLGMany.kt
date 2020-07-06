@@ -1,82 +1,136 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
-import cz.cuni.mff.aspect.evolution.levels.ge.GrammarLevelEvolution
+import cz.cuni.mff.aspect.coevolution.CoevolutionTimer
+import cz.cuni.mff.aspect.controllers.GoingRightAndJumpingController
+import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.DistanceLinearityDifficultyCompressionDiscretizedEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.NullEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
-import cz.cuni.mff.aspect.evolution.results.Agents
-import cz.cuni.mff.aspect.storage.LevelStorage
-import cz.cuni.mff.aspect.visualisation.level.LevelVisualiser
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PNGCompressionEvaluator
+import cz.cuni.mff.aspect.mario.MarioAgent
+import cz.cuni.mff.aspect.storage.ObjectStorage
 
 /**
  * Launches multiple evolutions of Probabilistic Multipass level generator using settings specified by instances of
  * [PMPEvolutionLauncher] class.
  */
 fun main() {
-    doManyPMPEvolution()
+    doManyPCEvolution()
+//    doManyPMPEvolution()
 }
 
-fun doManyPMPEvolution() {
+private fun doManyPCEvolution() {
+    val experimentsName = "data/experiments/final-experiments/lg/pc/fit+complexity+linearity"
+    val generationsCount = 50
+    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
+    val fitnessFunction: PCLevelEvaluator<Float> = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All()
+    val objectiveFunction: PCLevelEvaluator<Float> = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.5f, 1f)
+    val evaluateOnLevelsCount = 20
 
-    val experimentsName = "pmp_v3/NEATs4l1solver"
-    val generationsCount = 100
-    val agentFactory = { Agents.NEAT.Stage4Level1Solver }
-    val fitnessFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
-    val objectiveFunction: PMPLevelEvaluator<Float> = DistanceLinearityDifficultyCompressionDiscretizedEvaluator()
+    val launchers = arrayOf(
+        PCEvolutionLauncher(
+            storageLocation = experimentsName,
+            label = "experiment 1",
+            agentFactory = agentFactory,
+            populationSize = 50,
+            generationsCount = generationsCount,
+            fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
+            evaluateOnLevelsCount = evaluateOnLevelsCount
+        ),
+
+        PCEvolutionLauncher(
+            storageLocation = experimentsName,
+            label = "experiment 2",
+            agentFactory = agentFactory,
+            populationSize = 50,
+            generationsCount = generationsCount,
+            fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
+            evaluateOnLevelsCount = evaluateOnLevelsCount
+        ),
+
+        PCEvolutionLauncher(
+            storageLocation = experimentsName,
+            label = "experiment 3",
+            agentFactory = agentFactory,
+            populationSize = 50,
+            generationsCount = generationsCount,
+            fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
+            evaluateOnLevelsCount = evaluateOnLevelsCount
+        ),
+
+        PCEvolutionLauncher(
+            storageLocation = experimentsName,
+            label = "experiment 4",
+            agentFactory = agentFactory,
+            populationSize = 50,
+            generationsCount = generationsCount,
+            fitnessFunction = fitnessFunction,
+            objectiveFunction = objectiveFunction,
+            evaluateOnLevelsCount = evaluateOnLevelsCount
+        )
+    )
+
+    launchers.forEach { it.launch() }
+}
+
+
+private fun doManyPMPEvolution() {
+
+    val experimentsName = "data/experiments/final-experiments/pmp/complexity"
+    val generationsCount = 50
+    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
+    val fitnessFunction: PMPLevelEvaluator<Float> = PNGCompressionEvaluator()
+    val objectiveFunction: PMPLevelEvaluator<Float> = NullEvaluator()
+    val evaluateOnLevelsCount = 20
 
     val launchers = arrayOf(
         PMPEvolutionLauncher(
             storageLocation = experimentsName,
-            label = "experiment_1",
+            label = "experiment 1",
             agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
             objectiveFunction = objectiveFunction,
-            evaluateOnLevelsCount = 5,
-            resultLevelsCount = 5,
-            postProcess = false
+            evaluateOnLevelsCount = evaluateOnLevelsCount
         ),
 
         PMPEvolutionLauncher(
             storageLocation = experimentsName,
-            label = "experiment_2",
+            label = "experiment 2",
             agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
             objectiveFunction = objectiveFunction,
-            evaluateOnLevelsCount = 5,
-            resultLevelsCount = 5,
-            postProcess = false
+            evaluateOnLevelsCount = evaluateOnLevelsCount
         ),
 
         PMPEvolutionLauncher(
             storageLocation = experimentsName,
-            label = "experiment_3",
+            label = "experiment 3",
             agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
             objectiveFunction = objectiveFunction,
-            evaluateOnLevelsCount = 5,
-            resultLevelsCount = 5,
-            postProcess = false
+            evaluateOnLevelsCount = evaluateOnLevelsCount
         ),
 
         PMPEvolutionLauncher(
             storageLocation = experimentsName,
-            label = "experiment_4",
+            label = "experiment 4",
             agentFactory = agentFactory,
             populationSize = 50,
             generationsCount = generationsCount,
             fitnessFunction = fitnessFunction,
             objectiveFunction = objectiveFunction,
-            evaluateOnLevelsCount = 5,
-            resultLevelsCount = 5,
-            postProcess = false
+            evaluateOnLevelsCount = evaluateOnLevelsCount
         )
     )
 
@@ -92,14 +146,10 @@ class PMPEvolutionLauncher(
     private val generationsCount: Int,
     private val fitnessFunction: PMPLevelEvaluator<Float>,
     private val objectiveFunction: PMPLevelEvaluator<Float>,
-    private val resultLevelsCount: Int,
-    private val evaluateOnLevelsCount: Int,
-    private val postProcess: Boolean
+    private val evaluateOnLevelsCount: Int
 ) {
-
-    private val levelVisualiser = LevelVisualiser()
-
     fun launch()  {
+        val timer = CoevolutionTimer()
         val levelEvolution = PMPLevelGeneratorEvolution(
             populationSize = this.populationSize,
             generationsCount = this.generationsCount,
@@ -109,14 +159,43 @@ class PMPEvolutionLauncher(
             chartLabel = this.label
         )
 
-        val levelGenerator = levelEvolution.evolve(this.agentFactory)
-        var levels = Array(this.resultLevelsCount) { levelGenerator.bestLevelGenerator.generate() }
+        timer.startControllerEvolution()
+        val evolutionResult = levelEvolution.evolve(this.agentFactory)
+        timer.stopControllerEvolution()
 
-        if (this.postProcess)
-            levels = levels.map { LevelPostProcessor.postProcess(it) }.toTypedArray()
+        ObjectStorage.store("$storageLocation/${label}_lg.lg", evolutionResult.bestLevelGenerator)
+        levelEvolution.chart.store("$storageLocation/${label}_chart.svg")
+        timer.store("$storageLocation/${label}_time.txt")
+    }
+}
 
-        levels.forEachIndexed { index, level -> LevelStorage.storeLevel("data/levels/experiments/$storageLocation/${label}_$index.lvl", level) }
-        levels.forEachIndexed { index, level -> levelVisualiser.store(level, "data/levels/experiments/$storageLocation/${label}_$index") }
-        levelEvolution.chart.store("data/levels/experiments/$storageLocation/$label")
+class PCEvolutionLauncher(
+    private val storageLocation: String,
+    private val label: String,
+    private val agentFactory: () -> IAgent,
+    private val populationSize: Int,
+    private val generationsCount: Int,
+    private val fitnessFunction: PCLevelEvaluator<Float>,
+    private val objectiveFunction: PCLevelEvaluator<Float>,
+    private val evaluateOnLevelsCount: Int
+) {
+    fun launch()  {
+        val timer = CoevolutionTimer()
+        val levelEvolution = PCLevelGeneratorEvolution(
+            populationSize = this.populationSize,
+            generationsCount = this.generationsCount,
+            fitnessFunction = this.fitnessFunction,
+            objectiveFunction = this.objectiveFunction,
+            evaluateOnLevelsCount = this.evaluateOnLevelsCount,
+            chartLabel = this.label
+        )
+
+        timer.startControllerEvolution()
+        val evolutionResult = levelEvolution.evolve(this.agentFactory)
+        timer.stopControllerEvolution()
+
+        ObjectStorage.store("$storageLocation/${label}_lg.lg", evolutionResult.bestLevelGenerator)
+        levelEvolution.chart.store("$storageLocation/${label}_chart.svg")
+        timer.store("$storageLocation/${label}_time.txt")
     }
 }
