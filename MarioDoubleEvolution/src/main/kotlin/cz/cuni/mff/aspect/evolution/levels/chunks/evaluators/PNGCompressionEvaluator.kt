@@ -14,8 +14,7 @@ class PNGCompressionEvaluator : SummingEvaluator() {
         val image = LevelToImageConverter.createMinified(level, noAlpha=true)
         val compressionSize = SmallPNGCompression.getSize(image)
 
-        // TODO: konstanta vycucana z prsta...
-        return compressionSize / 3200f
+        return compressionSize.toFloat()
     }
 
     override val optimize: Optimize get() = Optimize.MAXIMUM
