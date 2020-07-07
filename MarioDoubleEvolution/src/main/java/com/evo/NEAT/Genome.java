@@ -63,15 +63,7 @@ public class Genome implements Comparable, Serializable {
         this.inputsCount = inputsCount;
         this.outputsCount = outputsCount;
 
-        this.mutationRates.put(MutationKeys.STEPS, NEAT_Config.STEPS);
-        this.mutationRates.put(MutationKeys.PERTURB_CHANCE, NEAT_Config.PERTURB_CHANCE);
-        this.mutationRates.put(MutationKeys.WEIGHT_CHANCE,NEAT_Config.WEIGHT_CHANCE);
-        this.mutationRates.put(MutationKeys.WEIGHT_MUTATION_CHANCE, NEAT_Config.WEIGHT_MUTATION_CHANCE);
-        this.mutationRates.put(MutationKeys.NODE_MUTATION_CHANCE , NEAT_Config.NODE_MUTATION_CHANCE);
-        this.mutationRates.put(MutationKeys.CONNECTION_MUTATION_CHANCE , NEAT_Config.CONNECTION_MUTATION_CHANCE);
-        this.mutationRates.put(MutationKeys.BIAS_CONNECTION_MUTATION_CHANCE , NEAT_Config.BIAS_CONNECTION_MUTATION_CHANCE);
-        this.mutationRates.put(MutationKeys.DISABLE_MUTATION_CHANCE , NEAT_Config.DISABLE_MUTATION_CHANCE);
-        this.mutationRates.put(MutationKeys.ENABLE_MUTATION_CHANCE , NEAT_Config.ENABLE_MUTATION_CHANCE);
+        this.setMutationRates();
     }
 
     public Genome(Genome child) {
@@ -96,6 +88,7 @@ public class Genome implements Comparable, Serializable {
         this.inputsCount = inputsCount;
         this.outputsCount = outputsCount;
         this.connectionGeneList = connections;
+        this.setMutationRates();
     }
 
     public float getFitness() {
@@ -237,6 +230,18 @@ public class Genome implements Comparable, Serializable {
 
         return delta < NEAT_Config.COMPATIBILITY_THRESHOLD;
 
+    }
+
+    private void setMutationRates() {
+        this.mutationRates.put(MutationKeys.STEPS, NEAT_Config.STEPS);
+        this.mutationRates.put(MutationKeys.PERTURB_CHANCE, NEAT_Config.PERTURB_CHANCE);
+        this.mutationRates.put(MutationKeys.WEIGHT_CHANCE, NEAT_Config.WEIGHT_CHANCE);
+        this.mutationRates.put(MutationKeys.WEIGHT_MUTATION_CHANCE, NEAT_Config.WEIGHT_MUTATION_CHANCE);
+        this.mutationRates.put(MutationKeys.NODE_MUTATION_CHANCE, NEAT_Config.NODE_MUTATION_CHANCE);
+        this.mutationRates.put(MutationKeys.CONNECTION_MUTATION_CHANCE, NEAT_Config.CONNECTION_MUTATION_CHANCE);
+        this.mutationRates.put(MutationKeys.BIAS_CONNECTION_MUTATION_CHANCE, NEAT_Config.BIAS_CONNECTION_MUTATION_CHANCE);
+        this.mutationRates.put(MutationKeys.DISABLE_MUTATION_CHANCE, NEAT_Config.DISABLE_MUTATION_CHANCE);
+        this.mutationRates.put(MutationKeys.ENABLE_MUTATION_CHANCE, NEAT_Config.ENABLE_MUTATION_CHANCE);
     }
 
     private void generateNetwork() {
