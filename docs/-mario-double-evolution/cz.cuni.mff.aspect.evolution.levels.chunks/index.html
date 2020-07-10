@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.levels.chunks - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.levels.chunks</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.levels.chunks</h2>
+<p>Contains implementation of Probabilistic Chunks level generator evolution.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-p-c-level-generator/index.html">PCLevelGenerator</a></h4>
+</td>
+<td>
+<p>Implementation of Probabilistic Chunks level generators. It generates levels using list of chunks, and a Markov Chain
+representing probabilities of transitions between chunks. Each chunk can be then generated on a different floor level.
+This floor level change probability can be also specified. Enemies are generated using their own probabilities of spawning
+on a tile.</p>
+<code><span class="keyword">class </span><span class="identifier">PCLevelGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-p-c-level-generator-evolution/index.html">PCLevelGeneratorEvolution</a></h4>
+</td>
+<td>
+<p>Implementation of a Super Mario level generator evolution using <a href="-p-c-level-generator/index.html">PCLevelGenerator</a> algorithm for level generation.
+The implementation is highly customizable in terms of multiple properties of the evolution, which can be specified
+via primary constructor.</p>
+<code><span class="keyword">class </span><span class="identifier">PCLevelGeneratorEvolution</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.evolution.levels/-jenetics-level-generator-evolution/index.html"><span class="identifier">JeneticsLevelGeneratorEvolution</span></a><span class="symbol">&lt;</span><a href="-p-c-level-generator/index.html"><span class="identifier">PCLevelGenerator</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

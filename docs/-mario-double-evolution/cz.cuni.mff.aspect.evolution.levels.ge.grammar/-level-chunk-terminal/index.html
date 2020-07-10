@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LevelChunkTerminal - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.ge.grammar</a>&nbsp;/&nbsp;<a href="./index.html">LevelChunkTerminal</a><br/>
+<br/>
+<h1>LevelChunkTerminal</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">LevelChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels.ge.algorithm/-terminal/index.html"><span class="identifier">Terminal</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">LevelChunkTerminal</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal$<init>(kotlin.String)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="width.html">width</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">width</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="equals.html">equals</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.LevelChunkTerminal$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generate-chunk.html">generateChunk</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">generateChunk</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level-chunk/index.html"><span class="identifier">MarioLevelChunk</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hash-code.html">hashCode</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-begin-platform-chunk-terminal/index.html">BeginPlatformChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BeginPlatformChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-bullet-bill-chunk-terminal/index.html">BulletBillChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BulletBillChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-end-platform-chunk-terminal/index.html">EndPlatformChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">EndPlatformChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-monster-spawning-chunk-terminal/index.html">MonsterSpawningChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">MonsterSpawningChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-nothing-chunk-terminal/index.html">NothingChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NothingChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-pipe-chunk-terminal/index.html">PipeChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PipeChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-start-chunk-terminal/index.html">StartChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StartChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LevelChunkTerminal</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

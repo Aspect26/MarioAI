@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ObjectStorage - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.storage</a>&nbsp;/&nbsp;<a href="./index.html">ObjectStorage</a><br/>
+<br/>
+<h1>ObjectStorage</h1>
+<code><span class="keyword">object </span><span class="identifier">ObjectStorage</span></code>
+<p>Generic storage for all kinds of Serializable Java objects.</p>
+<p>For storing and loading the objects the storage uses Java's <a href="https://docs.oracle.com/javase/6/docs/api/java/io/ObjectInputStream.html">ObjectInputStream</a> and <a href="https://docs.oracle.com/javase/6/docs/api/java/io/ObjectOutputStream.html">ObjectOutputStream</a>.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="exists.html">exists</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">exists</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.storage.ObjectStorage$exists(kotlin.String)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="load.html">load</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a><span class="symbol">&gt;</span> <span class="identifier">load</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.storage.ObjectStorage$load(kotlin.String)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="store.html">store</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">store</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.storage.ObjectStorage$store(kotlin.String, java.io.Serializable)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.storage.ObjectStorage$store(kotlin.String, java.io.Serializable)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LevelStorage - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.storage</a>&nbsp;/&nbsp;<a href="./index.html">LevelStorage</a><br/>
+<br/>
+<h1>LevelStorage</h1>
+<code><span class="keyword">object </span><span class="identifier">LevelStorage</span></code>
+<p>Storage for Super Mario levels. Provides methods to store and load levels.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-level-representation/index.html">LevelRepresentation</a></h4>
+</td>
+<td>
+<p>Minimalistic representation of a level which contains all data required to reconstruct given level.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">LevelRepresentation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="load-level.html">loadLevel</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">loadLevel</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.storage.LevelStorage$loadLevel(kotlin.String)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="store-level.html">storeLevel</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">storeLevel</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.storage.LevelStorage$storeLevel(kotlin.String, cz.cuni.mff.aspect.mario.level.MarioLevel)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.storage.LevelStorage$storeLevel(kotlin.String, cz.cuni.mff.aspect.mario.level.MarioLevel)/level">level</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

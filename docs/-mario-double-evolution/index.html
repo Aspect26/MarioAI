@@ -1,0 +1,384 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="./index.html">MarioDoubleEvolution</a><br/>
+<br/>
+<h3>Packages</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="com.evo.-n-e-a-t/index.html">com.evo.NEAT</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="com.evo.-n-e-a-t.com.evo.-n-e-a-t.config/index.html">com.evo.NEAT.com.evo.NEAT.config</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff/index.html">cz.cuni.mff</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.agents.arnold/index.html">cz.cuni.mff.agents.arnold</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.agents.aspect/index.html">cz.cuni.mff.agents.aspect</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.coevolution/index.html">cz.cuni.mff.aspect.coevolution</a></h4>
+</td>
+<td>
+<p>Contains implementation of coevolution of AI and level generators.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.controllers/index.html">cz.cuni.mff.aspect.controllers</a></h4>
+</td>
+<td>
+<p>Contains implementation of multiple AI Controllers</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution/index.html">cz.cuni.mff.aspect.evolution</a></h4>
+</td>
+<td>
+<p>Contains implementation of all evolutions. These evolutions include AI evolution using NeuroEvolution and NEAT algorithms, level generator evolutions using SGA and level evolution using grammar evolution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.controller/index.html">cz.cuni.mff.aspect.evolution.controller</a></h4>
+</td>
+<td>
+<p>Contains implementation of evolution algorithms of controller. It contains <a href="cz.cuni.mff.aspect.evolution.controller/-controller-evolution/index.html">ControllerEvolution</a> interface, which all controller evolutions should implement, and two implementations of it: <a href="#">NEATControllerEvolution</a> and <a href="cz.cuni.mff.aspect.evolution.controller.neuroevolution/-neuro-controller-evolution/index.html">NeuroControllerEvolution</a>.  </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.controller.evaluators/index.html">cz.cuni.mff.aspect.evolution.controller.evaluators</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.controller.neat/index.html">cz.cuni.mff.aspect.evolution.controller.neat</a></h4>
+</td>
+<td>
+<p>Contains implementation of NEAT evolution of a Super Mario controller. It uses <a href="com.evo.-n-e-a-t/index.html">com.evo.NEAT</a> library for the actual NEAT algorithm.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.controller.neuroevolution/index.html">cz.cuni.mff.aspect.evolution.controller.neuroevolution</a></h4>
+</td>
+<td>
+<p>Contains implementation of a simple NeuroEvolution (evolving only weights of a static ANN) of a Super Mario controller. It uses <code>Jenetics</code> library for the actual evolution algorithm. </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.jenetics.alterers/index.html">cz.cuni.mff.aspect.evolution.jenetics.alterers</a></h4>
+</td>
+<td>
+<p>Contains implementations of custom alterers for <code>Jenetics</code> library.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.jenetics.evaluators/index.html">cz.cuni.mff.aspect.evolution.jenetics.evaluators</a></h4>
+</td>
+<td>
+<p>Contains implementations of custom evaluators for <code>Jenetics</code> library.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.jenetics.genotype/index.html">cz.cuni.mff.aspect.evolution.jenetics.genotype</a></h4>
+</td>
+<td>
+<p>Contains implementations of custom genotype for <code>Jenetics</code> library.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels/index.html">cz.cuni.mff.aspect.evolution.levels</a></h4>
+</td>
+<td>
+<p>Contains implementations of level generator evolutions for Super Mario. Two level generators are evolved - Probabilistic Chunks and Probabilistic Multipass. </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.chunks/index.html">cz.cuni.mff.aspect.evolution.levels.chunks</a></h4>
+</td>
+<td>
+<p>Contains implementation of Probabilistic Chunks level generator evolution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.chunks.chunks/index.html">cz.cuni.mff.aspect.evolution.levels.chunks.chunks</a></h4>
+</td>
+<td>
+<p>Contains implementations of multiple chunks used in Probabilistic Chunks level generator. Each chunk type is implemented as a <code>data class</code>, so that we get copying for free. </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.chunks.evaluators/index.html">cz.cuni.mff.aspect.evolution.levels.chunks.evaluators</a></h4>
+</td>
+<td>
+<p>Contains implementations of multiple evaluators for Probabilistic Chunks level generator.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.chunks.metadata/index.html">cz.cuni.mff.aspect.evolution.levels.chunks.metadata</a></h4>
+</td>
+<td>
+<p>Contains implementation of metadata for Probabilistic Chunks level generators.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.evaluators/index.html">cz.cuni.mff.aspect.evolution.levels.evaluators</a></h4>
+</td>
+<td>
+<p>Contains implementations of evaluators for level generators.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.evaluators.compression/index.html">cz.cuni.mff.aspect.evolution.levels.evaluators.compression</a></h4>
+</td>
+<td>
+<p>Contains implementations of evaluators using image compressibility metric. </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.ge/index.html">cz.cuni.mff.aspect.evolution.levels.ge</a></h4>
+</td>
+<td>
+<p>Contains implementation of deprecated evolution of levels for Super Mario using Grammar Evolution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.ge.algorithm/index.html">cz.cuni.mff.aspect.evolution.levels.ge.algorithm</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics/index.html">cz.cuni.mff.aspect.evolution.levels.ge.algorithm.jenetics</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.ge.grammar/index.html">cz.cuni.mff.aspect.evolution.levels.ge.grammar</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.pmp/index.html">cz.cuni.mff.aspect.evolution.levels.pmp</a></h4>
+</td>
+<td>
+<p>Contains implementation of Probabilistic Multipass level generator evolution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.pmp.evaluators/index.html">cz.cuni.mff.aspect.evolution.levels.pmp.evaluators</a></h4>
+</td>
+<td>
+<p>Contains implementation of multiple evaluators of levels generated by Probabilistic Multipass level generator.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.levels.pmp.metadata/index.html">cz.cuni.mff.aspect.evolution.levels.pmp.metadata</a></h4>
+</td>
+<td>
+<p>Contains implementation of metadata of levels generated by Probabilistic Multipass level generator.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.evolution.results/index.html">cz.cuni.mff.aspect.evolution.results</a></h4>
+</td>
+<td>
+<p>Contains some of the evolved AIs and level generators.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.launch/index.html">cz.cuni.mff.aspect.launch</a></h4>
+</td>
+<td>
+<p>Contains multiple entry point of the project.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario/index.html">cz.cuni.mff.aspect.mario</a></h4>
+</td>
+<td>
+<p>Contains wrapper atop of Super Mario Infinite simulator from <a href="https://code.google.com/archive/p/marioai/">here</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.controllers/index.html">cz.cuni.mff.aspect.mario.controllers</a></h4>
+</td>
+<td>
+<p>Contains basic implementations of Super Mario player controllers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.controllers.ann/index.html">cz.cuni.mff.aspect.mario.controllers.ann</a></h4>
+</td>
+<td>
+<p>Contains implementation of controller which uses artificial neural network for actions selection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.controllers.ann.networks/index.html">cz.cuni.mff.aspect.mario.controllers.ann.networks</a></h4>
+</td>
+<td>
+<p>Contains implementations of multiple artificial neural networks used in agent controllers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.level/index.html">cz.cuni.mff.aspect.mario.level</a></h4>
+</td>
+<td>
+<p>Contains implementation of Super Mario level representation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.level.custom/index.html">cz.cuni.mff.aspect.mario.level.custom</a></h4>
+</td>
+<td>
+<p>Contains implementations of a few custom Super Mario levels.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.level.original/index.html">cz.cuni.mff.aspect.mario.level.original</a></h4>
+</td>
+<td>
+<p>Contains implementations of a few levels from original Super Mario Bros game.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.mario.level.splitting/index.html">cz.cuni.mff.aspect.mario.level.splitting</a></h4>
+</td>
+<td>
+<p>Contains implementation of splitting Super Mario levels into multiple parts.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.storage/index.html">cz.cuni.mff.aspect.storage</a></h4>
+</td>
+<td>
+<p>Contains implementation of multiple storages used in the project.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.utils/index.html">cz.cuni.mff.aspect.utils</a></h4>
+</td>
+<td>
+<p>Contains utility classes and extensions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.visualisation.charts/index.html">cz.cuni.mff.aspect.visualisation.charts</a></h4>
+</td>
+<td>
+<p>Contains implementations of chart visualisations of evolution and coevolution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.visualisation.charts.evolution/index.html">cz.cuni.mff.aspect.visualisation.charts.evolution</a></h4>
+</td>
+<td>
+<p>Contains implementations of charts specified for displaying data from evolutionary algorithms.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.visualisation.charts.linechart/index.html">cz.cuni.mff.aspect.visualisation.charts.linechart</a></h4>
+</td>
+<td>
+<p>Contains implementation of line chart atop <code>xcharts</code> library</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.visualisation.charts.xcharts/index.html">cz.cuni.mff.aspect.visualisation.charts.xcharts</a></h4>
+</td>
+<td>
+<p>Contains reimplementations of some of the <code>xcharts</code> library classes. </p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="cz.cuni.mff.aspect.visualisation.level/index.html">cz.cuni.mff.aspect.visualisation.level</a></h4>
+</td>
+<td>
+<p>Contains implementations of level visualisers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="org.knowm.xchart.internal.chartpart/index.html">org.knowm.xchart.internal.chartpart</a></h4>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Index</h3>
+<a href="alltypes/index.html">All Types</a>
+</BODY>
+</HTML>

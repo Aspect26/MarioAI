@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CoevolutionState - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.coevolution</a>&nbsp;/&nbsp;<a href="./index.html">CoevolutionState</a><br/>
+<br/>
+<h1>CoevolutionState</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CoevolutionState</span><span class="symbol">&lt;</span><span class="identifier">LevelGeneratorType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span></code>
+<p>Represents coevolution state which can be used to store and load the coevolution again.</p>
+<h3>Parameters</h3>
+<p><a name="LevelGeneratorType"></a>
+<code>LevelGeneratorType</code> - type of level generator being evolved.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Represents coevolution state which can be used to store and load the coevolution again.</p>
+<code><span class="identifier">CoevolutionState</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/lastFinishedGeneration">lastFinishedGeneration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/latestController">latestController</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/latestGenerator">latestGenerator</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/latestControllersPopulation">latestControllersPopulation</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/latestGeneratorsPopulation">latestGeneratorsPopulation</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">LevelGeneratorType</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/controllerEvolutionChart">controllerEvolutionChart</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/generatorEvolutionChart">generatorEvolutionChart</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionState$<init>(kotlin.Int, cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)), kotlin.collections.List((cz.cuni.mff.aspect.coevolution.CoevolutionState.LevelGeneratorType)), cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, cz.cuni.mff.aspect.coevolution.CoevolutionTimer)/coevolutionTimer">coevolutionTimer</span><span class="symbol">:</span>&nbsp;<a href="../-coevolution-timer/index.html"><span class="identifier">CoevolutionTimer</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="coevolution-timer.html">coevolutionTimer</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">coevolutionTimer</span><span class="symbol">: </span><a href="../-coevolution-timer/index.html"><span class="identifier">CoevolutionTimer</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="controller-evolution-chart.html">controllerEvolutionChart</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">controllerEvolutionChart</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generator-evolution-chart.html">generatorEvolutionChart</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">generatorEvolutionChart</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="last-finished-generation.html">lastFinishedGeneration</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">lastFinishedGeneration</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="latest-controller.html">latestController</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">latestController</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="latest-controllers-population.html">latestControllersPopulation</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">latestControllersPopulation</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="latest-generator.html">latestGenerator</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">latestGenerator</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="latest-generators-population.html">latestGeneratorsPopulation</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">latestGeneratorsPopulation</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">LevelGeneratorType</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

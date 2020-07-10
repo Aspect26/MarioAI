@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ControllerSerializer - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.controller</a>&nbsp;/&nbsp;<a href="./index.html">ControllerSerializer</a><br/>
+<br/>
+<h1>ControllerSerializer</h1>
+<code><span class="keyword">object </span><span class="identifier">ControllerSerializer</span></code>
+<p>Object taking care of serializing and deserializing mario controllers.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="deserialize.html">deserialize</a></h4>
+</td>
+<td>
+<p>Deserializes mario controller from string created by <a href="serialize.html">serialize</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">deserialize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.ControllerSerializer$deserialize(kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="serialize.html">serialize</a></h4>
+</td>
+<td>
+<p>Serializes the given controller to its string representation if the controller is supported. Supported
+controllers are <a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-simple-a-n-n-controller/index.html">cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController</a>. The controller can be then
+deserialized using <a href="deserialize.html">deserialize</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">serialize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.ControllerSerializer$serialize(cz.cuni.mff.aspect.mario.controllers.MarioController)/controller">controller</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

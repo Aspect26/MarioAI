@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CoevolutionTimer - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.coevolution</a>&nbsp;/&nbsp;<a href="./index.html">CoevolutionTimer</a><br/>
+<br/>
+<h1>CoevolutionTimer</h1>
+<code><span class="keyword">class </span><span class="identifier">CoevolutionTimer</span></code>
+<p>Utility class for computing total time spent on different evolutions during one coevolution.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Utility class for computing total time spent on different evolutions during one coevolution.</p>
+<code><span class="identifier">CoevolutionTimer</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="total-controller-evolution-time.html">totalControllerEvolutionTime</a></h4>
+</td>
+<td>
+<p>The total time spent on controller evolution.</p>
+<code><span class="keyword">val </span><span class="identifier">totalControllerEvolutionTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="total-generators-evolution-time.html">totalGeneratorsEvolutionTime</a></h4>
+</td>
+<td>
+<p>The total time spent on generators evolution.</p>
+<code><span class="keyword">val </span><span class="identifier">totalGeneratorsEvolutionTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="start-controller-evolution.html">startControllerEvolution</a></h4>
+</td>
+<td>
+<p>Starts controller evolution timer.</p>
+<code><span class="keyword">fun </span><span class="identifier">startControllerEvolution</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="start-generators-evolution.html">startGeneratorsEvolution</a></h4>
+</td>
+<td>
+<p>Starts generators evolution timer.</p>
+<code><span class="keyword">fun </span><span class="identifier">startGeneratorsEvolution</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="stop-controller-evolution.html">stopControllerEvolution</a></h4>
+</td>
+<td>
+<p>Stops controller evolution timer.</p>
+<code><span class="keyword">fun </span><span class="identifier">stopControllerEvolution</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="stop-generators-evolution.html">stopGeneratorsEvolution</a></h4>
+</td>
+<td>
+<p>Stops generators evolution timer.</p>
+<code><span class="keyword">fun </span><span class="identifier">stopGeneratorsEvolution</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="store.html">store</a></h4>
+</td>
+<td>
+<p>Stores the current state of timers to a file. It can be later used to reload the timers using <a href="load-from-file.html">loadFromFile</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">store</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionTimer$store(kotlin.String)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="load-from-file.html">loadFromFile</a></h4>
+</td>
+<td>
+<p>Loads timers state from given file if they were stored using <a href="store.html">store</a> method.</p>
+<code><span class="keyword">fun </span><span class="identifier">loadFromFile</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionTimer.Companion$loadFromFile(kotlin.String)/filePath">filePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">CoevolutionTimer</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

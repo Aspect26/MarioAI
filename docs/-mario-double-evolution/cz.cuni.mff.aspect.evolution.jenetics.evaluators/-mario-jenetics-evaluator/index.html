@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MarioJeneticsEvaluator - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.jenetics.evaluators</a>&nbsp;/&nbsp;<a href="./index.html">MarioJeneticsEvaluator</a><br/>
+<br/>
+<h1>MarioJeneticsEvaluator</h1>
+<code><span class="keyword">class </span><span class="identifier">MarioJeneticsEvaluator</span><span class="symbol">&lt;</span><span class="identifier">G</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Gene</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier">C</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><span class="identifier">C</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Evaluator</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">,</span>&nbsp;<span class="identifier">C</span><span class="symbol">&gt;</span></code>
+<p>This evaluator evaluates also objective value, not only fitness and has the ability to evaluate fitness of each
+individual in each generation whereas the default Jenetics evaluator evaluates fitness of an individual only once
+throughout the whole evolution.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>This evaluator evaluates also objective value, not only fitness and has the ability to evaluate fitness of each
+individual in each generation whereas the default Jenetics evaluator evaluates fitness of an individual only once
+throughout the whole evolution.</p>
+<code><span class="identifier">MarioJeneticsEvaluator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator$<init>(kotlin.Function1((io.jenetics.Genotype((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.G)), kotlin.Pair((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.C, )))), kotlin.Boolean, java.util.concurrent.Executor)/fitnessAndObjectiveFunction">fitnessAndObjectiveFunction</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">genotype</span><span class="symbol">:</span>&nbsp;<span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><span class="identifier">C</span><span class="symbol">,</span>&nbsp;<span class="identifier">C</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator$<init>(kotlin.Function1((io.jenetics.Genotype((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.G)), kotlin.Pair((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.C, )))), kotlin.Boolean, java.util.concurrent.Executor)/alwaysEvaluate">alwaysEvaluate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator$<init>(kotlin.Function1((io.jenetics.Genotype((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.G)), kotlin.Pair((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.C, )))), kotlin.Boolean, java.util.concurrent.Executor)/executor">executor</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/Executor.html"><span class="identifier">Executor</span></a>&nbsp;<span class="symbol">=</span>&nbsp;ForkJoinPool.commonPool()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="last-generation.html">lastGeneration</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">lastGeneration</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="last-generation-fitnesses.html">lastGenerationFitnesses</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">lastGenerationFitnesses</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">C</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="last-generation-objectives.html">lastGenerationObjectives</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">lastGenerationObjectives</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">C</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="eval.html">eval</a></h4>
+</td>
+<td>
+<p>Evaluate implementation, possibly reevaluating all individuals in a population.</p>
+<code><span class="keyword">fun </span><span class="identifier">eval</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator$eval(io.jenetics.util.Seq((io.jenetics.Phenotype((cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.G, cz.cuni.mff.aspect.evolution.jenetics.evaluators.MarioJeneticsEvaluator.C)))))/population">population</span><span class="symbol">:</span>&nbsp;<span class="identifier">Seq</span><span class="symbol">&lt;</span><span class="identifier">Phenotype</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">,</span>&nbsp;<span class="identifier">C</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ISeq</span><span class="symbol">&lt;</span><span class="identifier">Phenotype</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">,</span>&nbsp;<span class="identifier">C</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

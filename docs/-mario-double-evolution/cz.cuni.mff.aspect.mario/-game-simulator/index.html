@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>GameSimulator - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.mario</a>&nbsp;/&nbsp;<a href="./index.html">GameSimulator</a><br/>
+<br/>
+<h1>GameSimulator</h1>
+<code><span class="keyword">class </span><span class="identifier">GameSimulator</span></code>
+<p>Wrapper atop Super Mario Infinite's simulator.</p>
+<p>It uses an implementation of <a href="../-mario-agent/index.html">MarioAgent</a> or <a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html">MarioController</a> as an agent playing Super Mario Infinite. It also uses
+<a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html">MarioLevel</a> entities specifying which levels the agent should play.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Wrapper atop Super Mario Infinite's simulator.</p>
+<code><span class="identifier">GameSimulator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$<init>(kotlin.Int)/maxTicks">maxTicks</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_MAX_TICKS<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="statistics.html">statistics</a></h4>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">statistics</span><span class="symbol">: </span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="play-mario.html">playMario</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">playMario</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Boolean)/marioController">marioController</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Boolean)/levels">levels</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Boolean)/visualize">visualize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">playMario</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/marioController">marioController</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/level">level</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/visualize">visualize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">playMario</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/marioAgent">marioAgent</span><span class="symbol">:</span>&nbsp;<span class="identifier">IAgent</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/level">level</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.level.MarioLevel, kotlin.Boolean)/visualize">visualize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">playMario</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.SingleLevelLevelGenerator, kotlin.Boolean)/marioAgent">marioAgent</span><span class="symbol">:</span>&nbsp;<span class="identifier">IAgent</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.SingleLevelLevelGenerator, kotlin.Boolean)/levelGenerator">levelGenerator</span><span class="symbol">:</span>&nbsp;<a href="../-single-level-level-generator/index.html"><span class="identifier">SingleLevelLevelGenerator</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playMario(ch.idsia.agents.IAgent, cz.cuni.mff.aspect.mario.SingleLevelLevelGenerator, kotlin.Boolean)/visualize">visualize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="play-random-levels.html">playRandomLevels</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">playRandomLevels</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playRandomLevels(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Int, kotlin.Boolean)/controller">controller</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playRandomLevels(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Int, kotlin.Boolean)/levels">levels</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playRandomLevels(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Int, kotlin.Boolean)/levelsCount">levelsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.GameSimulator$playRandomLevels(cz.cuni.mff.aspect.mario.controllers.MarioController, kotlin.Array((cz.cuni.mff.aspect.mario.level.MarioLevel)), kotlin.Int, kotlin.Boolean)/visualize">visualize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../-game-statistics/index.html"><span class="identifier">GameStatistics</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

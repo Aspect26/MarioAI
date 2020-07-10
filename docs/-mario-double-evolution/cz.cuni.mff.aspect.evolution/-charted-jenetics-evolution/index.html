@@ -1,0 +1,192 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ChartedJeneticsEvolution - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution</a>&nbsp;/&nbsp;<a href="./index.html">ChartedJeneticsEvolution</a><br/>
+<br/>
+<h1>ChartedJeneticsEvolution</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ChartedJeneticsEvolution</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Wrapper for evolution based on Jenetics library which plots evolution data in a chart. It is highly configurable
+via primary constructor's parameters.</p>
+<h3>Parameters</h3>
+<p><a name="populationSize"></a>
+<code>populationSize</code> - population size.</p>
+<p><a name="generationsCount"></a>
+<code>generationsCount</code> - number of generations after which the evolution is stopped.</p>
+<p><a name="fitnessOptimization"></a>
+<code>fitnessOptimization</code> - specifies, whether fitness values should be minimized or maximized.</p>
+<p><a name="objectiveOptimization"></a>
+<code>objectiveOptimization</code> - specifies, whether objective values should be minimized or maximized.</p>
+<p><a name="alterers"></a>
+<code>alterers</code> - evolution alterers.</p>
+<p><a name="survivorsSelector"></a>
+<code>survivorsSelector</code> - evolution survivors selector.</p>
+<p><a name="offspringSelector"></a>
+<code>offspringSelector</code> - evolution offsprings selector.</p>
+<p><a name="displayChart"></a>
+<code>displayChart</code> - specifies, whether the evolution chart should be displayed.</p>
+<p><a name="chart"></a>
+<code>chart</code> - the evolution chart.</p>
+<p><a name="parallel"></a>
+<code>parallel</code> - specifies, whether the evaluations of individuals should be run on multiple CPU cores.</p>
+<p><a name="alwaysReevaluate"></a>
+<code>alwaysReevaluate</code> - specifies, whether the individuals should be reevaluated in each generation during the
+evolution, or only when they are created. This is useful when the fitness computation is randomized somehow.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Wrapper for evolution based on Jenetics library which plots evolution data in a chart. It is highly configurable
+via primary constructor's parameters.</p>
+<code><span class="identifier">ChartedJeneticsEvolution</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/populationSize">populationSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/generationsCount">generationsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/fitnessOptimization">fitnessOptimization</span><span class="symbol">:</span>&nbsp;<span class="identifier">Optimize</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/objectiveOptimization">objectiveOptimization</span><span class="symbol">:</span>&nbsp;<span class="identifier">Optimize</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/alterers">alterers</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">Alterer</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/survivorsSelector">survivorsSelector</span><span class="symbol">:</span>&nbsp;<span class="identifier">Selector</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/offspringSelector">offspringSelector</span><span class="symbol">:</span>&nbsp;<span class="identifier">Selector</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/displayChart">displayChart</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/chart">chart</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/parallel">parallel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$<init>(kotlin.Int, kotlin.Int, io.jenetics.Optimize, io.jenetics.Optimize, kotlin.Array((io.jenetics.Alterer((io.jenetics.DoubleGene, kotlin.Float)))), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), io.jenetics.Selector((io.jenetics.DoubleGene, kotlin.Float)), kotlin.Boolean, cz.cuni.mff.aspect.visualisation.charts.evolution.EvolutionLineChart, kotlin.Boolean, kotlin.Boolean)/alwaysReevaluate">alwaysReevaluate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="alterers.html">alterers</a></h4>
+</td>
+<td>
+<p>evolution alterers.</p>
+<code><span class="keyword">val </span><span class="identifier">alterers</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">Alterer</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="chart.html">chart</a></h4>
+</td>
+<td>
+<p>the evolution chart.</p>
+<code><span class="keyword">var </span><span class="identifier">chart</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="evaluator.html">evaluator</a></h4>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">evaluator</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.jenetics.evaluators/-mario-jenetics-evaluator/index.html"><span class="identifier">MarioJeneticsEvaluator</span></a><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="fitness-optimization.html">fitnessOptimization</a></h4>
+</td>
+<td>
+<p>specifies, whether fitness values should be minimized or maximized.</p>
+<code><span class="keyword">val </span><span class="identifier">fitnessOptimization</span><span class="symbol">: </span><span class="identifier">Optimize</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generations-count.html">generationsCount</a></h4>
+</td>
+<td>
+<p>number of generations after which the evolution is stopped.</p>
+<code><span class="keyword">val </span><span class="identifier">generationsCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="objective-optimization.html">objectiveOptimization</a></h4>
+</td>
+<td>
+<p>specifies, whether objective values should be minimized or maximized.</p>
+<code><span class="keyword">val </span><span class="identifier">objectiveOptimization</span><span class="symbol">: </span><span class="identifier">Optimize</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="offspring-selector.html">offspringSelector</a></h4>
+</td>
+<td>
+<p>evolution offsprings selector.</p>
+<code><span class="keyword">val </span><span class="identifier">offspringSelector</span><span class="symbol">: </span><span class="identifier">Selector</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="population-size.html">populationSize</a></h4>
+</td>
+<td>
+<p>population size.</p>
+<code><span class="keyword">val </span><span class="identifier">populationSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="survivors-selector.html">survivorsSelector</a></h4>
+</td>
+<td>
+<p>evolution survivors selector.</p>
+<code><span class="keyword">val </span><span class="identifier">survivorsSelector</span><span class="symbol">: </span><span class="identifier">Selector</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="compute-fitness-and-objective.html">computeFitnessAndObjective</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">computeFitnessAndObjective</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$computeFitnessAndObjective(io.jenetics.Genotype((io.jenetics.DoubleGene)))/genotype">genotype</span><span class="symbol">:</span>&nbsp;<span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="continue-evolution.html">continueEvolution</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">continueEvolution</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$continueEvolution(kotlin.collections.List((io.jenetics.Genotype((io.jenetics.DoubleGene)))))/initialPopulation">initialPopulation</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-jenetics-evolution-result/index.html"><span class="identifier">JeneticsEvolutionResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="create-genotype-factory.html">createGenotypeFactory</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">createGenotypeFactory</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Factory</span><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="entity-from-individual.html">entityFromIndividual</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">entityFromIndividual</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.ChartedJeneticsEvolution$entityFromIndividual(io.jenetics.Genotype((io.jenetics.DoubleGene)))/genotype">genotype</span><span class="symbol">:</span>&nbsp;<span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="evolve.html">evolve</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">evolve</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-jenetics-evolution-result/index.html"><span class="identifier">JeneticsEvolutionResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.evolution.levels/-jenetics-level-generator-evolution/index.html">JeneticsLevelGeneratorEvolution</a></h4>
+</td>
+<td>
+<p>Specialization of <a href="../../cz.cuni.mff.aspect.evolution.levels/-jenetics-level-generator-evolution/index.html">JeneticsLevelGeneratorEvolution</a> on <a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html">LevelGenerator</a>s.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">JeneticsLevelGeneratorEvolution</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ChartedJeneticsEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator-evolution/index.html"><span class="identifier">LevelGeneratorEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.evolution.controller.neuroevolution/-neuro-controller-evolution/index.html">NeuroControllerEvolution</a></h4>
+</td>
+<td>
+<p>Implementation of a Super Mario controller evolution using simple neuroevolution algorithm, which evolves only
+weights on a given non-changing ANN. The implementation is highly customizable in terms of multiple properties
+of the evolution, which can be specified via primary constructor.</p>
+<code><span class="keyword">class </span><span class="identifier">NeuroControllerEvolution</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ChartedJeneticsEvolution</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution/index.html"><span class="identifier">ControllerEvolution</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

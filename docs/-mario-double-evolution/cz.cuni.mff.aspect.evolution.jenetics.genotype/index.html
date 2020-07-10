@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.jenetics.genotype - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.jenetics.genotype</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.jenetics.genotype</h2>
+<p>Contains implementations of custom genotype for <code>Jenetics</code> library.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-markov-chain-genotype-factory/index.html">MarkovChainGenotypeFactory</a></h4>
+</td>
+<td>
+<p>Genotype factory for genotypes representing a Markov Chain, with an option to add additional probabilities to the end
+of the individual.</p>
+<code><span class="keyword">class </span><span class="identifier">MarkovChainGenotypeFactory</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Factory</span><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-static-genotype-factory/index.html">StaticGenotypeFactory</a></h4>
+</td>
+<td>
+<p>Static genotype factory creating only given genotypes.</p>
+<code><span class="keyword">class </span><span class="identifier">StaticGenotypeFactory</span><span class="symbol">&lt;</span><span class="identifier">G</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Gene</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Factory</span><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-zero-initializing-double-genotype-factory/index.html">ZeroInitializingDoubleGenotypeFactory</a></h4>
+</td>
+<td>
+<p>Genotype factory which creates genotype of <a href="#">DoubleGene</a> with given length, where all genes are initialized to 0.</p>
+<code><span class="keyword">class </span><span class="identifier">ZeroInitializingDoubleGenotypeFactory</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Factory</span><span class="symbol">&lt;</span><span class="identifier">Genotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

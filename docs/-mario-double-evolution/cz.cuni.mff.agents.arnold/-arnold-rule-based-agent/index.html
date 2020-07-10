@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ArnoldRuleBasedAgent - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.agents.arnold</a>&nbsp;/&nbsp;<a href="./index.html">ArnoldRuleBasedAgent</a><br/>
+<br/>
+<h1>ArnoldRuleBasedAgent</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ArnoldRuleBasedAgent</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">MarioHijackAIBase</span><span class="symbol">, </span><span class="identifier">IAgent</span></code>
+<p>Code your custom agent here! </p>
+<p> Change #actionSelection() implementation to alter the behavior of your Mario. </p>
+<p> Change #debugDraw(VisualizationComponent, LevelScene, IEnvironment, Graphics) to draw custom debug stuff. </p>
+<p> You can change the type of level you want to play in <code><a href="main.html">#main(String[])</a></code>. </p>
+<p> Once you have your agent ready, you may use Evaluate class to benchmark the quality of your AI.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-coord/index.html">Coord</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Coord</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Code your custom agent here! </p>
+<code><span class="identifier">ArnoldRuleBasedAgent</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="action-selection-a-i.html">actionSelectionAI</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">actionSelectionAI</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">MarioInput</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="coord-rect.html">coordRect</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">coordRect</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$coordRect(kotlin.Int, kotlin.Int)/x">x</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$coordRect(kotlin.Int, kotlin.Int)/y">y</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">Coord</span><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="danger-in-rect.html">dangerInRect</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">dangerInRect</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$dangerInRect(kotlin.Int, kotlin.Int)/x">x</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$dangerInRect(kotlin.Int, kotlin.Int)/y">y</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="debug-draw.html">debugDraw</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">debugDraw</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$debugDraw(ch.idsia.benchmark.mario.engine.VisualizationComponent, ch.idsia.benchmark.mario.engine.LevelScene, ch.idsia.benchmark.mario.environments.IEnvironment, java.awt.Graphics)/vis">vis</span><span class="symbol">:</span>&nbsp;<span class="identifier">VisualizationComponent</span><span class="symbol">!</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$debugDraw(ch.idsia.benchmark.mario.engine.VisualizationComponent, ch.idsia.benchmark.mario.engine.LevelScene, ch.idsia.benchmark.mario.environments.IEnvironment, java.awt.Graphics)/level">level</span><span class="symbol">:</span>&nbsp;<span class="identifier">LevelScene</span><span class="symbol">!</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$debugDraw(ch.idsia.benchmark.mario.engine.VisualizationComponent, ch.idsia.benchmark.mario.engine.LevelScene, ch.idsia.benchmark.mario.environments.IEnvironment, java.awt.Graphics)/env">env</span><span class="symbol">:</span>&nbsp;<span class="identifier">IEnvironment</span><span class="symbol">!</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$debugDraw(ch.idsia.benchmark.mario.engine.VisualizationComponent, ch.idsia.benchmark.mario.engine.LevelScene, ch.idsia.benchmark.mario.environments.IEnvironment, java.awt.Graphics)/g">g</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/awt/Graphics.html"><span class="identifier">Graphics</span></a><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="escape-left.html">escapeLeft</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">escapeLeft</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="main.html">main</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">main</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$main(kotlin.Array((kotlin.String)))/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reset.html">reset</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">reset</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent$reset(ch.idsia.agents.AgentOptions)/options">options</span><span class="symbol">:</span>&nbsp;<span class="identifier">AgentOptions</span><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="safe-move-left.html">safeMoveLeft</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">safeMoveLeft</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="safe-move-right.html">safeMoveRight</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">safeMoveRight</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

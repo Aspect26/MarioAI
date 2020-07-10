@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LevelEvaluator - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="index.html">cz.cuni.mff.aspect.evolution.levels.evaluators</a>&nbsp;/&nbsp;<a href="./-level-evaluator.html">LevelEvaluator</a><br/>
+<br/>
+<h1>LevelEvaluator</h1>
+<code><span class="keyword">typealias </span><span class="identifier">LevelEvaluator</span><span class="symbol">&lt;</span><span class="identifier">F</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="symbol">(</span><span class="identifier">level</span><span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">gameStatistic</span><span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.mario/-game-statistics/index.html"><span class="identifier">GameStatistics</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">F</span></code>
+<p>Typealias for a generic level evaluator.</p>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-difficulty-evaluator/index.html">DifficultyEvaluator</a></h4>
+</td>
+<td>
+<p>Evaluator evaluating difficulty of a level. Each monster and each obstacle in the level is assigned a difficulty value,
+and then all of these are summed. The sum is then result of the evaluation.</p>
+<code><span class="keyword">class </span><span class="identifier">DifficultyEvaluator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./-level-evaluator.html"><span class="identifier">LevelEvaluator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PMPLevelGenerator.<init> - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.pmp</a>&nbsp;/&nbsp;<a href="index.html">PMPLevelGenerator</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$&lt;init&gt;(kotlin.DoubleArray, kotlin.Int)"></a>
+<code><span class="identifier">PMPLevelGenerator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$<init>(kotlin.DoubleArray, kotlin.Int)/probabilities">probabilities</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DoubleArray(PROBABILITIES_COUNT) {
+        when (it) {
+            PI_CHANGE_HEIGHT -&gt; 0.1
+            PI_CREATE_GAP -&gt; 0.05
+
+            PI_ENEMY_GOOMBA -&gt; 0.03
+            PI_ENEMY_KOOPA_GREEN -&gt; 0.03
+            PI_ENEMY_KOOPA_GREEN_WINGED -&gt; 0.01
+            PI_ENEMY_KOOPA_RED -&gt; 0.03
+            PI_ENEMY_SPIKES -&gt; 0.03
+
+            PI_BULLET_BILL -&gt; 0.03
+            PI_PIPE -&gt; 0.03
+
+            PI_START_BOXES -&gt; 0.07
+            PI_DOUBLE_BOXES -&gt; 0.33
+            PI_POWER_UP -&gt; 0.25
+
+            PI_STAIRS -&gt; 0.1
+
+            else -&gt; 0.0
+        }
+    }<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$<init>(kotlin.DoubleArray, kotlin.Int)/length">length</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;200<span class="symbol">)</span></code>
+<p>Implementation of Probabilistic Multipass level generator algorithm. It generates Super Mario levels in multiple stages:</p>
+<ol><li>generate terrain</li>
+<li>generate pipes</li>
+<li>generate bullet bills</li>
+<li>generate stone stairs</li>
+<li>generate box platforms</li>
+<li>generate entities</li>
+</ol>
+<p>In each stage, the level is traversed from left to right, and in each tile it is decided (based on a spawn
+probability of current stage) whether an obstacle/entityof current stage is generated. The spawn probabilities can be
+specified.</p>
+<h3>Parameters</h3>
+<p><a name="probabilities"></a>
+<code>probabilities</code> - specifies the spawn probabilities.</p>
+<p><a name="length"></a>
+<code>length</code> - specifies the length of generated levels in tiles.</p>
+</BODY>
+</HTML>

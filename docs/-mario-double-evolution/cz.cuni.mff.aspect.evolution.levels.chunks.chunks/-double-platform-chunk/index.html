@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DoublePlatformChunk - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.chunks.chunks</a>&nbsp;/&nbsp;<a href="./index.html">DoublePlatformChunk</a><br/>
+<br/>
+<h1>DoublePlatformChunk</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">DoublePlatformChunk</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-mario-level-chunk/index.html"><span class="identifier">MarioLevelChunk</span></a></code>
+<p>Super Mario level chunk representing a double platform. The chunk is made of floor, first platform 4 tiles higher, and
+second platform 4 other files higher.</p>
+<h3>Parameters</h3>
+<p><a name="platformLength"></a>
+<code>platformLength</code> - length of the platform. The second platform is always two tiles shorter (one on each side). The
+chunk also contains one additional path column on each side of the platform.</p>
+<p><a name="firstPlatformType"></a>
+<code>firstPlatformType</code> - type of the first platform, see <a href="../../cz.cuni.mff.aspect.mario/-tiles/index.html">cz.cuni.mff.aspect.mario.Tiles</a> for supported values.</p>
+<p><a name="secondPlatformType"></a>
+<code>secondPlatformType</code> - type of the second platform, see <a href="../../cz.cuni.mff.aspect.mario/-tiles/index.html">cz.cuni.mff.aspect.mario.Tiles</a> for supported values.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Super Mario level chunk representing a double platform. The chunk is made of floor, first platform 4 tiles higher, and
+second platform 4 other files higher.</p>
+<code><span class="identifier">DoublePlatformChunk</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.chunks.chunks.DoublePlatformChunk$<init>(kotlin.Int, kotlin.Byte, kotlin.Byte)/platformLength">platformLength</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.chunks.chunks.DoublePlatformChunk$<init>(kotlin.Int, kotlin.Byte, kotlin.Byte)/firstPlatformType">firstPlatformType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte/index.html"><span class="identifier">Byte</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.chunks.chunks.DoublePlatformChunk$<init>(kotlin.Int, kotlin.Byte, kotlin.Byte)/secondPlatformType">secondPlatformType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte/index.html"><span class="identifier">Byte</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="length.html">length</a></h4>
+</td>
+<td>
+<p>Length (in tiles) of the level.</p>
+<code><span class="keyword">val </span><span class="identifier">length</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="copy-self.html">copySelf</a></h4>
+</td>
+<td>
+<p>Copies itself.</p>
+<code><span class="keyword">fun </span><span class="identifier">copySelf</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-mario-level-chunk/index.html"><span class="identifier">MarioLevelChunk</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generate-column.html">generateColumn</a></h4>
+</td>
+<td>
+<p>Generates given column of this chunk.</p>
+<code><span class="keyword">fun </span><span class="identifier">generateColumn</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.chunks.chunks.DoublePlatformChunk$generateColumn(kotlin.Int, kotlin.Int)/column">column</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.chunks.chunks.DoublePlatformChunk$generateColumn(kotlin.Int, kotlin.Int)/level">level</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

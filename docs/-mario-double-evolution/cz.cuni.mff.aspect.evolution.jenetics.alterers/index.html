@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.jenetics.alterers - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.jenetics.alterers</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.jenetics.alterers</h2>
+<p>Contains implementations of custom alterers for <code>Jenetics</code> library.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-markov-chain-mutator/index.html">MarkovChainMutator</a></h4>
+</td>
+<td>
+<p>Implementation of a custom Markov Chain mutator. It does 2 mutations in the Markov Chain: swap 2 probabilities in one
+random variable of the MC; change a random probability in a random random variable, adjusting the other probabilities
+in that random variable so it is still valid after the operation.</p>
+<code><span class="keyword">class </span><span class="identifier">MarkovChainMutator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Alterer</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-updated-gaussian-mutator/index.html">UpdatedGaussianMutator</a></h4>
+</td>
+<td>
+<p>Updated <a href="#">io.jenetics.GaussianMutator</a> with added an option to define standard deviation.</p>
+<code><span class="keyword">class </span><span class="identifier">UpdatedGaussianMutator</span><span class="symbol">&lt;</span><span class="identifier">G</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">NumericGene</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">G</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier">C</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><span class="identifier">C</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Mutator</span><span class="symbol">&lt;</span><span class="identifier">G</span><span class="symbol">,</span>&nbsp;<span class="identifier">C</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SlidingWindow - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.utils</a>&nbsp;/&nbsp;<a href="./index.html">SlidingWindow</a><br/>
+<br/>
+<h1>SlidingWindow</h1>
+<code><span class="keyword">class </span><span class="identifier">SlidingWindow</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Represents an ordered limited list of entries. It keeps its elements in the order in which they were added and
+never exceeds its limit. The entries which would exceed the limit are removed.</p>
+<p>The implementation is not thread safe!</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Represents an ordered limited list of entries. It keeps its elements in the order in which they were added and
+never exceeds its limit. The entries which would exceed the limit are removed.</p>
+<code><span class="identifier">SlidingWindow</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.utils.SlidingWindow$<init>(kotlin.Int)/limit">limit</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-all.html">getAll</a></h4>
+</td>
+<td>
+<p>Retrieves the elements pushed to the history, ordered by the time they were put in. The latest entry will be the
+first entry.</p>
+<code><span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="push.html">push</a></h4>
+</td>
+<td>
+<p>Pushes new element to the top of the history, possibly removing the oldest entry if it exceed the limit.</p>
+<code><span class="keyword">fun </span><span class="identifier">push</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.utils.SlidingWindow$push(cz.cuni.mff.aspect.utils.SlidingWindow.T)/element">element</span><span class="symbol">:</span>&nbsp;<span class="identifier">T</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

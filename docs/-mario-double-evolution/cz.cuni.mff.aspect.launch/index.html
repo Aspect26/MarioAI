@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.launch - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.launch</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.launch</h2>
+<p>Contains multiple entry point of the project.</p>
+<h2>Coevolution</h2>
+<p>To launch coevolution use <a href="#">CoEvolve.kt</a> or <a href="#">CoEvolveMulti.kt</a></p>
+<h2>Evolution</h2>
+<p>To launch AI evolution, use one of these:</p>
+<ul><li><a href="#">EvolveAINeuro.kt</a> - launches evolution of AI using simple NeuroEvolution</li>
+<li><a href="#">EvolveAINEAT.kt</a> - launches evolution of AI using NEAT algorithm</li>
+<li><a href="#">EvolveAIMany.kt</a> - launches multiple evolutions of AI</li>
+</ul>
+ 
+<p>To launch level generator evolution, use one of these:</p>
+<ul><li><a href="#">EvolveLGPMP.kt</a> - launches evolution of a Probabilistic Multipass level generator</li>
+<li><a href="#">EvolveLGPC.kt</a> - launches evolution of a Probabilistic Chunks level generator</li>
+<li><a href="#">EvolveLGMany.kt</a> - launches multiple evolutions of level generators</li>
+</ul>
+ 
+<h2>Playing mario</h2>
+<p>To play Super Mario, use on of these:</p>
+<ul><li><a href="#">PlayMarioAI.kt</a> - launches Super Mario controlled by an AI agent</li>
+<li><a href="#">PlayMarioKeyboard.kt</a> - launches Super Mario controlled by user input</li>
+</ul>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-controller-evolution-settings/index.html">ControllerEvolutionSettings</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ControllerEvolutionSettings</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-generator-evolution-settings/index.html">LevelGeneratorEvolutionSettings</a></h4>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">LevelGeneratorEvolutionSettings</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-neat-evolution-launcher/index.html">NeatEvolutionLauncher</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NeatEvolutionLauncher</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">EvolutionLauncher</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-p-c-evolution-launcher/index.html">PCEvolutionLauncher</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PCEvolutionLauncher</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-p-m-p-evolution-launcher/index.html">PMPEvolutionLauncher</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PMPEvolutionLauncher</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-f-i-l-e_-p-a-t-h_-l-a-t-e-s-t_-p-m-p.html">FILE_PATH_LATEST_PMP</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">FILE_PATH_LATEST_PMP</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="coevolve.html">coevolve</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span> <span class="identifier">coevolve</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/storagePath">storagePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/controllerEvolutionSettings">controllerEvolutionSettings</span><span class="symbol">:</span>&nbsp;<a href="-controller-evolution-settings/index.html"><span class="identifier">ControllerEvolutionSettings</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/levelGeneratorEvolutionSettings">levelGeneratorEvolutionSettings</span><span class="symbol">:</span>&nbsp;<a href="-level-generator-evolution-settings/index.html"><span class="identifier">LevelGeneratorEvolutionSettings</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/generations">generations</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/repeatGeneratorsCount">repeatGeneratorsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.launch$coevolve(kotlin.String, cz.cuni.mff.aspect.launch.ControllerEvolutionSettings, cz.cuni.mff.aspect.launch.LevelGeneratorEvolutionSettings((cz.cuni.mff.aspect.launch.coevolve.T)), kotlin.Int, kotlin.Int, kotlin.Boolean)/continueExperiment">continueExperiment</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="grammar-evolution.html">grammarEvolution</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">grammarEvolution</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="main.html">main</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">main</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Launches multiple coevolutions in series. The settings of the evolutions are specified by <a href="#">NeuroEvolution</a>,
+<a href="#">NEATEvolution</a>, <a href="#">PCEvolution</a> and <a href="#">PMPEvolution</a> objects. It is also able to showcase the result of the coevolution
+by playing one level from each coevolution step.</p>
+<code><span class="keyword">fun </span><span class="identifier">main</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.launch$main(kotlin.Array((kotlin.String)))/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

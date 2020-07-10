@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MarioLevel - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.mario.level</a>&nbsp;/&nbsp;<a href="./index.html">MarioLevel</a><br/>
+<br/>
+<h1>MarioLevel</h1>
+<code><span class="keyword">interface </span><span class="identifier">MarioLevel</span></code>
+<p>Interface for Super Mario game levels.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="entities.html">entities</a></h4>
+</td>
+<td>
+<p>Represents 2D grid of entities in the level. One tile can contain only one entity.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">entities</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="pixel-width.html">pixelWidth</a></h4>
+</td>
+<td>
+<p>Constant specifying pixel width of one tile.</p>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">pixelWidth</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="tiles.html">tiles</a></h4>
+</td>
+<td>
+<p>Represents 2D grid of tiles in the level.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">tiles</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-chunked-mario-level/index.html">ChunkedMarioLevel</a></h4>
+</td>
+<td>
+<p>Implementation of <a href="./index.html">MarioLevel</a> where the level is represented in multiple chunks connected together. The chunkd are
+represented by <a href="../-mario-level-chunk/index.html">MarioLevelChunk</a>.</p>
+<code><span class="keyword">class </span><span class="identifier">ChunkedMarioLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-direct-mario-level/index.html">DirectMarioLevel</a></h4>
+</td>
+<td>
+<p>Direct <a href="./index.html">MarioLevel</a> implementation. It receives both tiles and entities in the primary constructor
+and uses these objects to implement the <a href="./index.html">MarioLevel</a> interface.</p>
+<code><span class="keyword">class </span><span class="identifier">DirectMarioLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.custom/-only-path-level/index.html">OnlyPathLevel</a></h4>
+</td>
+<td>
+<p>Super Mario level containing only flat path with no obstacles.</p>
+<code><span class="keyword">object </span><span class="identifier">OnlyPathLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.custom/-path-with-holes-level/index.html">PathWithHolesLevel</a></h4>
+</td>
+<td>
+<p>Super Mario level containing only holes at specific locations.</p>
+<code><span class="keyword">object </span><span class="identifier">PathWithHolesLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.original/-stage1-level1/index.html">Stage1Level1</a></h4>
+</td>
+<td>
+<p>Implementation of original Super Mario Bros game's Level 1 from Stage 1.</p>
+<code><span class="keyword">object </span><span class="identifier">Stage1Level1</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.original/-stage2-level1/index.html">Stage2Level1</a></h4>
+</td>
+<td>
+<p>Implementation of original Super Mario Bros game's Level 1 from Stage 2.</p>
+<code><span class="keyword">object </span><span class="identifier">Stage2Level1</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.original/-stage4-level1/index.html">Stage4Level1</a></h4>
+</td>
+<td>
+<p>Implementation of original Super Mario Bros game's Level 1 from Stage 4.</p>
+<code><span class="keyword">object </span><span class="identifier">Stage4Level1</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../cz.cuni.mff.aspect.mario.level.original/-stage5-level1/index.html">Stage5Level1</a></h4>
+</td>
+<td>
+<p>Implementation of original Super Mario Bros game's Level 1 from Stage 5.</p>
+<code><span class="keyword">object </span><span class="identifier">Stage5Level1</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

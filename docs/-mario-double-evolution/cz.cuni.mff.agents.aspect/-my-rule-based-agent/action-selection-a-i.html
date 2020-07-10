@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MyRuleBasedAgent.actionSelectionAI - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.agents.aspect</a>&nbsp;/&nbsp;<a href="index.html">MyRuleBasedAgent</a>&nbsp;/&nbsp;<a href="./action-selection-a-i.html">actionSelectionAI</a><br/>
+<br/>
+<h1>actionSelectionAI</h1>
+<a name="cz.cuni.mff.agents.aspect.MyRuleBasedAgent$actionSelectionAI()"></a>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">actionSelectionAI</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">MarioInput</span><span class="symbol">!</span></code>
+<p>Use <code><a href="#">#e</a></code> member to query entities (Goombas, Spikies, Koopas, etc.) around Mario; see <code><a href="#">EntityType</a></code> for complete list of entities. Important methods you will definitely need: <code><a href="#">Entities#danger(int, int)</a></code> and <code><a href="#">Entities#entityType(int, int)</a></code>. Use <code><a href="#">#t</a></code> member to query tiles (Bricks, Flower pots, etc.} around Mario; see <code><a href="#">Tile</a></code> for complete list of tiles. Important method you will definitely need: <code><a href="#">Tiles#brick(int, int)</a></code>. Use <code><a href="#">#control</a></code> to output actions (technically this method must return <code><a href="#">#action</a></code> in order for <code><a href="#">#control</a></code> to work. Note that all actions in <code><a href="#">#control</a></code> runs in "parallel" (except <code><a href="#">MarioControl#runLeft()</a></code> and <code><a href="#">MarioControl#runRight()</a></code>, which cancels each other out in consecutive calls). Note that you have to call <code><a href="#">#control</a></code> methods every <code><a href="./action-selection-a-i.html">#actionSelectionAI()</a></code> tick (otherwise <code><a href="#">#control</a></code> will think you DO NOT want to perform that action}.</p>
+</BODY>
+</HTML>

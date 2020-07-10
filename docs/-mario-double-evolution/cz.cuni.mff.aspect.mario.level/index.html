@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.mario.level - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.mario.level</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.mario.level</h2>
+<p>Contains implementation of Super Mario level representation.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-array-mario-level-chunk/index.html">ArrayMarioLevelChunk</a></h4>
+</td>
+<td>
+<p>Implementation of <a href="-mario-level-chunk/index.html">MarioLevelChunk</a> where all the necessary data is specified via primary constructor.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ArrayMarioLevelChunk</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-mario-level-chunk/index.html"><span class="identifier">MarioLevelChunk</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-chunked-mario-level/index.html">ChunkedMarioLevel</a></h4>
+</td>
+<td>
+<p>Implementation of <a href="-mario-level/index.html">MarioLevel</a> where the level is represented in multiple chunks connected together. The chunkd are
+represented by <a href="-mario-level-chunk/index.html">MarioLevelChunk</a>.</p>
+<code><span class="keyword">class </span><span class="identifier">ChunkedMarioLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-mario-level/index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-direct-mario-level/index.html">DirectMarioLevel</a></h4>
+</td>
+<td>
+<p>Direct <a href="-mario-level/index.html">MarioLevel</a> implementation. It receives both tiles and entities in the primary constructor
+and uses these objects to implement the <a href="-mario-level/index.html">MarioLevel</a> interface.</p>
+<code><span class="keyword">class </span><span class="identifier">DirectMarioLevel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-mario-level/index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-mario-level/index.html">MarioLevel</a></h4>
+</td>
+<td>
+<p>Interface for Super Mario game levels.</p>
+<code><span class="keyword">interface </span><span class="identifier">MarioLevel</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-mario-level-chunk/index.html">MarioLevelChunk</a></h4>
+</td>
+<td>
+<p>Interface representing a Super Mario level chunk.</p>
+<code><span class="keyword">interface </span><span class="identifier">MarioLevelChunk</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-monster-spawn/index.html">MonsterSpawn</a></h4>
+</td>
+<td>
+<p>Representation of a monster spawn in a chunk.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">MonsterSpawn</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-terminal-mario-level-chunk/index.html">TerminalMarioLevelChunk</a></h4>
+</td>
+<td>
+<p>Representation of a Mario Chunk which was created by a grammar terminal.</p>
+<code><span class="keyword">class </span><span class="identifier">TerminalMarioLevelChunk</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-array-mario-level-chunk/index.html"><span class="identifier">ArrayMarioLevelChunk</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

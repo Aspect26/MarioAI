@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.levels.evaluators.compression - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.levels.evaluators.compression</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.levels.evaluators.compression</h2>
+<p>Contains implementations of evaluators using image compressibility metric. </p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-high-j-p-g-compression.html">HighJPGCompression</a></h4>
+</td>
+<td>
+<p>Implementation of JPG compression with high compression quality (the information loss will be high).</p>
+<code><span class="keyword">object </span><span class="identifier">HighJPGCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-high-png-compression.html">HighPngCompression</a></h4>
+</td>
+<td>
+<p>Implementation of PNG compression with high compression quality (the resulting size will be much smaller).</p>
+<code><span class="keyword">object </span><span class="identifier">HighPngCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-image-compression/index.html">ImageCompression</a></h4>
+</td>
+<td>
+<p>Interface for image compression of a <a href="https://docs.oracle.com/javase/6/docs/api/java/awt/image/BufferedImage.html">BufferedImage</a>.</p>
+<code><span class="keyword">interface </span><span class="identifier">ImageCompression</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-image-huffman-compression/index.html">ImageHuffmanCompression</a></h4>
+</td>
+<td>
+<p>Compression of an image using adjusted Huffman compression.</p>
+<code><span class="keyword">class </span><span class="identifier">ImageHuffmanCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-compression/index.html"><span class="identifier">ImageCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-image-i-o-compression/index.html">ImageIOCompression</a></h4>
+</td>
+<td>
+<p>Implementation of an image compression using <a href="https://docs.oracle.com/javase/6/docs/api/javax/imageio/ImageIO.html">ImageIO</a>.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ImageIOCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-compression/index.html"><span class="identifier">ImageCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-medium-j-p-g-compression.html">MediumJPGCompression</a></h4>
+</td>
+<td>
+<p>Implementation of JPG compression with medium compression quality (the information loss will be medium).</p>
+<code><span class="keyword">object </span><span class="identifier">MediumJPGCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-medium-png-compression.html">MediumPngCompression</a></h4>
+</td>
+<td>
+<p>Implementation of PNG compression with medium compression quality.</p>
+<code><span class="keyword">object </span><span class="identifier">MediumPngCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-small-j-p-g-compression.html">SmallJPGCompression</a></h4>
+</td>
+<td>
+<p>Implementation of JPG compression with small compression quality (the information loss will be smaller).</p>
+<code><span class="keyword">object </span><span class="identifier">SmallJPGCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-small-p-n-g-compression.html">SmallPNGCompression</a></h4>
+</td>
+<td>
+<p>Implementation of PNG compression with small compression quality (the resulting size will not be much smaller).</p>
+<code><span class="keyword">object </span><span class="identifier">SmallPNGCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-image-i-o-compression/index.html"><span class="identifier">ImageIOCompression</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

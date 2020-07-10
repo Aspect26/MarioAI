@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CoevolutionSettings - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.coevolution</a>&nbsp;/&nbsp;<a href="./index.html">CoevolutionSettings</a><br/>
+<br/>
+<h1>CoevolutionSettings</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CoevolutionSettings</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span></code>
+<p>Data class representing coevolution settings.</p>
+<h3>Parameters</h3>
+<p><a name="controllerEvolution"></a>
+<code>controllerEvolution</code> - the evolution algorithm for controller.</p>
+<p><a name="generatorEvolution"></a>
+<code>generatorEvolution</code> - the evolution algorithm for level generator.</p>
+<p><a name="initialController"></a>
+<code>initialController</code> - initial controller, which is being evolved by the algorithm.</p>
+<p><a name="initialLevelGenerator"></a>
+<code>initialLevelGenerator</code> - initial level generator used in the first generation of the coevolution</p>
+<p><a name="generations"></a>
+<code>generations</code> - number of coevolution generations.</p>
+<p><a name="repeatGeneratorsCount"></a>
+<code>repeatGeneratorsCount</code> - number of level generators, on which the controller evolution should evaluate the controllers.</p>
+<p><a name="storagePath"></a>
+<code>storagePath</code> - path, where the results of the coevolution are to be stored.</p>
+<p><a name="T"></a>
+<code>T</code> - level generator type.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Data class representing coevolution settings.</p>
+<code><span class="identifier">CoevolutionSettings</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/controllerEvolution">controllerEvolution</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution/index.html"><span class="identifier">ControllerEvolution</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/generatorEvolution">generatorEvolution</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator-evolution/index.html"><span class="identifier">LevelGeneratorEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/initialController">initialController</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/initialLevelGenerator">initialLevelGenerator</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/generations">generations</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/repeatGeneratorsCount">repeatGeneratorsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.coevolution.CoevolutionSettings$<init>(cz.cuni.mff.aspect.evolution.controller.ControllerEvolution, cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution((cz.cuni.mff.aspect.coevolution.CoevolutionSettings.T)), cz.cuni.mff.aspect.mario.controllers.MarioController, cz.cuni.mff.aspect.evolution.levels.LevelGenerator, kotlin.Int, kotlin.Int, kotlin.String)/storagePath">storagePath</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="controller-evolution.html">controllerEvolution</a></h4>
+</td>
+<td>
+<p>the evolution algorithm for controller.</p>
+<code><span class="keyword">val </span><span class="identifier">controllerEvolution</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution/index.html"><span class="identifier">ControllerEvolution</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generations.html">generations</a></h4>
+</td>
+<td>
+<p>number of coevolution generations.</p>
+<code><span class="keyword">val </span><span class="identifier">generations</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generator-evolution.html">generatorEvolution</a></h4>
+</td>
+<td>
+<p>the evolution algorithm for level generator.</p>
+<code><span class="keyword">val </span><span class="identifier">generatorEvolution</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator-evolution/index.html"><span class="identifier">LevelGeneratorEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="initial-controller.html">initialController</a></h4>
+</td>
+<td>
+<p>initial controller, which is being evolved by the algorithm.</p>
+<code><span class="keyword">val </span><span class="identifier">initialController</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="initial-level-generator.html">initialLevelGenerator</a></h4>
+</td>
+<td>
+<p>initial level generator used in the first generation of the coevolution</p>
+<code><span class="keyword">val </span><span class="identifier">initialLevelGenerator</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="repeat-generators-count.html">repeatGeneratorsCount</a></h4>
+</td>
+<td>
+<p>number of level generators, on which the controller evolution should evaluate the controllers.</p>
+<code><span class="keyword">val </span><span class="identifier">repeatGeneratorsCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="storage-path.html">storagePath</a></h4>
+</td>
+<td>
+<p>path, where the results of the coevolution are to be stored.</p>
+<code><span class="keyword">val </span><span class="identifier">storagePath</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

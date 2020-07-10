@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.mario.controllers.ann.networks - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.mario.controllers.ann.networks</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.mario.controllers.ann.networks</h2>
+<p>Contains implementations of multiple artificial neural networks used in agent controllers.</p>
+  
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-controller-artificial-network/index.html">ControllerArtificialNetwork</a></h4>
+</td>
+<td>
+<p>Interface for artificial neural networks used in <a href="../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html">cz.cuni.mff.aspect.mario.controllers.MarioController</a> for action selection.</p>
+<code><span class="keyword">interface </span><span class="identifier">ControllerArtificialNetwork</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-hidden-layer-controller-network/index.html">HiddenLayerControllerNetwork</a></h4>
+</td>
+<td>
+<p>Implementation of a <a href="-controller-artificial-network/index.html">ControllerArtificialNetwork</a> representing an artificial neural network with one hidden layer.</p>
+<code><span class="keyword">class </span><span class="identifier">HiddenLayerControllerNetwork</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a><span class="symbol">, </span><a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-neat-agent-network/index.html">NeatAgentNetwork</a></h4>
+</td>
+<td>
+<p>Wrapper atop neural network evolved by NEAT algorithm.</p>
+<code><span class="keyword">class </span><span class="identifier">NeatAgentNetwork</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a><span class="symbol">, </span><a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-network-input-builder/index.html">NetworkInputBuilder</a></h4>
+</td>
+<td>
+<p>This builder is used to build input for ANNs for given Mario game environment and ANN settings.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">NetworkInputBuilder</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

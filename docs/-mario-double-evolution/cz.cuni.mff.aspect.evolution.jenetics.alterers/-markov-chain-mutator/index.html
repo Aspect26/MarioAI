@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MarkovChainMutator - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.jenetics.alterers</a>&nbsp;/&nbsp;<a href="./index.html">MarkovChainMutator</a><br/>
+<br/>
+<h1>MarkovChainMutator</h1>
+<code><span class="keyword">class </span><span class="identifier">MarkovChainMutator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Alterer</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code>
+<p>Implementation of a custom Markov Chain mutator. It does 2 mutations in the Markov Chain: swap 2 probabilities in one
+random variable of the MC; change a random probability in a random random variable, adjusting the other probabilities
+in that random variable so it is still valid after the operation.</p>
+<p>Additionally, it supports having more probabilities, than those specified in the Markov Chain, which will be mutated
+randomly (change randomly their values).</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of a custom Markov Chain mutator. It does 2 mutations in the Markov Chain: swap 2 probabilities in one
+random variable of the MC; change a random probability in a random random variable, adjusting the other probabilities
+in that random variable so it is still valid after the operation.</p>
+<code><span class="identifier">MarkovChainMutator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$<init>(kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Double)/statesCount">statesCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$<init>(kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Double)/changeInRandomVariableProbability">changeInRandomVariableProbability</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$<init>(kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Double)/swapInRandomVariableProbability">swapInRandomVariableProbability</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$<init>(kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Double)/additionalProbabilitiesChangeProbability">additionalProbabilitiesChangeProbability</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="alter.html">alter</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">alter</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$alter(io.jenetics.util.Seq((io.jenetics.Phenotype((io.jenetics.DoubleGene, kotlin.Float)))), kotlin.Long)/population">population</span><span class="symbol">:</span>&nbsp;<span class="identifier">Seq</span><span class="symbol">&lt;</span><span class="identifier">Phenotype</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.jenetics.alterers.MarkovChainMutator$alter(io.jenetics.util.Seq((io.jenetics.Phenotype((io.jenetics.DoubleGene, kotlin.Float)))), kotlin.Long)/generation">generation</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AltererResult</span><span class="symbol">&lt;</span><span class="identifier">DoubleGene</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

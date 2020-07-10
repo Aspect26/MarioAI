@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Pool - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">com.evo.NEAT</a>&nbsp;/&nbsp;<a href="./index.html">Pool</a><br/>
+<br/>
+<h1>Pool</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Pool</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">Pool</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$<init>(kotlin.Int)/populationSize">populationSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="add-to-species.html">addToSpecies</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addToSpecies</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$addToSpecies(com.evo.NEAT.Genome)/g">g</span><span class="symbol">:</span>&nbsp;<a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="breed-new-generation.html">breedNewGeneration</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">breedNewGeneration</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="calculate-genome-adjusted-fitness.html">calculateGenomeAdjustedFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">calculateGenomeAdjustedFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="calculate-global-adjusted-fitness.html">calculateGlobalAdjustedFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">calculateGlobalAdjustedFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="evaluate-fitness.html">evaluateFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">evaluateFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">evaluateFitness</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$evaluateFitness(com.evo.NEAT.Environment)/environment">environment</span><span class="symbol">:</span>&nbsp;<a href="../-environment/index.html"><span class="identifier">Environment</span></a><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-current-population.html">getCurrentPopulation</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCurrentPopulation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-last-population.html">getLastPopulation</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getLastPopulation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-species.html">getSpecies</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getSpecies</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-species/index.html"><span class="identifier">Species</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-top-fitness.html">getTopFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getTopFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-top-genome.html">getTopGenome</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getTopGenome</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="initialize-pool.html">initializePool</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">initializePool</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$initializePool(kotlin.collections.MutableList((com.evo.NEAT.Genome)))/genomes">genomes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">initializePool</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$initializePool(kotlin.Int, kotlin.Int)/inputsCount">inputsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.evo.NEAT.Pool$initializePool(kotlin.Int, kotlin.Int)/outputsCount">outputsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-stale-species.html">removeStaleSpecies</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">removeStaleSpecies</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-weak-genomes-from-species.html">removeWeakGenomesFromSpecies</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">removeWeakGenomesFromSpecies</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Pool$removeWeakGenomesFromSpecies(kotlin.Boolean)/allButOne">allButOne</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

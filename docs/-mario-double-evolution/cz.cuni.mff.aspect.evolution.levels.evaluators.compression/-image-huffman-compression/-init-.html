@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ImageHuffmanCompression.<init> - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.evaluators.compression</a>&nbsp;/&nbsp;<a href="index.html">ImageHuffmanCompression</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression$&lt;init&gt;(kotlin.Int)"></a>
+<code><span class="identifier">ImageHuffmanCompression</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageHuffmanCompression$<init>(kotlin.Int)/gridSize">gridSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
+<p>Compression of an image using adjusted Huffman compression.</p>
+<p>The image is split into 2x2 pixels wide grid, and each tile gets its own character. The same tiles will get the same
+characters. The image is then converted to a String by going through the tiles from left to right, from top to bottom
+and taking each tile's character. This string is then compressed using original Huffman algorithm. This way, the more
+tiles in the image are different, the higher the resulting compression size will be.</p>
+</BODY>
+</HTML>

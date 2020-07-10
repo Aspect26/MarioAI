@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.mario - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.mario</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.mario</h2>
+<p>Contains wrapper atop of Super Mario Infinite simulator from <a href="https://code.google.com/archive/p/marioai/">here</a>.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-entities/index.html">Entities</a></h4>
+</td>
+<td>
+<p>Wrapper constants representing all types of enemies in Mario.</p>
+<code><span class="keyword">object </span><span class="identifier">Entities</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-game-simulator/index.html">GameSimulator</a></h4>
+</td>
+<td>
+<p>Wrapper atop Super Mario Infinite's simulator.</p>
+<code><span class="keyword">class </span><span class="identifier">GameSimulator</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-game-statistics/index.html">GameStatistics</a></h4>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">GameStatistics</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-types/index.html">LevelTypes</a></h4>
+</td>
+<td>
+<p>Constants representing all Mario level types.</p>
+<code><span class="keyword">object </span><span class="identifier">LevelTypes</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-mario-agent/index.html">MarioAgent</a></h4>
+</td>
+<td>
+<p>Base class for all mario agents. It uses <a href="../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html">MarioController</a> for action selection.</p>
+<code><span class="keyword">class </span><span class="identifier">MarioAgent</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">MarioHijackAIBase</span><span class="symbol">, </span><span class="identifier">IAgent</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-single-level-level-generator/index.html">SingleLevelLevelGenerator</a></h4>
+</td>
+<td>
+<p>Level generator for Super Mario Infinite simulator which take our implementation of Super Mario level (<a href="../cz.cuni.mff.aspect.mario.level/-mario-level/index.html">MarioLevel</a>)
+and converts it to Super Mario Infinite simulator's level implementation <a href="#">Level</a>.</p>
+<code><span class="keyword">class </span><span class="identifier">SingleLevelLevelGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">LevelGenerator</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-tiles/index.html">Tiles</a></h4>
+</td>
+<td>
+<p>Constants representing level tiles. These tiles can be found in /MarioAI4J/src/ch/idsia/benchmark/mario/engine/resources/mapsheet.png.
+The tile number is then computed as column + row * 16 (column and row being 0-based)</p>
+<code><span class="keyword">object </span><span class="identifier">Tiles</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

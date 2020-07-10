@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.controller - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.controller</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.controller</h2>
+<p>Contains implementation of evolution algorithms of controller. It contains <a href="-controller-evolution/index.html">ControllerEvolution</a> interface, which all controller evolutions should implement, and two implementations of it: <a href="#">NEATControllerEvolution</a> and <a href="../cz.cuni.mff.aspect.evolution.controller.neuroevolution/-neuro-controller-evolution/index.html">NeuroControllerEvolution</a>.  </p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-controller-evolution/index.html">ControllerEvolution</a></h4>
+</td>
+<td>
+<p>Interface representing controller evolution.</p>
+<code><span class="keyword">interface </span><span class="identifier">ControllerEvolution</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-controller-evolution-result/index.html">ControllerEvolutionResult</a></h4>
+</td>
+<td>
+<p>Data class representing result of a controller evolution.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">ControllerEvolutionResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-controller-serializer/index.html">ControllerSerializer</a></h4>
+</td>
+<td>
+<p>Object taking care of serializing and deserializing mario controllers.</p>
+<code><span class="keyword">object </span><span class="identifier">ControllerSerializer</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-training-levels-set.html">TrainingLevelsSet</a></h4>
+</td>
+<td>
+<p>Super Mario levels data set. Contains original Super Mario Bros game levels <code>Stage 1 Level 1</code>, <code>Stage 2 Level 1</code>,
+<code>Stage 4 Level 1</code> and <code>Stage 5 Level 1</code> split into smaller parts, as well as one flat level (doesn't contain any
+obstacles and is flat), and one level containing only holes.</p>
+<code><span class="keyword">val </span><span class="identifier">TrainingLevelsSet</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

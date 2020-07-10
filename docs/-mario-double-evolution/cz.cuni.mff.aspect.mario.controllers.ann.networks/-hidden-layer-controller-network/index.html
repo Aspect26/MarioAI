@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HiddenLayerControllerNetwork - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.mario.controllers.ann.networks</a>&nbsp;/&nbsp;<a href="./index.html">HiddenLayerControllerNetwork</a><br/>
+<br/>
+<h1>HiddenLayerControllerNetwork</h1>
+<code><span class="keyword">class </span><span class="identifier">HiddenLayerControllerNetwork</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a><span class="symbol">, </span><a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Implementation of a <a href="../-controller-artificial-network/index.html">ControllerArtificialNetwork</a> representing an artificial neural network with one hidden layer.</p>
+<p>The network contains one hidden dense layer of a configurable size. The input size is also configurable, in a way that
+the size of mario's receptive field can be specified. The output layer is always 4 neurons, each one representing
+one of Mario's actions (go left, go right, jump and shoot).</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../-network-input-builder/index.html">cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder</a></p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of a <a href="../-controller-artificial-network/index.html">ControllerArtificialNetwork</a> representing an artificial neural network with one hidden layer.</p>
+<code><span class="identifier">HiddenLayerControllerNetwork</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings)/networkSettings">networkSettings</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/index.html"><span class="identifier">NetworkSettings</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="network-settings.html">networkSettings</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">networkSettings</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/index.html"><span class="identifier">NetworkSettings</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="weights-count.html">weightsCount</a></h4>
+</td>
+<td>
+<p>Number of all weights in the network.</p>
+<code><span class="keyword">val </span><span class="identifier">weightsCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="choose-action.html">chooseAction</a></h4>
+</td>
+<td>
+<p>Chooses an agent action in given environment.</p>
+<code><span class="keyword">fun </span><span class="identifier">chooseAction</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$chooseAction(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity)/tiles">tiles</span><span class="symbol">:</span>&nbsp;<span class="identifier">Tiles</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$chooseAction(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity)/entities">entities</span><span class="symbol">:</span>&nbsp;<span class="identifier">Entities</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$chooseAction(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity)/mario">mario</span><span class="symbol">:</span>&nbsp;<span class="identifier">MarioEntity</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-action/index.html"><span class="identifier">MarioAction</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="compare-to.html">compareTo</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">compareTo</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$compareTo(cz.cuni.mff.aspect.mario.controllers.ann.networks.ControllerArtificialNetwork)/other">other</span><span class="symbol">:</span>&nbsp;<a href="../-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-network-weights.html">getNetworkWeights</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getNetworkWeights</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="new-instance.html">newInstance</a></h4>
+</td>
+<td>
+<p>Creates a new instance of this network.</p>
+<code><span class="keyword">fun </span><span class="identifier">newInstance</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-controller-artificial-network/index.html"><span class="identifier">ControllerArtificialNetwork</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-network-weights.html">setNetworkWeights</a></h4>
+</td>
+<td>
+<p>Sets all the network's weights.</p>
+<code><span class="keyword">fun </span><span class="identifier">setNetworkWeights</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.HiddenLayerControllerNetwork$setNetworkWeights(kotlin.DoubleArray)/weights">weights</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

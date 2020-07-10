@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ImageCompression - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.evaluators.compression</a>&nbsp;/&nbsp;<a href="./index.html">ImageCompression</a><br/>
+<br/>
+<h1>ImageCompression</h1>
+<code><span class="keyword">interface </span><span class="identifier">ImageCompression</span></code>
+<p>Interface for image compression of a <a href="https://docs.oracle.com/javase/6/docs/api/java/awt/image/BufferedImage.html">BufferedImage</a>.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-size.html">getSize</a></h4>
+</td>
+<td>
+<p>Compute size of the given image using this compression algorithm.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getSize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.evaluators.compression.ImageCompression$getSize(java.awt.image.BufferedImage)/image">image</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/awt/image/BufferedImage.html"><span class="identifier">BufferedImage</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-image-huffman-compression/index.html">ImageHuffmanCompression</a></h4>
+</td>
+<td>
+<p>Compression of an image using adjusted Huffman compression.</p>
+<code><span class="keyword">class </span><span class="identifier">ImageHuffmanCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ImageCompression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-image-i-o-compression/index.html">ImageIOCompression</a></h4>
+</td>
+<td>
+<p>Implementation of an image compression using <a href="https://docs.oracle.com/javase/6/docs/api/javax/imageio/ImageIO.html">ImageIO</a>.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ImageIOCompression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ImageCompression</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

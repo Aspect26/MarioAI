@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.levels.evaluators - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.levels.evaluators</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.levels.evaluators</h2>
+<p>Contains implementations of evaluators for level generators.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-difficulty-evaluator/index.html">DifficultyEvaluator</a></h4>
+</td>
+<td>
+<p>Evaluator evaluating difficulty of a level. Each monster and each obstacle in the level is assigned a difficulty value,
+and then all of these are summed. The sum is then result of the evaluation.</p>
+<code><span class="keyword">class </span><span class="identifier">DifficultyEvaluator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-level-evaluator.html"><span class="identifier">LevelEvaluator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-evaluator.html">LevelEvaluator</a></h4>
+</td>
+<td>
+<p>Typealias for a generic level evaluator.</p>
+<code><span class="keyword">typealias </span><span class="identifier">LevelEvaluator</span><span class="symbol">&lt;</span><span class="identifier">F</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="symbol">(</span><span class="identifier">level</span><span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">gameStatistic</span><span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.mario/-game-statistics/index.html"><span class="identifier">GameStatistics</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">F</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-levels-evaluator.html">LevelsEvaluator</a></h4>
+</td>
+<td>
+<p>Typealias for a generic evaluator of multiple levels.</p>
+<code><span class="keyword">typealias </span><span class="identifier">LevelsEvaluator</span><span class="symbol">&lt;</span><span class="identifier">F</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="symbol">(</span><span class="identifier">level</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<span class="identifier">gameStatistics</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../cz.cuni.mff.aspect.mario/-game-statistics/index.html"><span class="identifier">GameStatistics</span></a><span class="symbol">&gt;</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">F</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-win-ratio-evaluator/index.html">WinRatioEvaluator</a></h4>
+</td>
+<td>
+<p>Levels evaluator returning difference of expected win ratio and actual win ratio.</p>
+<code><span class="keyword">class </span><span class="identifier">WinRatioEvaluator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-levels-evaluator.html"><span class="identifier">LevelsEvaluator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

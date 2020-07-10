@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NetworkSettings - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.mario.controllers.ann</a>&nbsp;/&nbsp;<a href="./index.html">NetworkSettings</a><br/>
+<br/>
+<h1>NetworkSettings</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">NetworkSettings</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Settings of an artificial neural network which controls Super Mario agents.</p>
+<h3>Parameters</h3>
+<p><a name="receptiveFieldSizeRow"></a>
+<code>receptiveFieldSizeRow</code> - number of rows in agent's receptive field size.</p>
+<p><a name="receptiveFieldSizeColumn"></a>
+<code>receptiveFieldSizeColumn</code> - number of columns in agent's receptive field size.</p>
+<p><a name="receptiveFieldRowOffset"></a>
+<code>receptiveFieldRowOffset</code> - row offset of agent's receptive field. The default agent's location is in the middle
+of the receptive field.</p>
+<p><a name="receptiveFieldColumnOffset"></a>
+<code>receptiveFieldColumnOffset</code> - column offset of agent's receptive field. The default agent's location is in the middle
+of the receptive field.</p>
+<p><a name="hiddenLayerSize"></a>
+<code>hiddenLayerSize</code> - number of neurons in the hidden layer.</p>
+<p><a name="denseInput"></a>
+<code>denseInput</code> - specifies, whether the input grid tiles should be split in a half resulting in more dense grid around
+the agent being provided to the network.</p>
+<p><a name="oneHotOnEnemies"></a>
+<code>oneHotOnEnemies</code> - specifies, whether the enemies should be encoded using one hot encoding.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Settings of an artificial neural network which controls Super Mario agents.</p>
+<code><span class="identifier">NetworkSettings</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldSizeRow">receptiveFieldSizeRow</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;3<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldSizeColumn">receptiveFieldSizeColumn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;3<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldRowOffset">receptiveFieldRowOffset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldColumnOffset">receptiveFieldColumnOffset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/hiddenLayerSize">hiddenLayerSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;7<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/denseInput">denseInput</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings$<init>(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/oneHotOnEnemies">oneHotOnEnemies</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="dense-input.html">denseInput</a></h4>
+</td>
+<td>
+<p>specifies, whether the input grid tiles should be split in a half resulting in more dense grid around
+the agent being provided to the network.</p>
+<code><span class="keyword">val </span><span class="identifier">denseInput</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hidden-layer-size.html">hiddenLayerSize</a></h4>
+</td>
+<td>
+<p>number of neurons in the hidden layer.</p>
+<code><span class="keyword">val </span><span class="identifier">hiddenLayerSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="one-hot-on-enemies.html">oneHotOnEnemies</a></h4>
+</td>
+<td>
+<p>specifies, whether the enemies should be encoded using one hot encoding.</p>
+<code><span class="keyword">val </span><span class="identifier">oneHotOnEnemies</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-column-offset.html">receptiveFieldColumnOffset</a></h4>
+</td>
+<td>
+<p>column offset of agent's receptive field. The default agent's location is in the middle
+of the receptive field.</p>
+<code><span class="keyword">val </span><span class="identifier">receptiveFieldColumnOffset</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-row-offset.html">receptiveFieldRowOffset</a></h4>
+</td>
+<td>
+<p>row offset of agent's receptive field. The default agent's location is in the middle
+of the receptive field.</p>
+<code><span class="keyword">val </span><span class="identifier">receptiveFieldRowOffset</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-size-column.html">receptiveFieldSizeColumn</a></h4>
+</td>
+<td>
+<p>number of columns in agent's receptive field size.</p>
+<code><span class="keyword">val </span><span class="identifier">receptiveFieldSizeColumn</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-size-row.html">receptiveFieldSizeRow</a></h4>
+</td>
+<td>
+<p>number of rows in agent's receptive field size.</p>
+<code><span class="keyword">val </span><span class="identifier">receptiveFieldSizeRow</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

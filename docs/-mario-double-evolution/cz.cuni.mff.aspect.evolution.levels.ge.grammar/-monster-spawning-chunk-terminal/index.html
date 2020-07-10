@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MonsterSpawningChunkTerminal - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.ge.grammar</a>&nbsp;/&nbsp;<a href="./index.html">MonsterSpawningChunkTerminal</a><br/>
+<br/>
+<h1>MonsterSpawningChunkTerminal</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">MonsterSpawningChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-level-chunk-terminal/index.html"><span class="identifier">LevelChunkTerminal</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">MonsterSpawningChunkTerminal</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.MonsterSpawningChunkTerminal$<init>(kotlin.String, kotlin.Array((cz.cuni.mff.aspect.mario.level.MonsterSpawn)))/terminalName">terminalName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.MonsterSpawningChunkTerminal$<init>(kotlin.String, kotlin.Array((cz.cuni.mff.aspect.mario.level.MonsterSpawn)))/monsterSpawns">monsterSpawns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.level/-monster-spawn/index.html"><span class="identifier">MonsterSpawn</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="level.html">level</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">level</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="monsters-level.html">monstersLevel</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">monstersLevel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="monster-spawns.html">monsterSpawns</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">monsterSpawns</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.level/-monster-spawn/index.html"><span class="identifier">MonsterSpawn</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="take-chunk-parameters.html">takeChunkParameters</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">takeChunkParameters</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.MonsterSpawningChunkTerminal$takeChunkParameters(kotlin.collections.Iterator((kotlin.Int)))/iterator">iterator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterator/index.html"><span class="identifier">Iterator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="take-parameters.html">takeParameters</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">takeParameters</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.ge.grammar.MonsterSpawningChunkTerminal$takeParameters(kotlin.collections.Iterator((kotlin.Int)))/iterator">iterator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterator/index.html"><span class="identifier">Iterator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-boxes-chunk-terminal/index.html">BoxesChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BoxesChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MonsterSpawningChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-double-path-chunk-terminal/index.html">DoublePathChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">DoublePathChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MonsterSpawningChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-path-chunk-terminal/index.html">PathChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PathChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MonsterSpawningChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-secrets-chunk-terminal/index.html">SecretsChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">SecretsChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MonsterSpawningChunkTerminal</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-stair-chunk-terminal/index.html">StairChunkTerminal</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StairChunkTerminal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MonsterSpawningChunkTerminal</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

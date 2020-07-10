@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NetworkInputBuilder - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.mario.controllers.ann.networks</a>&nbsp;/&nbsp;<a href="./index.html">NetworkInputBuilder</a><br/>
+<br/>
+<h1>NetworkInputBuilder</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">NetworkInputBuilder</span></code>
+<p>This builder is used to build input for ANNs for given Mario game environment and ANN settings.</p>
+<h3>Exceptions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-network-input-builder-exception/index.html">NetworkInputBuilderException</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NetworkInputBuilderException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html"><span class="identifier">Exception</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>This builder is used to build input for ANNs for given Mario game environment and ANN settings.</p>
+<code><span class="identifier">NetworkInputBuilder</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/tiles">tiles</span><span class="symbol">:</span>&nbsp;<span class="identifier">Tiles</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/entities">entities</span><span class="symbol">:</span>&nbsp;<span class="identifier">Entities</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/mario">mario</span><span class="symbol">:</span>&nbsp;<span class="identifier">MarioEntity</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldRows">receptiveFieldRows</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;5<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldColumns">receptiveFieldColumns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;5<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldOffsetRows">receptiveFieldOffsetRows</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldOffsetColumns">receptiveFieldOffsetColumns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/denseInput">denseInput</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$<init>(ch.idsia.agents.controllers.modules.Tiles, ch.idsia.agents.controllers.modules.Entities, ch.idsia.benchmark.mario.engine.generalization.MarioEntity, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/oneHotOnEnemies">oneHotOnEnemies</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="build.html">build</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">build</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="build-double.html">buildDouble</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">buildDouble</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="build-float.html">buildFloat</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">buildFloat</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float-array/index.html"><span class="identifier">FloatArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="entities.html">entities</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">entities</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$entities(ch.idsia.agents.controllers.modules.Entities)/entities">entities</span><span class="symbol">:</span>&nbsp;<span class="identifier">Entities</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="mario.html">mario</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">mario</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$mario(ch.idsia.benchmark.mario.engine.generalization.MarioEntity)/mario">mario</span><span class="symbol">:</span>&nbsp;<span class="identifier">MarioEntity</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="one-hot-on-enemies.html">oneHotOnEnemies</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">oneHotOnEnemies</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$oneHotOnEnemies(kotlin.Boolean)/useIt">useIt</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-offset.html">receptiveFieldOffset</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">receptiveFieldOffset</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$receptiveFieldOffset(kotlin.Int, kotlin.Int)/rows">rows</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$receptiveFieldOffset(kotlin.Int, kotlin.Int)/columns">columns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="receptive-field-size.html">receptiveFieldSize</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">receptiveFieldSize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$receptiveFieldSize(kotlin.Int, kotlin.Int)/rows">rows</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$receptiveFieldSize(kotlin.Int, kotlin.Int)/columns">columns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="tiles.html">tiles</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">tiles</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$tiles(ch.idsia.agents.controllers.modules.Tiles)/tiles">tiles</span><span class="symbol">:</span>&nbsp;<span class="identifier">Tiles</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="use-dense-input.html">useDenseInput</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">useDenseInput</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder$useDenseInput(kotlin.Boolean)/useIt">useIt</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">NetworkInputBuilder</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="input-size.html">inputSize</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">inputSize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder.Companion$inputSize(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings)/networkSettings">networkSettings</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/index.html"><span class="identifier">NetworkSettings</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">inputSize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder.Companion$inputSize(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldRows">receptiveFieldRows</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder.Companion$inputSize(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/receptiveFieldColumns">receptiveFieldColumns</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder.Companion$inputSize(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/denseInput">denseInput</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.mario.controllers.ann.networks.NetworkInputBuilder.Companion$inputSize(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Boolean)/enemiesOneHotEncoded">enemiesOneHotEncoded</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

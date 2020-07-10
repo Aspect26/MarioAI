@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NeatControllerEvolution - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.controller.neat</a>&nbsp;/&nbsp;<a href="./index.html">NeatControllerEvolution</a><br/>
+<br/>
+<h1>NeatControllerEvolution</h1>
+<code><span class="keyword">class </span><span class="identifier">NeatControllerEvolution</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution/index.html"><span class="identifier">ControllerEvolution</span></a></code>
+<p>Implementation of a Super Mario controller evolution using NEAT algorithm. The implementation is highly customizable
+in terms of multiple properties of the evolution, which can be specified via primary constructor.</p>
+<h3>Parameters</h3>
+<p><a name="networkSettings"></a>
+<code>networkSettings</code> - specifies network settings, however, not all the settings can be applied using NEAT. The only
+property which is not used in this implementation is <a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/hidden-layer-size.html">NetworkSettings.hiddenLayerSize</a>.</p>
+<p><a name="generationsCount"></a>
+<code>generationsCount</code> - number specifying how many generations the evolution should run for.</p>
+<p><a name="populationSize"></a>
+<code>populationSize</code> - size of a population.</p>
+<p><a name="evaluateOnLevelsCount"></a>
+<code>evaluateOnLevelsCount</code> - number of levels on which each individual should be evaluated. If the individuals are
+evaluated on multiple level generators, this number is evenly split amongst them. If that it not possible, some
+generators will generate one level less.</p>
+<p><a name="fitnessFunction"></a>
+<code>fitnessFunction</code> - specifies fitness function.</p>
+<p><a name="objectiveFunction"></a>
+<code>objectiveFunction</code> - specifies objective function.</p>
+<p><a name="displayChart"></a>
+<code>displayChart</code> - specifies, whether a real-time chart, which displays fitness values and objective values,
+should be displayed.</p>
+<p><a name="chartLabel"></a>
+<code>chartLabel</code> - label of the chart.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/index.html">NetworkSettings</a></p>
+<p><a href="../../cz.cuni.mff.aspect.evolution.controller.evaluators/-mario-gameplay-evaluator/index.html">MarioGameplayEvaluator</a></p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of a Super Mario controller evolution using NEAT algorithm. The implementation is highly customizable
+in terms of multiple properties of the evolution, which can be specified via primary constructor.</p>
+<code><span class="identifier">NeatControllerEvolution</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/networkSettings">networkSettings</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.mario.controllers.ann/-network-settings/index.html"><span class="identifier">NetworkSettings</span></a><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/generationsCount">generationsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;200<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/populationSize">populationSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;150<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/evaluateOnLevelsCount">evaluateOnLevelsCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/fitnessFunction">fitnessFunction</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.controller.evaluators/-mario-gameplay-evaluator/index.html"><span class="identifier">MarioGameplayEvaluator</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DistanceOnlyEvaluator()<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/objectiveFunction">objectiveFunction</span><span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.controller.evaluators/-mario-gameplay-evaluator/index.html"><span class="identifier">MarioGameplayEvaluator</span></a>&nbsp;<span class="symbol">=</span>&nbsp;VictoriesOnlyEvaluator()<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/displayChart">displayChart</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$<init>(cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings, kotlin.Int, kotlin.Int, kotlin.Int, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, cz.cuni.mff.aspect.evolution.controller.evaluators.MarioGameplayEvaluator, kotlin.Boolean, kotlin.String)/chartLabel">chartLabel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;"NEAT Evolution"<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="chart.html">chart</a></h4>
+</td>
+<td>
+<p>Chart of the evolution.</p>
+<code><span class="keyword">var </span><span class="identifier">chart</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.visualisation.charts.evolution/-evolution-line-chart/index.html"><span class="identifier">EvolutionLineChart</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="continue-evolution.html">continueEvolution</a></h4>
+</td>
+<td>
+<p>Continues evolution of already evolved controller, using given initial population.</p>
+<code><span class="keyword">fun </span><span class="identifier">continueEvolution</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$continueEvolution(kotlin.collections.List((cz.cuni.mff.aspect.evolution.levels.LevelGenerator)), kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)))/levelGenerators">levelGenerators</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$continueEvolution(kotlin.collections.List((cz.cuni.mff.aspect.evolution.levels.LevelGenerator)), kotlin.collections.List((cz.cuni.mff.aspect.mario.controllers.MarioController)))/initialPopulation">initialPopulation</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.mario.controllers/-mario-controller/index.html"><span class="identifier">MarioController</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution-result/index.html"><span class="identifier">ControllerEvolutionResult</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="evolve.html">evolve</a></h4>
+</td>
+<td>
+<p>Evolves a mario agent controller, which will be evaluated using level generators given.</p>
+<code><span class="keyword">fun </span><span class="identifier">evolve</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.controller.neat.NeatControllerEvolution$evolve(kotlin.collections.List((cz.cuni.mff.aspect.evolution.levels.LevelGenerator)))/levelGenerators">levelGenerators</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.controller/-controller-evolution-result/index.html"><span class="identifier">ControllerEvolutionResult</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

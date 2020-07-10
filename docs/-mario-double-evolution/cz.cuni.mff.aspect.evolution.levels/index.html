@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>cz.cuni.mff.aspect.evolution.levels - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="./index.html">cz.cuni.mff.aspect.evolution.levels</a><br/>
+<br/>
+<h2>Package cz.cuni.mff.aspect.evolution.levels</h2>
+<p>Contains implementations of level generator evolutions for Super Mario. Two level generators are evolved - Probabilistic Chunks and Probabilistic Multipass. </p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-jenetics-level-generator-evolution/index.html">JeneticsLevelGeneratorEvolution</a></h4>
+</td>
+<td>
+<p>Specialization of <a href="-jenetics-level-generator-evolution/index.html">JeneticsLevelGeneratorEvolution</a> on <a href="-level-generator/index.html">LevelGenerator</a>s.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">JeneticsLevelGeneratorEvolution</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../cz.cuni.mff.aspect.evolution/-charted-jenetics-evolution/index.html"><span class="identifier">ChartedJeneticsEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-level-generator-evolution/index.html"><span class="identifier">LevelGeneratorEvolution</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-generator/index.html">LevelGenerator</a></h4>
+</td>
+<td>
+<p>Interface for level generators for Super Mario.</p>
+<code><span class="keyword">interface </span><span class="identifier">LevelGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-generator-evolution/index.html">LevelGeneratorEvolution</a></h4>
+</td>
+<td>
+<p>Interface representing evolution of mario levels. The evolution can return multiple levels.</p>
+<code><span class="keyword">interface </span><span class="identifier">LevelGeneratorEvolution</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-generator-evolution-result/index.html">LevelGeneratorEvolutionResult</a></h4>
+</td>
+<td>
+<p>Data class representing result of a level generator evolution.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">LevelGeneratorEvolutionResult</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-level-generator/index.html"><span class="identifier">LevelGenerator</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-generator-serializer/index.html">LevelGeneratorSerializer</a></h4>
+</td>
+<td>
+<p>Object taking care of serializing and deserializing level generators.</p>
+<code><span class="keyword">object </span><span class="identifier">LevelGeneratorSerializer</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-level-post-processor/index.html">LevelPostProcessor</a></h4>
+</td>
+<td>
+<p>Post processor of Super Mario levels. It polishes given levels by setting correct grass tiles (so that grass is at
+the edges of walls. Optionally, it adds multiple environment sprites.</p>
+<code><span class="keyword">object </span><span class="identifier">LevelPostProcessor</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

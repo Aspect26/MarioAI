@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Species - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">com.evo.NEAT</a>&nbsp;/&nbsp;<a href="./index.html">Species</a><br/>
+<br/>
+<h1>Species</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Species</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Created by vishnu on 7/1/17.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">Species</span><span class="symbol">(</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">Species</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$<init>(com.evo.NEAT.Genome)/top">top</span><span class="symbol">:</span>&nbsp;<a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="breed-child.html">breedChild</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">breedChild</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="calculate-genome-adjusted-fitness.html">calculateGenomeAdjustedFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">calculateGenomeAdjustedFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="compare-to.html">compareTo</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">compareTo</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$compareTo(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-genomes.html">getGenomes</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getGenomes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span><span class="symbol">&gt;</span><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-staleness.html">getStaleness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getStaleness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-top-fitness.html">getTopFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getTopFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-top-genome.html">getTopGenome</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getTopGenome</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-genome/index.html"><span class="identifier">Genome</span></a><span class="symbol">!</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-total-adjusted-fitness.html">getTotalAdjustedFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getTotalAdjustedFitness</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-weak-genome.html">removeWeakGenome</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><s><span class="identifier">removeWeakGenome</span></s><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$removeWeakGenome(kotlin.Int)/childrenToRemove">childrenToRemove</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-weak-genomes.html">removeWeakGenomes</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">removeWeakGenomes</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$removeWeakGenomes(kotlin.Boolean)/allButOne">allButOne</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-staleness.html">setStaleness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setStaleness</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$setStaleness(kotlin.Int)/staleness">staleness</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-top-fitness.html">setTopFitness</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setTopFitness</span><span class="symbol">(</span><span class="identifier" id="com.evo.NEAT.Species$setTopFitness(kotlin.Float)/topFitness">topFitness</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

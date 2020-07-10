@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PMPLevelGenerator - MarioDoubleEvolution</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.evolution.levels.pmp</a>&nbsp;/&nbsp;<a href="./index.html">PMPLevelGenerator</a><br/>
+<br/>
+<h1>PMPLevelGenerator</h1>
+<code><span class="keyword">class </span><span class="identifier">PMPLevelGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../cz.cuni.mff.aspect.evolution.levels/-level-generator/index.html"><span class="identifier">LevelGenerator</span></a></code>
+<p>Implementation of Probabilistic Multipass level generator algorithm. It generates Super Mario levels in multiple stages:</p>
+<ol><li>generate terrain</li>
+<li>generate pipes</li>
+<li>generate bullet bills</li>
+<li>generate stone stairs</li>
+<li>generate box platforms</li>
+<li>generate entities</li>
+</ol>
+<p>In each stage, the level is traversed from left to right, and in each tile it is decided (based on a spawn
+probability of current stage) whether an obstacle/entityof current stage is generated. The spawn probabilities can be
+specified.</p>
+<h3>Parameters</h3>
+<p><a name="probabilities"></a>
+<code>probabilities</code> - specifies the spawn probabilities.</p>
+<p><a name="length"></a>
+<code>length</code> - specifies the length of generated levels in tiles.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of Probabilistic Multipass level generator algorithm. It generates Super Mario levels in multiple stages:</p>
+<code><span class="identifier">PMPLevelGenerator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$<init>(kotlin.DoubleArray, kotlin.Int)/probabilities">probabilities</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DoubleArray(PROBABILITIES_COUNT) {
+        when (it) {
+            PI_CHANGE_HEIGHT -&gt; 0.1
+            PI_CREATE_GAP -&gt; 0.05
+
+            PI_ENEMY_GOOMBA -&gt; 0.03
+            PI_ENEMY_KOOPA_GREEN -&gt; 0.03
+            PI_ENEMY_KOOPA_GREEN_WINGED -&gt; 0.01
+            PI_ENEMY_KOOPA_RED -&gt; 0.03
+            PI_ENEMY_SPIKES -&gt; 0.03
+
+            PI_BULLET_BILL -&gt; 0.03
+            PI_PIPE -&gt; 0.03
+
+            PI_START_BOXES -&gt; 0.07
+            PI_DOUBLE_BOXES -&gt; 0.33
+            PI_POWER_UP -&gt; 0.25
+
+            PI_STAIRS -&gt; 0.1
+
+            else -&gt; 0.0
+        }
+    }<span class="symbol">, </span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$<init>(kotlin.DoubleArray, kotlin.Int)/length">length</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;200<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="data.html">data</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">data</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/index.html"><span class="identifier">DoubleArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="last-metadata.html">lastMetadata</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">lastMetadata</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.evolution.levels.pmp.metadata/-p-m-p-level-metadata/index.html"><span class="identifier">PMPLevelMetadata</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="equals-generator.html">equalsGenerator</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">equalsGenerator</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$equalsGenerator(cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator)/other">other</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">PMPLevelGenerator</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="generate.html">generate</a></h4>
+</td>
+<td>
+<p>Generates one Super Mario level.</p>
+<code><span class="keyword">fun </span><span class="identifier">generate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a></code><code><span class="keyword">fun </span><span class="identifier">generate</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator$generate(kotlin.Long)/seed">seed</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.mario.level/-mario-level/index.html"><span class="identifier">MarioLevel</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-p-r-o-b-a-b-i-l-i-t-i-e-s_-c-o-u-n-t.html">PROBABILITIES_COUNT</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">PROBABILITIES_COUNT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-s-a-f-e_-z-o-n-e_-l-e-n-g-t-h.html">SAFE_ZONE_LENGTH</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SAFE_ZONE_LENGTH</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="create-simplest.html">createSimplest</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createSimplest</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">PMPLevelGenerator</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
