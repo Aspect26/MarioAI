@@ -37,12 +37,12 @@ private const val repeatGeneratorsCount = 5
  * by playing one level from each coevolution step.
  */
 fun main() {
-    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount, false)
+//    coevolve("result/neuro_pc", NeuroEvolution, PCEvolution, generations, repeatGeneratorsCount, false)
 //    coevolve("result/neuro_pmp", NeuroEvolution, PMPEvolution, generations, repeatGeneratorsCount, false)
 //    coevolve("result/neat_pc", NEATEvolution, PCEvolution, generations, repeatGeneratorsCount, false)
 //    coevolve("result/neat_pmp", NEATEvolution, PMPEvolution, generations, repeatGeneratorsCount, false)
 
-//    playCoevolution("data/coev/17_pmp_last/neuro_pmp")
+    playCoevolution("data/experiments/final-experiments/coev/final-upl7/neuro_pc", 18)
 }
 
 interface ControllerEvolutionSettings {
@@ -229,7 +229,7 @@ private fun <T: LevelGenerator> continueCoevolution(
     coevolutionChart.storeChart("$storagePath/coev.svg")
 }
 
-private fun playCoevolution(dataPath: String) {
+private fun playCoevolution(dataPath: String, startAt: Int = 1) {
     val simulator = GameSimulator(1700)
 
     var currentController: MarioController = SimpleANNController(HiddenLayerControllerNetwork(NetworkSettings(
@@ -239,10 +239,11 @@ private fun playCoevolution(dataPath: String) {
         receptiveFieldColumnOffset = 2,
         hiddenLayerSize = 7
     )))
-    var currentGenerator: LevelGenerator = PCLevelGenerator.createSimplest()
+    var currentGenerator: LevelGenerator = if (startAt == 1) PCLevelGenerator.createSimplest()
+    else ObjectStorage.load("$dataPath/lg_${startAt - 1}.lg") as LevelGenerator
 //    simulator.playMario(currentController, currentGenerator.generate())
 
-    for (i in 1 .. 25) {
+    for (i in startAt .. 25) {
         println("Generation: $i")
 
         currentController = ObjectStorage.load("$dataPath/ai_$i.ai") as MarioController

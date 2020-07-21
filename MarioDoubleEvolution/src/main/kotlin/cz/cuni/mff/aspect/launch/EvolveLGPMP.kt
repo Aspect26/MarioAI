@@ -1,6 +1,7 @@
 package cz.cuni.mff.aspect.launch
 
 import ch.idsia.agents.controllers.keyboard.CheaterKeyboardAgent
+import cz.cuni.mff.aspect.controllers.GoingRightController
 import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelPostProcessor
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
@@ -28,15 +29,15 @@ fun main() {
 
 private fun evolve() {
 
-//    val agentFactory = { MarioAgent(GoingRightController()) }
-    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/16_pc_last/neuro_pc/ai_25.ai")) }
+    val agentFactory = { MarioAgent(GoingRightController()) }
+//    val agentFactory = { MarioAgent(ObjectStorage.load("data/coev/16_pc_last/neuro_pc/ai_25.ai")) }
 
     val levelGeneratorEvolution = PMPLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 10,
+        generationsCount = 20,
         evaluateOnLevelsCount = 10,
-        fitnessFunction = All(0.5f),
-        objectiveFunction = WinRatioEvaluator(0.5f, 1f),
+        fitnessFunction = HuffmanCompressionEvaluator(),
+        objectiveFunction = NullEvaluator(),
         alterers = arrayOf(UpdatedGaussianMutator(0.5, 0.3) /*, SinglePointCrossover(0.2)*/),
         displayChart = true,
         levelLength = 300,

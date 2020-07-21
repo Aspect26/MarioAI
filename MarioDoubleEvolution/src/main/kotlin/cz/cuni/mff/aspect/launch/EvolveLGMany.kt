@@ -3,13 +3,14 @@ package cz.cuni.mff.aspect.launch
 import ch.idsia.agents.IAgent
 import cz.cuni.mff.aspect.coevolution.CoevolutionTimer
 import cz.cuni.mff.aspect.controllers.GoingRightAndJumpingController
+import cz.cuni.mff.aspect.controllers.GoingRightController
+import cz.cuni.mff.aspect.controllers.RandomController
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.PCLevelEvaluator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.NullEvaluator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PMPLevelEvaluator
-import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.PNGCompressionEvaluator
+import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.*
 import cz.cuni.mff.aspect.mario.MarioAgent
+import cz.cuni.mff.aspect.mario.controllers.MarioController
 import cz.cuni.mff.aspect.storage.ObjectStorage
 
 /**
@@ -17,14 +18,15 @@ import cz.cuni.mff.aspect.storage.ObjectStorage
  * [PMPEvolutionLauncher] class.
  */
 fun main() {
-    doManyPCEvolution()
-//    doManyPMPEvolution()
+//    doManyPCEvolution()
+    doManyPMPEvolution()
 }
 
 private fun doManyPCEvolution() {
-    val experimentsName = "data/experiments/final-experiments/lg/pc/fit+complexity+linearity"
+    val experimentsName = "data/experiments/final-experiments/lg/pc/fit+complexity+linearity_bestNEATPlayer"
     val generationsCount = 50
-    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
+//    val agentFactory = { MarioAgent(GoingRightController()) }
+    val agentFactory = { MarioAgent(ObjectStorage.load("data/experiments/final-experiments/ai/neat/03 fitness/500:100:DO:7x7:false:false/NEAT evolution, experiment 2_ai.ai")) }
     val fitnessFunction: PCLevelEvaluator<Float> = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All()
     val objectiveFunction: PCLevelEvaluator<Float> = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.5f, 1f)
     val evaluateOnLevelsCount = 20
@@ -81,11 +83,12 @@ private fun doManyPCEvolution() {
 
 private fun doManyPMPEvolution() {
 
-    val experimentsName = "data/experiments/final-experiments/pmp/complexity"
+    val experimentsName = "data/experiments/final-experiments/lg/pmp/fit+complexity+linearity_bestNEATPlayer"
     val generationsCount = 50
-    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
-    val fitnessFunction: PMPLevelEvaluator<Float> = PNGCompressionEvaluator()
-    val objectiveFunction: PMPLevelEvaluator<Float> = NullEvaluator()
+//    val agentFactory = { MarioAgent(GoingRightAndJumpingController()) }
+    val agentFactory = { MarioAgent(ObjectStorage.load("data/experiments/final-experiments/ai/neat/03 fitness/500:100:DO:7x7:false:false/NEAT evolution, experiment 2_ai.ai")) }
+    val fitnessFunction: PMPLevelEvaluator<Float> = All()
+    val objectiveFunction: PMPLevelEvaluator<Float> = WinRatioEvaluator(0.5f, 1f)
     val evaluateOnLevelsCount = 20
 
     val launchers = arrayOf(

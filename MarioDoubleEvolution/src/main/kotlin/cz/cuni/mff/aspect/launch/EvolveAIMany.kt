@@ -29,11 +29,10 @@ fun main() {
 
 
 private fun doManyNeuroEvolution() {
-    val levels = TrainingLevelsSet
-    val levelGenerator = LevelGenerators.StaticGenerator(levels)
-    val evaluationName = "final-experiments/neuro/50:50:DO:0.65:7:5x5:false:false:-25,25"
+    val levelGenerator = ObjectStorage.load<LevelGenerator>("data/experiments/final-experiments/coev/final-upl8/neuro_pc/lg_20.lg")
+    val evaluationName = "final-experiments/ai/neuro/against coev/upl8-pc"
 
-    val generationsCount = 50
+    val generationsCount = 150
     val populationSize = 50
     val fitness = DistanceOnlyEvaluator()
     val mutators = arrayOf<Alterer<DoubleGene, Float>>(UpdatedGaussianMutator(1.0, 0.65))
@@ -41,8 +40,9 @@ private fun doManyNeuroEvolution() {
     val offspringsSelector = TournamentSelector<DoubleGene, Float>(2)
     val networkSettings = NetworkSettings(5, 5, 0, 2,
         hiddenLayerSize, denseInput = false, oneHotOnEnemies = false)
-    val evaluateOnLevelsCount = levels.size
+    val evaluateOnLevelsCount = 25
     val weightsRange = DoubleRange.of(-25.0, 25.0)
+    val alwaysReevaluate = true
 
     val evolutions = arrayOf(
         NeuroEvolutionLauncher(
@@ -59,7 +59,7 @@ private fun doManyNeuroEvolution() {
             weightsRange = weightsRange,
             label = "NeuroEvolution, experiment 1",
             runParallel = true,
-            alwaysReevaluate = false,
+            alwaysReevaluate = alwaysReevaluate,
             dataLocation = evaluationName
         ),
 
@@ -77,7 +77,7 @@ private fun doManyNeuroEvolution() {
             weightsRange = weightsRange,
             label = "NeuroEvolution, experiment 2",
             runParallel = true,
-            alwaysReevaluate = false,
+            alwaysReevaluate = alwaysReevaluate,
             dataLocation = evaluationName
         ),
 
@@ -95,7 +95,7 @@ private fun doManyNeuroEvolution() {
             weightsRange = weightsRange,
             label = "NeuroEvolution, experiment 3",
             runParallel = true,
-            alwaysReevaluate = false,
+            alwaysReevaluate = alwaysReevaluate,
             dataLocation = evaluationName
         ),
 
@@ -113,7 +113,7 @@ private fun doManyNeuroEvolution() {
             weightsRange = weightsRange,
             label = "NeuroEvolution, experiment 4",
             runParallel = true,
-            alwaysReevaluate = false,
+            alwaysReevaluate = alwaysReevaluate,
             dataLocation = evaluationName
         )
     )
@@ -128,15 +128,15 @@ private fun doManyNeuroEvolution() {
 private fun doManyNEATEvolution() {
     val levels = TrainingLevelsSet
     val levelGenerators = listOf(LevelGenerators.StaticGenerator(levels))
-    val evaluationName = "final-experiments/neat/500:100:DWP30:7x7:false:false"
+    val evaluationName = "final-experiments/ai/neat/04 additional/500:100:DO:7x7:false:true"
 
     val generationsCount = 500
     val populationSize = 100
-    val fitness = DistanceWithLeastActionsEvaluator(30)
+    val fitness = DistanceOnlyEvaluator()
     val evaluateOnLevelsCount = levels.size
     val networkSettings = NetworkSettings(
         7, 7, 0, 3, 0,
-        false, false
+        false, true
     )
 
     val evolutions = arrayOf(

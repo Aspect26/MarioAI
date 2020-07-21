@@ -28,10 +28,10 @@ private fun evolve() {
 
     val levelGeneratorEvolution = PCLevelGeneratorEvolution(
         populationSize = 50,
-        generationsCount = 10,
+        generationsCount = 50,
         evaluateOnLevelsCount = 10,
-        fitnessFunction = All(0.5f),
-        objectiveFunction = WinRatioEvaluator(0.5f, 1f),
+        fitnessFunction = PNGCompressionEvaluator(),
+        objectiveFunction = NullEvaluator(),
         chunksCount = 55,
         displayChart = true
     )
