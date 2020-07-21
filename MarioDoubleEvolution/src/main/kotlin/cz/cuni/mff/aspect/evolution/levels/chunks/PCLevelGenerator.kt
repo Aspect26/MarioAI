@@ -149,7 +149,7 @@ class PCLevelGenerator(
                 0 -> Entities.Goomba.NORMAL
                 1 -> Entities.Koopa.GREEN
                 2 -> Entities.Koopa.RED
-                3 -> Entities.Koopa.GREEN_WINGED
+//                3 -> Entities.Koopa.GREEN_WINGED
                 4 -> Entities.Spiky.NORMAL
                 else -> Entities.NOTHING
             }
