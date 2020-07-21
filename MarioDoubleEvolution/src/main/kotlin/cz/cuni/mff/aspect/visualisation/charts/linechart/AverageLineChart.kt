@@ -9,7 +9,7 @@ import cz.cuni.mff.aspect.visualisation.charts.DataSeries
  */
 class AverageLineChart(lineCharts: Array<LineChart>) {
 
-    private val averagedLineChart: LineChart = this.createAveragedLineChart(lineCharts)
+    val averagedLineChart: LineChart = this.createAveragedLineChart(lineCharts)
 
     fun renderChart() {
         this.averagedLineChart.renderChart()

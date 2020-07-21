@@ -102,7 +102,7 @@ private fun renderCoevolutionAverageChart() {
 
     val c2 = AverageLineChart(objectiveLineCharts.toTypedArray())
     c2.averagedLineChart.setFontSize(20f)
-    c2.averagedLineChart.setLegentOutside()
+    c2.averagedLineChart.setLegendOutside()
     c2.renderChart()
 }
 

@@ -103,4 +103,9 @@ class GameSimulator(private val maxTicks: Int = DEFAULT_MAX_TICKS) {
 
 
 data class GameStatistics(val finalMarioDistance: Float, val jumps: Int, val specials: Int, val kills: Int,
-                          val marioHurts: Int, val marioDied: Boolean, val levelFinished: Boolean)
+                          val marioHurts: Int, val marioDied: Boolean, val levelFinished: Boolean) {
+    companion object {
+        fun empty(): GameStatistics = GameStatistics(0f, 0, 0, 0, 0,
+            false, false)
+    }
+}

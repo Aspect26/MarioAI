@@ -10,15 +10,19 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
+import java.util.*
 import javax.swing.JFrame
 
 /**
  * A wrapper of `xcharts` library's line chart which specifies the overall chart style and is able to display the chart
  * using Java's `swing` GUI library, store the chart as an SVG and update the chart's data in realtime.
  */
-class LineChart(internal val label: String = "Line chart", internal val xLabel: String = "X", internal val yLabel: String = "Y") {
-
-    private val chart: XYChartWithStops = XYChartWithStops(XYChartBuilder()
+open class LineChart(
+    internal val label: String = "Line chart",
+    internal val xLabel: String = "X",
+    internal val yLabel: String = "Y"
+) {
+    protected val chart: XYChartWithStops = XYChartWithStops(XYChartBuilder()
         .width(1920)
         .height(1080)
         .title(label)
@@ -43,6 +47,7 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
             legendPosition = Styler.LegendPosition.InsideNW
             isLegendVisible = true
             markerSize = 16
+            decimalPattern = "########.##"
         }
     }
 
@@ -86,6 +91,22 @@ class LineChart(internal val label: String = "Line chart", internal val xLabel: 
     fun save(path: String) {
         LineChartDataFile.storeData("$path.dat", LineChartData(label, xLabel, yLabel, _stops, _series))
         this.storeChart(path)
+    }
+
+    fun setFontSize(fontSize: Float) {
+        chart.styler.apply {
+            axisTickLabelsFont = axisTickLabelsFont.deriveFont(fontSize)
+            annotationsFont = annotationsFont.deriveFont(fontSize)
+            axisTitleFont = axisTitleFont.deriveFont(fontSize)
+            chartTitleFont = axisTitleFont.deriveFont(fontSize)
+            legendFont = legendFont.deriveFont(fontSize)
+        }
+    }
+
+    fun setLegendOutside() {
+        chart.styler.apply {
+            legendPosition = Styler.LegendPosition.OutsideS
+        }
     }
 
     val isShown get() = this.windowShown
