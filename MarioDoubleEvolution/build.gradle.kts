@@ -75,7 +75,7 @@ tasks.register<JavaExec>("runExperiment") {
     classpath = sourceSets.main.get().runtimeClasspath
 }
 
-val launchClass: String by project
+val launchClass: String? by project
 tasks.register<JavaExec>("runLauncher") {
     main = launchClass
     classpath = sourceSets.main.get().runtimeClasspath
