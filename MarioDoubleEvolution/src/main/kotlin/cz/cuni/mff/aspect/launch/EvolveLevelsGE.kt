@@ -15,7 +15,7 @@ fun main() {
      grammarEvolution()
 }
 
-fun grammarEvolution() {
+private fun grammarEvolution() {
     val agent = Agents.NeuroEvolution.Stage4Level1Solver
 
     val levelEvolution = GrammarLevelEvolution()
