@@ -8,7 +8,7 @@
 <a href="../../index.html">MarioDoubleEvolution</a>&nbsp;/&nbsp;<a href="../index.html">cz.cuni.mff.aspect.visualisation.charts.linechart</a>&nbsp;/&nbsp;<a href="./index.html">LineChart</a><br/>
 <br/>
 <h1>LineChart</h1>
-<code><span class="keyword">class </span><span class="identifier">LineChart</span></code>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LineChart</span></code>
 <p>A wrapper of <code>xcharts</code> library's line chart which specifies the overall chart style and is able to display the chart
 using Java's <code>swing</code> GUI library, store the chart as an SVG and update the chart's data in realtime.</p>
 <h3>Constructors</h3>
@@ -28,6 +28,13 @@ using Java's <code>swing</code> GUI library, store the chart as an SVG and updat
 <h3>Properties</h3>
 <table>
 <tbody>
+<tr>
+<td>
+<h4><a href="chart.html">chart</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">chart</span><span class="symbol">: </span><a href="../../cz.cuni.mff.aspect.visualisation.charts.xcharts/-x-y-chart-with-stops/index.html"><span class="identifier">XYChartWithStops</span></a></code></td>
+</tr>
 <tr>
 <td>
 <h4><a href="is-shown.html">isShown</a></h4>
@@ -53,6 +60,20 @@ using Java's <code>swing</code> GUI library, store the chart as an SVG and updat
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">save</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart$save(kotlin.String)/path">path</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-font-size.html">setFontSize</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setFontSize</span><span class="symbol">(</span><span class="identifier" id="cz.cuni.mff.aspect.visualisation.charts.linechart.LineChart$setFontSize(kotlin.Float)/fontSize">fontSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-legend-outside.html">setLegendOutside</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLegendOutside</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
