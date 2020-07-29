@@ -29,23 +29,23 @@ fun main() {
 //    fixCharts()
 //    renderCoevolutionAverageChart()
 //    levelImages("data/experiments/final-experiments/coev/final-upl9-2/neuro_pc/lg_20.lg")
-    evaluatePlayer(
-        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp/lg_20.lg",
-        "data/experiments/final-experiments/ai/neuro/against coev/upl7-pmp/NeuroEvolution, experiment 1_ai.ai"
-//        "data/experiments/final-experiments/coev/final-upl8/neuro_pc/ai_20.ai"
-    )
-//    evaluateCoevLGs(arrayOf(
-//        "data/experiments/final-experiments/coev/final-chic-1/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl6/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl8/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pmp",
-//        "data/experiments/final-experiments/coev/final-upl9/neuro_pmp",
+//    evaluatePlayer(
+//        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp/lg_20.lg",
+//        "data/experiments/final-experiments/ai/neuro/against coev/upl7-pmp/NeuroEvolution, experiment 1_ai.ai"
+////        "data/experiments/final-experiments/coev/final-upl8/neuro_pc/ai_20.ai"
+//    )
+    evaluateCoevLGs(arrayOf(
+//        "data/experiments/final-experiments/coev/final-chic-1/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-upl6/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp"
+        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-upl8/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-upl9/neuro_pmp"
 //        "data/experiments/final-experiments/coev/final-upl9-2/neuro_pmp"
-//    ), 20, 50)
+    ), 20, 50)
 //    fixChartY("data/experiments/final-experiments/ai/neuro/against coev/upl7-pmp/NeuroEvolution, experiment 1_chart.svg.dat")
 }
 
@@ -108,26 +108,47 @@ private fun renderCoevolutionAverageChart() {
 
 private fun fixCharts() {
     val paths = arrayOf(
-        "data/experiments/final-experiments/coev/final-chic-1/neuro_pc",
-        "data/experiments/final-experiments/coev/final-chic-1/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pc",
-        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pc",
-        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl6/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl6/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl7/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl8/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl8/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl9/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl9/neuro_pmp",
-        "data/experiments/final-experiments/coev/final-upl9-2/neuro_pc",
-        "data/experiments/final-experiments/coev/final-upl9-2/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-chic-1/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-chic-1/neuro_pmp"
+//        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-dyscalculia/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-mayrau-1/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl6/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl6/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl7/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl7/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl7-2/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl8/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl8/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl8-2/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl9/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl9/neuro_pmp",
+//        "data/experiments/final-experiments/coev/final-upl9-2/neuro_pc",
+//        "data/experiments/final-experiments/coev/final-upl9-2/neuro_pmp"
+
+//        "data/experiments/final-experiments/coev/neat-upl1/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl1/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl2/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl2/neat_pc"
+//        "data/experiments/final-experiments/coev/neat-upl3/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl3/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl4/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl4/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl5/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl5/neat_pc"
+//        "data/experiments/final-experiments/coev/neat-upl6/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl6/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl7/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl7/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl8/neat_pmp",
+        "data/experiments/final-experiments/coev/neat-upl8/neat_pc"
+//        "data/experiments/final-experiments/coev/neat-upl9/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl9/neat_pc",
+//        "data/experiments/final-experiments/coev/neat-upl10/neat_pmp",
+//        "data/experiments/final-experiments/coev/neat-upl10/neat_pc"
     )
 
     // LG
@@ -149,18 +170,18 @@ private fun fixCharts() {
     }
 
     // coev-missing last generation
-    paths.forEach { path ->
-        val controllerChart = EvolutionLineChart.loadFromFile("$path/ai.svg.dat")
-        val levelGeneratorChart = EvolutionLineChart.loadFromFile("$path/lg.svg.dat")
-
-        val coevolutionChart = CoevolutionLineChart(
-            controllerChart,
-            levelGeneratorChart,
-            "Coevolution"
-        )
-
-        coevolutionChart.storeChart("$path/coev.svg")
-    }
+//    paths.forEach { path ->
+//        val controllerChart = EvolutionLineChart.loadFromFile("$path/ai.svg.dat")
+//        val levelGeneratorChart = EvolutionLineChart.loadFromFile("$path/lg.svg.dat")
+//
+//        val coevolutionChart = CoevolutionLineChart(
+//            controllerChart,
+//            levelGeneratorChart,
+//            "Coevolution"
+//        )
+//
+//        coevolutionChart.storeChart("$path/coev.svg")
+//    }
 
     // coev-fitness
     paths.forEach { path ->
@@ -180,23 +201,23 @@ private fun fixCharts() {
         chart.save("$path/coev-fitness.svg")
     }
 
-    // coev-objective
-    paths.forEach { path ->
-        val chartDataFile = LineChartDataFile.loadData("$path/coev-objective.svg.dat")
-        val updatedSeries = chartDataFile.series.map { dataSeries ->
-            if (!dataSeries.label.contains("Level Generator")) {
-                return@map dataSeries
-            }
-
-            DataSeries(dataSeries.label, dataSeries.color, dataSeries.data.map { (x, y) ->
-                Pair(x, y * 50000)
-            }.toMutableList())
-        }
-
-        val updatedData = LineChartData(chartDataFile.label, chartDataFile.xLabel, chartDataFile.yLabel, chartDataFile.stops, updatedSeries)
-        val chart = LineChart.loadFromData(updatedData)
-        chart.save("$path/coev-objective.svg")
-    }
+//    // coev-objective
+//    paths.forEach { path ->
+//        val chartDataFile = LineChartDataFile.loadData("$path/coev-objective.svg.dat")
+//        val updatedSeries = chartDataFile.series.map { dataSeries ->
+//            if (!dataSeries.label.contains("Level Generator")) {
+//                return@map dataSeries
+//            }
+//
+//            DataSeries(dataSeries.label, dataSeries.color, dataSeries.data.map { (x, y) ->
+//                Pair(x, y * 50000)
+//            }.toMutableList())
+//        }
+//
+//        val updatedData = LineChartData(chartDataFile.label, chartDataFile.xLabel, chartDataFile.yLabel, chartDataFile.stops, updatedSeries)
+//        val chart = LineChart.loadFromData(updatedData)
+//        chart.save("$path/coev-objective.svg")
+//    }
 }
 
 private fun increaseChartTexts() {
@@ -264,7 +285,8 @@ private fun evaluateCoevLGs(coevPaths: Array<String>, generations: Int, evalOnCo
     val charts = coevPaths.map { evaluateCoevLG(it, generations, evalOnCount) }.toTypedArray()
     val averageChart = AverageLineChart(charts)
     averageChart.averagedLineChart.setFontSize(20f)
-    averageChart.storeChart("data/charts/lg_evaluation/pmp.svg")
+//    averageChart.storeChart("data/charts/lg_evaluation/pmp.svg")
+    averageChart.renderChart()
 }
 
 private fun fixChartY(chartDataFilePath: String) {

@@ -14,7 +14,6 @@ class HuffmanCompressionEvaluator : SummingEvaluator() {
         val image = LevelToImageConverter.createMinified(level, noAlpha=true)
         val compressionSize = ImageHuffmanCompression(2).getSize(image)
 
-        // TODO: konstanta vycucana z prsta...
         return compressionSize / 2400f
     }
 

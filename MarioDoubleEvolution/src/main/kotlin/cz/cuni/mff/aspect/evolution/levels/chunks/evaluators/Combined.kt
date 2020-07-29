@@ -12,8 +12,7 @@ import io.jenetics.Optimize
  * Probabilistic Chunks level generator evaluator returning difference of won/lost count, compressibility metric
  * and linearity metric.
  */
-// TODO: better name...
-class All(expectedWinRatio: Float = 0.5f) : PCLevelEvaluator<Float> {
+class Combined(expectedWinRatio: Float = 0.5f) : PCLevelEvaluator<Float> {
 
     private val winRatioEvaluator: WinRatioEvaluator = WinRatioEvaluator(expectedWinRatio, 1f)
 

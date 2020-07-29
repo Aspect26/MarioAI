@@ -10,7 +10,7 @@ import cz.cuni.mff.aspect.evolution.jenetics.alterers.UpdatedGaussianMutator
 import cz.cuni.mff.aspect.evolution.levels.LevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.chunks.PCLevelGeneratorEvolution
-import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.All
+import cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.Combined
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGenerator
 import cz.cuni.mff.aspect.evolution.levels.pmp.PMPLevelGeneratorEvolution
 import cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.WinRatioEvaluator
@@ -108,7 +108,7 @@ private object PCEvolutionLarge : LevelGeneratorEvolutionSettings<PCLevelGenerat
                 populationSize = 50,
                 generationsCount = 15,
                 evaluateOnLevelsCount = 36,
-                fitnessFunction = All(0.5f),
+                fitnessFunction = Combined(0.5f),
                 objectiveFunction = cz.cuni.mff.aspect.evolution.levels.chunks.evaluators.WinRatioEvaluator(0.5f, 50000f),
                 chunksCount = 55,
                 displayChart = false,
@@ -126,7 +126,7 @@ private object PMPEvolutionLarge : LevelGeneratorEvolutionSettings<PMPLevelGener
             populationSize = 50,
             generationsCount = 35,
             evaluateOnLevelsCount = 30,
-            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.All(0.5f),
+            fitnessFunction = cz.cuni.mff.aspect.evolution.levels.pmp.evaluators.Combined(0.5f),
             objectiveFunction = WinRatioEvaluator(0.5f, 50000f),
             alterers = arrayOf(UpdatedGaussianMutator(0.03, 0.1) /*, SinglePointCrossover(0.2)*/),
             displayChart = false,

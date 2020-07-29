@@ -7,7 +7,6 @@ import cz.cuni.mff.aspect.mario.controllers.ann.NetworkSettings
 
 
 /** This builder is used to build input for ANNs for given Mario game environment and ANN settings. */
-// TODO: would be better to pass NetworkSettings but that would break serialization
 data class NetworkInputBuilder(
     private var tiles: Tiles? = null,
     private var entities: Entities? = null,

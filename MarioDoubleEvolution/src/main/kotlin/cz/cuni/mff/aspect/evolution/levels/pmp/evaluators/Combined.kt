@@ -12,8 +12,7 @@ import io.jenetics.Optimize
  * Probabilistic Multipass level generator evaluator returning win ratio metric, compressibility metric
  * and linearity metric.
  */
-// TODO: better name...
-class All(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
+class Combined(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
 
     private val winRatioEvaluator: WinRatioEvaluator = WinRatioEvaluator(expectedWinRatio, 1f)
 
@@ -24,7 +23,6 @@ class All(expectedWinRatio: Float = 0.5f) : PMPLevelEvaluator<Float> {
     ): Float {
         val winRatioFactor = this.winRatioEvaluator(levels, gameStatistics)
 
-        // TODO: konstanta vycucana z prsta
         val compressionFactor = List(levels.size) {
             val image = LevelToImageConverter.createMinified(levels[it], noAlpha=true)
             ImageHuffmanCompression(2).getSize(image)
