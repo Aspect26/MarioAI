@@ -1,8 +1,6 @@
 package cz.cuni.mff.aspect.evolution.results
 
 import ch.idsia.agents.IAgent
-import cz.cuni.mff.agents.arnold.ArnoldRuleBasedAgent
-import cz.cuni.mff.agents.aspect.MyRuleBasedAgent
 import cz.cuni.mff.aspect.controllers.*
 import cz.cuni.mff.aspect.mario.MarioAgent
 import cz.cuni.mff.aspect.mario.controllers.ann.SimpleANNController
@@ -19,13 +17,6 @@ object Agents {
         val random: MarioAgent get() = MarioAgent(RandomController())
         val goingRight: MarioAgent get() = MarioAgent(GoingRightController())
         val goingRightJumping: MarioAgent get() = MarioAgent(GoingRightAndJumpingController())
-
-        // My best implementation from AI course
-        val my: IAgent get() = MyRuleBasedAgent()
-
-        // Jakub Arnold's implementation from AI course
-        val arnold: IAgent get() = ArnoldRuleBasedAgent()
-
     }
 
     /** Agents evolved by simple neuroevolution. */
